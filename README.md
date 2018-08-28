@@ -16,19 +16,19 @@ classes/<br/>
 db/<br/>
 &nbsp;&nbsp;&nbsp;[access.php](#accessphp)<br/>
 &nbsp;&nbsp;&nbsp;[events.php](#dbeventsphp)<br/>
-&nbsp;&nbsp;&nbsp;[install.xml](#installphp)<br/>
+&nbsp;&nbsp;&nbsp;[install.xml](#installxml)<br/>
 &nbsp;&nbsp;&nbsp;[index.php](#indexphp)<br/>
 javascript/<br/>
-[tableEvents.js](#javascripttableEvents.js)<br/>
+[tableEvents.js](#javascripttableEventsjs)<br/>
 lang/<br/>
  &nbsp;&nbsp;&nbsp;en/<br/>
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[block_leaderboard.php](#langenblock_leaderboard.php)<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[block_leaderboard.php](#langenblock_leaderboardphp)<br/>
 pix/<br/> 
 &nbsp;&nbsp;&nbsp; [icon.svg](#adding-pictures-and-icons)<br/>
-[renderer.php](#renderer.php)<br/>
-[settings.php](#settings.php)<br/>
-[styles.css](#styles.css)<br/>
-[version.php](#version.php)<br/>
+[renderer.php](#rendererphp)<br/>
+[settings.php](#settingsphp)<br/>
+[styles.css](#stylescss)<br/>
+[version.php](#versionphp)<br/>
 
 The structure of this plugin is based off of Moodle's standards. Moodle uses something called [automatic class loading](https://docs.moodle.org/dev/Automatic_class_loading) where it knows where to look for certain peices of the plugin. This means that cetrain directory and file names should adhere to Moodle's standards.
 
