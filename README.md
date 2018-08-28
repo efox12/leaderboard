@@ -10,14 +10,14 @@ This section will give a general overview of the project.
 [block_leaderboard.php](#block_leaderboard.php)<br/>
 classes/<br/>
 
-&nbsp;&nbsp;&nbsp;[data_loader.php](#classesobserver.php)<br/>
-&nbsp;&nbsp;&nbsp;[multiplier.php](#classesobserver.php)<br/>
-&nbsp;&nbsp;&nbsp;[observer.php](#classesobserver.php)<br/>
+&nbsp;&nbsp;&nbsp;[data_loader.php](#classesobserverphp)<br/>
+&nbsp;&nbsp;&nbsp;[multiplier.php](#classesobserverphp)<br/>
+&nbsp;&nbsp;&nbsp;[observer.php](#classesobserverphp)<br/>
 db/<br/>
-&nbsp;&nbsp;&nbsp;[access.php](#access.php)<br/>
-&nbsp;&nbsp;&nbsp;[events.php](#dbevents.php)<br/>
-&nbsp;&nbsp;&nbsp;[install.xml](#install.php)<br/>
-&nbsp;&nbsp;&nbsp;[index.php](#index.php)<br/>
+&nbsp;&nbsp;&nbsp;[access.php](#accessphp)<br/>
+&nbsp;&nbsp;&nbsp;[events.php](#dbeventsphp)<br/>
+&nbsp;&nbsp;&nbsp;[install.xml](#installphp)<br/>
+&nbsp;&nbsp;&nbsp;[index.php](#indexphp)<br/>
 javascript/<br/>
 [tableEvents.js](#javascripttableEvents.js)<br/>
 lang/<br/>
@@ -490,8 +490,3 @@ It returns nothing.
 You probably won't need to touch this file but it controls capabilities and what the current user is and isn't allowed to use.
 
 [More info on access API](https://docs.moodle.org/dev/Access_API)
-
-<!--stackedit_data:
-eyJoaXN0b3J5IjpbMTMzNTIyNzkyMCwxNjQ4MjIzMjY0LC0zMD
-g3MTg1NF19
--->
