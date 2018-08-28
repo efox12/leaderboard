@@ -1,0 +1,37 @@
+student_id,module_id,module_name,module_type,time_finished,days_early,attempts,days_spaced,discussion_id,post_id,is_response
+14,52,Q0,Quiz,1534143664,,0,,null,null,null
+7,22,PA1,Assignment,1534141671,,null,null,null,null,null
+7,52,Q0,Quiz,1534142868,,0,,null,null,null
+7,2,"Forum Post",Forum,1534141717,null,null,null,15,27,0
+12,52,Q0,Quiz,1534143334,,0,,null,null,null
+9,24,PA1,Assignment,1534141933,,null,null,null,null,null
+9,52,Q0,Quiz,1534143024,,0,,null,null,null
+5,20,PA1,Assignment,1534142462,,null,null,null,null,null
+5,52,Q0,Quiz,1534142505,,0,,null,null,null
+5,53,Q1,Quiz,1534142542,,0,,null,null,null
+5,56,Q3,Quiz,1534369886,,0,,null,null,null
+5,9,C0,Choice,1534142398,null,null,null,null,null,null
+5,2,"Forum Response",Forum,1534373475,null,null,null,18,37,1
+13,52,Q0,Quiz,1534143505,,0,,null,null,null
+13,53,Q1,Quiz,1534370191,,0,,null,null,null
+13,56,Q3,Quiz,1534371732,,0,,null,null,null
+6,21,PA1,Assignment,1534104825,,null,null,null,null,null
+6,52,Q0,Quiz,1534142604,,0,,null,null,null
+15,25,PA1,Assignment,1534143992,,null,null,null,null,null
+15,52,Q0,Quiz,1534143775,,0,,null,null,null
+15,53,Q1,Quiz,1534143899,,0,,null,null,null
+15,56,Q3,Quiz,1534143927,,0,,null,null,null
+15,2,"Forum Response",Forum,1534144021,null,null,null,15,29,1
+11,52,Q0,Quiz,1534143223,,0,,null,null,null
+8,23,PA1,Assignment,1534141788,,null,null,null,null,null
+8,2,"Forum Response",Forum,1534141870,null,null,null,15,28,1
+3,19,PA1,Assignment,1534061375,,null,null,null,null,null
+3,52,Q0,Quiz,1534142189,,0,,null,null,null
+3,53,Q1,Quiz,1534142172,,0,,null,null,null
+3,56,Q3,Quiz,1534142231,,0,,null,null,null
+3,9,,Choice,1534142263,null,null,null,null,null,null
+3,2,"Forum Post",Forum,1534368936,null,null,null,17,34,0
+3,2,"Forum Post",Forum,1534368949,null,null,null,18,35,0
+3,2,"Forum Response",Forum,1535471833,null,null,null,18,39,1
+3,2,test,Forum,1535472333,null,null,null,20,40,0
+10,52,Q0,Quiz,1534143145,,0,,null,null,null

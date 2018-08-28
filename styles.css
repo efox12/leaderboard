@@ -1,0 +1,284 @@
+.block_leaderboard table thhead .header{
+    font-size: 1em;
+    color: black;
+}
+
+.block_leaderboard block_header {
+    font-weight: bold;
+    font-size: 1.5em;
+    color: black;
+}
+
+.block_leaderboard desc {
+    color: black;
+    position: relative;
+    display: block;
+    text-align: right;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.block_leaderboard mult {
+    font-size: 4em;
+    font-weight: bolder;
+    color: black;
+    position: relative;
+    display: block;
+    text-align: center;
+    
+}
+.block_leaderboard div.mult {
+    display: inline-block;
+    margin-bottom: -10px;
+}
+
+.block_leaderboard current_rate {
+    display: block;
+    text-align: center;
+}
+
+.block_leaderboard current_rate unit {
+    font-size: smaller;
+}
+
+.block_leaderboard div.progress-bar {
+    background-color: lightgrey;
+    height: 10px;
+    border-radius: 5px;
+    position: relative;
+    margin-top: 5px;
+    margin-bottom: 10px;
+  }
+    
+.block_leaderboard .progress-bar span {
+    background-color: gray;
+    border-radius: 5px;
+    min-width: 5px;
+    height: 100%;
+}
+
+div .info {
+    font-size: 1.5rem;
+    padding-top: 10px;
+}
+
+div .description {
+    padding-top: 10px;
+}
+
+div .q {
+    display: inline-block;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 0px;
+    width: 100%;
+    border-top: 1px solid rgba(0,0,0,.08);
+    border-bottom: none;
+}
+
+div .a {
+    display: inline-table;
+    padding-left: 10px;
+    padding-bottom: 10px;
+    border-top: 1px;
+    border-bottom: none;
+}
+
+div .a.partone {
+    display: inline-table;
+    padding-bottom: 0;   
+    border:none;
+}
+
+div .a.levels {
+    display: inline-table;
+    padding-left: 40px;
+    border:none;
+}
+
+table.generaltable th.header.c0,
+table.generaltable th.header.c1,
+table.generaltable th.header.c2,
+table.generaltable th.header.c3,
+table.generaltable th.header.c4 {
+    border-bottom: 1px solid rgba(0,0,0,.05) !important; 
+}
+table.generaltable.leaderboardtable {
+    width: 100%
+}
+
+table.generaltable td.cell {
+    table-layout: fixed;
+    font-size: 90%;
+    border: 0 none; 
+}
+
+.block_leaderboard table tr.rank1,
+table.leaderboardtable tr.rank1 {
+    background-color: rgba(255, 187, 0, 0.7) !important;
+    border-color: rgba(255, 187, 0, 0.4) !important;
+}
+
+.block_leaderboard table tr.rank2,
+table.leaderboardtable tr.rank2 {
+    background-color: rgba(168, 168, 168, 0.7) !important;
+    border-color: rgba(168, 168, 168, 0.4) !important;
+}
+
+.block_leaderboard table tr.rank3,
+table.leaderboardtable tr.rank3 {
+    background-color: rgba(150, 90, 56, 0.7) !important;
+    border-color: rgba(150, 90, 56, 0.4) !important;
+}
+
+.block_leaderboard table tr.break_row {
+    background-color: rgba(0,0,0,.05) !important;
+    padding: 7;
+}
+
+.block_leaderboard table .header.c0,
+.block_leaderboard table .cell.c0 {
+    width: 10%;
+    padding-left: 5px;
+    padding-right: 5px;
+    text-align: center;
+    border-bottom: 1px solid rgba(0,0,0,.05) !important; 
+}
+
+.block_leaderboard table .cell.c0 {
+    font-weight: bold; 
+}
+
+.block_leaderboard table .header.c1,
+.block_leaderboard table .cell.c1 {
+    width: 10%;
+    padding-left: 5px;
+    padding-right: 5px;
+    vertical-align: middle;
+    border-bottom: 1px solid rgba(0,0,0,.05) !important; 
+}
+
+.block_leaderboard table .header.c2,
+.block_leaderboard table .cell.c2 {
+    width: 50%;
+    padding-left: 5px;
+    padding-right: 5px; 
+    border-bottom: 1px solid rgba(0,0,0,.05) !important; 
+}
+
+.block_leaderboard table .header.c3,
+.block_leaderboard table .cell.c3 {
+    width: 30%;
+    padding-left: 5px;
+    padding-right: 5px; 
+    border-bottom: 1px solid rgba(0,0,0,.05) !important; 
+}
+
+table.leaderboardtable tr.content.this_user,
+table.leaderboardtable tr.collapsible.this_group,
+.block_leaderboard table .this_group {
+    border: 3px;
+    font-weight: bold; 
+}
+
+table.leaderboardtable tr.collapsible {
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+}
+
+tr.group {
+    background-color: rgba(0,0,0,.06) !important;
+    border-bottom: 1px solid rgba(0,0,0,.05) !important; 
+}
+
+tr.content {
+    background-color: rgba(0,0,0,.03) !important;
+    border-bottom: 1px solid rgba(0,0,0,.05) !important; 
+    visibility: collapse;
+    overflow: hidden;
+}
+
+tr.subcontent {
+    background-color: rgba(0,0,0,.01) !important;
+    border-bottom: 1px solid rgba(0,0,0,.05) !important; 
+    visibility: collapse;
+    overflow: hidden;
+}
+
+tr.content .dropdown,
+tr.subcontent .dropdown {
+    transform: rotate(-90deg);
+}
+
+table.leaderboardtable .header.c0,
+table.leaderboardtable tr.collapsible .cell.c0,
+table.leaderboardtable tr.content .cell.c0,
+table.leaderboardtable tr.subcontent .cell.c0  {
+    width: 5%;
+    padding-left: 10px;
+    vertical-align: middle;
+}
+
+table.leaderboardtable tr.collapsible .cell.c0 img.dropdown,
+table.leaderboardtable tr.content .cell.c1 img.dropdown {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    transition: transform .1s;
+    transform: rotate(-90deg);
+}
+
+table.leaderboardtable .header.c1,
+table.leaderboardtable tr.collapsible .cell.c1,
+table.leaderboardtable tr.content .cell.c1,
+table.leaderboardtable tr.subcontent .cell.c1 {
+    width: 10%;
+    padding: 12px;
+    vertical-align: middle;
+}
+table.leaderboardtable tr.content .cell.c1 {
+    margin-top: 6px;
+    float:left;
+}
+
+table.leaderboardtable .header.c2,
+table.leaderboardtable tr.collapsible .cell.c2,
+table.leaderboardtable tr.content .cell.c2,
+table.leaderboardtable tr.subcontent .cell.c2 {
+    width: 10%;
+    vertical-align: middle;
+}
+
+table.leaderboardtable .header.c3,
+table.leaderboardtable tr.collapsible .cell.c3 {
+    width: 49%;
+}
+table.leaderboardtable tr.content .cell.c3 {
+    width: 49%;
+    padding-left: 15px;
+}
+table.leaderboardtable tr.subcontent .cell.c3 {
+    width: 49%;
+    padding-left: 25px;
+}
+
+table.leaderboardtable .header.c4,
+table.leaderboardtable tr.collapsible .cell.c4,
+table.leaderboardtable tr.content .cell.c4,
+table.leaderboardtable tr.subcontent .cell.c4 {
+    width: 30%; 
+}
+
+table.leaderboardtable tr.content td.cell,
+table.leaderboardtable tr.subcontent td.cell  {
+    font-size: small;
+}
+
+.download_button{
+    text-align: center;
+}

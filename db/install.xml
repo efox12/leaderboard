@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="blocks/leaderboard/db" VERSION="20180811" COMMENT="XMLDB file for Moodle blocks/leaderboard"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="assignment_table" COMMENT="A table for student assignments">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="activity_id" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The id of the activity the student completed."/>
+        <FIELD NAME="activity_student" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The id of the student who completed this activity."/>
+        <FIELD NAME="points_earned" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The number of points earned when the student completed the activity."/>
+        <FIELD NAME="time_finished" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The time the assignment was most recently submitted."/>
+        <FIELD NAME="module_name" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="The title of the assignment."/>
+        <FIELD NAME="days_early" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The number of days early an assignment was turned in."/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="quiz_table" COMMENT="A table containing high level data about a quiz">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="time_started" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The timestamp when the quiz is started."/>
+        <FIELD NAME="time_finished" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The timestamp when the quiz gets finished."/>
+        <FIELD NAME="attempts" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The number times the student has attempted the quiz"/>
+        <FIELD NAME="student_id" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The id of the student"/>
+        <FIELD NAME="quiz_id" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The id of the quiz in 'quiz_attempts'"/>
+        <FIELD NAME="points_earned" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The number of points earned by the student"/>
+        <FIELD NAME="module_name" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="The title of the quiz instance."/>
+        <FIELD NAME="days_early" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The number of days early a quiz is submitted."/>
+        <FIELD NAME="days_spaced" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The number of days since the last quiz taken."/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="choice_table" COMMENT="A table with data about student participation in choices">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="student_id" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The id of the student submitting this choice"/>
+        <FIELD NAME="choice_id" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The id of the choice"/>
+        <FIELD NAME="points_earned" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The amount of points earned upon completing the choice"/>
+        <FIELD NAME="module_name" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="The title of the choice module."/>
+        <FIELD NAME="time_finished" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The timestamp of when the choice was completed."/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="forum_table" COMMENT="A table with data about student posts">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="student_id" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The id of the student making the post"/>
+        <FIELD NAME="forum_id" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The id of the forum module the student is posting in"/>
+        <FIELD NAME="post_id" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The id of the post the student made"/>
+        <FIELD NAME="is_response" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="0 if this is a new thread, 1 if this is a response"/>
+        <FIELD NAME="points_earned" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The number of points earned upon creating the post"/>
+        <FIELD NAME="module_name" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="The title of the forum."/>
+        <FIELD NAME="time_finished" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The time the post was submitted."/>
+        <FIELD NAME="discussion_id" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The id of the discussion the post is in"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="group_data_table" COMMENT="Data about the groups needed by the leaderboard block.">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="group_id" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The groups id."/>
+        <FIELD NAME="multiplier" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The current multiplier associated with the group."/>
+        <FIELD NAME="current_standing" TYPE="int" LENGTH="10" NOTNULL="false" DEFAULT="1" SEQUENCE="false" COMMENT="The groups current standing in the leaderboard."/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+  </TABLES>
+</XMLDB>

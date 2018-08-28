@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" x="0px" y="0px" width="8px" height="8px" viewBox="0 0 8 8" enable-background="new 0 0 8 8" xmlns="http://www.w3.org/2000/svg">
+  <g id="Bounding_Boxes" transform="matrix(0.328021, 0, 0, 0.328021, 8.063745, 8.063745)">
+    <g id="ui_x5F_spec_x5F_header_copy_3" display="none"/>
+    <path fill="none" d="M0,0h24v24H0V0z"/>
+  </g>
+  <g id="Rounded_1_" transform="matrix(0.515812, 0, 0, 1, -2.172207, -7.983)">
+    <g id="ui_x5F_spec_x5F_header_copy_6" display="none"/>
+    <path d="M 17.12 12.983 L 6.811 12.983 C 6.261 12.983 4.966 12.695 4.966 11.983 C 4.966 11.271 6.261 10.983 6.811 10.983 L 17.12 10.983 C 17.67 10.983 18.966 11.213 18.966 11.983 C 18.966 12.753 17.67 12.983 17.12 12.983 Z" style="fill: rgb(32, 115, 210);"/>
+  </g>
+</svg>
