@@ -68,7 +68,7 @@ class block_leaderboard_observer {
     //when officially starting the quiz
     //use this to add the starting time of the quiz to the database and create questions data table
     public static function quiz_started_handler(\mod_quiz\event\attempt_started $event){
-        /*global $DB, $USER;
+        global $DB, $USER;
         if(user_has_role_assignment($USER->id,5)){
             //the table of all quiz attempts
             $quiz_attempts = $DB->get_records('quiz_attempts');
@@ -88,7 +88,7 @@ class block_leaderboard_observer {
             $quizdata->days_early = 0;
             $quizdata->days_spaced = 0;
             $DB->insert_record('quiz_table', $quizdata);
-        }*/
+        }
     }
 
     //when clicking the confirmation button to submit the quiz
