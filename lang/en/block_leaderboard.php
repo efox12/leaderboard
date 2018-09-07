@@ -107,7 +107,7 @@ $string['a22'] = 'Submit Assignments <strong>'.get_config('leaderboard','assignm
                     <br/>Earn <strong>'.get_config('leaderboard','forumresponsepoints').'</strong> points for responding to a Forum
                     <br/><br/>Earn <strong>'.get_config('leaderboard','choicepoints').'</strong> points for participating in a Choice';
 $string['q3'] = '<strong>Q3</strong>: What are the multipliers for?'; 
-$string['a3'] = '<strong>A3</strong>: The multipliers are there to encourage continual goo study habits. If your team is averaging many points a week then they will be rewarded with a multiplier that will increase all of their pointes earned by that exact amount. If your team continues to earn points the multiplier will increase even more, however you can loose the multiplier if your teams weekly point average drops enough.';           
+$string['a3'] = '<strong>A3</strong>: The multipliers are there to encourage continual good study habits. If your team is averaging many points a week then they will be rewarded with a multiplier that will increase all of their pointes earned by that exact amount. If your team continues to earn points the multiplier will increase even more, however you can loose the multiplier if your teams weekly point average drops enough.';           
 $string['q4'] = '<strong>Q4</strong>: What are the different multiplier values and how many points are needed to reach them?';
 $string['a41'] = '<strong>A4</strong>: The multiplier levels are currently set to:';
 $string['a42'] = '<strong>'.get_config('leaderboard','groupdata1').'</strong> points per week to reach <strong>'.get_config('leaderboard','multiplier2').'x</strong> points, 

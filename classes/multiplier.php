@@ -220,7 +220,11 @@ class block_leaderboard_multiplier{
             if(($time - $activity->time_finished)/86400 <= 14){
                 $points->past_two_weeks += $activity->points_earned;
             }
-            $student_history[] = $activity;
+            if($activity->module_name != ''){
+                $student_history[] = $activity;
+            } else {
+                echo("<script>console.log('BAD DATA: ".json_encode($post)."');</script>");
+            }
         }
         $student_quizzes = $DB->get_records('quiz_table', array('student_id'=> $student->id));
         foreach($student_quizzes as $quiz){
@@ -231,7 +235,11 @@ class block_leaderboard_multiplier{
             if(($time - $quiz->time_finished)/86400 <= 14){
                 $points->past_two_weeks += $quiz->points_earned;
             }
-            $student_history[] = $quiz;
+            if($quiz->module_name != ''){
+                $student_history[] = $quiz;
+            } else {
+                echo("<script>console.log('BAD DATA: ".json_encode($post)."');</script>");
+            }
         }
         $student_choices = $DB->get_records('choice_table', array('student_id'=> $student->id));
         foreach($student_choices as $choice){
@@ -242,7 +250,11 @@ class block_leaderboard_multiplier{
             if(($time - $choice->time_finished)/86400 <= 14){
                 $points->past_two_weeks += $choice->points_earned;
             }
-            $student_history[] = $choice;
+            if($choice->module_name != ''){
+                $student_history[] = $choice;
+            } else {
+                echo("<script>console.log('BAD DATA: ".json_encode($post)."');</script>");
+            }
         }
         $student_forum_posts = $DB->get_records('forum_table', array('student_id'=> $student->id));
         foreach($student_forum_posts as $post){
@@ -253,7 +265,11 @@ class block_leaderboard_multiplier{
             if(($time - $post->time_finished)/86400 <= 14){
                 $points->past_two_weeks += $post->points_earned;
             }
-            $student_history[] = $post;
+            if($post->module_name != ''){
+                $student_history[] = $post;
+            } else {
+                echo("<script>console.log('BAD DATA: ".json_encode($post)."');</script>");
+            }
         }
 
         if(count($student_history) > 1){ //only sort if there is something to sort
