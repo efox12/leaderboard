@@ -45,7 +45,7 @@ class block_leaderboard_observer {
             $eventdata->activity_id = $eventid;
             $eventdata->time_finished = $event->timecreated;
             $eventdata->module_name = $assignment_data->name;
-
+            $eventdata->days_early = $days_before_submission;
             //Insert the new data into the databese if new, update if old
             if($DB->get_records('assignment_table', array('activity_id'=> $eventid))){
                 //the id of the object is required for update_record();
@@ -55,7 +55,7 @@ class block_leaderboard_observer {
                         $eventdata->id = $activity->id;
                         break;
                     }
-                }            
+                }
                 $DB->update_record('assignment_table', $eventdata);
             } else{ 
                 $DB->insert_record('assignment_table', $eventdata);
@@ -68,7 +68,7 @@ class block_leaderboard_observer {
     //when officially starting the quiz
     //use this to add the starting time of the quiz to the database and create questions data table
     public static function quiz_started_handler(\mod_quiz\event\attempt_started $event){
-        global $DB, $USER;
+        /*global $DB, $USER;
         if(user_has_role_assignment($USER->id,5)){
             //the table of all quiz attempts
             $quiz_attempts = $DB->get_records('quiz_attempts');
@@ -85,8 +85,10 @@ class block_leaderboard_observer {
             $quizdata->quiz_id = $quiz->id;
             $quizdata->student_id = $event->userid;
             $quizdata->attempts = 0;
+            $quizdata->days_early = 0;
+            $quizdata->days_spaced = 0;
             $DB->insert_record('quiz_table', $quizdata);
-        }
+        }*/
     }
 
     //when clicking the confirmation button to submit the quiz
@@ -105,19 +107,35 @@ class block_leaderboard_observer {
             $due_date = $this_quiz->timeclose;
             
             //the table for the leadder board block
-            $quiz_table = $DB->get_record('quiz_table',
+            $quiz_table = $quiz_table = $DB->get_record('quiz_table',
                                     array('quiz_id'=> $this_quiz->id, 'student_id'=> $event->userid),
                                     $fields='*',
                                     $strictness=IGNORE_MISSING);
+
+            //add a quiz to the database if one doesn't already exist
+            if($quiz_table === false){
+                $quiz_table = new \stdClass();
+                $quiz_table->time_started = $event->timecreated;
+                $quiz_table->quiz_id = $this_quiz->id;
+                $quiz_table->student_id = $event->userid;
+                $quiz_table->attempts = 0;
+                $quiz_table->days_early = 0;
+                $quiz_table->days_spaced = 0;
+                $DB->insert_record('quiz_table', $quiz_table);
+                $quiz_table = $quiz_table = $DB->get_record('quiz_table',
+                                    array('quiz_id'=> $this_quiz->id, 'student_id'=> $event->userid),
+                                    $fields='*',
+                                    $strictness=IGNORE_MISSING);
+            }
             $quiz_table->time_finished = $event->timecreated;
             $quiz_table->module_name = $this_quiz->name;
 
-            if($quiz_table->attempts == 0){ //if this is the first attempt of the quiz
+            if($quiz_table->attempts === 0){ //if this is the first attempt of the quiz
                 $quiz_table->attempts == 1;
 
                 //assign points for finishing early
                 $days_before_submission = ($due_date - $event->timecreated)/86400;
-
+                $quiz_table->days_early = $days_before_submission;
                 $points_earned = 0;
                 for($x=1; $x<=5; $x++){
                     $current_time = get_config('leaderboard','quiztime'.$x);
@@ -147,6 +165,7 @@ class block_leaderboard_observer {
                 //bonus points get awarded for spacing out quizzes instead of cramming (only judges the 2 most recent quizzes)
                 $spacing_points = 0;
                 $quiz_spacing = ($quiz_table->time_started - $recent_time_finished)/86400;
+                $quiz_table->days_spaced = $quiz_spacing;
                 for($x=1; $x<=3; $x++){
                     $current_spacing = get_config('leaderboard','quizspacing'.$x);
                     if($x < 3) {
@@ -165,18 +184,13 @@ class block_leaderboard_observer {
                 $quiz_table->points_earned += block_leaderboard_multiplier::calculate_points($event->userid, $spacing_points);
 
             } else { //this is another attempt
-
                 //bonus points for attempting quiz again (need to find a way to limit abuse)
                 $multiple_attempt_points = 0;
-                for($x=1; $x<=3; $x++){
-                    $quiz_attempts = get_config('leaderboard','quizattempts'.$x);
-                    if($quiz_attempts = $x){
-                        $multiple_attempt_points = get_config('leaderboard','quizattemptspoints'.$x);
-                    }
+                $quiz_attempts = get_config('leaderboard','quizattempts');
+                if($quiz_table->attempts <= $quiz_attempts){
+                    $multiple_attempt_points = get_config('leaderboard','quizattemptspoints');
                     echo("<script>console.log('MA: ".$multiple_attempt_points."');</script>");
-
                 }
-
                 $quiz_table->attempts += 1;
                 $quiz_table->points_earned += block_leaderboard_multiplier::calculate_points($event->userid, $multiple_attempt_points);
             }

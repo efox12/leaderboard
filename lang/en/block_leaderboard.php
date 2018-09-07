@@ -89,17 +89,20 @@ $string['q1'] = '<strong>Q1</strong>: What are ways that we can earn points?';
 $string['a1'] = '<strong>A1</strong>: Your team can earn points by practicing good study habits. Turning in assignments and completing quizzes early will award the most points. Other ways of earning points include spacing out quizzes instead of cramming them into one, retaking quizzes for extra practice, posting and responding to questions on the forum, and even rating your understanding in the choice module will all award points.';
 $string['q2'] = '<strong>Q2</strong>: What are the exact point breakdowns?';
 $string['a2'] = '<strong>A2</strong>: Here is a breakdown of the points before multipliers:';
-$string['a22'] = 'Submit Assignments and quizzes <strong>'.get_config('leaderboard','assignmenttime5').'</strong> days early to earn <strong>'.get_config('leaderboard','assignmnetpoints5').'</strong> points, 
-                    <br/>Submit Assignments and Quizzes <strong>'.get_config('leaderboard','assignmenttime4').'</strong> days early to earn <strong>'.get_config('leaderboard','assignmnetpoints4').'</strong> points, 
-                    <br/>Submit Assignments and Quizzes <strong>'.get_config('leaderboard','assignmenttime3').'</strong> days early to earn <strong>'.get_config('leaderboard','assignmnetpoints3').'</strong> points, 
-                    <br/>Submit Assignments and Quizzes <strong>'.get_config('leaderboard','assignmenttime2').'</strong> days early to earn <strong>'.get_config('leaderboard','assignmnetpoints2').'</strong> points, 
-                    <br/>Submit Assignments and Quizzes <strong>'.get_config('leaderboard','assignmenttime1').'</strong> day early to earn <strong>'.get_config('leaderboard','assignmnetpoints1').'</strong> points.
+$string['a22'] = 'Submit Assignments <strong>'.get_config('leaderboard','assignmenttime5').'</strong> days early to earn <strong>'.get_config('leaderboard','assignmnetpoints5').'</strong> points, 
+                    <br/>Submit Assignments <strong>'.get_config('leaderboard','assignmenttime4').'</strong> days early to earn <strong>'.get_config('leaderboard','assignmnetpoints4').'</strong> points, 
+                    <br/>Submit Assignments <strong>'.get_config('leaderboard','assignmenttime3').'</strong> days early to earn <strong>'.get_config('leaderboard','assignmnetpoints3').'</strong> points, 
+                    <br/>Submit Assignments <strong>'.get_config('leaderboard','assignmenttime2').'</strong> days early to earn <strong>'.get_config('leaderboard','assignmnetpoints2').'</strong> points, 
+                    <br/>Submit Assignments <strong>'.get_config('leaderboard','assignmenttime1').'</strong> day early to earn <strong>'.get_config('leaderboard','assignmnetpoints1').'</strong> points.
+                    <br/><br/>Submit Quizzes <strong>'.get_config('leaderboard','assignmenttime5').'</strong> days early to earn <strong>'.get_config('leaderboard','assignmnetpoints5').'</strong> points,
+                    <br/>Submit Quizzes <strong>'.get_config('leaderboard','quiztime4').'</strong> days early to earn <strong>'.get_config('leaderboard','quizpoints4').'</strong> points, 
+                    <br/>Submit Quizzes <strong>'.get_config('leaderboard','quiztime3').'</strong> days early to earn <strong>'.get_config('leaderboard','quizpoints3').'</strong> points, 
+                    <br/>Submit Quizzes <strong>'.get_config('leaderboard','quiztime2').'</strong> days early to earn <strong>'.get_config('leaderboard','quizpoints2').'</strong> points, 
+                    <br/>Submit Quizzes <strong>'.get_config('leaderboard','quiztime1').'</strong> day early to earn <strong>'.get_config('leaderboard','quizpoints1').'</strong> points.
                     <br/><br/>Take <strong>'.get_config('leaderboard','quizspacing3').'</strong> days between Quizzes to earn <strong>'.get_config('leaderboard','quizspacingpoints3').'</strong> points, 
                     <br/>Take <strong>'.get_config('leaderboard','quizspacing2').'</strong> days between Quizzes to earn <strong>'.get_config('leaderboard','quizspacingpoints2').'</strong> points, 
                     <br/>Take <strong>'.get_config('leaderboard','quizspacing1').'</strong> days between Quizzes to earn <strong>'.get_config('leaderboard','quizspacingpoints1').'</strong> points.
-                    <br/><br/>Attempt Quizzes <strong>'.get_config('leaderboard','quizattempts3').'</strong> to earn <strong>'.get_config('leaderboard','quizattemptspoints3').'</strong> points, 
-                    <br/>Attempt Quizzes <strong>'.get_config('leaderboard','quizattempts2').'</strong> to earn <strong>'.get_config('leaderboard','quizattemptspoints2').'</strong> points, 
-                    <br/>Attempt Quizzes <strong>'.get_config('leaderboard','quizattempts1').'</strong> to earn <strong>'.get_config('leaderboard','quizattemptspoints1').'</strong> points.
+                    <br/><br/>Attempt Quizzes up to <strong>'.get_config('leaderboard','quizattempts').'</strong> times to earn <strong>'.get_config('leaderboard','quizattemptspoints').'</strong> points each attempt.
                     <br/><br/>Earn <strong>'.get_config('leaderboard','forumpostpoints').'</strong> points for posting in a Forum
                     <br/>Earn <strong>'.get_config('leaderboard','forumresponsepoints').'</strong> points for responding to a Forum
                     <br/><br/>Earn <strong>'.get_config('leaderboard','choicepoints').'</strong> points for participating in a Choice';

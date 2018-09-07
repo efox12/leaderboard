@@ -176,7 +176,8 @@ class block_leaderboard_multiplier{
         } else {
             $points_per_week = $points_per_two_weeks;
         }
-
+        $points_per_week = round($points_per_week);
+        
         $stored_group_data = $DB->get_record('group_data_table', array('group_id'=> $group->id), $fields='*', $strictness=IGNORE_MISSING);
         if(!$stored_group_data){
             $stored_group_data = new stdClass();
@@ -197,8 +198,6 @@ class block_leaderboard_multiplier{
         $group_data->bonus_points = $bonus_points;
         return $group_data;
     }
-
-
 
     public static function get_points($student){
         global $DB;

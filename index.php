@@ -19,7 +19,7 @@ require_course_login($course, true);
 $url = new moodle_url('/blocks/leaderboard/index.php', array('id' => $course->id));
 
 //setup page
-$PAGE->requires->js(new moodle_url('/blocks/leaderboard/javascript/tableEvents2.js'));
+$PAGE->requires->js(new moodle_url('/blocks/leaderboard/javascript/tableEvents.js'));
 $PAGE->set_pagelayout('incourse');
 $PAGE->set_url($url);
 $PAGE->set_title(get_string('leaderboard', 'block_leaderboard'));
@@ -105,7 +105,7 @@ if(count($groups) > 0){ //there are groups to display
 
         //add the groups row to the table
         if($group_data->is_users_group || !$is_student){ //include group students
-            $group_row = new html_table_row(array('<img class="dropdown" src='.$expandurl.'>',$current_standing,$symbol,$group_data->name, $group_data->points));
+            $group_row = new html_table_row(array('<img class="dropdown" src='.$expandurl.'>',$current_standing,$symbol,$group_data->name, round($group_data->points)));
             if($group_data->is_users_group){ //bold the group
                 $group_row->attributes['class'] = 'group this_group collapsible rank'.$current_standing;
                 $group_row->attributes['name'] = $group_index;
@@ -115,7 +115,7 @@ if(count($groups) > 0){ //there are groups to display
             }
             $table->data[] = $group_row;
         } else {
-            $group_row = new html_table_row(array('',$current_standing,$symbol,$group_data->name, $group_data->points));
+            $group_row = new html_table_row(array('',$current_standing,$symbol,$group_data->name, round($group_data->points)));
             $group_row->attributes['class'] = 'group rank'.$current_standing;
             $table->data[] = $group_row;
         }
@@ -130,9 +130,9 @@ if(count($groups) > 0){ //there are groups to display
                 //add the student to the table
                 if(!$is_student || $student_data->id == $USER->id){ //include student history
                     if(empty($student_data->history) != 1){
-                        $individual_row = new html_table_row(array("",'<img class="dropdown" src='.$expandurl.'>',"",$student_data->firstname." ".$student_data->lastname, $student_data->points));  
+                        $individual_row = new html_table_row(array("",'<img class="dropdown" src='.$expandurl.'>',"",$student_data->firstname." ".$student_data->lastname, round($student_data->points)));  
                     } else {
-                        $individual_row = new html_table_row(array("","","",$student_data->firstname." ".$student_data->lastname, $student_data->points));
+                        $individual_row = new html_table_row(array("","","",$student_data->firstname." ".$student_data->lastname, round($student_data->points)));
                     }
                     if($student_data->id === $USER->id){ //bold the current user
                         $individual_row->attributes['class'] = 'this_user content';
@@ -149,12 +149,12 @@ if(count($groups) > 0){ //there are groups to display
                             //$module_row = new html_table_row();
                             if(property_exists($points_module, "is_response")){
                                 if($points_module->is_response == 0){
-                                    $module_row = new html_table_row(array("","","","Forum Post",$points_module->points_earned));
+                                    $module_row = new html_table_row(array("","","","Forum Post",round($points_module->points_earned)));
                                 } else if($points_module->is_response == 1){
-                                    $module_row = new html_table_row(array("","","","Forum Response",$points_module->points_earned));
+                                    $module_row = new html_table_row(array("","","","Forum Response",round($points_module->points_earned)));
                                 } 
                             } else {
-                                $module_row = new html_table_row(array("","","",$points_module->module_name,$points_module->points_earned));
+                                $module_row = new html_table_row(array("","","",$points_module->module_name,round($points_module->points_earned)));
                             }
                             $module_row->attributes['class'] = 'subcontent';
                             $module_row->attributes['name'] = 'c'.$group_index.'s'.$count;
@@ -162,7 +162,7 @@ if(count($groups) > 0){ //there are groups to display
                         }
                     }
                 } else { //don't include student history
-                    $individual_row = new html_table_row(array("","","",$student_data->firstname." ".$student_data->lastname, $student_data->points));
+                    $individual_row = new html_table_row(array("","","",$student_data->firstname." ".$student_data->lastname, round($student_data->points)));
                     //don't bold student
                     $individual_row->attributes['class'] = 'content';
                     $individual_row->attributes['name'] = 'c'.$group_index;
@@ -172,7 +172,7 @@ if(count($groups) > 0){ //there are groups to display
             }
             //if the teams are not equal add visible bonus points to the table
             if($group_data->bonus_points > 0){
-                $individual_row = new html_table_row(array("","","",get_string('extra_points', 'block_leaderboard'), $group_data->bonus_points));
+                $individual_row = new html_table_row(array("","","",get_string('extra_points', 'block_leaderboard'), round($group_data->bonus_points)));
                 $individual_row->attributes['class'] = 'content';
                 $individual_row->attributes['name'] = 'c'.$group_index;
                 $individual_row->attributes['child'] = 's'.$count;

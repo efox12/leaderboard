@@ -144,7 +144,7 @@ class block_leaderboard_renderer extends plugin_renderer_base {
             //add the top three groups row to the table
             if($current_standing <=3){
                 //add the group to the table
-                $row = new html_table_row(array($current_standing,$symbol,$group_data->name, $group_data->points));
+                $row = new html_table_row(array($current_standing,$symbol,$group_data->name, round($group_data->points)));
                 if($group_data->is_users_group){ //bold current user group
                     $our_group_data = $group_data;
                     $row->attributes['class'] = 'this_group rank'.$current_standing;
@@ -163,7 +163,7 @@ class block_leaderboard_renderer extends plugin_renderer_base {
                     }
                     //add the current users group to the table
                     $our_group_data = $group_data;
-                    $row = new html_table_row(array($current_standing,$symbol,$group_data->name, $group_data->points));
+                    $row = new html_table_row(array($current_standing,$symbol,$group_data->name, round($group_data->points)));
                     $row->attributes['class'] = 'this_group';
                     $table->data[] = $row;
                 }

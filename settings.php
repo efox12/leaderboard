@@ -52,10 +52,10 @@ $settings->add(new admin_setting_heading(
             'leaderboard/quizpoints'.$x,
             get_string('points_earned', 'block_leaderboard'),
             '<br/>',
-            $x
+            $x*2
         ));
         if(get_config('leaderboard','quizpoints'.$x) === ''){
-            set_config('quizpoints'.$x,$x*5,'leaderboard');
+            set_config('quizpoints'.$x,$x*2,'leaderboard');
         }
     }
     $settings->add(new admin_setting_heading(
@@ -80,7 +80,7 @@ $settings->add(new admin_setting_heading(
             'leaderboard/quizspacingpoints'.$x,
             get_string('points_earned', 'block_leaderboard'),
             '<br/>',
-            $x*5
+            $x*2
         ));
         if(get_config('leaderboard','quizspacingpoints'.$x) === ''){
             set_config('quizspacingpoints'.$x,$x*5,'leaderboard');
@@ -91,27 +91,25 @@ $settings->add(new admin_setting_heading(
         get_string('quiz_attempts', 'block_leaderboard'),
         get_string('quiz_attempts_desc', 'block_leaderboard')
     ));
-    for($x=3; $x>=1; $x--){
         $settings->add(new admin_setting_configtext(
-            'leaderboard/quizattempts'.$x,
+            'leaderboard/quizattempts',
             get_string('number_of_attempts', 'block_leaderboard'),
             '',
-            $x
+            3
         ));
-        if(get_config('leaderboard','quizattempts'.$x) === ''){
-            set_config('quizattempts'.$x,$x,'leaderboard');
+        if(get_config('leaderboard','quizattempts') === ''){
+            set_config('quizattempts',3,'leaderboard');
         }
 
         $settings->add(new admin_setting_configtext(
-            'leaderboard/quizattemptspoints'.$x,
+            'leaderboard/quizattemptspoints',
             get_string('points_earned', 'block_leaderboard'),
             '<br/>',
-            $x*2
+            2
         ));
-        if(get_config('leaderboard','quizattemptspoints'.$x) === ''){
-            set_config('quizattemptspoints'.$x,$x*2,'leaderboard');
+        if(get_config('leaderboard','quizattemptspoints') === ''){
+            set_config('quizattemptspoints',2,'leaderboard');
         }
-    }
 
 //-------------------------------------------------------------------------------------------------------------------//
 // CHOICE
@@ -180,7 +178,7 @@ $settings->add(new admin_setting_heading(
 //-------------------------------------------------------------------------------------------------------------------//
 // MULTIPLIER
 
-$vals = array(325,450,575,700,800);
+$vals = array(100,175,300,500,800);
 $settings->add(new admin_setting_heading(
     'groupdataheaderconfig',
     get_string('multiplier_settings', 'block_leaderboard'),
