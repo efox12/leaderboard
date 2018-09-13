@@ -87,6 +87,7 @@ class block_leaderboard_observer {
             $quizdata->attempts = 0;
             $quizdata->days_early = 0;
             $quizdata->days_spaced = 0;
+            $quizdata->module_name = $quiz->name;
             $DB->insert_record('quiz_table', $quizdata);
         }
     }
@@ -129,10 +130,8 @@ class block_leaderboard_observer {
             }
             $quiz_table->time_finished = $event->timecreated;
             $quiz_table->module_name = $this_quiz->name;
-
-            if($quiz_table->attempts === 0){ //if this is the first attempt of the quiz
-                $quiz_table->attempts == 1;
-
+            if($quiz_table->attempts == 0){ //if this is the first attempt of the quiz
+                $quiz_table->attempts = 1;
                 //assign points for finishing early
                 $days_before_submission = ($due_date - $event->timecreated)/86400;
                 $quiz_table->days_early = $days_before_submission;
@@ -180,7 +179,6 @@ class block_leaderboard_observer {
                         }
                     }
                 }
-
                 $quiz_table->points_earned += block_leaderboard_multiplier::calculate_points($event->userid, $spacing_points);
 
             } else { //this is another attempt
@@ -189,7 +187,6 @@ class block_leaderboard_observer {
                 $quiz_attempts = get_config('leaderboard','quizattempts');
                 if($quiz_table->attempts <= $quiz_attempts){
                     $multiple_attempt_points = get_config('leaderboard','quizattemptspoints');
-                    echo("<script>console.log('MA: ".$multiple_attempt_points."');</script>");
                 }
                 $quiz_table->attempts += 1;
                 $quiz_table->points_earned += block_leaderboard_multiplier::calculate_points($event->userid, $multiple_attempt_points);

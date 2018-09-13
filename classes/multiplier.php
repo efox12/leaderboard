@@ -223,7 +223,7 @@ class block_leaderboard_multiplier{
             if($activity->module_name != ''){
                 $student_history[] = $activity;
             } else {
-                echo("<script>console.log('BAD DATA: ".json_encode($post)."');</script>");
+                echo("<script>console.log('BAD ACTIVITY DATA: ".json_encode($activity)."');</script>");
             }
         }
         $student_quizzes = $DB->get_records('quiz_table', array('student_id'=> $student->id));
@@ -238,7 +238,7 @@ class block_leaderboard_multiplier{
             if($quiz->module_name != ''){
                 $student_history[] = $quiz;
             } else {
-                echo("<script>console.log('BAD DATA: ".json_encode($post)."');</script>");
+                echo("<script>console.log('BAD QUIZ DATA: ".json_encode($quiz)."');</script>");
             }
         }
         $student_choices = $DB->get_records('choice_table', array('student_id'=> $student->id));
@@ -253,7 +253,7 @@ class block_leaderboard_multiplier{
             if($choice->module_name != ''){
                 $student_history[] = $choice;
             } else {
-                echo("<script>console.log('BAD DATA: ".json_encode($post)."');</script>");
+                echo("<script>console.log('BAD CHOICE DATA: ".json_encode($choice)."');</script>");
             }
         }
         $student_forum_posts = $DB->get_records('forum_table', array('student_id'=> $student->id));
@@ -268,7 +268,7 @@ class block_leaderboard_multiplier{
             if($post->module_name != ''){
                 $student_history[] = $post;
             } else {
-                echo("<script>console.log('BAD DATA: ".json_encode($post)."');</script>");
+                echo("<script>console.log('BAD FORUM DATA: ".json_encode($post)."');</script>");
             }
         }
 
