@@ -197,21 +197,29 @@ tr.group {
 }
 
 tr.content {
-    background-color: rgba(0,0,0,.03) !important;
+    background-color: rgba(0,0,0,.04) !important;
     border-bottom: 1px solid rgba(0,0,0,.05) !important; 
     visibility: collapse;
     overflow: hidden;
 }
 
 tr.subcontent {
-    background-color: rgba(0,0,0,.01) !important;
+    background-color: rgba(0,0,0,.02) !important;
+    border-bottom: 1px solid rgba(0,0,0,.05) !important; 
+    visibility: collapse;
+    overflow: hidden;
+}
+
+tr.contentInfo {
+    background-color: rgba(0,0,0,.00) !important;
     border-bottom: 1px solid rgba(0,0,0,.05) !important; 
     visibility: collapse;
     overflow: hidden;
 }
 
 tr.content .dropdown,
-tr.subcontent .dropdown {
+tr.subcontent .dropdown
+tr.collapsible .dropdown {
     transform: rotate(-90deg);
 }
 
@@ -225,7 +233,8 @@ table.leaderboardtable tr.subcontent .cell.c0  {
 }
 
 table.leaderboardtable tr.collapsible .cell.c0 img.dropdown,
-table.leaderboardtable tr.content .cell.c1 img.dropdown {
+table.leaderboardtable tr.content .cell.c1 img.dropdown,
+table.leaderboardtable tr.subcontent .cell.c1 img.dropdown {
     display: block;
     margin-left: auto;
     margin-right: auto;
