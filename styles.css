@@ -276,6 +276,11 @@ table.leaderboardtable tr.subcontent .cell.c3 {
     padding-left: 25px;
 }
 
+table.leaderboardtable tr.contentInfo .cell.c3 {
+    width: 49%;
+    padding-left: 30px;
+}
+
 table.leaderboardtable .header.c4,
 table.leaderboardtable tr.collapsible .cell.c4,
 table.leaderboardtable tr.content .cell.c4,

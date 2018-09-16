@@ -155,7 +155,7 @@ if(count($groups) > 0){ //there are groups to display
                                     $module_row = new html_table_row(array("","","","Forum Response",round($points_module->points_earned)));
                                 } 
                             } else {
-                                if(property_exists($points_module, "days_early")){
+                                if(property_exists($points_module, "days_early") && $points_module->points_earned > 0){
                                     $module_row = new html_table_row(array("",'<img class="dropdown" src='.$expandurl.'>',"",$points_module->module_name,round($points_module->points_earned)));
                                 } else {
                                     $module_row = new html_table_row(array("","","",$points_module->module_name,round($points_module->points_earned)));
@@ -167,6 +167,8 @@ if(count($groups) > 0){ //there are groups to display
                             $table->data[] = $module_row;
                             $early_points = 0;
                             $attempts_points = 0;
+
+                            //include info about how many days early a task was completed
                             if(property_exists($points_module, "days_early")){
                                 $days_early = $points_module->days_early;
                                 for($x=1; $x<=5; $x++){
@@ -182,19 +184,26 @@ if(count($groups) > 0){ //there are groups to display
                                         }
                                     }
                                 }
-                                $module_row = new html_table_row(array("","","","Submitted ".abs(round($points_module->days_early/86400))." days early", $early_points));
-                                $module_row->attributes['class'] = 'contentInfo';
-                                $module_row->attributes['name'] = 'c'.$group_index.'s'.$count.'i'.$infoCount;
-                                $table->data[] = $module_row;
-                            }
-                            if(property_exists($points_module, "attempts")){
-                                $attempts_points = get_config('leaderboard','quizattemptspoints')*($points_module->attempts - 1);
-                                $module_row = new html_table_row(array("","","",$points_module->attempts." attempts", $attempts_points));
-                                $module_row->attributes['class'] = 'contentInfo';
-                                $module_row->attributes['name'] = 'c'.$group_index.'s'.$count.'i'.$infoCount;
-                                $table->data[] = $module_row;
+                                if($early_points > 0){
+                                    $module_row = new html_table_row(array("","","","Submitted ".abs(round($points_module->days_early))." days early", $early_points));
+                                    $module_row->attributes['class'] = 'contentInfo';
+                                    $module_row->attributes['name'] = 'c'.$group_index.'s'.$count.'i'.$infoCount;
+                                    $table->data[] = $module_row;
+                                }
                             }
 
+                            //include info about how many times a quiz was attempted
+                            if(property_exists($points_module, "attempts")){
+                                $attempts_points = get_config('leaderboard','quizattemptspoints')*($points_module->attempts - 1);
+                                if($attempts_points > 0){
+                                    $module_row = new html_table_row(array("","","",$points_module->attempts." attempts", $attempts_points));
+                                    $module_row->attributes['class'] = 'contentInfo';
+                                    $module_row->attributes['name'] = 'c'.$group_index.'s'.$count.'i'.$infoCount;
+                                    $table->data[] = $module_row;
+                                }
+                            }
+
+                            //include info about how long quizzes were spaced out
                             if(property_exists($points_module, "days_spaced")){
                                 $spacing_points = $points_module->points_earned - $attempts_points+$early_points;
                                 $quiz_spacing = 0;
@@ -205,11 +214,12 @@ if(count($groups) > 0){ //there are groups to display
                                         $quiz_spacing = get_config('leaderboard','quizspacing'.$x);
                                     }
                                 }
-
-                                $module_row = new html_table_row(array("","","",$quiz_spacing." days spaced",$spacing_points));
-                                $module_row->attributes['class'] = 'contentInfo';
-                                $module_row->attributes['name'] = 'c'.$group_index.'s'.$count.'i'.$infoCount;
-                                $table->data[] = $module_row;
+                                if($spacing_points > 0){
+                                    $module_row = new html_table_row(array("","","",$quiz_spacing." days spaced",$spacing_points));
+                                    $module_row->attributes['class'] = 'contentInfo';
+                                    $module_row->attributes['name'] = 'c'.$group_index.'s'.$count.'i'.$infoCount;
+                                    $table->data[] = $module_row;
+                                }
                             }
                             $infoCount++;
                         }

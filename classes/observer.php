@@ -134,20 +134,25 @@ class block_leaderboard_observer {
                 $quiz_table->attempts = 1;
                 //assign points for finishing early
                 $days_before_submission = ($due_date - $event->timecreated)/86400;
-                $quiz_table->days_early = $days_before_submission;
                 $points_earned = 0;
-                for($x=1; $x<=5; $x++){
-                    $current_time = get_config('leaderboard','quiztime'.$x);
-                    if($x < 5) {
-                        $next_time = get_config('leaderboard','quiztime'.($x+1));
-                        if($days_before_submission >= $current_time && $days_before_submission < $next_time){
-                            $points_earned = get_config('leaderboard','quizpoints'.$x);
-                        }
-                    } else {
-                        if($days_before_submission >= $current_time){
-                            $points_earned = get_config('leaderboard','quizpoints'.$x);
+                if(abs($days_before_submission) < 20){ //quizzes without duedates will produce a value like -17788
+                    $quiz_table->days_early = $days_before_submission;
+                    for($x=1; $x<=5; $x++){
+                        $current_time = get_config('leaderboard','quiztime'.$x);
+                        if($x < 5) {
+                            $next_time = get_config('leaderboard','quiztime'.($x+1));
+                            if($days_before_submission >= $current_time && $days_before_submission < $next_time){
+                                $points_earned = get_config('leaderboard','quizpoints'.$x);
+                            }
+                        } else {
+                            if($days_before_submission >= $current_time){
+                                $points_earned = get_config('leaderboard','quizpoints'.$x);
+                            }
                         }
                     }
+                } else {
+                    $quiz_table->days_early = 0;
+                    $points_earned = 0;
                 }
 
                 $quiz_table->points_earned = block_leaderboard_multiplier::calculate_points($event->userid, $points_earned);  
