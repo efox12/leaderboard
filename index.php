@@ -19,7 +19,7 @@ require_course_login($course, true);
 $url = new moodle_url('/blocks/leaderboard/index.php', array('id' => $course->id));
 
 //setup page
-$PAGE->requires->js(new moodle_url('/blocks/leaderboard/javascript/tableEvents.js'));
+$PAGE->requires->js(new moodle_url('/blocks/leaderboard/javascript/leaderboardTable.js'));
 $PAGE->set_pagelayout('incourse');
 $PAGE->set_url($url);
 $PAGE->set_title(get_string('leaderboard', 'block_leaderboard'));
