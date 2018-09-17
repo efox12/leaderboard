@@ -169,7 +169,7 @@ class block_leaderboard_observer {
                 //bonus points get awarded for spacing out quizzes instead of cramming (only judges the 2 most recent quizzes)
                 $spacing_points = 0;
                 $quiz_spacing = ($quiz_table->time_started - $recent_time_finished)/86400;
-                $quiz_table->days_spaced = $quiz_spacing;
+                $quiz_table->days_spaced = $quiz_spacing*1000;
                 for($x=1; $x<=3; $x++){
                     $current_spacing = get_config('leaderboard','quizspacing'.$x);
                     if($x < 3) {

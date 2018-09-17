@@ -165,22 +165,40 @@ if(count($groups) > 0){ //there are groups to display
                             $module_row->attributes['child'] = 'i'.$infoCount;
                             $module_row->attributes['name'] = 'c'.$group_index.'s'.$count;
                             $table->data[] = $module_row;
+
                             $early_points = 0;
                             $attempts_points = 0;
+                            $spacing_points = 0;
 
                             //include info about how many days early a task was completed
                             if(property_exists($points_module, "days_early")){
                                 $days_early = $points_module->days_early;
-                                for($x=1; $x<=5; $x++){
-                                    $current_time = get_config('leaderboard','quiztime'.$x);
-                                    if($x < 5) {
-                                        $next_time = get_config('leaderboard','quiztime'.($x+1));
-                                        if($days_early >= $current_time && $days_early < $next_time){
-                                            $early_points = get_config('leaderboard','quizpoints'.$x);
+                                if(property_exists($points_module, "attempts")){
+                                    for($x=1; $x<=5; $x++){
+                                        $current_time = get_config('leaderboard','quiztime'.$x);
+                                        if($x < 5) {
+                                            $next_time = get_config('leaderboard','quiztime'.($x+1));
+                                            if($days_early >= $current_time && $days_early < $next_time){
+                                                $early_points = get_config('leaderboard','quizpoints'.$x);
+                                            }
+                                        } else {
+                                            if($days_early >= $current_time){
+                                                $early_points = get_config('leaderboard','quizpoints'.$x);
+                                            }
                                         }
-                                    } else {
-                                        if($days_early >= $current_time){
-                                            $early_points = get_config('leaderboard','quizpoints'.$x);
+                                    }
+                                } else {
+                                    for($x=1; $x<=5; $x++){
+                                        $current_time = get_config('leaderboard','assignmenttime'.$x);
+                                        if($x < 5) {
+                                            $next_time = get_config('leaderboard','assignmenttime'.($x+1));
+                                            if($days_early >= $current_time && $days_early < $next_time){
+                                                $early_points = get_config('leaderboard','assignmnetpoints'.$x);
+                                            }
+                                        } else {
+                                            if($days_early >= $current_time){
+                                                $early_points = get_config('leaderboard','assignmnetpoints'.$x);
+                                            }
                                         }
                                     }
                                 }
@@ -205,13 +223,35 @@ if(count($groups) > 0){ //there are groups to display
 
                             //include info about how long quizzes were spaced out
                             if(property_exists($points_module, "days_spaced")){
-                                $spacing_points = $points_module->points_earned - $attempts_points+$early_points;
+                                $spacing_points = 0;
                                 $quiz_spacing = 0;
-                                $points_module->days_spaced = $quiz_spacing;
-                                for($x=1; $x<=3; $x++){
-                                    $current_spacing_points = get_config('leaderboard','quizspacingpoints'.$x);
-                                    if($current_spacing_points <= $spacing_points){
-                                        $quiz_spacing = get_config('leaderboard','quizspacing'.$x);
+                                if($points_module->days_spaced == 0){
+                                    $spacing_points = $points_module->points_earned - $attempts_points+$early_points;
+                                    $points_module->days_spaced = $quiz_spacing;
+                                    for($x=1; $x<=3; $x++){
+                                        $current_spacing_points = get_config('leaderboard','quizspacingpoints'.$x);
+                                        if($current_spacing_points <= $spacing_points){
+                                            $quiz_spacing = get_config('leaderboard','quizspacing'.$x);
+                                        }
+                                    }
+                                } else {
+                                    if($points_module->days_spaced >= 20){
+                                        $quiz_spacing = round($points_module->days_spaced/1000,2);
+                                        
+                                        for($x=1; $x<=3; $x++){
+                                            $current_spacing = get_config('leaderboard','quizspacing'.$x);
+                                            if($x < 3) {
+                                                $next_spacing = get_config('leaderboard','quizspacing'.($x+1));
+                                                if($quiz_spacing >= $current_spacing && $quiz_spacing < $next_spacing){
+                                                    $spacing_points = get_config('leaderboard','quizspacingpoints'.$x);
+                                                    break;
+                                                }
+                                            } else {
+                                                if($current_spacing <= $quiz_spacing){
+                                                    $spacing_points = get_config('leaderboard','quizspacingpoints'.$x);
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                                 if($spacing_points > 0){
@@ -220,6 +260,15 @@ if(count($groups) > 0){ //there are groups to display
                                     $module_row->attributes['name'] = 'c'.$group_index.'s'.$count.'i'.$infoCount;
                                     $table->data[] = $module_row;
                                 }
+                            }
+
+                            //include info about extra points from multiplier
+                            if($points_module->points_earned - ($attempts_points+$early_points+$spacing_points) > 0){
+                                $multiplier_points = $points_module->points_earned - ($attempts_points+$early_points+$spacing_points);
+                                $module_row = new html_table_row(array("","","","Points from multiplier",$multiplier_points));
+                                $module_row->attributes['class'] = 'contentInfo';
+                                $module_row->attributes['name'] = 'c'.$group_index.'s'.$count.'i'.$infoCount;
+                                $table->data[] = $module_row;
                             }
                             $infoCount++;
                         }
