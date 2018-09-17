@@ -94,7 +94,7 @@ $string['a22'] = 'Submit Assignments <strong>'.get_config('leaderboard','assignm
                     <br/>Submit Assignments <strong>'.get_config('leaderboard','assignmenttime3').'</strong> days early to earn <strong>'.get_config('leaderboard','assignmnetpoints3').'</strong> points, 
                     <br/>Submit Assignments <strong>'.get_config('leaderboard','assignmenttime2').'</strong> days early to earn <strong>'.get_config('leaderboard','assignmnetpoints2').'</strong> points, 
                     <br/>Submit Assignments <strong>'.get_config('leaderboard','assignmenttime1').'</strong> day early to earn <strong>'.get_config('leaderboard','assignmnetpoints1').'</strong> points.
-                    <br/><br/>Submit Quizzes <strong>'.get_config('leaderboard','assignmenttime5').'</strong> days early to earn <strong>'.get_config('leaderboard','assignmnetpoints5').'</strong> points,
+                    <br/><br/>Submit Quizzes <strong>'.get_config('leaderboard','quiztime5').'</strong> days early to earn <strong>'.get_config('leaderboard','quizpoints5').'</strong> points,
                     <br/>Submit Quizzes <strong>'.get_config('leaderboard','quiztime4').'</strong> days early to earn <strong>'.get_config('leaderboard','quizpoints4').'</strong> points, 
                     <br/>Submit Quizzes <strong>'.get_config('leaderboard','quiztime3').'</strong> days early to earn <strong>'.get_config('leaderboard','quizpoints3').'</strong> points, 
                     <br/>Submit Quizzes <strong>'.get_config('leaderboard','quiztime2').'</strong> days early to earn <strong>'.get_config('leaderboard','quizpoints2').'</strong> points, 

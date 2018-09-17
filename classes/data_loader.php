@@ -53,7 +53,7 @@ class block_leaderboard_data_loader {
                         $quiz->time_finished,
                         $quiz->days_early,
                         $quiz->attempts,
-                        $quiz->days_spaced/1000,
+                        $quiz->round(days_spaced/1000,2),
                         'null',
                         'null',
                         'null'
