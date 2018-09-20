@@ -158,7 +158,7 @@ class block_leaderboard_observer {
                 $quiz_table->points_earned = block_leaderboard_multiplier::calculate_points($event->userid, $points_earned);  
                 
                 //gets the most recent completed quiz submission time
-                $past_quizzes = $DB->get_records('quiz_table');
+                $past_quizzes = $DB->get_records('quiz_table',array('student_id'=> $event->userid));
                 $recent_time_finished = 0;
                 foreach($past_quizzes as $past_quiz){
                     if($past_quiz->time_finished > $recent_time_finished){
@@ -169,7 +169,10 @@ class block_leaderboard_observer {
                 //bonus points get awarded for spacing out quizzes instead of cramming (only judges the 2 most recent quizzes)
                 $spacing_points = 0;
                 $quiz_spacing = ($quiz_table->time_started - $recent_time_finished)/86400;
-                $quiz_table->days_spaced = $quiz_spacing*1000;
+                echo("<script>console.log('EVENT0: ".$recent_time_finished."');</script>");
+                echo("<script>console.log('EVENT1: ".$quiz_spacing."');</script>");
+                $quiz_table->days_spaced = $quiz_spacing*100000;
+                
                 for($x=1; $x<=3; $x++){
                     $current_spacing = get_config('leaderboard','quizspacing'.$x);
                     if($x < 3) {
@@ -184,6 +187,7 @@ class block_leaderboard_observer {
                         }
                     }
                 }
+                echo("<script>console.log('EVENT: ".$quiz_table->days_spaced."');</script>");
                 $quiz_table->points_earned += block_leaderboard_multiplier::calculate_points($event->userid, $spacing_points);
 
             } else { //this is another attempt

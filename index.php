@@ -225,6 +225,7 @@ if(count($groups) > 0){ //there are groups to display
                             if(property_exists($points_module, "days_spaced")){
                                 $spacing_points = 0;
                                 $quiz_spacing = 0;
+                                
                                 if($points_module->days_spaced == 0){
                                     $spacing_points = $points_module->points_earned - $attempts_points+$early_points;
                                     $points_module->days_spaced = $quiz_spacing;
@@ -236,7 +237,7 @@ if(count($groups) > 0){ //there are groups to display
                                     }
                                 } else {
                                     if($points_module->days_spaced >= 20){
-                                        $quiz_spacing = round($points_module->days_spaced/1000,2);
+                                        $quiz_spacing = round($points_module->days_spaced/100000,2);
                                         
                                         for($x=1; $x<=3; $x++){
                                             $current_spacing = get_config('leaderboard','quizspacing'.$x);
