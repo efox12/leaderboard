@@ -169,7 +169,6 @@ class block_leaderboard_observer {
                 //bonus points get awarded for spacing out quizzes instead of cramming (only judges the 2 most recent quizzes)
                 $spacing_points = 0;
                 $quiz_spacing = ($quiz_table->time_started - $recent_time_finished)/86400;
-                echo("<script>console.log('EVENT0: ".$recent_time_finished."');</script>");
                 echo("<script>console.log('EVENT1: ".$quiz_spacing."');</script>");
                 $quiz_table->days_spaced = $quiz_spacing*100000;
                 

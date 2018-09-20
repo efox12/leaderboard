@@ -48,7 +48,7 @@ class block_leaderboard extends block_base {
                     $assignment_table = $DB->get_record('assignment_table', array('activity_student'=> $student->id, 'activity_id' => $key));
                     if($assignment_table != false){
                         $days_early = ($due_date - $assignment_table->time_finished)/86400;
-                        if($assignment_table->points_earned == 0 && $days_early > 0){
+                        if($assignment_table->points_earned == 0 && $days_early > 0 || $assignment_table->days_early != $days_early){
                             $points = 0;
                             for($x=1; $x<=5; $x++){
                                 $current_time = get_config('leaderboard','assignmenttime'.$x);
@@ -66,6 +66,7 @@ class block_leaderboard extends block_base {
                                 }
                             }
                             $assignment_table->points_earned = block_leaderboard_multiplier::calculate_points($student->id, $points);
+                            $assignment_table->days_early = $days_early;
                             $DB->update_record('assignment_table', $assignment_table);
                         }
                     }
