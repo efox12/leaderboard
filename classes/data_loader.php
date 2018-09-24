@@ -99,7 +99,7 @@ class block_leaderboard_data_loader {
         }
     
         //write data to the file
-        $myfile = fopen("file.csv", "w") or die("Error: ".json_encode(error_get_last()));
+        $myfile = fopen("file.csv", "w") or print_r("Error: ".error_get_last());
         foreach ($CSV as $line) {
             fputcsv($myfile, $line, ',');
         }
