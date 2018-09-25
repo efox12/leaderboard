@@ -309,9 +309,7 @@ echo html_writer::table($table);
 //load CSV file with student data
 if(!$is_student){
     //display the download button
-    $file_loader = new block_leaderboard_data_loader;
-    $file_loader->load_data_file($groups);
-    echo html_writer::div($OUTPUT->single_button(new moodle_url('file.csv'), get_string('download_data', 'block_leaderboard'),"get"), 'download_button');
+    echo html_writer::div($OUTPUT->single_button(new moodle_url('classes/data_loader.php'), get_string('download_data', 'block_leaderboard'),"get"), 'download_button');
 }
 
 //display the Q/A
