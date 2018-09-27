@@ -67,13 +67,20 @@ class block_leaderboard_renderer extends plugin_renderer_base {
                 $output .= "<current_rate>".$points_per_week."<unit> ".get_string('points_week', 'block_leaderboard')."</unit></current_rate>";
                 $output .= '<div class="progress-bar"><span style="width:'.($multiplier->width).'%; background-color:'.$multiplier->color.'; '.$multiplier->style.'"></span></div>';
             }
+
+            //display table
+            //$output .= "<block_header>".get_string('rankings', 'block_leaderboard')."</block_header><br>";       
+            //$output .= html_writer::table($table);
+            //$output .= $OUTPUT->single_button($url, get_string('view_full_leaderboard', 'block_leaderboard'),'get');
         } else {
+            //$output .= "<block_header>".get_string('rankings', 'block_leaderboard')."</block_header><br>";   
             $table = new html_table();
             $table->head = array(get_string('num', 'block_leaderboard')," ",get_string('group', 'block_leaderboard'),get_string('points', 'block_leaderboard'));
             $row = new html_table_row(array("","",get_string('no_Groups_Found', 'block_leaderboard'),""));
             $table->data[] = $row;
+            //$output .= html_writer::table($table);
+            //$output .= $OUTPUT->single_button($url, get_string('view_full_leaderboard', 'block_leaderboard'),'get');
         }
-        //display table
         $output .= "<block_header>".get_string('rankings', 'block_leaderboard')."</block_header><br>";       
         $output .= html_writer::table($table);
         $output .= $OUTPUT->single_button($url, get_string('view_full_leaderboard', 'block_leaderboard'),'get');
