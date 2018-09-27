@@ -119,25 +119,62 @@ class block_leaderboard_renderer extends plugin_renderer_base {
         foreach($group_data_array as $group_data){
             //set the groups current standing to the groups current index in the sorted array
             $group_index = array_search($group_data, $group_data_array);
-            //set groups change in position icon
             $current_standing = $rank_array[$group_index];
             $symbol = " ";
-            if($group_data->past_standing == 0){
-                $symbol = '<img src='.$stayurl.'>';
-            } else{
-                if($group_data->past_standing > $current_standing){
+
+            $move = substr($group_data->past_standing, -2,1); //0 for up, 1 for down, 2 for stay
+            $change = substr($group_data->past_standing, -1);
+            $past_standing = substr($group_data->past_standing, 0, -2);
+            echo("<script>console.log('Full: ".json_encode($group_data->past_standing)."');</script>");
+            echo("<script>console.log('Past: ".json_encode($past_standing)."');</script>");
+            echo("<script>console.log('Change: ".json_encode($change)."');</script>");
+            echo("<script>console.log('Move: ".json_encode($move)."');</script>");
+            if ($group_data->time_updated < floor((time()-7*60)/86400)){
+                if($past_standing > $current_standing){
                     $symbol = '<img src='.$upurl.'>';
-                } else if ($group_data->past_standing < $current_standing) {
+                    $move = 0;
+                    $change += 1;
+                } else if ($past_standing < $current_standing) {
                     $symbol = '<img src='.$downurl.'>';
-                } else {
+                    $move = 1;
+                    $change -= 1;
+                } else if ($change == 0) {
                     $symbol = '<img src='.$stayurl.'>';
+                    $move = 2;
+                }
+                $change = 0;
+            } else{
+                //echo("<script>console.log('Move: ".json_encode($move)."');</script>");
+                if($past_standing > $current_standing){
+                    $symbol = '<img src='.$upurl.'>';
+                    $move = 0;
+                    $change += 1;
+                } else if ($past_standing < $current_standing) {
+                    $symbol = '<img src='.$downurl.'>';
+                    $move = 1;
+                    $change -= 1;
+                } else {
+                    if ($move == 0){
+                        $symbol = '<img src='.$upurl.'>';
+                        $change += 1;
+                    }
+                    if ($move == 1){
+                        $symbol = '<img src='.$downurl.'>';
+                        $change -= 1;
+                    }
+                    if ($move == 2){
+                        $symbol = '<img src='.$stayurl.'>';
+                    }
                 }
             }
-
+            
             //update the groups current standing in the stored group data
             if($group_data->id){
                 $stored_group_data = $DB->get_record('group_data_table', array('group_id'=> $group_data->id), $fields='*', $strictness=IGNORE_MISSING);
-                $stored_group_data->current_standing = $current_standing;
+                $stored_group_data->current_standing = (int)($current_standing.$move.$change);
+                if ($stored_group_data->multiplier < floor((time()-7*60)/86400)){
+                    $stored_group_data->multiplier = floor((time()-7*60)/86400);
+                }
                 $DB->update_record('group_data_table', $stored_group_data);
             }
         

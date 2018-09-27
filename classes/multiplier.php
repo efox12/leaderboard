@@ -181,7 +181,8 @@ class block_leaderboard_multiplier{
         $stored_group_data = $DB->get_record('group_data_table', array('group_id'=> $group->id), $fields='*', $strictness=IGNORE_MISSING);
         if(!$stored_group_data){
             $stored_group_data = new stdClass();
-            $stored_group_data->current_standing = 0;
+            $stored_group_data->current_standing = 020;
+            $stored_group_data->multiplier = floor((time()-7*60)/86400);
             $stored_group_data->group_id = $group->id;
             $DB->insert_record('group_data_table',$stored_group_data);
         }     
@@ -191,6 +192,7 @@ class block_leaderboard_multiplier{
         $group_data->name = $group->name;
         $group_data->id = $group->id;
         $group_data->past_standing = $stored_group_data->current_standing;
+        $group_data->time_updated = $stored_group_data->multiplier;
         $group_data->points = $total_points;
         $group_data->is_users_group = $is_users_group;
         $group_data->points_per_week = $points_per_week;
