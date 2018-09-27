@@ -119,7 +119,7 @@ class block_leaderboard_renderer extends plugin_renderer_base {
             $initialPosition = substr($group_data->past_standing, -1);
             $past_standing = substr($group_data->past_standing, 0, -2);
             
-            if ($group_data->time_updated < floor((time()-7*60)/86400)+1){
+            if ($group_data->time_updated < floor((time()-7*60)/86400)){
                 if($past_standing > $current_standing){
                     $symbol = '<img src='.$upurl.'>';
                     $move = 0;
