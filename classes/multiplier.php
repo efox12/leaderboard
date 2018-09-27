@@ -185,7 +185,11 @@ class block_leaderboard_multiplier{
             $stored_group_data->multiplier = floor((time()-7*60)/86400);
             $stored_group_data->group_id = $group->id;
             $DB->insert_record('group_data_table',$stored_group_data);
-        }     
+        } else if(strlen((string)$stored_group_data->current_standing) < 3){
+            $stored_group_data->current_standing = (int)($stored_group_data->current_standing.'2'.$stored_group_data->current_standing);
+            $stored_group_data->group_id = $group->id;
+            $DB->update_record('group_data_table',$stored_group_data);
+        }
 
         //load the groups data into an object
         $group_data = new stdClass();
