@@ -1,4 +1,9 @@
 <?php
+/*
+ * Author: Erik Fox
+ * Date Created: 5/22/18
+ * Last Updated: 9/21/18
+ */
 
 defined('MOODLE_INTERNAL') || die();
 

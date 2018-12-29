@@ -1,9 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: erikfox
- * Date: 5/22/18
- * Time: 11:19 PM
+/*
+ * Author: Erik Fox
+ * Date Created: 5/22/18
+ * Last Updated: 7/15/18
  */
 
 $capabilities = array(

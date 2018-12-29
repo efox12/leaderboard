@@ -1,4 +1,10 @@
 <?php
+/*
+ * Author: Erik Fox
+ * Date Created: 5/22/18
+ * Last Updated: 8/20/18
+ */
+
 defined('MOODLE_INTERNAL') || die;
 
 class block_leaderboard_renderer extends plugin_renderer_base {

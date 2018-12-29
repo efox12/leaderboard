@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="blocks/leaderboard/db" VERSION="20180811" COMMENT="XMLDB file for Moodle blocks/leaderboard"
+<XMLDB PATH="blocks/leaderboard/db" VERSION="20181229" COMMENT="XMLDB file for Moodle blocks/leaderboard"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
@@ -29,7 +29,7 @@
         <FIELD NAME="points_earned" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The number of points earned by the student"/>
         <FIELD NAME="module_name" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="The title of the quiz instance."/>
         <FIELD NAME="days_early" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The number of days early a quiz is submitted."/>
-        <FIELD NAME="days_spaced" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The number of days since the last quiz taken."/>
+        <FIELD NAME="days_spaced" TYPE="number" LENGTH="10" NOTNULL="false" SEQUENCE="false" DECIMALS="5" COMMENT="The number of days since the last quiz taken."/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>

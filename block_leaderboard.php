@@ -1,9 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: erikfox
- * Date: 5/22/18
- * Time: 11:15 PM
+/*
+ * Author: Erik Fox
+ * Date Created: 5/22/18
+ * Last Updated: 12/29/18
  */
 
 class block_leaderboard extends block_base {
@@ -31,7 +30,13 @@ class block_leaderboard extends block_base {
         $renderer = $this->page->get_renderer('block_leaderboard');
         $this->content->text = $renderer->leaderboard_block($this->page->course);
         
-        //updates points values for assignments retrospectively
+        /*updates points values for assignments retrospectively
+        Uncomment this if some assignments were not recorded for any reason.
+        This was initially used because the first few assignments did not have 
+        due dates so no points were recorded
+        */
+        
+        /*
         global $DB;
         $groups = $DB->get_records('groups');
         $all_assignments = $DB->get_records('assign');
@@ -72,7 +77,7 @@ class block_leaderboard extends block_base {
                     }
                 }
             }
-        }
+        }*/
         return $this->content;
     }
 

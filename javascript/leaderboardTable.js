@@ -1,3 +1,9 @@
+/*
+ * Author: Erik Fox
+ * Date Created: 5/22/18
+ * Last Updated: 9/25/18
+ */
+
 "use strict"
 var coll = document.getElementsByClassName("collapsible");
 var content = document.getElementsByClassName("content");

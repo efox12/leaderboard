@@ -1,4 +1,9 @@
 <?php
+/*
+ * Author: Erik Fox
+ * Date Created: 5/22/18
+ * Last Updated: 12/29/18
+ */
 
 defined('MOODLE_INTERNAL') || die();
 class block_leaderboard_observer {  
@@ -170,7 +175,8 @@ class block_leaderboard_observer {
                 $spacing_points = 0;
                 $quiz_spacing = ($quiz_table->time_started - $recent_time_finished)/86400;
                 echo("<script>console.log('EVENT1: ".$quiz_spacing."');</script>");
-                $quiz_table->days_spaced = $quiz_spacing*100000;
+                //make sure that days spaced doesn't go above a maximum of 5 days
+                $quiz_table->days_spaced = min($quiz_spacing, 5);
                 
                 for($x=1; $x<=3; $x++){
                     $current_spacing = get_config('leaderboard','quizspacing'.$x);

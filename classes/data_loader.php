@@ -1,4 +1,10 @@
 <?php
+/*
+ * Author: Erik Fox
+ * Date Created: 5/22/18
+ * Last Updated: 8/21/18
+ */
+
 require_once('../../../config.php'); // Specify path to moodle /config.php file.
 require_login(); // require valid moodle login.  Will redirect to login page if not logged in.
 
@@ -53,7 +59,7 @@ foreach($groups as $group){
                 $quiz->time_finished,
                 $quiz->days_early,
                 $quiz->attempts,
-                round($quiz->days_spaced/100000,2),
+                round($quiz->days_spaced,2),
                 'null',
                 'null',
                 'null'

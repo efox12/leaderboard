@@ -1,4 +1,10 @@
 <?php
+/*
+ * Author: Erik Fox
+ * Date Created: 5/22/18
+ * Last Updated: 12/29/18
+ */
+
 require_once('../../config.php');
 global $COURSE, $DB;
 
@@ -267,39 +273,28 @@ if(count($groups) > 0){ //there are groups to display
                             //include info about how long quizzes were spaced out
                             if(property_exists($points_module, "days_spaced")){
                                 $spacing_points = 0;
-                                $quiz_spacing = 0;
-                                
-                                if($points_module->days_spaced == 0){
-                                    $spacing_points = $points_module->points_earned - $attempts_points+$early_points;
-                                    $points_module->days_spaced = $quiz_spacing;
-                                    for($x=1; $x<=3; $x++){
-                                        $current_spacing_points = get_config('leaderboard','quizspacingpoints'.$x);
-                                        if($current_spacing_points <= $spacing_points){
-                                            $quiz_spacing = get_config('leaderboard','quizspacing'.$x);
+                                $unit = " days spaced";
+                                $quiz_spacing = round($points_module->days_spaced,5);    
+                                //get the spacing_points for the given days_spaced
+                                for($x=1; $x<=3; $x++){
+                                    $current_spacing = get_config('leaderboard','quizspacing'.$x);
+                                    if($x < 3) {
+                                        $next_spacing = get_config('leaderboard','quizspacing'.($x+1));
+                                        if($quiz_spacing >= $current_spacing && $quiz_spacing < $next_spacing){
+                                            $spacing_points = get_config('leaderboard','quizspacingpoints'.$x);
+                                            break;
                                         }
-                                    }
-                                } else {
-                                    if($points_module->days_spaced >= 20){
-                                        $quiz_spacing = round($points_module->days_spaced/100000,2);
-                                        
-                                        for($x=1; $x<=3; $x++){
-                                            $current_spacing = get_config('leaderboard','quizspacing'.$x);
-                                            if($x < 3) {
-                                                $next_spacing = get_config('leaderboard','quizspacing'.($x+1));
-                                                if($quiz_spacing >= $current_spacing && $quiz_spacing < $next_spacing){
-                                                    $spacing_points = get_config('leaderboard','quizspacingpoints'.$x);
-                                                    break;
-                                                }
-                                            } else {
-                                                if($current_spacing <= $quiz_spacing){
-                                                    $spacing_points = get_config('leaderboard','quizspacingpoints'.$x);
-                                                }
-                                            }
+                                    } else {
+                                        if($current_spacing <= $quiz_spacing){
+                                            $spacing_points = get_config('leaderboard','quizspacingpoints'.$x);
+                                            $quiz_spacing = $current_spacing;
+                                            $unit = " or more days spaced";
                                         }
                                     }
                                 }
+                                
                                 if($spacing_points > 0){
-                                    $module_row = new html_table_row(array("","","",$quiz_spacing." days spaced",$spacing_points));
+                                    $module_row = new html_table_row(array("","","",$quiz_spacing.$unit,$spacing_points));
                                     $module_row->attributes['class'] = 'contentInfo';
                                     $module_row->attributes['name'] = 'c'.$group_index.'s'.$count.'i'.$infoCount;
                                     $table->data[] = $module_row;
