@@ -45,7 +45,7 @@ class block_leaderboard_observer {
                     }
                 }
             }
-            $eventdata->points_earned = block_leaderboard_multiplier::calculate_points($event->userid, $points);
+            $eventdata->points_earned = block_leaderboard_functions::calculate_points($event->userid, $points);
             $eventdata->activity_student = $submission_data[$eventid]->userid;
             $eventdata->activity_id = $eventid;
             $eventdata->time_finished = $event->timecreated;
@@ -140,7 +140,7 @@ class block_leaderboard_observer {
                 //assign points for finishing early
                 $days_before_submission = ($due_date - $event->timecreated)/86400;
                 $points_earned = 0;
-                if(abs($days_before_submission) < 20){ //quizzes without duedates will produce a value like -17788
+                if(abs($days_before_submission) < 50){ //quizzes without duedates will produce a value like -17788
                     $quiz_table->days_early = $days_before_submission;
                     for($x=1; $x<=5; $x++){
                         $current_time = get_config('leaderboard','quiztime'.$x);
@@ -160,7 +160,7 @@ class block_leaderboard_observer {
                     $points_earned = 0;
                 }
 
-                $quiz_table->points_earned = block_leaderboard_multiplier::calculate_points($event->userid, $points_earned);  
+                $quiz_table->points_earned = block_leaderboard_functions::calculate_points($event->userid, $points_earned);  
                 
                 //gets the most recent completed quiz submission time
                 $past_quizzes = $DB->get_records('quiz_table',array('student_id'=> $event->userid));
@@ -193,7 +193,7 @@ class block_leaderboard_observer {
                     }
                 }
                 echo("<script>console.log('EVENT: ".$quiz_table->days_spaced."');</script>");
-                $quiz_table->points_earned += block_leaderboard_multiplier::calculate_points($event->userid, $spacing_points);
+                $quiz_table->points_earned += block_leaderboard_functions::calculate_points($event->userid, $spacing_points);
 
             } else { //this is another attempt
                 //bonus points for attempting quiz again (need to find a way to limit abuse)
@@ -203,7 +203,7 @@ class block_leaderboard_observer {
                     $multiple_attempt_points = get_config('leaderboard','quizattemptspoints');
                 }
                 $quiz_table->attempts += 1;
-                $quiz_table->points_earned += block_leaderboard_multiplier::calculate_points($event->userid, $multiple_attempt_points);
+                $quiz_table->points_earned += block_leaderboard_functions::calculate_points($event->userid, $multiple_attempt_points);
             }
             $DB->update_record('quiz_table', $quiz_table);
         }
@@ -225,7 +225,7 @@ class block_leaderboard_observer {
                 $choicedata = new \stdClass();
                 $choicedata->student_id = $event->userid;
                 $choicedata->choice_id = $choice_id;
-                $choicedata->points_earned = block_leaderboard_multiplier::calculate_points($event->userid, get_config('leaderboard','choicepoints'));
+                $choicedata->points_earned = block_leaderboard_functions::calculate_points($event->userid, get_config('leaderboard','choicepoints'));
                 $choicedata->time_finished = $event->timecreated;
                 $choicedata->module_name = $choice->name;
                 
@@ -245,7 +245,7 @@ class block_leaderboard_observer {
             $forumdata->discussion_id = $event->other{'discussionid'};
             $forumdata->post_id = $event->objectid;
             $forumdata->is_response = true;
-            $forumdata->points_earned = block_leaderboard_multiplier::calculate_points($event->userid, get_config('leaderboard','forumresponsepoints'));
+            $forumdata->points_earned = block_leaderboard_functions::calculate_points($event->userid, get_config('leaderboard','forumresponsepoints'));
             $forumdata->time_finished = $event->timecreated;
             $forumdata->module_name = "Forum Response";
             
@@ -264,7 +264,7 @@ class block_leaderboard_observer {
             $forumdata->post_id = $discussion->firstpost;
             $forumdata->discussion_id = $event->objectid;
             $forumdata->is_response = false;
-            $forumdata->points_earned = block_leaderboard_multiplier::calculate_points($event->userid, get_config('leaderboard','forumpostpoints'));
+            $forumdata->points_earned = block_leaderboard_functions::calculate_points($event->userid, get_config('leaderboard','forumpostpoints'));
             $forumdata->time_finished = $event->timecreated;
             $forumdata->module_name = $discussion->name;
 

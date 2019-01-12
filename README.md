@@ -11,7 +11,7 @@ This section will give a general overview of the project.
 classes/<br/>
 
 &nbsp;&nbsp;&nbsp;[data_loader.php](#classesobserverphp)<br/>
-&nbsp;&nbsp;&nbsp;[multiplier.php](#classesobserverphp)<br/>
+&nbsp;&nbsp;&nbsp;[functions.php](#classesobserverphp)<br/>
 &nbsp;&nbsp;&nbsp;[observer.php](#classesobserverphp)<br/>
 db/<br/>
 &nbsp;&nbsp;&nbsp;[access.php](#accessphp)<br/>
@@ -384,7 +384,7 @@ This ensures that if a setting is left unfilled by accident it gets filled in au
 
 [More info on settings here](https://docs.moodle.org/dev/Admin_settings)
 ## Modify the Multiplier/Points System
-### multiplier.php
+### functions.php
 All of the functions corresponding to points and the multipliers are found in this file.
 ```
 //static call
@@ -396,7 +396,7 @@ $data = $multiplier->get_multiplier($points_per_week);
 ```
 
 #### `get_multiplier($points_per_week)`
-This function calculates all required multiplier data based on a points-per-week value. This function is called in `multiplier.php` and `renderer.php`. 
+This function calculates all required multiplier data based on a points-per-week value. This function is called in `functions.php` and `renderer.php`. 
 
 It requires the folowing parameters:
 ```
@@ -415,7 +415,7 @@ $data->style //extra styling for the progress bar
 ```
 
 #### `get_points($student)`
-This function gets all of a students points and history. This function is called in `multiplier.php` and `renderer.php`. 
+This function gets all of a students points and history. This function is called in `functions.php` and `renderer.php`. 
 
 It requires the following parameters:
 ```
@@ -433,7 +433,7 @@ $data->history //an array of all of the students event object
 ```
 
 #### `get_group_data($group,$average_group_size)`
-This function gets important group data. This function is called in `multiplier.php`, `renderer.php`, and `index.php`. 
+This function gets important group data. This function is called in `functions.php`, `renderer.php`, and `index.php`. 
 
 It requires the following parameters:
 ```

@@ -182,7 +182,7 @@ $settings->add(new admin_setting_heading(
 
 //-------------------------------------------------------------------------------------------------------------------//
 // MULTIPLIER
-
+/*
 $vals = array(100,175,300,500,800);
 $settings->add(new admin_setting_heading(
     'groupdataheaderconfig',
@@ -219,7 +219,7 @@ $settings->add(new admin_setting_heading(
             set_config('groupdata'.$x,$vals[$x-1],'leaderboard');
         }
     }
-
+*/
     
     
     

@@ -70,7 +70,7 @@ class block_leaderboard extends block_base {
                                     }
                                 }
                             }
-                            $assignment_table->points_earned = block_leaderboard_multiplier::calculate_points($student->id, $points);
+                            $assignment_table->points_earned = block_leaderboard_functions::calculate_points($student->id, $points);
                             $assignment_table->days_early = $days_early;
                             $DB->update_record('assignment_table', $assignment_table);
                         }

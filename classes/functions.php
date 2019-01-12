@@ -7,8 +7,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-class block_leaderboard_multiplier{
-    public static function get_multiplier($points){   
+class block_leaderboard_functions{
+    /*public static function get_multiplier($points){   
         //create new object
         $multiplier_data = new stdClass();      
         $multiplier_data->previous = 1;
@@ -67,7 +67,7 @@ class block_leaderboard_multiplier{
 
         //$multiplier_data->width = $width;
         return $multiplier_data;
-    }
+    }*/
     
 
 
@@ -99,11 +99,14 @@ class block_leaderboard_multiplier{
             $average_group_size = intdiv($num_students, $num_groups);
             //get the groups general data
             $group_data = self::get_group_data($group,$average_group_size);
+            /*
             //get the groups multiplier
             $multiplier = self::get_multiplier($group_data->points_per_week);
         
             //calculate the groups points
             $calculated_points = $new_points * $multiplier->multiplier;
+            */
+            $calculated_points = $new_points;
         }
 
         return $calculated_points;

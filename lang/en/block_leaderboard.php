@@ -117,5 +117,5 @@ $string['a42'] = '<strong>'.get_config('leaderboard','groupdata1').'</strong> po
                     <br/><strong>'.get_config('leaderboard','groupdata5').'</strong> points per week to stay at <strong>'.get_config('leaderboard','multiplier5').'x</strong> points.';
 $string['q5'] = '<strong>Q5</strong>: How is the weekly point average for my team determined?';
 $string['a5'] = '<strong>A5</strong>: The weekly point average only takes the two most recent weeks into account so that teams can get stuck with low averages or secure high averages throughout the semester. If the teams most recent week has a higher average than the last 2 weeks, the 1 week average is used instead so that teams don\'t loose their multiplier due to a school break.';
-$string['q6'] = '<strong>Q6</strong>: Is my data being logged?';
-$string['a6'] = '<strong>A6</strong>: Yes. This data is being used for research purposes to track in class study habits and how to improve them. However your names and personal data are not attached to any of the data being logged.';
+$string['q6'] = '<strong>Q3</strong>: Is my data being logged?';
+$string['a6'] = '<strong>A3</strong>: Yes. This data is being used for research purposes to track in class study habits and how to improve them. However your names and personal data are not attached to any of the data being logged.';

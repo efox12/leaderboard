@@ -27,7 +27,7 @@ class block_leaderboard_renderer extends plugin_renderer_base {
         $groups = $DB->get_records('groups');
         //only display content in the block if there are groups
         if(count($groups) > 0){
-            $multiplier = new block_leaderboard_multiplier;
+            $multiplier = new block_leaderboard_functions;
             $average_group_size = $multiplier->get_average_group_size($groups);
             //get data for the groups
             $group_data_array = array();
@@ -55,7 +55,7 @@ class block_leaderboard_renderer extends plugin_renderer_base {
             // DISPLAY BLOCK CONTENT
 
             //build help button
-            $help = $this->container_start('mult');
+            /*$help = $this->container_start('mult');
             $help .= $this->help_icon('mult', 'block_leaderboard');
             $help .= $this->container_end();
 
@@ -72,7 +72,7 @@ class block_leaderboard_renderer extends plugin_renderer_base {
                 $output .= "<mult>".$multiplier->multiplier."x</mult>";
                 $output .= "<current_rate>".$points_per_week."<unit> ".get_string('points_week', 'block_leaderboard')."</unit></current_rate>";
                 $output .= '<div class="progress-bar"><span style="width:'.($multiplier->width).'%; background-color:'.$multiplier->color.'; '.$multiplier->style.'"></span></div>';
-            }
+            }*/
 
             //display table
             //$output .= "<block_header>".get_string('rankings', 'block_leaderboard')."</block_header><br>";       
@@ -178,9 +178,9 @@ class block_leaderboard_renderer extends plugin_renderer_base {
             if($group_data->id){
                 $stored_group_data = $DB->get_record('group_data_table', array('group_id'=> $group_data->id), $fields='*', $strictness=IGNORE_MISSING);
                 $stored_group_data->current_standing = (int)($current_standing.$move.$initialPosition);
-                if ($stored_group_data->multiplier < floor((time()-7*60)/86400)){
+                /*if ($stored_group_data->multiplier < floor((time()-7*60)/86400)){
                     $stored_group_data->multiplier = floor((time()-7*60)/86400);
-                }
+                }*/
                 $DB->update_record('group_data_table', $stored_group_data);
             }
         
