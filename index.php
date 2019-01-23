@@ -40,8 +40,8 @@ echo $OUTPUT->header();
 //-------------------------------------------------------------------------------------------------------------------//
 // CREATE TABLE
 //create an html table
-//get all groups
-$groups = $DB->get_records('groups');
+//get all groups from the current course
+$groups = $DB->get_records('groups', array('courseid'=>$cid));
 if(count($groups) > 0){ //there are groups to display
     //create the table
     $table = new html_table();

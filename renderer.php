@@ -23,8 +23,8 @@ class block_leaderboard_renderer extends plugin_renderer_base {
         $courseid  = $COURSE->id;
         $url = new moodle_url('/blocks/leaderboard/index.php', array('id' => $courseid));
 
-        //get all groups
-        $groups = $DB->get_records('groups');
+        //get all groups from the current course
+        $groups = $DB->get_records('groups', array('courseid'=>$courseid));
         //only display content in the block if there are groups
         if(count($groups) > 0){
             $multiplier = new block_leaderboard_functions;
