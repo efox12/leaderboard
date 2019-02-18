@@ -59,6 +59,15 @@ $string['desc_forum_post_points'] = 'Points earned for posting a question';
 $string['label_forum_response_points'] = 'Response Points';
 $string['desc_forum_response_points'] = 'Points earned for responding to a question';
 
+$string['reset_settings'] = 'Leaderboard Reset Settings';
+$string['reset_settings_desc'] = 'Set the dates when you want the leaderboard to reset.';
+
+$string['label_reset1'] =  'First Reset';
+$string['desc_reset1'] = 'Type using format DD-MM-YYYY';
+
+$string['label_reset2'] =  'Second Reset';
+$string['desc_reset2'] = 'Type using format DD-MM-YYYY';
+
 //block strings
 $string['group_multiplier'] = 'Group Multiplier';
 $string['mult'] = 'Info';
@@ -117,5 +126,7 @@ $string['a42'] = '<strong>'.get_config('leaderboard','groupdata1').'</strong> po
                     <br/><strong>'.get_config('leaderboard','groupdata5').'</strong> points per week to stay at <strong>'.get_config('leaderboard','multiplier5').'x</strong> points.';
 $string['q5'] = '<strong>Q5</strong>: How is the weekly point average for my team determined?';
 $string['a5'] = '<strong>A5</strong>: The weekly point average only takes the two most recent weeks into account so that teams can get stuck with low averages or secure high averages throughout the semester. If the teams most recent week has a higher average than the last 2 weeks, the 1 week average is used instead so that teams don\'t loose their multiplier due to a school break.';
-$string['q6'] = '<strong>Q3</strong>: Is my data being logged?';
-$string['a6'] = '<strong>A3</strong>: Yes. This data is being used for research purposes to track in class study habits and how to improve them. However your names and personal data are not attached to any of the data being logged.';
+$string['q6'] = '<strong>Q3</strong>: I submitted an assignment early, why don\'t I see any points?';
+$string['a6'] = '<strong>A3</strong>: This is normal. Your points will not be recorded in the leaderboard until after the due date for an assignment or quiz has passed. This is in place to so that an assignment cannot earn points for submission both before and after a reset.';
+$string['q7'] = '<strong>Q4</strong>: Is my data being logged?';
+$string['a7'] = '<strong>A4</strong>: Yes. This data is being used for research purposes to track in class study habits and how to improve them. However your names and personal data are not attached to any of the data being logged.';

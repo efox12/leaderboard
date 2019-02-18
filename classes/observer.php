@@ -7,6 +7,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 class block_leaderboard_observer {  
+    //-------------------------------------------------------------------------------------------------------------------//
+    //ASSIGNMENT EVENTS
     public static function assignment_submitted_handler(\mod_assign\event\assessable_submitted $event){
         global $DB, $USER;
         if(user_has_role_assignment($USER->id,5)){

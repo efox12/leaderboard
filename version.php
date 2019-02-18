@@ -5,7 +5,7 @@
  * Last Updated: 12/29/18
  */
 
-$plugin->version   = 2018122900;        // The current plugin version (Date: YYYYMMDDXX)
+$plugin->version   = 2019091800;        // The current plugin version (Date: YYYYMMDDXX)
 $plugin->requires  = 2018050800;        // Requires this Moodle version
 $plugin->release = 'v2.0';
 $plugin->maturity = MATURITY_STABLE;

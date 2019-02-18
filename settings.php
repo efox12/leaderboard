@@ -168,6 +168,25 @@ $settings->add(new admin_setting_heading(
 // MISC
 
 $settings->add(new admin_setting_heading(
+    'resetheaderconfig',
+    get_string('reset_settings', 'block_leaderboard'),
+    get_string('reset_settings_desc', 'block_leaderboard')
+    ));
+    $settings->add(new admin_setting_configtext(
+        'leaderboard/reset1',
+        get_string('label_reset1', 'block_leaderboard'),
+        get_string('desc_reset1', 'block_leaderboard'),
+        1
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'leaderboard/reset2',
+        get_string('label_reset2', 'block_leaderboard'),
+        get_string('desc_reset2', 'block_leaderboard'),
+        2
+    ));
+
+$settings->add(new admin_setting_heading(
     'glossaryheaderconfig',
     get_string('glossary_settings', 'block_leaderboard'),
     get_string('glossary_settings_desc', 'block_leaderboard')
@@ -178,6 +197,7 @@ $settings->add(new admin_setting_heading(
     get_string('other_settings', 'block_leaderboard'),
     get_string('other_settings_desc', 'block_leaderboard')
 ));
+
 
 
 //-------------------------------------------------------------------------------------------------------------------//

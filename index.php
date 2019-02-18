@@ -387,5 +387,8 @@ echo '<br/>';
 echo '<div class="q">'.get_string('q6', 'block_leaderboard').'</div>';
 echo '<br/>';
 echo '<div class="a">'.get_string('a6', 'block_leaderboard').'</div>';
-
+echo '<br/>';
+echo '<div class="q">'.get_string('q7', 'block_leaderboard').'</div>';
+echo '<br/>';
+echo '<div class="a">'.get_string('a7', 'block_leaderboard').'</div>';
 echo $OUTPUT->footer();

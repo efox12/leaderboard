@@ -225,64 +225,117 @@ class block_leaderboard_functions{
 
         //add up student points for all points, past week, past two weeks, and fill student history array
         $time = time();
+        $reset = 0;
+        $reset1 = get_config('leaderboard','reset1');
+        $reset2 = get_config('leaderboard','reset1');
+        if($reset1 != ''  && $reset2 != ''){
+            $reset1 = strtotime($reset1);
+            $reset2 = strtotime($reset2);
+        }
+        if(time() >= $reset1){
+            $reset = $reset1;
+        } else if(time() >= $reset2) {
+            $reset = $reset2;
+        }
+
         $student_activities = $DB->get_records('assignment_table', array('activity_student'=> $student->id));
         foreach($student_activities as $activity){
-            $points->all += $activity->points_earned;
-            if(($time - $activity->time_finished)/86400 <= 7){
-                $points->past_week += $activity->points_earned;
+            
+            //The data of the submission
+            $submission_data = $DB->get_records('assign_submission',array('id'=> $activity->activity_id));
+            //All assignments information
+            $all_assignments = $DB->get_records('assign');
+            
+            //The submitted assignemnts information
+            $due_date = INF;
+            if(count($submission_data) > 0){
+                $assignment_data = $all_assignments[$submission_data[$activity->activity_id]->assignment];
+                //duedate
+                $due_date = $assignment_data->duedate;
             }
-            if(($time - $activity->time_finished)/86400 <= 14){
-                $points->past_two_weeks += $activity->points_earned;
-            }
-            if($activity->module_name != ''){
-                $student_history[] = $activity;
-            } else {
-                echo("<script>console.log('BAD ACTIVITY DATA: ".json_encode($activity)."');</script>");
+            
+            if($time >= $due_date && $due_date > $reset){
+                #echo("<script>console.log('ACTIVITY1: ".json_encode($submission_data)."');</script>");
+                $points->all += $activity->points_earned;
+                if(($time - $activity->time_finished)/86400 <= 7){
+                    $points->past_week += $activity->points_earned;
+                }
+                if(($time - $activity->time_finished)/86400 <= 14){
+                    $points->past_two_weeks += $activity->points_earned;
+                }
+                if($activity->module_name != ''){
+                    $student_history[] = $activity;
+                } else {
+                    echo("<script>console.log('BAD ACTIVITY DATA: ".json_encode($activity)."');</script>");
+                }
             }
         }
         $student_quizzes = $DB->get_records('quiz_table', array('student_id'=> $student->id));
         foreach($student_quizzes as $quiz){
-            $points->all += $quiz->points_earned;
-            if(($time - $quiz->time_finished)/86400 <= 7){
-                $points->past_week += $quiz->points_earned;
+            
+            //the table of all quiz attempts
+            $quiz_attempts = $DB->get_records('quiz_attempts');
+            //the id corresponding to the users current attempt
+            $current_id = $quiz->quiz_id;
+            
+            //the users current attempt
+            #$current_quiz_attempt = $quiz_attempts[$current_id];
+            //the quiz
+            $due_date = INF;
+            if($this_quiz = $DB->get_record('quiz', array('id'=> $current_id), $fields='*', $strictness=IGNORE_MISSING)){
+                #$this_quiz = $DB->get_record('quiz', array('id'=> $current_id), $fields='*', $strictness=IGNORE_MISSING);
+                $due_date = $this_quiz->timeclose;
+                #echo("<script>console.log('DUE DATE: ".json_encode($this_quiz)."');</script>");
+                #echo("<script>console.log('DUE DATE: ".$due_date."');</script>");
             }
-            if(($time - $quiz->time_finished)/86400 <= 14){
-                $points->past_two_weeks += $quiz->points_earned;
-            }
-            if($quiz->module_name != ''){
-                $student_history[] = $quiz;
-            } else {
-                echo("<script>console.log('BAD QUIZ DATA: ".json_encode($quiz)."');</script>");
+
+            if($time >= $due_date && $due_date > $reset){
+                $points->all += $quiz->points_earned;
+                if(($time - $quiz->time_finished)/86400 <= 7){
+                    $points->past_week += $quiz->points_earned;
+                }
+                if(($time - $quiz->time_finished)/86400 <= 14){
+                    $points->past_two_weeks += $quiz->points_earned;
+                }
+                if($quiz->module_name != ''){
+                    $student_history[] = $quiz;
+                } else {
+                    echo("<script>console.log('BAD QUIZ DATA: ".json_encode($quiz)."');</script>");
+                }
             }
         }
         $student_choices = $DB->get_records('choice_table', array('student_id'=> $student->id));
         foreach($student_choices as $choice){
-            $points->all += $choice->points_earned;
-            if(($time - $choice->time_finished)/86400 <= 7){
-                $points->past_week += $choice->points_earned;
-            }
-            if(($time - $choice->time_finished)/86400 <= 14){
-                $points->past_two_weeks += $choice->points_earned;
-            }
-            if($choice->module_name != ''){
-                $student_history[] = $choice;
-            } else {
-                echo("<script>console.log('BAD CHOICE DATA: ".json_encode($choice)."');</script>");
+            if($choice->time_finished >= $reset){
+                $points->all += $choice->points_earned;
+                if(($time - $choice->time_finished)/86400 <= 7){
+                    $points->past_week += $choice->points_earned;
+                }
+                if(($time - $choice->time_finished)/86400 <= 14){
+                    $points->past_two_weeks += $choice->points_earned;
+                }
+                if($choice->module_name != ''){
+                    $student_history[] = $choice;
+                } else {
+                    echo("<script>console.log('BAD CHOICE DATA: ".json_encode($choice)."');</script>");
+                }
             }
         }
         $student_forum_posts = $DB->get_records('forum_table', array('student_id'=> $student->id));
         foreach($student_forum_posts as $post){
-            $points->all += $post->points_earned;
-            if(($time - $post->time_finished)/86400 <= 7){
-                $points->past_week += $post->points_earned;
-            }
-            if(($time - $post->time_finished)/86400 <= 14){
-                $points->past_two_weeks += $post->points_earned;
-            }
-            if($post->module_name != ''){
-                $student_history[] = $post;
-            } else {
-                echo("<script>console.log('BAD FORUM DATA: ".json_encode($post)."');</script>");
+            if($post->time_finished >= $reset){
+                $points->all += $post->points_earned;
+                if(($time - $post->time_finished)/86400 <= 7){
+                    $points->past_week += $post->points_earned;
+                }
+                if(($time - $post->time_finished)/86400 <= 14){
+                    $points->past_two_weeks += $post->points_earned;
+                }
+                if($post->module_name != ''){
+                    $student_history[] = $post;
+                } else {
+                    echo("<script>console.log('BAD FORUM DATA: ".json_encode($post)."');</script>");
+                }
             }
         }
 
