@@ -63,10 +63,10 @@ $string['reset_settings'] = 'Leaderboard Reset Settings';
 $string['reset_settings_desc'] = 'Set the dates when you want the leaderboard to reset.';
 
 $string['label_reset1'] =  'First Reset';
-$string['desc_reset1'] = 'Type using format DD-MM-YYYY';
+$string['desc_reset1'] = 'Type using format MM/DD/YYYY';
 
 $string['label_reset2'] =  'Second Reset';
-$string['desc_reset2'] = 'Type using format DD-MM-YYYY';
+$string['desc_reset2'] = 'Type using format MM/DD/YYYY';
 
 //block strings
 $string['group_multiplier'] = 'Group Multiplier';
