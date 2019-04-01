@@ -223,7 +223,7 @@ class block_leaderboard_functions{
         $points->past_two_weeks = 0;
         $student_history = [];
 
-        //add up student points for all points, past week, past two weeks, and fill student history array
+        
         $time = time();
         $reset = 0;
         $reset1 = get_config('leaderboard','reset1');
@@ -232,12 +232,13 @@ class block_leaderboard_functions{
             $reset1 = strtotime($reset1);
             $reset2 = strtotime($reset2);
         }
-        if(time() >= $reset1){
+        if(time() >= $reset1 && time() < $reset2){
             $reset = $reset1;
         } else if(time() >= $reset2) {
             $reset = $reset2;
         }
-
+        
+        //add up student points for all points, past week, past two weeks, and fill student history array
         $student_activities = $DB->get_records('assignment_table', array('activity_student'=> $student->id));
         foreach($student_activities as $activity){
             
