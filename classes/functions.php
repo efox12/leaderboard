@@ -227,7 +227,7 @@ class block_leaderboard_functions{
         $time = time();
         $reset = 0;
         $reset1 = get_config('leaderboard','reset1');
-        $reset2 = get_config('leaderboard','reset1');
+        $reset2 = get_config('leaderboard','reset2');
         if($reset1 != ''  && $reset2 != ''){
             $reset1 = strtotime($reset1);
             $reset2 = strtotime($reset2);
