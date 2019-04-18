@@ -1,0 +1,1446 @@
+student_id,module_id,module_name,module_type,time_finished,days_early,attempts,days_spaced,discussion_id,post_id,is_response
+11,12,PA1,Assignment,1536902311,0,null,null,null,null,null
+11,47,PA2,Assignment,1537934739,0,null,null,null,null,null
+11,77,PA3,Assignment,1538549566,0,null,null,null,null,null
+11,102,PA4,Assignment,1539152755,0,null,null,null,null,null
+11,127,PA5,Assignment,1539844972,-1,null,null,null,null,null
+11,150,PA6,Assignment,1540607692,-1,null,null,null,null,null
+11,156,PA7,Assignment,1541542458,2,null,null,null,null,null
+11,191,PA8,Assignment,1542947559,-2,null,null,null,null,null
+11,203,PA9,Assignment,1543864801,-17869,null,null,null,null,null
+11,225,"Lab Final PRACTICE Submission",Assignment,1544251028,-17873,null,null,null,null,null
+11,252,"Lab Final Submission",Assignment,1544734098,-17879,null,null,null,null,null
+11,3,"VQ0-C Command Line",Quiz,1536032004,,0,0,null,null,null
+11,4,"VQ0-D File Commands",Quiz,1536034272,,0,0,null,null,null
+11,5,"VQ0-E Programming Languages",Quiz,1536038107,,0,0,null,null,null
+11,6,"VQ0-F First C++ Program",Quiz,1536040091,,0,0,null,null,null
+11,7,"VQ1-A C++ Language Elements",Quiz,1536208702,,0,0,null,null,null
+11,7,,Quiz,,,0,0,null,null,null
+11,8,"VQ1-B User Input Output",Quiz,1536208813,,0,0,null,null,null
+11,9,"VQ1-C Example Problem (Cone Volume)",Quiz,1536208897,,0,0,null,null,null
+11,11,"VQ1-E Programming Errors",Quiz,1536565689,0,1,0,null,null,null
+11,11,,Quiz,,0,0,0,null,null,null
+11,10,"VQ1-D Arithmetic",Quiz,1536610526,0,1,0,null,null,null
+11,12,"VQ2-A Boolean Conditions",Quiz,1536816530,0,1,0,null,null,null
+11,13,"VQ2-B Conditionals",Quiz,1536817905,0,1,0,null,null,null
+11,14,"VQ2-C Example Problem (Guess my Number)",Quiz,1536820386,0,2,0,null,null,null
+11,14,,Quiz,,0,0,0,null,null,null
+11,15,"VQ2-D Nested Conditionals",Quiz,1536820601,0,1,0,null,null,null
+11,16,"VQ2-E Multiple Alternative Conditionals",Quiz,1537230742,0,1,-0,null,null,null
+11,17,"VQ2-F Switch Statements",Quiz,1537243201,0,1,0,null,null,null
+11,19,"VQ3-A Introduction to Iteration",Quiz,1537419793,0,1,0,null,null,null
+11,20,"VQ3-B Assignment Operators",Quiz,1537424817,0,1,-0,null,null,null
+11,21,"VQ3-C While Loops",Quiz,1537425335,0,1,0,null,null,null
+11,22,"VQ3-D While Loop Examples",Quiz,1537425662,0,1,0,null,null,null
+11,23,"VQ3-E Random Numbers",Quiz,1537846186,0,1,4.87,null,null,null
+11,24,"VQ3-F For Loops",Quiz,1537846260,0,1,0,null,null,null
+11,25,"VQ3-G Do While Loops",Quiz,1538450675,0,1,6.99,null,null,null
+11,26,"VQ3-H Advanced Loops",Quiz,1538450759,0,1,0,null,null,null
+11,38,"VQ5-A Introduction to Functions",Quiz,1539226889,0,1,8.98,null,null,null
+11,39,"VQ5-B Functions",Quiz,1539227800,0,1,0,null,null,null
+11,40,"VQ5-C Example Problem GPA Computation",Quiz,1539228168,0,1,0,null,null,null
+11,41,"VQ5-D Function Details",Quiz,1539673005,0,1,5.15,null,null,null
+11,42,"VQ5-E Scope",Quiz,1539673056,0,1,0,null,null,null
+11,43,"VQ5-F Prototypes",Quiz,1539673110,0,1,0,null,null,null
+11,44,"VQ5-G Advanced Prototypes",Quiz,1540271519,0,1,6.92,null,null,null
+11,45,"VQ5-H Pass by Reference",Quiz,1540272321,0,1,0,null,null,null
+11,46,"VQ5-I Three File Format",Quiz,1540272496,0,1,0,null,null,null
+11,47,"VQ6-A Introduction to Arrays",Quiz,1540442851,0,1,1.97,null,null,null
+11,48,"VQ6-B Looping through Arrays",Quiz,1540443116,0,1,0,null,null,null
+11,49,"VQ6-C Arrays and Functions",Quiz,1540853490,0,1,4.75,null,null,null
+11,50,"VQ6-D Parallel Arrays",Quiz,1540862151,0,1,0,null,null,null
+11,51,"VQ6-E Multidimensional Arrays",Quiz,1541483766,0,1,7.19,null,null,null
+11,52,"VQ7-A Introduction to Vectors",Quiz,1541659347,0,1,2.03,null,null,null
+11,53,"VQ7-B Vector Member Functions",Quiz,1541660131,0,1,0.01,null,null,null
+11,54,"VQ7-C Sorting",Quiz,1542091434,0,1,4.99,null,null,null
+11,55,"VQ8-A Introduction to Strings",Quiz,1542688210,0,1,6.91,null,null,null
+11,56,"VQ8-B String Member Functions",Quiz,1542688320,0,1,0,null,null,null
+11,57,"VQ8-C String Streams",Quiz,1543272678,0,1,6.76,null,null,null
+11,58,"VQ8-D String Tokenizing",Quiz,1543285528,0,1,0.15,null,null,null
+11,59,"VQ8-E Binary",Quiz,1543300978,0,1,0.18,null,null,null
+11,1,CR0,Choice,1536549563,null,null,null,null,null,null
+11,2,CR1,Choice,1536862527,null,null,null,null,null,null
+11,3,CR2,Choice,1537419105,null,null,null,null,null,null
+11,4,CR3,Choice,1538163287,null,null,null,null,null,null
+11,5,CR4,Choice,1541455785,null,null,null,null,null,null
+11,6,CR5,Choice,1541455801,null,null,null,null,null,null
+11,7,CR6,Choice,1541455820,null,null,null,null,null,null
+11,8,CR7,Choice,1542112276,null,null,null,null,null,null
+11,9,CR8,Choice,1543864823,null,null,null,null,null,null
+13,25,PA1,Assignment,1536904350,0,null,null,null,null,null
+13,34,PA2,Assignment,1537753333,2,null,null,null,null,null
+13,67,PA3,Assignment,1538542291,0,null,null,null,null,null
+13,101,PA4,Assignment,1539148040,0,null,null,null,null,null
+13,115,PA5,Assignment,1539744580,0,null,null,null,null,null
+13,131,PA6,Assignment,1540534237,0,null,null,null,null,null
+13,130,PA7,Assignment,1541725053,0,null,null,null,null,null
+13,183,PA8,Assignment,1542782525,0,null,null,null,null,null
+13,223,PA9,Assignment,1544080658,-17871,null,null,null,null,null
+13,226,"Lab Final PRACTICE Submission",Assignment,1544214060,-17873,null,null,null,null,null
+13,244,"Lab Final Submission",Assignment,1544733784,-17879,null,null,null,null,null
+13,3,"VQ0-C Command Line",Quiz,1536109052,,0,0,null,null,null
+13,4,"VQ0-D File Commands",Quiz,1536289364,,0,0,null,null,null
+13,5,"VQ0-E Programming Languages",Quiz,1536291094,,0,0,null,null,null
+13,6,"VQ0-F First C++ Program",Quiz,1536292741,,0,0,null,null,null
+13,7,"VQ1-A C++ Language Elements",Quiz,1536368909,0,1,0,null,null,null
+13,8,"VQ1-B User Input Output",Quiz,1536372023,0,1,0,null,null,null
+13,9,"VQ1-C Example Problem (Cone Volume)",Quiz,1536372197,0,1,0,null,null,null
+13,10,"VQ1-D Arithmetic",Quiz,1536602336,0,1,0,null,null,null
+13,11,"VQ1-E Programming Errors",Quiz,1536604292,0,1,0,null,null,null
+13,12,"VQ2-A Boolean Conditions",Quiz,1536775428,0,1,0,null,null,null
+13,13,"VQ2-B Conditionals",Quiz,1536776518,0,1,0,null,null,null
+13,14,"VQ2-C Example Problem (Guess my Number)",Quiz,1536777519,0,1,0,null,null,null
+13,15,"VQ2-D Nested Conditionals",Quiz,1536800863,0,1,0,null,null,null
+13,16,"VQ2-E Multiple Alternative Conditionals",Quiz,1537229730,0,1,0,null,null,null
+13,17,"VQ2-F Switch Statements",Quiz,1537230650,0,1,0,null,null,null
+13,28,"OPTIONAL Gaddis Ch. 1 Extra Practice Questions",Quiz,,0,0,0,null,null,null
+13,19,"VQ3-A Introduction to Iteration",Quiz,1537399691,0,1,-0,null,null,null
+13,20,"VQ3-B Assignment Operators",Quiz,1537400568,0,1,-0,null,null,null
+13,21,"VQ3-C While Loops",Quiz,1537401698,0,1,-0,null,null,null
+13,22,"VQ3-D While Loop Examples",Quiz,1537402970,0,1,-0,null,null,null
+13,23,"VQ3-E Random Numbers",Quiz,1537832913,0,1,4.96,null,null,null
+13,24,"VQ3-F For Loops",Quiz,1537834175,0,1,0,null,null,null
+13,25,"VQ3-G Do While Loops",Quiz,1538417889,1,1,6.74,null,null,null
+13,26,"VQ3-H Advanced Loops",Quiz,1538418910,1,1,0,null,null,null
+13,37,"VQ4-C Advanced File IO",Quiz,1539019748,1,1,6.94,null,null,null
+13,38,"VQ5-A Introduction to Functions",Quiz,1539193563,1,1,2,null,null,null
+13,39,"VQ5-B Functions",Quiz,1539195003,1,1,0,null,null,null
+13,40,"VQ5-C Example Problem GPA Computation",Quiz,1539196982,1,1,0,null,null,null
+13,41,"VQ5-D Function Details",Quiz,1539579394,1,1,4.42,null,null,null
+13,42,"VQ5-E Scope",Quiz,1539580251,1,1,0,null,null,null
+13,43,"VQ5-F Prototypes",Quiz,1539581148,1,1,0,null,null,null
+13,44,"VQ5-G Advanced Prototypes",Quiz,1540276135,0,1,8.04,null,null,null
+13,45,"VQ5-H Pass by Reference",Quiz,1540276430,0,1,0,null,null,null
+13,46,"VQ5-I Three File Format",Quiz,1540276815,0,1,0,null,null,null
+13,47,"VQ6-A Introduction to Arrays",Quiz,1540434594,0,1,1.81,null,null,null
+13,48,"VQ6-B Looping through Arrays",Quiz,1540434784,0,1,0,null,null,null
+13,49,"VQ6-C Arrays and Functions",Quiz,1540865748,0,1,4.99,null,null,null
+13,50,"VQ6-D Parallel Arrays",Quiz,1540866023,0,1,0,null,null,null
+13,51,"VQ6-E Multidimensional Arrays",Quiz,1541464793,0,1,6.93,null,null,null
+13,52,"VQ7-A Introduction to Vectors",Quiz,1541654305,0,1,2.19,null,null,null
+13,53,"VQ7-B Vector Member Functions",Quiz,1541654484,0,1,0,null,null,null
+13,54,"VQ7-C Sorting",Quiz,1541654761,5,1,0,null,null,null
+13,55,"VQ8-A Introduction to Strings",Quiz,1542697141,0,1,12.06,null,null,null
+13,56,"VQ8-B String Member Functions",Quiz,1542697289,0,1,0,null,null,null
+13,57,"VQ8-C String Streams",Quiz,1543268994,0,1,6.61,null,null,null
+13,58,"VQ8-D String Tokenizing",Quiz,1543269202,0,1,0,null,null,null
+13,59,"VQ8-E Binary",Quiz,1543269443,0,1,0,null,null,null
+26,11,PA1,Assignment,1536817031,1,null,null,null,null,null
+26,49,PA2,Assignment,1537943077,0,null,null,null,null,null
+26,65,PA3,Assignment,1538544511,0,null,null,null,null,null
+26,97,PA4,Assignment,1539125976,0,null,null,null,null,null
+26,123,PA5,Assignment,1539759244,0,null,null,null,null,null
+26,122,PA6,Assignment,1540536494,0,null,null,null,null,null
+26,165,PA7,Assignment,1541749919,0,null,null,null,null,null
+26,182,PA8,Assignment,1542779525,0,null,null,null,null,null
+26,222,PA9,Assignment,1544080075,-17871,null,null,null,null,null
+26,230,"Lab Final PRACTICE Submission",Assignment,1544233174,-17873,null,null,null,null,null
+26,229,"Lab Final Submission",Assignment,1544734541,-17879,null,null,null,null,null
+26,3,"VQ0-C Command Line",Quiz,1535917185,,0,0,null,null,null
+26,4,"VQ0-D File Commands",Quiz,1535932403,,0,0,null,null,null
+26,5,"VQ0-E Programming Languages",Quiz,1535942409,,0,0,null,null,null
+26,6,"VQ0-F First C++ Program",Quiz,1536000739,,0,0,null,null,null
+26,12,"VQ2-A Boolean Conditions",Quiz,1536729737,,1,0,null,null,null
+26,7,"VQ1-A C++ Language Elements",Quiz,1536176766,,0,0,null,null,null
+26,8,"VQ1-B User Input Output",Quiz,1536206596,,0,0,null,null,null
+26,9,"VQ1-C Example Problem (Cone Volume)",Quiz,1536211150,,0,0,null,null,null
+26,10,"VQ1-D Arithmetic",Quiz,1536453043,0,1,0,null,null,null
+26,11,"VQ1-E Programming Errors",Quiz,1536517952,0,1,0,null,null,null
+26,13,"VQ2-B Conditionals",Quiz,1536785239,0,1,0,null,null,null
+26,14,"VQ2-C Example Problem (Guess my Number)",Quiz,1536803623,0,1,0,null,null,null
+26,15,"VQ2-D Nested Conditionals",Quiz,1536804973,0,1,0,null,null,null
+26,16,"VQ2-E Multiple Alternative Conditionals",Quiz,1537128874,1,1,0,null,null,null
+26,17,"VQ2-F Switch Statements",Quiz,1537142656,1,1,0,null,null,null
+26,19,"VQ3-A Introduction to Iteration",Quiz,1537334254,1,1,-0,null,null,null
+26,20,"VQ3-B Assignment Operators",Quiz,1537338088,1,1,-0,null,null,null
+26,21,"VQ3-C While Loops",Quiz,1537397361,0,1,-0.01,null,null,null
+26,22,"VQ3-D While Loop Examples",Quiz,1537411336,0,1,-0,null,null,null
+26,23,"VQ3-E Random Numbers",Quiz,1537743676,1,1,3.8,null,null,null
+26,24,"VQ3-F For Loops",Quiz,1537760284,1,1,0.03,null,null,null
+26,25,"VQ3-G Do While Loops",Quiz,1538415175,1,1,7.56,null,null,null
+26,26,"VQ3-H Advanced Loops",Quiz,1538426675,0,1,0.11,null,null,null
+26,35,"VQ4-A Introduction to File IO",Quiz,1538623620,0,1,2.06,null,null,null
+26,36,"VQ4-B File Processing",Quiz,1538633322,0,1,0,null,null,null
+26,37,"VQ4-C Advanced File IO",Quiz,1538938184,2,1,2.74,null,null,null
+26,38,"VQ5-A Introduction to Functions",Quiz,1539202356,0,1,3.05,null,null,null
+26,39,"VQ5-B Functions",Quiz,1539227066,0,1,0.22,null,null,null
+26,40,"VQ5-C Example Problem GPA Computation",Quiz,1539237776,0,1,0,null,null,null
+26,41,"VQ5-D Function Details",Quiz,1539659470,0,1,1.67,null,null,null
+26,42,"VQ5-E Scope",Quiz,1539661414,0,1,0,null,null,null
+26,43,"VQ5-F Prototypes",Quiz,1539663219,0,1,0,null,null,null
+26,44,"VQ5-G Advanced Prototypes",Quiz,1540165543,1,1,5.78,null,null,null
+26,45,"VQ5-H Pass by Reference",Quiz,1540264633,0,1,0,null,null,null
+26,46,"VQ5-I Three File Format",Quiz,1540271503,0,1,0,null,null,null
+26,47,"VQ6-A Introduction to Arrays",Quiz,1540404996,1,1,1.52,null,null,null
+26,48,"VQ6-B Looping through Arrays",Quiz,1540410252,0,1,0.04,null,null,null
+26,49,"VQ6-C Arrays and Functions",Quiz,1540846512,0,1,5.04,null,null,null
+26,50,"VQ6-D Parallel Arrays",Quiz,1540853418,0,1,0,null,null,null
+26,51,"VQ6-E Multidimensional Arrays",Quiz,,0,0,0,null,null,null
+26,52,"VQ7-A Introduction to Vectors",Quiz,1541657391,0,1,9.3,null,null,null
+26,53,"VQ7-B Vector Member Functions",Quiz,1541657660,0,1,0,null,null,null
+26,54,"VQ7-C Sorting",Quiz,1542055892,0,1,3.54,null,null,null
+26,55,"VQ8-A Introduction to Strings",Quiz,1542688139,0,1,7.32,null,null,null
+26,56,"VQ8-B String Member Functions",Quiz,1542688316,0,1,0,null,null,null
+26,57,"VQ8-C String Streams",Quiz,1543190852,1,1,5.79,null,null,null
+26,58,"VQ8-D String Tokenizing",Quiz,1543268528,0,1,0,null,null,null
+26,59,"VQ8-E Binary",Quiz,1543290035,0,1,0.25,null,null,null
+26,4,CR3,Choice,1537056825,null,null,null,null,null,null
+26,1,CR0,Choice,1537056842,null,null,null,null,null,null
+26,2,CR1,Choice,1537056855,null,null,null,null,null,null
+26,3,CR2,Choice,1537056865,null,null,null,null,null,null
+26,5,CR4,Choice,1539382320,null,null,null,null,null,null
+26,6,CR5,Choice,1542055946,null,null,null,null,null,null
+26,8,CR7,Choice,1542055970,null,null,null,null,null,null
+26,7,CR6,Choice,1542055984,null,null,null,null,null,null
+26,9,CR8,Choice,1543528783,null,null,null,null,null,null
+9,29,PA1,Assignment,1536899201,0,null,null,null,null,null
+9,32,PA2,Assignment,1537843724,1,null,null,null,null,null
+9,76,PA3,Assignment,1538548854,0,null,null,null,null,null
+9,94,PA4,Assignment,1539109914,1,null,null,null,null,null
+9,120,PA5,Assignment,1539758002,0,null,null,null,null,null
+9,148,PA6,Assignment,1540538840,0,null,null,null,null,null
+9,167,PA7,Assignment,1541835834,-1,null,null,null,null,null
+9,189,PA8,Assignment,1542873476,-1,null,null,null,null,null
+9,216,PA9,Assignment,1543996682,-17870,null,null,null,null,null
+9,228,"Lab Final PRACTICE Submission",Assignment,1544233007,-17873,null,null,null,null,null
+9,251,"Lab Final Submission",Assignment,1544732733,-17879,null,null,null,null,null
+9,3,"VQ0-C Command Line",Quiz,1536036020,,0,0,null,null,null
+9,4,"VQ0-D File Commands",Quiz,1536036006,,0,0,null,null,null
+9,5,"VQ0-E Programming Languages",Quiz,1536035991,,0,0,null,null,null
+9,6,"VQ0-F First C++ Program",Quiz,1536036070,,0,0,null,null,null
+9,6,,Quiz,,,0,0,null,null,null
+9,7,"VQ1-A C++ Language Elements",Quiz,1536202513,,0,0,null,null,null
+9,8,"VQ1-B User Input Output",Quiz,1536212987,,0,0,null,null,null
+9,9,"VQ1-C Example Problem (Cone Volume)",Quiz,1536214965,,0,0,null,null,null
+9,10,"VQ1-D Arithmetic",Quiz,1536612882,0,1,0,null,null,null
+9,11,"VQ1-E Programming Errors",Quiz,1536611380,0,1,0,null,null,null
+9,12,"VQ2-A Boolean Conditions",Quiz,1536794284,0,2,0,null,null,null
+9,12,,Quiz,,0,0,0,null,null,null
+9,13,"VQ2-B Conditionals",Quiz,1536816179,0,2,0,null,null,null
+9,13,,Quiz,,0,0,0,null,null,null
+9,14,"VQ2-C Example Problem (Guess my Number)",Quiz,1536817026,0,1,0,null,null,null
+9,15,"VQ2-D Nested Conditionals",Quiz,1536818021,0,1,0,null,null,null
+9,16,"VQ2-E Multiple Alternative Conditionals",Quiz,1537248178,0,1,-0,null,null,null
+9,17,"VQ2-F Switch Statements",Quiz,1537251434,0,1,-0,null,null,null
+9,19,"VQ3-A Introduction to Iteration",Quiz,1537402064,0,1,-0,null,null,null
+9,20,"VQ3-B Assignment Operators",Quiz,1537403510,0,1,-0,null,null,null
+9,21,"VQ3-C While Loops",Quiz,1537409375,0,1,-0,null,null,null
+9,22,"VQ3-D While Loop Examples",Quiz,1537412466,0,1,-0,null,null,null
+9,28,"OPTIONAL Gaddis Ch. 1 Extra Practice Questions",Quiz,1537466462,0,1,0.62,null,null,null
+9,27,"OPTIONAL Gaddis Ch. 2 Extra Practice Questions",Quiz,,0,0,0,null,null,null
+9,23,"VQ3-E Random Numbers",Quiz,1537732438,1,1,3.05,null,null,null
+9,24,"VQ3-F For Loops",Quiz,1537845684,0,1,1.29,null,null,null
+9,30,"OPTIONAL Gaddis Ch. 4 Extra Practice Questions",Quiz,,0,0,0,null,null,null
+9,25,"VQ3-G Do While Loops",Quiz,1538457513,0,1,7.06,null,null,null
+9,26,"VQ3-H Advanced Loops",Quiz,1538461295,0,1,0.03,null,null,null
+9,31,"OPTIONAL Gaddis Ch. 5 (Loops AND Files) Extra Practice Questions",Quiz,1540329626,0,1,-19.46,null,null,null
+9,35,"VQ4-A Introduction to File IO",Quiz,1538621702,0,1,1.84,null,null,null
+9,36,"VQ4-B File Processing",Quiz,1538623238,0,1,0,null,null,null
+9,37,"VQ4-C Advanced File IO",Quiz,1539055049,0,1,4.97,null,null,null
+9,38,"VQ5-A Introduction to Functions",Quiz,1539225824,0,1,1.97,null,null,null
+9,39,"VQ5-B Functions",Quiz,1539227963,0,1,0,null,null,null
+9,40,"VQ5-C Example Problem GPA Computation",Quiz,1539230693,0,1,0.01,null,null,null
+9,41,"VQ5-D Function Details",Quiz,1539661507,0,1,4.98,null,null,null
+9,42,"VQ5-E Scope",Quiz,1539662848,0,1,0,null,null,null
+9,43,"VQ5-F Prototypes",Quiz,1539664127,0,1,0,null,null,null
+9,44,"VQ5-G Advanced Prototypes",Quiz,1539666377,7,1,0,null,null,null
+9,45,"VQ5-H Pass by Reference",Quiz,1540249847,0,1,6.73,null,null,null
+9,46,"VQ5-I Three File Format",Quiz,1540272988,0,1,0.24,null,null,null
+9,47,"VQ6-A Introduction to Arrays",Quiz,1540436667,0,1,1.2,null,null,null
+9,48,"VQ6-B Looping through Arrays",Quiz,1540439322,0,1,0,null,null,null
+9,49,"VQ6-C Arrays and Functions",Quiz,1540868150,0,1,4.95,null,null,null
+9,50,"VQ6-D Parallel Arrays",Quiz,1540880156,0,1,0.12,null,null,null
+9,51,"VQ6-E Multidimensional Arrays",Quiz,1541486235,0,1,6.99,null,null,null
+9,54,"VQ7-C Sorting",Quiz,1542095088,0,1,7.02,null,null,null
+9,33,"OPTIONAL Gaddis Ch. 7 (Arrays AND Vectors) Extra Practice Questions",Quiz,1542132432,0,1,0.08,null,null,null
+9,57,"VQ8-C String Streams",Quiz,1543299004,0,1,13.48,null,null,null
+9,58,"VQ8-D String Tokenizing",Quiz,1543302410,0,1,0.03,null,null,null
+9,59,"VQ8-E Binary",Quiz,1543304318,0,1,0.01,null,null,null
+20,3,PA1,Assignment,1536872150,0,null,null,null,null,null
+20,33,PA2,Assignment,1537829650,1,null,null,null,null,null
+20,55,PA3,Assignment,1538163976,4,null,null,null,null,null
+20,59,PA4,Assignment,1538628098,6,null,null,null,null,null
+20,93,PA5,Assignment,1539125314,7,null,null,null,null,null
+20,132,PA6,Assignment,1540423157,1,null,null,null,null,null
+20,155,PA7,Assignment,1541134987,7,null,null,null,null,null
+20,177,PA8,Assignment,1542395267,5,null,null,null,null,null
+20,200,PA9,Assignment,1543603389,-17866,null,null,null,null,null
+20,227,"Lab Final PRACTICE Submission",Assignment,1544218396,-17873,null,null,null,null,null
+20,247,"Lab Final Submission",Assignment,1544730992,-17879,null,null,null,null,null
+20,3,"VQ0-C Command Line",Quiz,1535740513,,0,0,null,null,null
+20,4,"VQ0-D File Commands",Quiz,1535742225,,0,0,null,null,null
+20,5,"VQ0-E Programming Languages",Quiz,1535751805,,0,0,null,null,null
+20,6,"VQ0-F First C++ Program",Quiz,1535753304,,0,0,null,null,null
+20,6,,Quiz,,,0,0,null,null,null
+20,7,"VQ1-A C++ Language Elements",Quiz,1536102490,,0,0,null,null,null
+20,8,"VQ1-B User Input Output",Quiz,1536170397,,0,0,null,null,null
+20,9,"VQ1-C Example Problem (Cone Volume)",Quiz,1536170634,,0,0,null,null,null
+20,10,"VQ1-D Arithmetic",Quiz,1536170963,,0,0,null,null,null
+20,11,"VQ1-E Programming Errors",Quiz,1536187211,,0,0,null,null,null
+20,12,"VQ2-A Boolean Conditions",Quiz,1536703800,0,1,0,null,null,null
+20,13,"VQ2-B Conditionals",Quiz,1536705193,0,1,0,null,null,null
+20,14,"VQ2-C Example Problem (Guess my Number)",Quiz,1536705520,0,1,0,null,null,null
+20,15,"VQ2-D Nested Conditionals",Quiz,1536705859,0,1,0,null,null,null
+20,16,"VQ2-E Multiple Alternative Conditionals",Quiz,1536775310,0,1,0,null,null,null
+20,17,"VQ2-F Switch Statements",Quiz,1536776287,0,1,0,null,null,null
+20,19,"VQ3-A Introduction to Iteration",Quiz,1537226982,2,1,0,null,null,null
+20,20,"VQ3-B Assignment Operators",Quiz,1537227472,2,1,0,null,null,null
+20,21,"VQ3-C While Loops",Quiz,1537227609,2,1,0,null,null,null
+20,22,"VQ3-D While Loop Examples",Quiz,1537228590,2,1,0,null,null,null
+20,23,"VQ3-E Random Numbers",Quiz,1537482698,4,1,2.94,null,null,null
+20,24,"VQ3-F For Loops",Quiz,1537482773,4,1,0,null,null,null
+20,25,"VQ3-G Do While Loops",Quiz,1538356304,1,1,10.11,null,null,null
+20,26,"VQ3-H Advanced Loops",Quiz,1538356423,1,1,0,null,null,null
+20,35,"VQ4-A Introduction to File IO",Quiz,1538414948,3,1,0.66,null,null,null
+20,36,"VQ4-B File Processing",Quiz,1538455909,2,1,0.47,null,null,null
+20,37,"VQ4-C Advanced File IO",Quiz,1538940577,1,1,5.61,null,null,null
+20,38,"VQ5-A Introduction to Functions",Quiz,1538952999,3,1,0.14,null,null,null
+20,39,"VQ5-B Functions",Quiz,1538953098,3,1,0,null,null,null
+20,40,"VQ5-C Example Problem GPA Computation",Quiz,1538953169,3,1,0,null,null,null
+20,41,"VQ5-D Function Details",Quiz,1538953305,8,1,0,null,null,null
+20,42,"VQ5-E Scope",Quiz,1538953453,8,1,0,null,null,null
+20,43,"VQ5-F Prototypes",Quiz,1538954137,8,1,0,null,null,null
+20,44,"VQ5-G Advanced Prototypes",Quiz,1540245052,0,1,14.94,null,null,null
+20,45,"VQ5-H Pass by Reference",Quiz,1540245796,0,1,0,null,null,null
+20,46,"VQ5-I Three File Format",Quiz,1540249566,0,1,0,null,null,null
+20,47,"VQ6-A Introduction to Arrays",Quiz,1540403284,1,1,1.78,null,null,null
+20,48,"VQ6-B Looping through Arrays",Quiz,1540403925,1,1,0,null,null,null
+20,49,"VQ6-C Arrays and Functions",Quiz,1540774008,1,1,4.28,null,null,null
+20,50,"VQ6-D Parallel Arrays",Quiz,1540774606,1,1,0,null,null,null
+20,51,"VQ6-E Multidimensional Arrays",Quiz,1541453782,0,1,7.85,null,null,null
+20,52,"VQ7-A Introduction to Vectors",Quiz,1541540508,1,1,1,null,null,null
+20,54,"VQ7-C Sorting",Quiz,1541996561,1,1,5.27,null,null,null
+20,55,"VQ8-A Introduction to Strings",Quiz,1542667597,0,1,7.76,null,null,null
+20,56,"VQ8-B String Member Functions",Quiz,1542667985,0,1,0,null,null,null
+20,57,"VQ8-C String Streams",Quiz,1543272670,0,1,7,null,null,null
+20,58,"VQ8-D String Tokenizing",Quiz,1543274649,0,1,0,null,null,null
+20,59,"VQ8-E Binary",Quiz,1543275072,0,1,0,null,null,null
+25,18,PA1,Assignment,1536872324,0,null,null,null,null,null
+25,31,PA2,Assignment,1537936119,0,null,null,null,null,null
+25,63,PA3,Assignment,1538547111,0,null,null,null,null,null
+25,104,PA4,Assignment,1539154038,0,null,null,null,null,null
+25,145,PA6,Assignment,1540536783,0,null,null,null,null,null
+25,185,PA8,Assignment,1542785825,0,null,null,null,null,null
+25,201,PA9,Assignment,1543823029,-17868,null,null,null,null,null
+25,7,"VQ1-A C++ Language Elements",Quiz,1536190319,,0,0,null,null,null
+25,8,"VQ1-B User Input Output",Quiz,1536192570,,0,0,null,null,null
+25,9,"VQ1-C Example Problem (Cone Volume)",Quiz,1536193977,,0,0,null,null,null
+25,10,"VQ1-D Arithmetic",Quiz,1536518223,0,1,0,null,null,null
+25,11,"VQ1-E Programming Errors",Quiz,1536525218,0,1,0,null,null,null
+25,12,"VQ2-A Boolean Conditions",Quiz,1536789906,0,1,0,null,null,null
+25,13,"VQ2-B Conditionals",Quiz,1536790748,0,1,0,null,null,null
+25,14,"VQ2-C Example Problem (Guess my Number)",Quiz,1536791180,0,1,0,null,null,null
+25,15,"VQ2-D Nested Conditionals",Quiz,1536791591,0,1,0,null,null,null
+25,16,"VQ2-E Multiple Alternative Conditionals",Quiz,1537134563,1,1,0,null,null,null
+25,17,"VQ2-F Switch Statements",Quiz,1537136549,1,1,0,null,null,null
+25,19,"VQ3-A Introduction to Iteration",Quiz,1537398217,0,1,0,null,null,null
+25,20,"VQ3-B Assignment Operators",Quiz,1537399452,0,1,0,null,null,null
+25,21,"VQ3-C While Loops",Quiz,1537400025,0,1,-0,null,null,null
+25,22,"VQ3-D While Loop Examples",Quiz,1537400878,0,1,-0,null,null,null
+25,23,"VQ3-E Random Numbers",Quiz,1537829292,0,1,4.94,null,null,null
+25,24,"VQ3-F For Loops",Quiz,1537829714,0,1,0,null,null,null
+25,25,"VQ3-G Do While Loops",Quiz,1538463423,0,1,7.33,null,null,null
+25,26,"VQ3-H Advanced Loops",Quiz,1538463479,0,1,0,null,null,null
+25,35,"VQ4-A Introduction to File IO",Quiz,1538626207,0,1,1.8,null,null,null
+25,36,"VQ4-B File Processing",Quiz,1538627120,0,1,0,null,null,null
+25,37,"VQ4-C Advanced File IO",Quiz,1539057519,0,1,4.87,null,null,null
+25,38,"VQ5-A Introduction to Functions",Quiz,1539229944,0,1,1.98,null,null,null
+25,39,"VQ5-B Functions",Quiz,1539230108,0,1,0,null,null,null
+25,40,"VQ5-C Example Problem GPA Computation",Quiz,1539230851,0,1,0,null,null,null
+25,44,"VQ5-G Advanced Prototypes",Quiz,,0,0,0,null,null,null
+25,49,"VQ6-C Arrays and Functions",Quiz,1540880216,0,1,19.09,null,null,null
+25,50,"VQ6-D Parallel Arrays",Quiz,1540880626,0,1,0,null,null,null
+25,1,CR0,Choice,1536515272,null,null,null,null,null,null
+25,1,"Forum Response",Forum,1540523770,null,null,null,4,14,1
+27,15,PA1,Assignment,1536908282,0,null,null,null,null,null
+27,46,PA2,Assignment,1537931401,0,null,null,null,null,null
+27,71,PA3,Assignment,1538533432,0,null,null,null,null,null
+27,96,PA4,Assignment,1539125763,0,null,null,null,null,null
+27,112,PA5,Assignment,1539744497,0,null,null,null,null,null
+27,133,PA6,Assignment,1540537076,0,null,null,null,null,null
+27,164,PA7,Assignment,1541746788,0,null,null,null,null,null
+27,175,PA8,Assignment,1542777624,0,null,null,null,null,null
+27,213,PA9,Assignment,1543988413,-17870,null,null,null,null,null
+27,232,"Lab Final PRACTICE Submission",Assignment,1544233459,-17873,null,null,null,null,null
+27,250,"Lab Final Submission",Assignment,1544732423,-17879,null,null,null,null,null
+27,3,"VQ0-C Command Line",Quiz,1536029882,,0,0,null,null,null
+27,4,"VQ0-D File Commands",Quiz,1536032399,,0,0,null,null,null
+27,4,,Quiz,,,0,0,null,null,null
+27,5,"VQ0-E Programming Languages",Quiz,1536040366,,0,0,null,null,null
+27,6,"VQ0-F First C++ Program",Quiz,1536041275,,0,0,null,null,null
+27,5,,Quiz,,,0,0,null,null,null
+27,6,,Quiz,,,0,0,null,null,null
+27,7,"VQ1-A C++ Language Elements",Quiz,1536205320,,0,0,null,null,null
+27,7,,Quiz,,,0,0,null,null,null
+27,8,"VQ1-B User Input Output",Quiz,1536205520,,0,0,null,null,null
+27,8,,Quiz,,,0,0,null,null,null
+27,9,"VQ1-C Example Problem (Cone Volume)",Quiz,1536205669,,0,0,null,null,null
+27,10,"VQ1-D Arithmetic",Quiz,1536606140,0,1,0,null,null,null
+27,11,"VQ1-E Programming Errors",Quiz,1536610793,0,1,0,null,null,null
+27,12,"VQ2-A Boolean Conditions",Quiz,1536792097,0,2,0,null,null,null
+27,12,,Quiz,,0,0,0,null,null,null
+27,13,"VQ2-B Conditionals",Quiz,1536806714,0,1,0,null,null,null
+27,14,"VQ2-C Example Problem (Guess my Number)",Quiz,1536808619,0,1,0,null,null,null
+27,15,"VQ2-D Nested Conditionals",Quiz,1536809210,0,1,0,null,null,null
+27,16,"VQ2-E Multiple Alternative Conditionals",Quiz,1537248837,0,1,0,null,null,null
+27,17,"VQ2-F Switch Statements",Quiz,1537249879,0,1,-0,null,null,null
+27,19,"VQ3-A Introduction to Iteration",Quiz,1537332161,1,1,0,null,null,null
+27,20,"VQ3-B Assignment Operators",Quiz,1537334875,1,1,0,null,null,null
+27,21,"VQ3-C While Loops",Quiz,1537421545,0,1,0,null,null,null
+27,22,"VQ3-D While Loop Examples",Quiz,1537422561,0,1,0,null,null,null
+27,23,"VQ3-E Random Numbers",Quiz,1537849329,0,1,4.93,null,null,null
+27,24,"VQ3-F For Loops",Quiz,1537850844,0,1,0.02,null,null,null
+27,25,"VQ3-G Do While Loops",Quiz,1538455404,0,1,7,null,null,null
+27,26,"VQ3-H Advanced Loops",Quiz,1538456110,0,1,0,null,null,null
+27,35,"VQ4-A Introduction to File IO",Quiz,1538632898,0,1,2.05,null,null,null
+27,36,"VQ4-B File Processing",Quiz,1538633790,0,1,0.01,null,null,null
+27,37,"VQ4-C Advanced File IO",Quiz,1539055509,0,1,4.88,null,null,null
+27,38,"VQ5-A Introduction to Functions",Quiz,1539224262,0,1,1.95,null,null,null
+27,39,"VQ5-B Functions",Quiz,1539233453,0,1,0.11,null,null,null
+27,40,"VQ5-C Example Problem GPA Computation",Quiz,1539233498,0,1,0,null,null,null
+27,41,"VQ5-D Function Details",Quiz,1539660653,0,1,4.94,null,null,null
+27,42,"VQ5-E Scope",Quiz,1539662028,0,1,0,null,null,null
+27,43,"VQ5-F Prototypes",Quiz,1539662734,0,1,0.01,null,null,null
+27,44,"VQ5-G Advanced Prototypes",Quiz,1540264789,0,1,6.97,null,null,null
+27,45,"VQ5-H Pass by Reference",Quiz,1540267417,0,1,0.03,null,null,null
+27,46,"VQ5-I Three File Format",Quiz,1540269595,0,1,0.02,null,null,null
+27,47,"VQ6-A Introduction to Arrays",Quiz,1540443455,0,1,2.01,null,null,null
+27,48,"VQ6-B Looping through Arrays",Quiz,1540443906,0,1,0,null,null,null
+27,49,"VQ6-C Arrays and Functions",Quiz,1540852982,0,1,4.73,null,null,null
+27,51,"VQ6-E Multidimensional Arrays",Quiz,1541489692,0,1,7.37,null,null,null
+27,52,"VQ7-A Introduction to Vectors",Quiz,1541654385,0,1,1.91,null,null,null
+27,53,"VQ7-B Vector Member Functions",Quiz,1541655037,0,1,0.01,null,null,null
+27,54,"VQ7-C Sorting",Quiz,1541984653,1,1,3.81,null,null,null
+27,57,"VQ8-C String Streams",Quiz,1543296471,0,1,15.15,null,null,null
+27,58,"VQ8-D String Tokenizing",Quiz,1543297396,0,1,0.01,null,null,null
+27,59,"VQ8-E Binary",Quiz,1543297742,0,1,0,null,null,null
+27,1,CR0,Choice,1536205283,null,null,null,null,null,null
+27,2,CR1,Choice,1536702850,null,null,null,null,null,null
+27,3,CR2,Choice,1536782293,null,null,null,null,null,null
+27,4,CR3,Choice,1536782303,null,null,null,null,null,null
+18,17,PA1,Assignment,1536776018,2,null,null,null,null,null
+18,19,PA2,Assignment,1537927002,0,null,null,null,null,null
+18,68,PA3,Assignment,1538535932,0,null,null,null,null,null
+18,108,PA4,Assignment,1539200475,-1,null,null,null,null,null
+18,137,PA6,Assignment,1540521899,0,null,null,null,null,null
+18,160,PA7,Assignment,1541729656,0,null,null,null,null,null
+18,179,PA8,Assignment,1542740876,1,null,null,null,null,null
+18,210,PA9,Assignment,1543980265,-17870,null,null,null,null,null
+18,240,"Lab Final PRACTICE Submission",Assignment,1544465181,-17876,null,null,null,null,null
+18,253,"Lab Final Submission",Assignment,1544734477,-17879,null,null,null,null,null
+18,3,"VQ0-C Command Line",Quiz,1536007412,,0,0,null,null,null
+18,4,"VQ0-D File Commands",Quiz,1536007495,,0,0,null,null,null
+18,5,"VQ0-E Programming Languages",Quiz,1536007381,,0,0,null,null,null
+18,6,"VQ0-F First C++ Program",Quiz,1536008724,,0,0,null,null,null
+18,7,"VQ1-A C++ Language Elements",Quiz,1536185066,,0,0,null,null,null
+18,8,"VQ1-B User Input Output",Quiz,1536188636,,0,0,null,null,null
+18,9,"VQ1-C Example Problem (Cone Volume)",Quiz,1536198810,,0,0,null,null,null
+18,10,"VQ1-D Arithmetic",Quiz,1536246527,,0,0,null,null,null
+18,11,"VQ1-E Programming Errors",Quiz,1536248889,,0,0,null,null,null
+18,12,"VQ2-A Boolean Conditions",Quiz,1536438802,0,1,0,null,null,null
+18,13,"VQ2-B Conditionals",Quiz,1536441634,0,1,0,null,null,null
+18,14,"VQ2-C Example Problem (Guess my Number)",Quiz,1536443670,0,1,0,null,null,null
+18,15,"VQ2-D Nested Conditionals",Quiz,1536449813,0,1,0,null,null,null
+18,16,"VQ2-E Multiple Alternative Conditionals",Quiz,1536968279,3,1,0,null,null,null
+18,17,"VQ2-F Switch Statements",Quiz,1536971026,3,1,0,null,null,null
+18,19,"VQ3-A Introduction to Iteration",Quiz,1537142998,3,1,0,null,null,null
+18,20,"VQ3-B Assignment Operators",Quiz,1537197652,3,1,0,null,null,null
+18,21,"VQ3-C While Loops",Quiz,1537220916,2,1,0,null,null,null
+18,22,"VQ3-D While Loop Examples",Quiz,1537282865,2,1,0,null,null,null
+18,23,"VQ3-E Random Numbers",Quiz,1537640638,3,1,4.14,null,null,null
+18,24,"VQ3-F For Loops",Quiz,1537642696,3,1,0.02,null,null,null
+18,25,"VQ3-G Do While Loops",Quiz,1538338070,1,1,8.05,null,null,null
+18,26,"VQ3-H Advanced Loops",Quiz,1538361351,1,1,0.27,null,null,null
+18,35,"VQ4-A Introduction to File IO",Quiz,1538539085,1,1,2.04,null,null,null
+18,36,"VQ4-B File Processing",Quiz,1538579082,1,1,0.44,null,null,null
+18,37,"VQ4-C Advanced File IO",Quiz,1538952487,1,1,4.3,null,null,null
+18,41,"VQ5-D Function Details",Quiz,1539464600,2,1,5.9,null,null,null
+18,42,"VQ5-E Scope",Quiz,1539467395,2,1,0,null,null,null
+18,43,"VQ5-F Prototypes",Quiz,1539469398,2,1,0,null,null,null
+18,44,"VQ5-G Advanced Prototypes",Quiz,1539980643,3,1,5.89,null,null,null
+18,45,"VQ5-H Pass by Reference",Quiz,1539987592,3,1,0,null,null,null
+18,46,"VQ5-I Three File Format",Quiz,1540058731,3,1,0,null,null,null
+18,47,"VQ6-A Introduction to Arrays",Quiz,1540234712,3,1,0.18,null,null,null
+18,48,"VQ6-B Looping through Arrays",Quiz,1540322322,1,1,0.96,null,null,null
+18,49,"VQ6-C Arrays and Functions",Quiz,1540676304,2,1,4.07,null,null,null
+18,50,"VQ6-D Parallel Arrays",Quiz,1540678984,2,1,0,null,null,null
+18,51,"VQ6-E Multidimensional Arrays",Quiz,1541363661,1,1,7.86,null,null,null
+18,52,"VQ7-A Introduction to Vectors",Quiz,1541532384,2,1,1.81,null,null,null
+18,53,"VQ7-B Vector Member Functions",Quiz,1541629838,0,1,0,null,null,null
+18,54,"VQ7-C Sorting",Quiz,1542059401,0,1,4.91,null,null,null
+18,57,"VQ8-C String Streams",Quiz,1542922708,4,1,9.96,null,null,null
+18,58,"VQ8-D String Tokenizing",Quiz,1542990061,4,1,0,null,null,null
+18,59,"VQ8-E Binary",Quiz,1542994680,4,1,0,null,null,null
+21,27,PA1,Assignment,1536892166,0,null,null,null,null,null
+21,48,PA2,Assignment,1537939167,0,null,null,null,null,null
+21,56,PA3,Assignment,1538540051,0,null,null,null,null,null
+21,88,PA4,Assignment,1539151619,0,null,null,null,null,null
+21,118,PA5,Assignment,1539754306,0,null,null,null,null,null
+21,143,PA6,Assignment,1540530094,0,null,null,null,null,null
+21,162,PA7,Assignment,1541740649,0,null,null,null,null,null
+21,187,PA8,Assignment,1542868639,-1,null,null,null,null,null
+21,217,PA9,Assignment,1543996678,-17870,null,null,null,null,null
+21,236,"Lab Final PRACTICE Submission",Assignment,1544309321,-17874,null,null,null,null,null
+21,246,"Lab Final Submission",Assignment,1544730278,-17879,null,null,null,null,null
+21,3,"VQ0-C Command Line",Quiz,1536042830,,0,0,null,null,null
+21,3,,Quiz,,,0,0,null,null,null
+21,4,"VQ0-D File Commands",Quiz,1536041084,,0,0,null,null,null
+21,4,,Quiz,,,0,0,null,null,null
+21,5,"VQ0-E Programming Languages",Quiz,1536041877,,0,0,null,null,null
+21,5,,Quiz,,,0,0,null,null,null
+21,6,"VQ0-F First C++ Program",Quiz,1536042765,,0,0,null,null,null
+21,6,,Quiz,,,0,0,null,null,null
+21,6,,Quiz,,,0,0,null,null,null
+21,3,,Quiz,,,0,0,null,null,null
+21,7,"VQ1-A C++ Language Elements",Quiz,1536202569,,0,0,null,null,null
+21,7,,Quiz,,,0,0,null,null,null
+21,8,"VQ1-B User Input Output",Quiz,1536205064,,0,0,null,null,null
+21,9,"VQ1-C Example Problem (Cone Volume)",Quiz,1536206107,,0,0,null,null,null
+21,9,,Quiz,,,0,0,null,null,null
+21,10,"VQ1-D Arithmetic",Quiz,1536527509,0,1,0,null,null,null
+21,11,"VQ1-E Programming Errors",Quiz,1536527992,0,1,0,null,null,null
+21,12,"VQ2-A Boolean Conditions",Quiz,1536812366,0,1,0,null,null,null
+21,13,"VQ2-B Conditionals",Quiz,1536813486,0,1,0,null,null,null
+21,14,"VQ2-C Example Problem (Guess my Number)",Quiz,1536818515,0,1,0,null,null,null
+21,15,"VQ2-D Nested Conditionals",Quiz,1536819248,0,1,0,null,null,null
+21,16,"VQ2-E Multiple Alternative Conditionals",Quiz,1537156622,1,1,0,null,null,null
+21,17,"VQ2-F Switch Statements",Quiz,1537159714,1,1,0,null,null,null
+21,19,"VQ3-A Introduction to Iteration",Quiz,1537412706,0,1,0,null,null,null
+21,20,"VQ3-B Assignment Operators",Quiz,1537413220,0,1,0,null,null,null
+21,21,"VQ3-C While Loops",Quiz,1537413930,0,1,0,null,null,null
+21,22,"VQ3-D While Loop Examples",Quiz,1537416186,0,1,-0,null,null,null
+21,23,"VQ3-E Random Numbers",Quiz,1537843869,0,1,4.95,null,null,null
+21,24,"VQ3-F For Loops",Quiz,1537845628,0,1,0.02,null,null,null
+21,25,"VQ3-G Do While Loops",Quiz,1538434711,0,1,6.69,null,null,null
+21,26,"VQ3-H Advanced Loops",Quiz,1538435446,0,1,0.01,null,null,null
+21,35,"VQ4-A Introduction to File IO",Quiz,1538623293,0,1,2.12,null,null,null
+21,36,"VQ4-B File Processing",Quiz,1538624550,0,1,0.01,null,null,null
+21,37,"VQ4-C Advanced File IO",Quiz,1539043904,0,1,4.85,null,null,null
+21,38,"VQ5-A Introduction to Functions",Quiz,1539241058,0,1,2.28,null,null,null
+21,39,"VQ5-B Functions",Quiz,1539241111,0,1,0,null,null,null
+21,40,"VQ5-C Example Problem GPA Computation",Quiz,1539241136,0,1,0,null,null,null
+21,41,"VQ5-D Function Details",Quiz,1539633427,0,1,4.54,null,null,null
+21,42,"VQ5-E Scope",Quiz,1539671040,0,1,0.41,null,null,null
+21,43,"VQ5-F Prototypes",Quiz,1539671779,0,1,0.01,null,null,null
+21,44,"VQ5-G Advanced Prototypes",Quiz,1540274848,0,1,6.97,null,null,null
+21,45,"VQ5-H Pass by Reference",Quiz,1540275474,0,1,0,null,null,null
+21,46,"VQ5-I Three File Format",Quiz,1540276539,0,1,0,null,null,null
+21,49,"VQ6-C Arrays and Functions",Quiz,1540865860,0,1,6.81,null,null,null
+21,50,"VQ6-D Parallel Arrays",Quiz,1540866065,0,1,0,null,null,null
+21,51,"VQ6-E Multidimensional Arrays",Quiz,1541486798,0,1,7.18,null,null,null
+21,54,"VQ7-C Sorting",Quiz,1542083877,0,1,6.89,null,null,null
+21,57,"VQ8-C String Streams",Quiz,1543299210,0,1,14.07,null,null,null
+21,58,"VQ8-D String Tokenizing",Quiz,1543300080,0,1,0.01,null,null,null
+21,59,"VQ8-E Binary",Quiz,1543300797,0,1,0,null,null,null
+21,1,CR0,Choice,1536186842,null,null,null,null,null,null
+21,2,CR1,Choice,1536620958,null,null,null,null,null,null
+21,3,CR2,Choice,1536620968,null,null,null,null,null,null
+21,4,CR3,Choice,1536620976,null,null,null,null,null,null
+21,5,CR4,Choice,1543300830,null,null,null,null,null,null
+21,6,CR5,Choice,1543300858,null,null,null,null,null,null
+21,7,CR6,Choice,1543300865,null,null,null,null,null,null
+21,8,CR7,Choice,1543300872,null,null,null,null,null,null
+21,9,CR8,Choice,1543300877,null,null,null,null,null,null
+24,4,PA1,Assignment,1536817380,1,null,null,null,null,null
+24,43,PA2,Assignment,1537757167,2,null,null,null,null,null
+24,72,PA3,Assignment,1538537501,0,null,null,null,null,null
+24,98,PA4,Assignment,1539131385,0,null,null,null,null,null
+24,116,PA5,Assignment,1539743951,0,null,null,null,null,null
+24,144,PA6,Assignment,1540535308,0,null,null,null,null,null
+24,157,PA7,Assignment,1541615859,2,null,null,null,null,null
+24,186,PA8,Assignment,1542786523,0,null,null,null,null,null
+24,208,PA9,Assignment,1543976926,-17870,null,null,null,null,null
+24,209,"Lab Final PRACTICE Submission",Assignment,1543976986,-17870,null,null,null,null,null
+24,256,"Lab Final Submission",Assignment,1544734460,-17879,null,null,null,null,null
+24,3,"VQ0-C Command Line",Quiz,1535855765,,0,0,null,null,null
+24,4,"VQ0-D File Commands",Quiz,1535858235,,0,0,null,null,null
+24,5,"VQ0-E Programming Languages",Quiz,1535861511,,0,0,null,null,null
+24,6,"VQ0-F First C++ Program",Quiz,1535863386,,0,0,null,null,null
+24,7,"VQ1-A C++ Language Elements",Quiz,1536114754,,0,0,null,null,null
+24,8,"VQ1-B User Input Output",Quiz,1536121740,,0,0,null,null,null
+24,8,,Quiz,,,0,0,null,null,null
+24,9,"VQ1-C Example Problem (Cone Volume)",Quiz,1536195034,,0,0,null,null,null
+24,10,"VQ1-D Arithmetic",Quiz,1536284307,,0,0,null,null,null
+24,10,,Quiz,,,0,0,null,null,null
+24,10,,Quiz,,,0,0,null,null,null
+24,10,,Quiz,,,0,0,null,null,null
+24,11,"VQ1-E Programming Errors",Quiz,1536523977,0,1,0,null,null,null
+24,12,"VQ2-A Boolean Conditions",Quiz,1536801009,0,1,0,null,null,null
+24,13,"VQ2-B Conditionals",Quiz,1536802653,0,1,0,null,null,null
+24,14,"VQ2-C Example Problem (Guess my Number)",Quiz,1536807151,0,2,0,null,null,null
+24,14,,Quiz,,0,0,0,null,null,null
+24,15,"VQ2-D Nested Conditionals",Quiz,1536807869,0,1,0,null,null,null
+24,16,"VQ2-E Multiple Alternative Conditionals",Quiz,1537129297,1,1,0,null,null,null
+24,17,"VQ2-F Switch Statements",Quiz,1537130965,1,1,0,null,null,null
+24,28,"OPTIONAL Gaddis Ch. 1 Extra Practice Questions",Quiz,,0,0,0,null,null,null
+24,19,"VQ3-A Introduction to Iteration",Quiz,1537412619,0,1,-0,null,null,null
+24,20,"VQ3-B Assignment Operators",Quiz,1537413012,0,1,-0,null,null,null
+24,21,"VQ3-C While Loops",Quiz,1537414389,0,1,-0,null,null,null
+24,22,"VQ3-D While Loop Examples",Quiz,1537415077,0,1,0,null,null,null
+24,23,"VQ3-E Random Numbers",Quiz,1537761495,1,1,3.97,null,null,null
+24,24,"VQ3-F For Loops",Quiz,1537847913,0,1,0,null,null,null
+24,43,"VQ5-F Prototypes",Quiz,1539549659,1,1,-19.67,null,null,null
+24,25,"VQ3-G Do While Loops",Quiz,1538346057,1,1,5.74,null,null,null
+24,26,"VQ3-H Advanced Loops",Quiz,1538347356,1,1,0,null,null,null
+24,35,"VQ4-A Introduction to File IO",Quiz,1538621227,0,1,3.16,null,null,null
+24,36,"VQ4-B File Processing",Quiz,1538622330,0,1,0.01,null,null,null
+24,37,"VQ4-C Advanced File IO",Quiz,1538623706,5,1,0.01,null,null,null
+24,38,"VQ5-A Introduction to Functions",Quiz,1539229319,0,1,4.17,null,null,null
+24,39,"VQ5-B Functions",Quiz,1539229527,0,1,0,null,null,null
+24,40,"VQ5-C Example Problem GPA Computation",Quiz,1539231320,0,1,0.02,null,null,null
+24,41,"VQ5-D Function Details",Quiz,1539546698,1,1,3.65,null,null,null
+24,42,"VQ5-E Scope",Quiz,1539547760,1,1,0.01,null,null,null
+24,44,"VQ5-G Advanced Prototypes",Quiz,1540259579,0,1,8.16,null,null,null
+24,45,"VQ5-H Pass by Reference",Quiz,1540261464,0,1,0.02,null,null,null
+24,46,"VQ5-I Three File Format",Quiz,1540264818,0,1,0.01,null,null,null
+24,47,"VQ6-A Introduction to Arrays",Quiz,1540422724,0,1,1.83,null,null,null
+24,48,"VQ6-B Looping through Arrays",Quiz,1540429661,0,1,0.07,null,null,null
+24,49,"VQ6-C Arrays and Functions",Quiz,1540755501,1,1,3.76,null,null,null
+24,50,"VQ6-D Parallel Arrays",Quiz,1540757434,1,1,0.01,null,null,null
+24,51,"VQ6-E Multidimensional Arrays",Quiz,1541370451,1,1,7.06,null,null,null
+24,52,"VQ7-A Introduction to Vectors",Quiz,1541619002,1,1,2.86,null,null,null
+24,53,"VQ7-B Vector Member Functions",Quiz,1541619586,1,1,0,null,null,null
+24,54,"VQ7-C Sorting",Quiz,1542094996,0,1,5.5,null,null,null
+24,55,"VQ8-A Introduction to Strings",Quiz,1542694793,0,1,6.93,null,null,null
+24,56,"VQ8-B String Member Functions",Quiz,1542694976,0,1,0,null,null,null
+24,57,"VQ8-C String Streams",Quiz,1543301048,0,1,6.92,null,null,null
+24,58,"VQ8-D String Tokenizing",Quiz,1543302410,0,1,0,null,null,null
+24,59,"VQ8-E Binary",Quiz,1543303763,0,1,0,null,null,null
+24,1,CR0,Choice,1536101884,null,null,null,null,null,null
+24,2,CR1,Choice,1536807269,null,null,null,null,null,null
+24,3,CR2,Choice,1537131034,null,null,null,null,null,null
+24,4,CR3,Choice,1538619903,null,null,null,null,null,null
+24,5,CR4,Choice,1538984155,null,null,null,null,null,null
+24,6,CR5,Choice,1540330243,null,null,null,null,null,null
+24,7,CR6,Choice,1541617628,null,null,null,null,null,null
+24,8,CR7,Choice,1542694620,null,null,null,null,null,null
+24,9,CR8,Choice,1543303775,null,null,null,null,null,null
+12,22,PA1,Assignment,1536960041,-1,null,null,null,null,null
+12,53,PA2,Assignment,1537943853,0,null,null,null,null,null
+12,74,PA3,Assignment,1538546303,0,null,null,null,null,null
+12,106,PA4,Assignment,1539156754,0,null,null,null,null,null
+12,124,PA5,Assignment,1539761466,0,null,null,null,null,null
+12,149,PA6,Assignment,1540550844,0,null,null,null,null,null
+12,169,PA7,Assignment,1541836732,-1,null,null,null,null,null
+12,239,"Lab Final PRACTICE Submission",Assignment,1544415529,-17875,null,null,null,null,null
+12,249,"Lab Final Submission",Assignment,1544732196,-17879,null,null,null,null,null
+12,193,PA8,Assignment,1544768719,-23,null,null,null,null,null
+12,3,"VQ0-C Command Line",Quiz,1536019138,,0,0,null,null,null
+12,4,"VQ0-D File Commands",Quiz,1536028147,,0,0,null,null,null
+12,5,"VQ0-E Programming Languages",Quiz,1536030672,,0,0,null,null,null
+12,6,"VQ0-F First C++ Program",Quiz,1536037617,,0,0,null,null,null
+12,7,"VQ1-A C++ Language Elements",Quiz,1536212632,,0,0,null,null,null
+12,8,"VQ1-B User Input Output",Quiz,1536215798,,0,0,null,null,null
+12,9,"VQ1-C Example Problem (Cone Volume)",Quiz,1536216561,,0,0,null,null,null
+12,10,"VQ1-D Arithmetic",Quiz,1536646826,0,1,0,null,null,null
+12,11,"VQ1-E Programming Errors",Quiz,1536647836,0,1,0,null,null,null
+12,12,"VQ2-A Boolean Conditions",Quiz,1536806638,0,1,0,null,null,null
+12,13,"VQ2-B Conditionals",Quiz,1536807323,0,1,0,null,null,null
+12,14,"VQ2-C Example Problem (Guess my Number)",Quiz,1536808864,0,1,0,null,null,null
+12,15,"VQ2-D Nested Conditionals",Quiz,1536809177,0,1,0,null,null,null
+12,16,"VQ2-E Multiple Alternative Conditionals",Quiz,1537244749,0,1,0,null,null,null
+12,17,"VQ2-F Switch Statements",Quiz,1537252931,0,1,0,null,null,null
+12,19,"VQ3-A Introduction to Iteration",Quiz,1537417478,0,1,0,null,null,null
+12,20,"VQ3-B Assignment Operators",Quiz,1537418570,0,1,0,null,null,null
+12,21,"VQ3-C While Loops",Quiz,1537421776,0,1,-0,null,null,null
+12,22,"VQ3-D While Loop Examples",Quiz,1537424597,0,1,0,null,null,null
+12,23,"VQ3-E Random Numbers",Quiz,1537830590,0,1,4.7,null,null,null
+12,24,"VQ3-F For Loops",Quiz,1537839322,0,1,0.09,null,null,null
+12,25,"VQ3-G Do While Loops",Quiz,1538432815,0,1,6.86,null,null,null
+12,26,"VQ3-H Advanced Loops",Quiz,1538434636,0,1,0.02,null,null,null
+12,35,"VQ4-A Introduction to File IO",Quiz,1538632894,0,1,2.29,null,null,null
+12,36,"VQ4-B File Processing",Quiz,1538635760,0,1,0.02,null,null,null
+12,37,"VQ4-C Advanced File IO",Quiz,1539060751,0,1,4.9,null,null,null
+12,38,"VQ5-A Introduction to Functions",Quiz,1539234553,0,1,2.01,null,null,null
+12,39,"VQ5-B Functions",Quiz,1539238985,0,1,0.05,null,null,null
+12,40,"VQ5-C Example Problem GPA Computation",Quiz,1539239822,0,1,0.01,null,null,null
+12,41,"VQ5-D Function Details",Quiz,1539636626,0,1,4.59,null,null,null
+12,42,"VQ5-E Scope",Quiz,1539638109,0,1,0.01,null,null,null
+12,43,"VQ5-F Prototypes",Quiz,1539638955,0,1,0.01,null,null,null
+12,44,"VQ5-G Advanced Prototypes",Quiz,1540273537,0,1,7.34,null,null,null
+12,45,"VQ5-H Pass by Reference",Quiz,1540274598,0,1,0.01,null,null,null
+12,46,"VQ5-I Three File Format",Quiz,1540275967,0,1,0,null,null,null
+12,47,"VQ6-A Introduction to Arrays",Quiz,1540448194,0,1,1.95,null,null,null
+12,48,"VQ6-B Looping through Arrays",Quiz,1540449500,0,2,0,null,null,null
+12,48,"VQ6-B Looping through Arrays",Quiz,,0,0,0,null,null,null
+12,49,"VQ6-C Arrays and Functions",Quiz,1540880763,0,1,4.98,null,null,null
+12,50,"VQ6-D Parallel Arrays",Quiz,1540882173,0,1,0,null,null,null
+12,51,"VQ6-E Multidimensional Arrays",Quiz,1541651211,-2,1,8.9,null,null,null
+12,54,"VQ7-C Sorting",Quiz,1542094213,0,1,5.12,null,null,null
+12,56,"VQ8-B String Member Functions",Quiz,1542691391,0,1,6.9,null,null,null
+12,55,"VQ8-A Introduction to Strings",Quiz,1542691592,0,1,0,null,null,null
+12,58,"VQ8-D String Tokenizing",Quiz,1543304046,0,1,7.09,null,null,null
+12,59,"VQ8-E Binary",Quiz,1543304309,0,1,0,null,null,null
+12,57,"VQ8-C String Streams",Quiz,1543305081,0,1,0,null,null,null
+12,7,CR6,Choice,1540503070,null,null,null,null,null,null
+12,6,CR5,Choice,1540503085,null,null,null,null,null,null
+17,24,PA1,Assignment,1536878932,0,null,null,null,null,null
+17,45,PA2,Assignment,1537918561,0,null,null,null,null,null
+17,69,PA3,Assignment,1538522475,0,null,null,null,null,null
+17,81,PA4,Assignment,1539148233,0,null,null,null,null,null
+17,117,PA5,Assignment,1539751985,0,null,null,null,null,null
+17,136,PA6,Assignment,1540507979,0,null,null,null,null,null
+17,161,PA7,Assignment,1541731589,0,null,null,null,null,null
+17,180,PA8,Assignment,1542760663,0,null,null,null,null,null
+17,214,PA9,Assignment,1543989998,-17870,null,null,null,null,null
+17,231,"Lab Final PRACTICE Submission",Assignment,1544226816,-17873,null,null,null,null,null
+17,254,"Lab Final Submission",Assignment,1544734373,-17879,null,null,null,null,null
+17,3,"VQ0-C Command Line",Quiz,1535996413,,0,0,null,null,null
+17,4,"VQ0-D File Commands",Quiz,1535998273,,0,0,null,null,null
+17,5,"VQ0-E Programming Languages",Quiz,1535999979,,0,0,null,null,null
+17,6,"VQ0-F First C++ Program",Quiz,1536001397,,0,0,null,null,null
+17,6,,Quiz,,,0,0,null,null,null
+17,7,"VQ1-A C++ Language Elements",Quiz,1536199603,,0,0,null,null,null
+17,8,"VQ1-B User Input Output",Quiz,1536202072,,0,0,null,null,null
+17,9,"VQ1-C Example Problem (Cone Volume)",Quiz,1536203229,,0,0,null,null,null
+17,10,"VQ1-D Arithmetic",Quiz,1536556491,0,1,0,null,null,null
+17,11,"VQ1-E Programming Errors",Quiz,1536600526,0,1,0,null,null,null
+17,12,"VQ2-A Boolean Conditions",Quiz,1536804798,0,1,0,null,null,null
+17,13,"VQ2-B Conditionals",Quiz,1536806118,0,1,0,null,null,null
+17,14,"VQ2-C Example Problem (Guess my Number)",Quiz,1536807055,0,1,0,null,null,null
+17,15,"VQ2-D Nested Conditionals",Quiz,1536807562,0,1,0,null,null,null
+17,16,"VQ2-E Multiple Alternative Conditionals",Quiz,1537237780,0,1,0,null,null,null
+17,17,"VQ2-F Switch Statements",Quiz,1537239536,0,1,0,null,null,null
+17,19,"VQ3-A Introduction to Iteration",Quiz,1537405627,0,1,0,null,null,null
+17,20,"VQ3-B Assignment Operators",Quiz,1537406592,0,1,-0,null,null,null
+17,21,"VQ3-C While Loops",Quiz,1537406849,0,1,0,null,null,null
+17,22,"VQ3-D While Loop Examples",Quiz,1537407932,0,1,-0,null,null,null
+17,23,"VQ3-E Random Numbers",Quiz,1537841172,0,1,5,null,null,null
+17,24,"VQ3-F For Loops",Quiz,1537841594,0,1,0,null,null,null
+17,25,"VQ3-G Do While Loops",Quiz,1538096745,4,1,2.95,null,null,null
+17,26,"VQ3-H Advanced Loops",Quiz,1538097966,4,1,0,null,null,null
+17,35,"VQ4-A Introduction to File IO",Quiz,1538630853,0,1,6.17,null,null,null
+17,36,"VQ4-B File Processing",Quiz,1538630931,0,1,0,null,null,null
+17,37,"VQ4-C Advanced File IO",Quiz,1539029860,0,2,4.61,null,null,null
+17,37,"VQ4-C Advanced File IO",Quiz,,0,0,0,null,null,null
+17,38,"VQ5-A Introduction to Functions",Quiz,1539222822,0,1,2.23,null,null,null
+17,39,"VQ5-B Functions",Quiz,1539223139,0,1,0,null,null,null
+17,40,"VQ5-C Example Problem GPA Computation",Quiz,1539223310,0,1,0,null,null,null
+17,41,"VQ5-D Function Details",Quiz,1539223460,5,1,0,null,null,null
+17,42,"VQ5-E Scope",Quiz,1539659998,0,1,5.04,null,null,null
+17,43,"VQ5-F Prototypes",Quiz,1539660374,0,1,0,null,null,null
+17,44,"VQ5-G Advanced Prototypes",Quiz,1540236636,0,1,6.65,null,null,null
+17,45,"VQ5-H Pass by Reference",Quiz,1540238150,0,1,0,null,null,null
+17,46,"VQ5-I Three File Format",Quiz,1540240269,0,1,0,null,null,null
+17,47,"VQ6-A Introduction to Arrays",Quiz,1540431151,0,2,2.2,null,null,null
+17,47,"VQ6-A Introduction to Arrays",Quiz,,0,0,0,null,null,null
+17,48,"VQ6-B Looping through Arrays",Quiz,1540431563,0,2,0,null,null,null
+17,48,"VQ6-B Looping through Arrays",Quiz,,0,0,0,null,null,null
+17,49,"VQ6-C Arrays and Functions",Quiz,1540836127,1,1,4.68,null,null,null
+17,50,"VQ6-D Parallel Arrays",Quiz,1540836379,1,1,0,null,null,null
+17,51,"VQ6-E Multidimensional Arrays",Quiz,1541450212,0,1,7.08,null,null,null
+17,52,"VQ7-A Introduction to Vectors",Quiz,1541642711,0,1,2.23,null,null,null
+17,53,"VQ7-B Vector Member Functions",Quiz,1541642879,0,1,0,null,null,null
+17,54,"VQ7-C Sorting",Quiz,1542059452,0,1,4.82,null,null,null
+17,55,"VQ8-A Introduction to Strings",Quiz,1542326557,4,2,3.09,null,null,null
+17,55,"VQ8-A Introduction to Strings",Quiz,,0,0,0,null,null,null
+17,56,"VQ8-B String Member Functions",Quiz,1542326839,4,1,0,null,null,null
+17,57,"VQ8-C String Streams",Quiz,1543189225,1,1,9.98,null,null,null
+17,58,"VQ8-D String Tokenizing",Quiz,1543189412,1,1,0,null,null,null
+17,59,"VQ8-E Binary",Quiz,1543189677,1,1,0,null,null,null
+17,1,CR0,Choice,1536203592,null,null,null,null,null,null
+17,1,"Random Word from Text File",Forum,1541379882,null,null,null,5,15,0
+17,1,"Forum Response",Forum,1541393060,null,null,null,5,17,1
+32,16,PA1,Assignment,1536872320,0,null,null,null,null,null
+32,20,PA2,Assignment,1537839160,1,null,null,null,null,null
+32,64,PA3,Assignment,1538546280,0,null,null,null,null,null
+32,80,PA4,Assignment,1539154843,0,null,null,null,null,null
+32,119,PA5,Assignment,1539837136,-1,null,null,null,null,null
+32,138,PA6,Assignment,1540526318,0,null,null,null,null,null
+32,159,PA7,Assignment,1541726305,0,null,null,null,null,null
+32,174,PA8,Assignment,1542760869,0,null,null,null,null,null
+32,205,"Lab Final PRACTICE Submission",Assignment,1544071977,-17871,null,null,null,null,null
+32,218,PA9,Assignment,1544161322,-17872,null,null,null,null,null
+32,212,"Lab Final Submission",Assignment,1544734401,-17879,null,null,null,null,null
+32,3,"VQ0-C Command Line",Quiz,1536038331,,0,0,null,null,null
+32,4,"VQ0-D File Commands",Quiz,1536041838,,0,0,null,null,null
+32,5,"VQ0-E Programming Languages",Quiz,1536109480,,0,0,null,null,null
+32,6,"VQ0-F First C++ Program",Quiz,1536111152,,0,0,null,null,null
+32,7,"VQ1-A C++ Language Elements",Quiz,1536204986,,0,0,null,null,null
+32,8,"VQ1-B User Input Output",Quiz,1536209322,,0,0,null,null,null
+32,9,"VQ1-C Example Problem (Cone Volume)",Quiz,1536211272,,0,0,null,null,null
+32,10,"VQ1-D Arithmetic",Quiz,1536634459,0,1,0,null,null,null
+32,11,"VQ1-E Programming Errors",Quiz,1536635749,0,1,0,null,null,null
+32,12,"VQ2-A Boolean Conditions",Quiz,1536725242,0,1,0,null,null,null
+32,13,"VQ2-B Conditionals",Quiz,1536727831,0,1,0,null,null,null
+32,14,"VQ2-C Example Problem (Guess my Number)",Quiz,1536804067,0,1,0,null,null,null
+32,15,"VQ2-D Nested Conditionals",Quiz,1536805661,0,1,0,null,null,null
+32,16,"VQ2-E Multiple Alternative Conditionals",Quiz,1537041537,2,1,0,null,null,null
+32,17,"VQ2-F Switch Statements",Quiz,1537046845,2,1,0,null,null,null
+32,19,"VQ3-A Introduction to Iteration",Quiz,1537234728,2,1,0,null,null,null
+32,20,"VQ3-B Assignment Operators",Quiz,1537237949,2,1,-0,null,null,null
+32,21,"VQ3-C While Loops",Quiz,1537324710,1,1,0,null,null,null
+32,22,"VQ3-D While Loop Examples",Quiz,1537405885,0,1,0,null,null,null
+32,23,"VQ3-E Random Numbers",Quiz,1537765771,1,1,4.16,null,null,null
+32,24,"VQ3-F For Loops",Quiz,1537769613,1,1,0.04,null,null,null
+32,25,"VQ3-G Do While Loops",Quiz,1538281224,2,1,5.92,null,null,null
+32,26,"VQ3-H Advanced Loops",Quiz,1538283294,2,1,0.02,null,null,null
+32,35,"VQ4-A Introduction to File IO",Quiz,1538533158,1,1,2.89,null,null,null
+32,36,"VQ4-B File Processing",Quiz,1538535802,1,1,0.03,null,null,null
+32,37,"VQ4-C Advanced File IO",Quiz,1538616611,5,1,0.93,null,null,null
+32,38,"VQ5-A Introduction to Functions",Quiz,1539141824,1,1,6.08,null,null,null
+32,39,"VQ5-B Functions",Quiz,1539156124,1,1,0.16,null,null,null
+32,40,"VQ5-C Example Problem GPA Computation",Quiz,1539222717,0,1,0.77,null,null,null
+32,41,"VQ5-D Function Details",Quiz,1539506893,2,1,3.29,null,null,null
+32,42,"VQ5-E Scope",Quiz,1539509522,2,1,0.02,null,null,null
+32,43,"VQ5-F Prototypes",Quiz,1539553638,1,1,0.51,null,null,null
+32,44,"VQ5-G Advanced Prototypes",Quiz,1540168017,1,1,7.11,null,null,null
+32,45,"VQ5-H Pass by Reference",Quiz,1540180762,1,1,0.14,null,null,null
+32,46,"VQ5-I Three File Format",Quiz,1540190414,1,1,0.11,null,null,null
+32,47,"VQ6-A Introduction to Arrays",Quiz,1540371557,1,1,2.04,null,null,null
+32,48,"VQ6-B Looping through Arrays",Quiz,1540437626,0,1,0.72,null,null,null
+32,49,"VQ6-C Arrays and Functions",Quiz,1540605405,3,1,1.92,null,null,null
+32,50,"VQ6-D Parallel Arrays",Quiz,1540607964,3,1,0,null,null,null
+32,51,"VQ6-E Multidimensional Arrays",Quiz,1541447705,1,1,9.66,null,null,null
+32,52,"VQ7-A Introduction to Vectors",Quiz,1541574250,1,1,0.01,null,null,null
+32,53,"VQ7-B Vector Member Functions",Quiz,1541579586,1,1,0.03,null,null,null
+32,54,"VQ7-C Sorting",Quiz,1542050449,1,1,5.4,null,null,null
+32,55,"VQ8-A Introduction to Strings",Quiz,1542691306,0,1,7.4,null,null,null
+32,56,"VQ8-B String Member Functions",Quiz,1542691489,0,1,0,null,null,null
+32,57,"VQ8-C String Streams",Quiz,1543212084,1,1,5.99,null,null,null
+32,58,"VQ8-D String Tokenizing",Quiz,1543215625,1,1,0.02,null,null,null
+32,59,"VQ8-E Binary",Quiz,1543221668,1,1,0.03,null,null,null
+32,1,CR0,Choice,1536079098,null,null,null,null,null,null
+32,2,CR1,Choice,1536632002,null,null,null,null,null,null
+32,3,CR2,Choice,1536802415,null,null,null,null,null,null
+32,4,CR3,Choice,1536984742,null,null,null,null,null,null
+23,9,PA1,Assignment,1536891208,0,null,null,null,null,null
+23,51,PA2,Assignment,1537944228,0,null,null,null,null,null
+23,61,PA3,Assignment,1538543042,0,null,null,null,null,null
+23,100,PA4,Assignment,1539142605,0,null,null,null,null,null
+23,113,PA5,Assignment,1540851190,-13,null,null,null,null,null
+23,146,PA6,Assignment,1540851412,-4,null,null,null,null,null
+23,171,PA7,Assignment,1542004233,-3,null,null,null,null,null
+23,190,PA8,Assignment,1542879120,-1,null,null,null,null,null
+23,211,PA9,Assignment,1543983543,-17870,null,null,null,null,null
+23,259,"Lab Final Submission",Assignment,1544734670,-17879,null,null,null,null,null
+23,3,"VQ0-C Command Line",Quiz,1536032266,,0,0,null,null,null
+23,4,"VQ0-D File Commands",Quiz,1536034439,,0,0,null,null,null
+23,5,"VQ0-E Programming Languages",Quiz,1536035237,,0,0,null,null,null
+23,6,"VQ0-F First C++ Program",Quiz,1536043713,,0,0,null,null,null
+23,7,"VQ1-A C++ Language Elements",Quiz,1536206789,,0,0,null,null,null
+23,8,"VQ1-B User Input Output",Quiz,1536208495,,0,0,null,null,null
+23,9,"VQ1-C Example Problem (Cone Volume)",Quiz,1536209404,,0,0,null,null,null
+23,10,"VQ1-D Arithmetic",Quiz,1536635206,0,1,0,null,null,null
+23,11,"VQ1-E Programming Errors",Quiz,1536636004,0,1,0,null,null,null
+23,12,"VQ2-A Boolean Conditions",Quiz,1536798014,0,1,0,null,null,null
+23,13,"VQ2-B Conditionals",Quiz,1536800320,0,1,0,null,null,null
+23,14,"VQ2-C Example Problem (Guess my Number)",Quiz,1536807282,0,1,0,null,null,null
+23,15,"VQ2-D Nested Conditionals",Quiz,1536807789,0,1,0,null,null,null
+23,16,"VQ2-E Multiple Alternative Conditionals",Quiz,1537245010,0,1,-0,null,null,null
+23,17,"VQ2-F Switch Statements",Quiz,1537247150,0,1,-0,null,null,null
+23,19,"VQ3-A Introduction to Iteration",Quiz,1537404619,0,1,-0,null,null,null
+23,20,"VQ3-B Assignment Operators",Quiz,1537407225,0,1,-0,null,null,null
+23,21,"VQ3-C While Loops",Quiz,1537409322,0,1,-0,null,null,null
+23,22,"VQ3-D While Loop Examples",Quiz,1537411020,0,1,-0,null,null,null
+23,23,"VQ3-E Random Numbers",Quiz,1537848987,0,1,4.9,null,null,null
+23,24,"VQ3-F For Loops",Quiz,1537850087,0,1,0,null,null,null
+23,25,"VQ3-G Do While Loops",Quiz,1538459406,0,1,6.99,null,null,null
+23,26,"VQ3-H Advanced Loops",Quiz,1538460803,0,1,0,null,null,null
+23,35,"VQ4-A Introduction to File IO",Quiz,1538619700,0,1,1.77,null,null,null
+23,36,"VQ4-B File Processing",Quiz,1538624390,0,1,0,null,null,null
+23,37,"VQ4-C Advanced File IO",Quiz,1539066261,0,1,4.11,null,null,null
+23,38,"VQ5-A Introduction to Functions",Quiz,1539228151,0,1,1.73,null,null,null
+23,39,"VQ5-B Functions",Quiz,1539229392,0,1,0,null,null,null
+23,40,"VQ5-C Example Problem GPA Computation",Quiz,1539234863,0,1,0.05,null,null,null
+23,41,"VQ5-D Function Details",Quiz,1539661649,0,1,4.92,null,null,null
+23,42,"VQ5-E Scope",Quiz,1539663533,0,1,0,null,null,null
+23,43,"VQ5-F Prototypes",Quiz,1539664829,0,1,0,null,null,null
+23,44,"VQ5-G Advanced Prototypes",Quiz,1540255767,0,1,6.78,null,null,null
+23,45,"VQ5-H Pass by Reference",Quiz,1540258492,0,1,0,null,null,null
+23,46,"VQ5-I Three File Format",Quiz,1540260806,0,1,0,null,null,null
+23,47,"VQ6-A Introduction to Arrays",Quiz,1540433510,0,1,1.99,null,null,null
+23,48,"VQ6-B Looping through Arrays",Quiz,1540434751,0,1,0,null,null,null
+23,49,"VQ6-C Arrays and Functions",Quiz,1540866729,0,1,4.95,null,null,null
+23,50,"VQ6-D Parallel Arrays",Quiz,1540882172,0,1,0.15,null,null,null
+23,51,"VQ6-E Multidimensional Arrays",Quiz,1541469444,0,1,6.62,null,null,null
+23,52,"VQ7-A Introduction to Vectors",Quiz,1541625403,0,1,1.75,null,null,null
+23,53,"VQ7-B Vector Member Functions",Quiz,1541626139,0,1,0,null,null,null
+23,54,"VQ7-C Sorting",Quiz,1542095592,0,1,5.38,null,null,null
+23,55,"VQ8-A Introduction to Strings",Quiz,1542697989,0,1,6.95,null,null,null
+23,56,"VQ8-B String Member Functions",Quiz,1542700492,0,1,0,null,null,null
+23,57,"VQ8-C String Streams",Quiz,1543205676,1,1,5.81,null,null,null
+23,58,"VQ8-D String Tokenizing",Quiz,1543207206,1,1,0,null,null,null
+23,59,"VQ8-E Binary",Quiz,1543209757,1,1,0,null,null,null
+23,1,CR0,Choice,1536117597,null,null,null,null,null,null
+14,8,PA1,Assignment,1536961504,-1,null,null,null,null,null
+14,40,PA2,Assignment,1537945182,0,null,null,null,null,null
+14,79,PA3,Assignment,1538635777,-1,null,null,null,null,null
+14,95,PA4,Assignment,1539154452,0,null,null,null,null,null
+14,129,PA5,Assignment,1539915033,-2,null,null,null,null,null
+14,151,PA6,Assignment,1540710012,-2,null,null,null,null,null
+14,170,PA7,Assignment,1541922748,-2,null,null,null,null,null
+14,178,PA8,Assignment,1542962562,-2,null,null,null,null,null
+14,258,"Lab Final Submission",Assignment,1544734508,-17879,null,null,null,null,null
+14,3,"VQ0-C Command Line",Quiz,1535842284,,0,0,null,null,null
+14,12,"VQ2-A Boolean Conditions",Quiz,1536192525,,0,0,null,null,null
+14,13,"VQ2-B Conditionals",Quiz,1536194952,,0,0,null,null,null
+14,7,"VQ1-A C++ Language Elements",Quiz,1536197939,,0,0,null,null,null
+14,8,"VQ1-B User Input Output",Quiz,1536212519,,0,0,null,null,null
+14,9,"VQ1-C Example Problem (Cone Volume)",Quiz,1536215282,,0,0,null,null,null
+14,10,"VQ1-D Arithmetic",Quiz,1536643338,0,1,0,null,null,null
+14,11,"VQ1-E Programming Errors",Quiz,1536644068,0,1,0,null,null,null
+14,14,"VQ2-C Example Problem (Guess my Number)",Quiz,1536813211,0,2,0,null,null,null
+14,14,,Quiz,,0,0,0,null,null,null
+14,15,"VQ2-D Nested Conditionals",Quiz,1536814280,0,1,0,null,null,null
+14,16,"VQ2-E Multiple Alternative Conditionals",Quiz,1537252995,0,1,0,null,null,null
+14,19,"VQ3-A Introduction to Iteration",Quiz,1537417961,0,1,0,null,null,null
+14,20,"VQ3-B Assignment Operators",Quiz,1537420819,0,1,0,null,null,null
+14,21,"VQ3-C While Loops",Quiz,1537422123,0,1,0,null,null,null
+14,22,"VQ3-D While Loop Examples",Quiz,1537423255,0,1,0,null,null,null
+14,23,"VQ3-E Random Numbers",Quiz,1537855689,0,1,5,null,null,null
+14,24,"VQ3-F For Loops",Quiz,1537856931,0,1,0.01,null,null,null
+14,25,"VQ3-G Do While Loops",Quiz,1538452674,0,1,6.89,null,null,null
+14,26,"VQ3-H Advanced Loops",Quiz,1538463437,0,1,0.12,null,null,null
+14,37,"VQ4-C Advanced File IO",Quiz,1539068110,0,1,7,null,null,null
+14,40,"VQ5-C Example Problem GPA Computation",Quiz,1539239398,0,1,1.98,null,null,null
+14,39,"VQ5-B Functions",Quiz,1539239510,0,1,0,null,null,null
+14,38,"VQ5-A Introduction to Functions",Quiz,1539240577,0,1,0.01,null,null,null
+14,41,"VQ5-D Function Details",Quiz,1539659183,0,1,4.84,null,null,null
+14,42,"VQ5-E Scope",Quiz,1539660446,0,1,0.01,null,null,null
+14,44,"VQ5-G Advanced Prototypes",Quiz,1540270777,0,1,7.06,null,null,null
+14,45,"VQ5-H Pass by Reference",Quiz,1540275482,0,1,0.05,null,null,null
+14,46,"VQ5-I Three File Format",Quiz,1540275606,0,1,0,null,null,null
+14,47,"VQ6-A Introduction to Arrays",Quiz,1540450357,0,1,2.02,null,null,null
+14,48,"VQ6-B Looping through Arrays",Quiz,1540450628,0,1,0,null,null,null
+14,49,"VQ6-C Arrays and Functions",Quiz,1540863901,0,1,4.78,null,null,null
+14,50,"VQ6-D Parallel Arrays",Quiz,1540878002,0,1,0.16,null,null,null
+14,52,"VQ7-A Introduction to Vectors",Quiz,1541822810,-2,1,10.93,null,null,null
+14,53,"VQ7-B Vector Member Functions",Quiz,1541823405,-2,1,0.01,null,null,null
+14,54,"VQ7-C Sorting",Quiz,1542095723,0,1,3.15,null,null,null
+14,55,"VQ8-A Introduction to Strings",Quiz,1542682979,0,1,6.8,null,null,null
+14,56,"VQ8-B String Member Functions",Quiz,1542686573,0,1,0.04,null,null,null
+14,57,"VQ8-C String Streams",Quiz,1543289125,0,2,6.97,null,null,null
+14,57,"VQ8-C String Streams",Quiz,,0,0,0,null,null,null
+15,10,PA1,Assignment,1536468720,5,null,null,null,null,null
+15,42,PA2,Assignment,1537940992,0,null,null,null,null,null
+15,62,PA3,Assignment,1538425961,1,null,null,null,null,null
+15,91,PA4,Assignment,1539154678,0,null,null,null,null,null
+15,125,PA5,Assignment,1539832701,-1,null,null,null,null,null
+15,147,PA6,Assignment,1540537386,0,null,null,null,null,null
+15,168,PA7,Assignment,1541828212,-1,null,null,null,null,null
+15,184,PA8,Assignment,1542785156,0,null,null,null,null,null
+15,198,PA9,Assignment,1543991709,-17870,null,null,null,null,null
+15,245,"Lab Final Submission",Assignment,1544734576,-17879,null,null,null,null,null
+15,3,"VQ0-C Command Line",Quiz,1536016413,,0,0,null,null,null
+15,4,"VQ0-D File Commands",Quiz,1536020151,,0,0,null,null,null
+15,5,"VQ0-E Programming Languages",Quiz,1536022791,,0,0,null,null,null
+15,6,"VQ0-F First C++ Program",Quiz,1536023698,,0,0,null,null,null
+15,7,"VQ1-A C++ Language Elements",Quiz,1536283603,,0,0,null,null,null
+15,8,"VQ1-B User Input Output",Quiz,1536283823,,0,0,null,null,null
+15,9,"VQ1-C Example Problem (Cone Volume)",Quiz,1536285850,,0,0,null,null,null
+15,10,"VQ1-D Arithmetic",Quiz,1536390317,,1,0,null,null,null
+15,10,,Quiz,,0,0,0,null,null,null
+15,11,"VQ1-E Programming Errors",Quiz,1536648018,0,2,0,null,null,null
+15,11,,Quiz,,0,0,0,null,null,null
+15,12,"VQ2-A Boolean Conditions",Quiz,1536800941,0,3,0,null,null,null
+15,12,,Quiz,,0,0,0,null,null,null
+15,12,,Quiz,,0,0,0,null,null,null
+15,13,"VQ2-B Conditionals",Quiz,1536801438,0,2,0,null,null,null
+15,13,,Quiz,,0,0,0,null,null,null
+15,14,"VQ2-C Example Problem (Guess my Number)",Quiz,1536802667,0,2,0,null,null,null
+15,14,,Quiz,,0,0,0,null,null,null
+15,15,"VQ2-D Nested Conditionals",Quiz,1536803073,0,1,0,null,null,null
+15,16,"VQ2-E Multiple Alternative Conditionals",Quiz,1537231528,0,4,0,null,null,null
+15,16,"VQ2-E Multiple Alternative Conditionals",Quiz,,0,0,0,null,null,null
+15,16,"VQ2-E Multiple Alternative Conditionals",Quiz,,0,0,0,null,null,null
+15,16,"VQ2-E Multiple Alternative Conditionals",Quiz,,0,0,0,null,null,null
+15,17,"VQ2-F Switch Statements",Quiz,1537232967,0,2,0,null,null,null
+15,17,"VQ2-F Switch Statements",Quiz,,0,0,0,null,null,null
+15,28,"OPTIONAL Gaddis Ch. 1 Extra Practice Questions",Quiz,1538018597,0,3,0,null,null,null
+15,22,"VQ3-D While Loop Examples",Quiz,1537410685,0,2,-0,null,null,null
+15,19,"VQ3-A Introduction to Iteration",Quiz,1537410480,0,2,0,null,null,null
+15,19,"VQ3-A Introduction to Iteration",Quiz,,0,0,0,null,null,null
+15,23,"VQ3-E Random Numbers",Quiz,1537838163,0,2,-0,null,null,null
+15,22,"VQ3-D While Loop Examples",Quiz,,0,0,0,null,null,null
+15,21,"VQ3-C While Loops",Quiz,1537410895,0,2,0,null,null,null
+15,21,"VQ3-C While Loops",Quiz,,0,0,0,null,null,null
+15,20,"VQ3-B Assignment Operators",Quiz,1537411057,0,2,-0,null,null,null
+15,20,"VQ3-B Assignment Operators",Quiz,,0,0,0,null,null,null
+15,24,"VQ3-F For Loops",Quiz,1537838808,0,2,-0,null,null,null
+15,23,"VQ3-E Random Numbers",Quiz,,0,0,0,null,null,null
+15,24,"VQ3-F For Loops",Quiz,,0,0,0,null,null,null
+15,28,"OPTIONAL Gaddis Ch. 1 Extra Practice Questions",Quiz,,0,0,0,null,null,null
+15,28,"OPTIONAL Gaddis Ch. 1 Extra Practice Questions",Quiz,,0,0,0,null,null,null
+15,27,"OPTIONAL Gaddis Ch. 2 Extra Practice Questions",Quiz,1538072692,0,2,0,null,null,null
+15,29,"OPTIONAL Gaddis Ch. 3 Extra Practice Questions",Quiz,1538020351,0,1,0,null,null,null
+15,27,"OPTIONAL Gaddis Ch. 2 Extra Practice Questions",Quiz,,0,0,0,null,null,null
+15,29,"OPTIONAL Gaddis Ch. 3 Extra Practice Questions",Quiz,,0,0,0,null,null,null
+15,28,"OPTIONAL Gaddis Ch. 1 Extra Practice Questions",Quiz,,0,0,0,null,null,null
+15,25,"VQ3-G Do While Loops",Quiz,1538438610,0,2,4.23,null,null,null
+15,25,"VQ3-G Do While Loops",Quiz,,0,0,0,null,null,null
+15,26,"VQ3-H Advanced Loops",Quiz,1538439795,0,2,0.01,null,null,null
+15,26,"VQ3-H Advanced Loops",Quiz,,0,0,0,null,null,null
+15,35,"VQ4-A Introduction to File IO",Quiz,1538619065,0,2,2.07,null,null,null
+15,35,"VQ4-A Introduction to File IO",Quiz,,0,0,0,null,null,null
+15,36,"VQ4-B File Processing",Quiz,1538621491,0,2,0.03,null,null,null
+15,36,"VQ4-B File Processing",Quiz,,0,0,0,null,null,null
+15,37,"VQ4-C Advanced File IO",Quiz,1539062003,0,2,5.1,null,null,null
+15,37,"VQ4-C Advanced File IO",Quiz,,0,0,0,null,null,null
+15,38,"VQ5-A Introduction to Functions",Quiz,1539226320,0,2,1.9,null,null,null
+15,38,"VQ5-A Introduction to Functions",Quiz,,0,0,0,null,null,null
+15,39,"VQ5-B Functions",Quiz,1539228903,0,3,0.03,null,null,null
+15,39,"VQ5-B Functions",Quiz,,0,0,0,null,null,null
+15,39,"VQ5-B Functions",Quiz,,0,0,0,null,null,null
+15,40,"VQ5-C Example Problem GPA Computation",Quiz,1539229551,0,1,0.01,null,null,null
+15,31,"OPTIONAL Gaddis Ch. 5 (Loops AND Files) Extra Practice Questions",Quiz,1539284609,0,1,0.59,null,null,null
+15,41,"VQ5-D Function Details",Quiz,1539665263,0,2,4.36,null,null,null
+15,42,"VQ5-E Scope",Quiz,1539665219,0,2,0,null,null,null
+15,43,"VQ5-F Prototypes",Quiz,1539665155,0,2,0.02,null,null,null
+15,43,"VQ5-F Prototypes",Quiz,,0,0,0,null,null,null
+15,42,"VQ5-E Scope",Quiz,,0,0,0,null,null,null
+15,41,"VQ5-D Function Details",Quiz,,0,0,0,null,null,null
+15,41,"VQ5-D Function Details",Quiz,,0,0,0,null,null,null
+15,44,"VQ5-G Advanced Prototypes",Quiz,1540267701,0,3,6.97,null,null,null
+15,44,"VQ5-G Advanced Prototypes",Quiz,,0,0,0,null,null,null
+15,44,"VQ5-G Advanced Prototypes",Quiz,,0,0,0,null,null,null
+15,45,"VQ5-H Pass by Reference",Quiz,1540268097,0,2,0,null,null,null
+15,45,"VQ5-H Pass by Reference",Quiz,,0,0,0,null,null,null
+15,46,"VQ5-I Three File Format",Quiz,1540269671,0,3,0,null,null,null
+15,46,"VQ5-I Three File Format",Quiz,,0,0,0,null,null,null
+15,46,"VQ5-I Three File Format",Quiz,,0,0,0,null,null,null
+15,47,"VQ6-A Introduction to Arrays",Quiz,1540435639,0,2,1.88,null,null,null
+15,47,"VQ6-A Introduction to Arrays",Quiz,,0,0,0,null,null,null
+15,48,"VQ6-B Looping through Arrays",Quiz,1540436934,0,2,0,null,null,null
+15,49,"VQ6-C Arrays and Functions",Quiz,1540867375,0,2,-0,null,null,null
+15,48,"VQ6-B Looping through Arrays",Quiz,,0,0,0,null,null,null
+15,49,"VQ6-C Arrays and Functions",Quiz,,0,0,0,null,null,null
+15,50,"VQ6-D Parallel Arrays",Quiz,1540868886,0,2,0,null,null,null
+15,50,"VQ6-D Parallel Arrays",Quiz,,0,0,0,null,null,null
+15,51,"VQ6-E Multidimensional Arrays",Quiz,1541481846,0,1,7.07,null,null,null
+15,52,"VQ7-A Introduction to Vectors",Quiz,1541657988,0,1,2.01,null,null,null
+15,53,"VQ7-B Vector Member Functions",Quiz,1541658575,0,2,0,null,null,null
+15,53,"VQ7-B Vector Member Functions",Quiz,,0,0,0,null,null,null
+15,55,"VQ8-A Introduction to Strings",Quiz,1542692348,0,1,11.96,null,null,null
+15,56,"VQ8-B String Member Functions",Quiz,1542693776,0,2,-0.01,null,null,null
+15,56,"VQ8-B String Member Functions",Quiz,,0,0,0,null,null,null
+15,57,"VQ8-C String Streams",Quiz,1543292596,0,1,6.91,null,null,null
+15,58,"VQ8-D String Tokenizing",Quiz,1543293095,0,1,0,null,null,null
+15,59,"VQ8-E Binary",Quiz,1543293626,0,2,0,null,null,null
+15,59,"VQ8-E Binary",Quiz,,0,0,0,null,null,null
+15,1,CR0,Choice,1536348676,null,null,null,null,null,null
+15,2,CR1,Choice,1536803105,null,null,null,null,null,null
+15,3,CR2,Choice,1536803667,null,null,null,null,null,null
+15,4,CR3,Choice,1536803688,null,null,null,null,null,null
+15,5,CR4,Choice,1538621508,null,null,null,null,null,null
+15,9,CR8,Choice,1538621522,null,null,null,null,null,null
+15,8,CR7,Choice,1538621534,null,null,null,null,null,null
+15,7,CR6,Choice,1538621542,null,null,null,null,null,null
+15,6,CR5,Choice,1538621551,null,null,null,null,null,null
+19,13,PA1,Assignment,1536898046,0,null,null,null,null,null
+19,50,PA2,Assignment,1537942570,0,null,null,null,null,null
+19,57,PA3,Assignment,1538549776,0,null,null,null,null,null
+19,92,PA4,Assignment,1539151255,0,null,null,null,null,null
+19,126,PA5,Assignment,1539845993,-1,null,null,null,null,null
+19,128,PA6,Assignment,1540617538,-1,null,null,null,null,null
+19,166,PA7,Assignment,1541750186,0,null,null,null,null,null
+19,188,PA8,Assignment,1542873473,-1,null,null,null,null,null
+19,215,PA9,Assignment,1543993667,-17870,null,null,null,null,null
+19,234,"Lab Final PRACTICE Submission",Assignment,1544238811,-17873,null,null,null,null,null
+19,255,"Lab Final Submission",Assignment,1544734415,-17879,null,null,null,null,null
+19,3,"VQ0-C Command Line",Quiz,1536035768,,0,0,null,null,null
+19,4,"VQ0-D File Commands",Quiz,1536037871,,0,0,null,null,null
+19,5,"VQ0-E Programming Languages",Quiz,1536039552,,0,0,null,null,null
+19,6,"VQ0-F First C++ Program",Quiz,1536040403,,0,0,null,null,null
+19,7,"VQ1-A C++ Language Elements",Quiz,1536179230,,0,0,null,null,null
+19,8,"VQ1-B User Input Output",Quiz,1536198406,,0,0,null,null,null
+19,8,,Quiz,,,0,0,null,null,null
+19,9,"VQ1-C Example Problem (Cone Volume)",Quiz,1536201543,,0,0,null,null,null
+19,8,,Quiz,,,0,0,null,null,null
+19,10,"VQ1-D Arithmetic",Quiz,1536639614,0,1,0,null,null,null
+19,11,"VQ1-E Programming Errors",Quiz,1536641883,0,1,0,null,null,null
+19,12,"VQ2-A Boolean Conditions",Quiz,1536810122,0,2,0,null,null,null
+19,12,,Quiz,,0,0,0,null,null,null
+19,13,"VQ2-B Conditionals",Quiz,1536811698,0,2,0,null,null,null
+19,13,,Quiz,,0,0,0,null,null,null
+19,16,"VQ2-E Multiple Alternative Conditionals",Quiz,1537230782,0,1,-0.05,null,null,null
+19,14,"VQ2-C Example Problem (Guess my Number)",Quiz,1536812577,0,2,0,null,null,null
+19,14,,Quiz,,0,0,0,null,null,null
+19,15,"VQ2-D Nested Conditionals",Quiz,1536813074,0,1,0,null,null,null
+19,17,"VQ2-F Switch Statements",Quiz,1537245927,0,1,-0,null,null,null
+19,19,"VQ3-A Introduction to Iteration",Quiz,1537313070,1,1,0,null,null,null
+19,20,"VQ3-B Assignment Operators",Quiz,1537333384,1,3,-0,null,null,null
+19,20,"VQ3-B Assignment Operators",Quiz,,0,0,0,null,null,null
+19,20,"VQ3-B Assignment Operators",Quiz,,0,0,0,null,null,null
+19,21,"VQ3-C While Loops",Quiz,1537337635,1,1,-0,null,null,null
+19,22,"VQ3-D While Loop Examples",Quiz,1537340390,1,3,0,null,null,null
+19,22,"VQ3-D While Loop Examples",Quiz,,0,0,0,null,null,null
+19,22,"VQ3-D While Loop Examples",Quiz,,0,0,0,null,null,null
+19,23,"VQ3-E Random Numbers",Quiz,1537837014,0,3,5.73,null,null,null
+19,23,"VQ3-E Random Numbers",Quiz,,0,0,0,null,null,null
+19,23,"VQ3-E Random Numbers",Quiz,,0,0,0,null,null,null
+19,24,"VQ3-F For Loops",Quiz,1537838170,0,3,0,null,null,null
+19,24,"VQ3-F For Loops",Quiz,,0,0,0,null,null,null
+19,24,"VQ3-F For Loops",Quiz,,0,0,0,null,null,null
+19,25,"VQ3-G Do While Loops",Quiz,1538419790,1,3,6.72,null,null,null
+19,25,"VQ3-G Do While Loops",Quiz,,0,0,0,null,null,null
+19,25,"VQ3-G Do While Loops",Quiz,,0,0,0,null,null,null
+19,26,"VQ3-H Advanced Loops",Quiz,1538420685,0,2,0,null,null,null
+19,26,"VQ3-H Advanced Loops",Quiz,,0,0,0,null,null,null
+19,26,"VQ3-H Advanced Loops",Quiz,,0,0,0,null,null,null
+19,35,"VQ4-A Introduction to File IO",Quiz,1538592713,1,3,1.98,null,null,null
+19,35,"VQ4-A Introduction to File IO",Quiz,,0,0,0,null,null,null
+19,35,"VQ4-A Introduction to File IO",Quiz,,0,0,0,null,null,null
+19,36,"VQ4-B File Processing",Quiz,1538593817,0,3,0,null,null,null
+19,36,"VQ4-B File Processing",Quiz,,0,0,0,null,null,null
+19,36,"VQ4-B File Processing",Quiz,,0,0,0,null,null,null
+19,37,"VQ4-C Advanced File IO",Quiz,1538864921,2,3,3.12,null,null,null
+19,37,"VQ4-C Advanced File IO",Quiz,,0,0,0,null,null,null
+19,37,"VQ4-C Advanced File IO",Quiz,,0,0,0,null,null,null
+19,38,"VQ5-A Introduction to Functions",Quiz,1539229991,0,1,4.22,null,null,null
+19,39,"VQ5-B Functions",Quiz,,0,0,0,null,null,null
+19,40,"VQ5-C Example Problem GPA Computation",Quiz,1539230120,0,1,0,null,null,null
+19,41,"VQ5-D Function Details",Quiz,1539643028,0,1,4.77,null,null,null
+19,42,"VQ5-E Scope",Quiz,1539666478,0,1,0.01,null,null,null
+19,43,"VQ5-F Prototypes",Quiz,1539666968,0,1,0,null,null,null
+19,41,"VQ5-D Function Details",Quiz,,0,0,0,null,null,null
+19,44,"VQ5-G Advanced Prototypes",Quiz,1540074832,2,1,4.7,null,null,null
+19,45,"VQ5-H Pass by Reference",Quiz,1540276502,0,1,2.33,null,null,null
+19,46,"VQ5-I Three File Format",Quiz,1540277518,0,1,0,null,null,null
+19,47,"VQ6-A Introduction to Arrays",Quiz,1540442880,0,1,1.91,null,null,null
+19,48,"VQ6-B Looping through Arrays",Quiz,1540443181,0,1,0,null,null,null
+19,49,"VQ6-C Arrays and Functions",Quiz,1540881877,0,1,5.08,null,null,null
+19,50,"VQ6-D Parallel Arrays",Quiz,1540881941,0,1,0,null,null,null
+19,51,"VQ6-E Multidimensional Arrays",Quiz,1541472177,0,1,6.83,null,null,null
+19,52,"VQ7-A Introduction to Vectors",Quiz,1541642001,0,1,1.96,null,null,null
+19,52,"VQ7-A Introduction to Vectors",Quiz,,0,0,0,null,null,null
+19,53,"VQ7-B Vector Member Functions",Quiz,1541657745,0,1,0.18,null,null,null
+19,54,"VQ7-C Sorting",Quiz,1542076352,0,1,4.84,null,null,null
+19,55,"VQ8-A Introduction to Strings",Quiz,1542588026,1,1,5.92,null,null,null
+19,56,"VQ8-B String Member Functions",Quiz,1542611554,1,1,0.27,null,null,null
+19,57,"VQ8-C String Streams",Quiz,1543277545,0,1,7.71,null,null,null
+19,58,"VQ8-D String Tokenizing",Quiz,1543285966,0,1,0.1,null,null,null
+19,59,"VQ8-E Binary",Quiz,1543294589,0,1,0.09,null,null,null
+19,1,CR0,Choice,1536203138,null,null,null,null,null,null
+19,3,CR2,Choice,1538864985,null,null,null,null,null,null
+19,2,CR1,Choice,1538865019,null,null,null,null,null,null
+19,4,CR3,Choice,1538865047,null,null,null,null,null,null
+19,1,"""Press Enter to Continue""",Forum,1538434140,null,null,null,2,9,0
+8,28,PA1,Assignment,1536895228,0,null,null,null,null,null
+8,54,PA2,Assignment,1537945060,0,null,null,null,null,null
+8,66,PA3,Assignment,1538547078,0,null,null,null,null,null
+8,105,PA4,Assignment,1539154407,0,null,null,null,null,null
+8,121,PA5,Assignment,1539757782,0,null,null,null,null,null
+8,153,PA6,Assignment,1540966988,-5,null,null,null,null,null
+8,176,PA7,Assignment,1542249406,-6,null,null,null,null,null
+8,238,"Lab Final PRACTICE Submission",Assignment,1544319627,-17874,null,null,null,null,null
+8,260,"Lab Final Submission",Assignment,1544742564,-17879,null,null,null,null,null
+8,3,"VQ0-C Command Line",Quiz,1536014943,,0,0,null,null,null
+8,4,"VQ0-D File Commands",Quiz,1536016578,,0,0,null,null,null
+8,5,"VQ0-E Programming Languages",Quiz,1536018666,,0,0,null,null,null
+8,6,"VQ0-F First C++ Program",Quiz,1536019624,,0,0,null,null,null
+8,7,"VQ1-A C++ Language Elements",Quiz,1536128495,,0,0,null,null,null
+8,8,"VQ1-B User Input Output",Quiz,1536205859,,0,0,null,null,null
+8,9,"VQ1-C Example Problem (Cone Volume)",Quiz,1536208380,,0,0,null,null,null
+8,10,"VQ1-D Arithmetic",Quiz,1536558307,0,1,0,null,null,null
+8,11,"VQ1-E Programming Errors",Quiz,1536634643,0,1,0,null,null,null
+8,12,"VQ2-A Boolean Conditions",Quiz,1536814819,0,1,0,null,null,null
+8,13,"VQ2-B Conditionals",Quiz,1536816948,0,1,0,null,null,null
+8,14,"VQ2-C Example Problem (Guess my Number)",Quiz,1536817875,0,1,0,null,null,null
+8,15,"VQ2-D Nested Conditionals",Quiz,1536818571,0,1,0,null,null,null
+8,16,"VQ2-E Multiple Alternative Conditionals",Quiz,1537166462,1,1,0,null,null,null
+8,17,"VQ2-F Switch Statements",Quiz,1537242907,0,1,0,null,null,null
+8,19,"VQ3-A Introduction to Iteration",Quiz,1537336058,1,1,0,null,null,null
+8,20,"VQ3-B Assignment Operators",Quiz,1537338880,1,1,-0,null,null,null
+8,21,"VQ3-C While Loops",Quiz,1537397101,0,1,0.01,null,null,null
+8,22,"VQ3-D While Loop Examples",Quiz,1537399473,0,1,0,null,null,null
+8,23,"VQ3-E Random Numbers",Quiz,1537845165,0,1,5.15,null,null,null
+8,24,"VQ3-F For Loops",Quiz,1537847200,0,1,0.02,null,null,null
+8,25,"VQ3-G Do While Loops",Quiz,1538453124,0,1,7.01,null,null,null
+8,26,"VQ3-H Advanced Loops",Quiz,1538454662,0,1,0.01,null,null,null
+8,35,"VQ4-A Introduction to File IO",Quiz,1538605068,0,1,1.74,null,null,null
+8,36,"VQ4-B File Processing",Quiz,1538608925,0,1,0.04,null,null,null
+8,28,"OPTIONAL Gaddis Ch. 1 Extra Practice Questions",Quiz,,0,0,0,null,null,null
+8,37,"VQ4-C Advanced File IO",Quiz,1539040906,0,1,5,null,null,null
+8,38,"VQ5-A Introduction to Functions",Quiz,1539212583,0,1,1.99,null,null,null
+8,39,"VQ5-B Functions",Quiz,1539224587,0,1,0.14,null,null,null
+8,40,"VQ5-C Example Problem GPA Computation",Quiz,1539233082,0,1,0.1,null,null,null
+8,41,"VQ5-D Function Details",Quiz,1539640703,0,2,4.71,null,null,null
+8,41,"VQ5-D Function Details",Quiz,,0,0,0,null,null,null
+8,42,"VQ5-E Scope",Quiz,1539643500,0,1,0.03,null,null,null
+8,43,"VQ5-F Prototypes",Quiz,1539645495,0,1,0.02,null,null,null
+8,44,"VQ5-G Advanced Prototypes",Quiz,1540153974,1,1,5.88,null,null,null
+8,45,"VQ5-H Pass by Reference",Quiz,1540174368,1,1,0.23,null,null,null
+8,46,"VQ5-I Three File Format",Quiz,1540269041,0,1,1.09,null,null,null
+8,47,"VQ6-A Introduction to Arrays",Quiz,1540347956,1,2,0.91,null,null,null
+8,47,"VQ6-A Introduction to Arrays",Quiz,,0,0,0,null,null,null
+8,48,"VQ6-B Looping through Arrays",Quiz,1540424146,0,1,0.88,null,null,null
+8,49,"VQ6-C Arrays and Functions",Quiz,1540784542,1,1,4.17,null,null,null
+8,50,"VQ6-D Parallel Arrays",Quiz,1540871663,0,1,1.01,null,null,null
+8,51,"VQ6-E Multidimensional Arrays",Quiz,1541459677,0,1,6.8,null,null,null
+8,52,"VQ7-A Introduction to Vectors",Quiz,1541636142,0,3,2.04,null,null,null
+8,52,"VQ7-A Introduction to Vectors",Quiz,,0,0,0,null,null,null
+8,52,"VQ7-A Introduction to Vectors",Quiz,,0,0,0,null,null,null
+8,53,"VQ7-B Vector Member Functions",Quiz,1541637068,0,1,0.01,null,null,null
+8,54,"VQ7-C Sorting",Quiz,1541970734,1,2,3.86,null,null,null
+8,54,"VQ7-C Sorting",Quiz,,0,0,0,null,null,null
+8,55,"VQ8-A Introduction to Strings",Quiz,1542596928,1,1,7.25,null,null,null
+8,56,"VQ8-B String Member Functions",Quiz,1542667326,0,1,0.81,null,null,null
+8,57,"VQ8-C String Streams",Quiz,1543090829,2,2,4.9,null,null,null
+8,57,"VQ8-C String Streams",Quiz,,0,0,0,null,null,null
+8,58,"VQ8-D String Tokenizing",Quiz,1543274384,0,1,2.12,null,null,null
+8,59,"VQ8-E Binary",Quiz,1543291963,0,1,0.2,null,null,null
+22,21,PA1,Assignment,1536902090,0,null,null,null,null,null
+22,30,PA2,Assignment,1537936665,0,null,null,null,null,null
+22,73,PA3,Assignment,1538542480,0,null,null,null,null,null
+22,99,PA4,Assignment,1539142284,0,null,null,null,null,null
+22,114,PA5,Assignment,1539733755,0,null,null,null,null,null
+22,142,PA6,Assignment,1540527162,0,null,null,null,null,null
+22,158,PA7,Assignment,1541718331,0,null,null,null,null,null
+22,181,PA8,Assignment,1542762548,0,null,null,null,null,null
+22,204,PA9,Assignment,1543968575,-17870,null,null,null,null,null
+22,206,"Lab Final PRACTICE Submission",Assignment,1543970062,-17870,null,null,null,null,null
+22,220,"Lab Final Submission",Assignment,1544730642,-17879,null,null,null,null,null
+22,3,"VQ0-C Command Line",Quiz,1535929738,,0,0,null,null,null
+22,4,"VQ0-D File Commands",Quiz,1535932159,,0,0,null,null,null
+22,5,"VQ0-E Programming Languages",Quiz,1535941844,,0,0,null,null,null
+22,6,"VQ0-F First C++ Program",Quiz,1535943312,,0,0,null,null,null
+22,7,"VQ1-A C++ Language Elements",Quiz,1536083616,,0,0,null,null,null
+22,8,"VQ1-B User Input Output",Quiz,1536123864,,0,0,null,null,null
+22,9,"VQ1-C Example Problem (Cone Volume)",Quiz,1536125357,,0,0,null,null,null
+22,10,"VQ1-D Arithmetic",Quiz,1536344351,0,1,0,null,null,null
+22,11,"VQ1-E Programming Errors",Quiz,1536345509,0,1,0,null,null,null
+22,12,"VQ2-A Boolean Conditions",Quiz,1536729764,0,1,0,null,null,null
+22,13,"VQ2-B Conditionals",Quiz,1536731364,0,1,0,null,null,null
+22,14,"VQ2-C Example Problem (Guess my Number)",Quiz,1536732189,0,1,0,null,null,null
+22,15,"VQ2-D Nested Conditionals",Quiz,1536732807,0,1,0,null,null,null
+22,16,"VQ2-E Multiple Alternative Conditionals",Quiz,1536903918,4,1,0,null,null,null
+22,17,"VQ2-F Switch Statements",Quiz,1536907413,4,1,0,null,null,null
+22,19,"VQ3-A Introduction to Iteration",Quiz,1537249742,2,1,0,null,null,null
+22,20,"VQ3-B Assignment Operators",Quiz,1537251555,2,1,0,null,null,null
+22,21,"VQ3-C While Loops",Quiz,1537294346,2,1,0,null,null,null
+22,22,"VQ3-D While Loop Examples",Quiz,1537338714,1,1,0,null,null,null
+22,23,"VQ3-E Random Numbers",Quiz,1537743311,1,1,4.68,null,null,null
+22,24,"VQ3-F For Loops",Quiz,1537745460,1,1,0.02,null,null,null
+22,28,"OPTIONAL Gaddis Ch. 1 Extra Practice Questions",Quiz,1538021433,0,1,1.92,null,null,null
+22,27,"OPTIONAL Gaddis Ch. 2 Extra Practice Questions",Quiz,1538022244,0,1,0,null,null,null
+22,29,"OPTIONAL Gaddis Ch. 3 Extra Practice Questions",Quiz,1538023072,0,1,0,null,null,null
+22,30,"OPTIONAL Gaddis Ch. 4 Extra Practice Questions",Quiz,1538024140,0,1,0,null,null,null
+22,25,"VQ3-G Do While Loops",Quiz,1538238775,3,1,2.48,null,null,null
+22,26,"VQ3-H Advanced Loops",Quiz,1538242532,3,1,0.04,null,null,null
+22,35,"VQ4-A Introduction to File IO",Quiz,1538623173,0,1,4.4,null,null,null
+22,36,"VQ4-B File Processing",Quiz,1538625197,0,1,0.02,null,null,null
+22,37,"VQ4-C Advanced File IO",Quiz,1538943974,1,1,3.69,null,null,null
+22,38,"VQ5-A Introduction to Functions",Quiz,1539225561,0,1,3.26,null,null,null
+22,39,"VQ5-B Functions",Quiz,1539228052,0,1,0.03,null,null,null
+22,40,"VQ5-C Example Problem GPA Computation",Quiz,1539230118,0,1,0.02,null,null,null
+22,41,"VQ5-D Function Details",Quiz,1539541211,2,1,3.6,null,null,null
+22,42,"VQ5-E Scope",Quiz,1539544588,1,1,0.04,null,null,null
+22,43,"VQ5-F Prototypes",Quiz,1539545677,1,1,0.01,null,null,null
+22,44,"VQ5-G Advanced Prototypes",Quiz,1539886160,5,1,3.94,null,null,null
+22,45,"VQ5-H Pass by Reference",Quiz,1539888216,5,1,0.02,null,null,null
+22,46,"VQ5-I Three File Format",Quiz,1540103624,2,1,2.49,null,null,null
+22,47,"VQ6-A Introduction to Arrays",Quiz,1540361198,1,1,2.98,null,null,null
+22,48,"VQ6-B Looping through Arrays",Quiz,1540434164,0,1,0.84,null,null,null
+22,50,"VQ6-D Parallel Arrays",Quiz,1540653287,3,1,2.54,null,null,null
+22,49,"VQ6-C Arrays and Functions",Quiz,1540839938,0,1,2.16,null,null,null
+22,31,"OPTIONAL Gaddis Ch. 5 (Loops AND Files) Extra Practice Questions",Quiz,1540955977,0,1,1.34,null,null,null
+22,32,"OPTIONAL Gaddis Ch. 6 Extra Practice Questions",Quiz,1540957733,0,1,0.01,null,null,null
+22,51,"VQ6-E Multidimensional Arrays",Quiz,1541095989,5,1,1.6,null,null,null
+22,52,"VQ7-A Introduction to Vectors",Quiz,1541109063,6,1,0.15,null,null,null
+22,53,"VQ7-B Vector Member Functions",Quiz,1541139873,6,1,0.36,null,null,null
+22,54,"VQ7-C Sorting",Quiz,1541993824,1,1,9.88,null,null,null
+22,55,"VQ8-A Introduction to Strings",Quiz,1542661073,0,1,7.72,null,null,null
+22,56,"VQ8-B String Member Functions",Quiz,1542681937,0,1,0.24,null,null,null
+22,57,"VQ8-C String Streams",Quiz,1543190292,1,1,5.88,null,null,null
+22,58,"VQ8-D String Tokenizing",Quiz,1543192877,1,1,0.03,null,null,null
+22,59,"VQ8-E Binary",Quiz,1543196405,1,1,0.03,null,null,null
+22,34,"OPTIONAL Gaddis Ch. 8 (Searching and Sorting Arrays) Extra Practice Questions",Quiz,1544070499,0,1,10.11,null,null,null
+22,33,"OPTIONAL Gaddis Ch. 7 (Arrays AND Vectors) Extra Practice Questions",Quiz,1544071570,0,1,0,null,null,null
+22,1,CR0,Choice,1536124090,null,null,null,null,null,null
+22,2,CR1,Choice,1536732880,null,null,null,null,null,null
+22,3,CR2,Choice,1536732903,null,null,null,null,null,null
+22,4,CR3,Choice,1537336614,null,null,null,null,null,null
+22,5,CR4,Choice,1543898892,null,null,null,null,null,null
+22,6,CR5,Choice,1543898907,null,null,null,null,null,null
+22,7,CR6,Choice,1543898926,null,null,null,null,null,null
+22,8,CR7,Choice,1543898948,null,null,null,null,null,null
+22,9,CR8,Choice,1543898969,null,null,null,null,null,null
+28,23,PA1,Assignment,1536882431,0,null,null,null,null,null
+28,41,PA2,Assignment,1538012931,-1,null,null,null,null,null
+28,70,PA3,Assignment,1538530444,0,null,null,null,null,null
+28,107,PA4,Assignment,1539154582,0,null,null,null,null,null
+28,58,PA5,Assignment,1539813228,-1,null,null,null,null,null
+28,152,PA6,Assignment,1540711904,-2,null,null,null,null,null
+28,173,PA7,Assignment,1542009369,-3,null,null,null,null,null
+28,224,PA9,Assignment,1544083828,-17871,null,null,null,null,null
+28,235,"Lab Final PRACTICE Submission",Assignment,1544255707,-17873,null,null,null,null,null
+28,248,"Lab Final Submission",Assignment,1544731667,-17879,null,null,null,null,null
+28,3,"VQ0-C Command Line",Quiz,1536030747,,0,0,null,null,null
+28,4,"VQ0-D File Commands",Quiz,1536032840,,0,0,null,null,null
+28,5,"VQ0-E Programming Languages",Quiz,1536034593,,0,0,null,null,null
+28,6,"VQ0-F First C++ Program",Quiz,1536039375,,0,0,null,null,null
+28,7,"VQ1-A C++ Language Elements",Quiz,1536208498,,0,0,null,null,null
+28,8,"VQ1-B User Input Output",Quiz,1536212222,,0,0,null,null,null
+28,9,"VQ1-C Example Problem (Cone Volume)",Quiz,1536213476,,0,0,null,null,null
+28,10,"VQ1-D Arithmetic",Quiz,1536632009,0,1,0,null,null,null
+28,11,"VQ1-E Programming Errors",Quiz,1536636262,0,1,0,null,null,null
+28,19,"VQ3-A Introduction to Iteration",Quiz,1537409051,0,2,-0.07,null,null,null
+28,12,"VQ2-A Boolean Conditions",Quiz,1536818357,0,1,0,null,null,null
+28,13,"VQ2-B Conditionals",Quiz,1536819901,0,1,0,null,null,null
+28,14,"VQ2-C Example Problem (Guess my Number)",Quiz,1536820928,0,1,0,null,null,null
+28,15,"VQ2-D Nested Conditionals",Quiz,1536821548,0,1,0,null,null,null
+28,16,"VQ2-E Multiple Alternative Conditionals",Quiz,1537241708,0,1,0,null,null,null
+28,28,"OPTIONAL Gaddis Ch. 1 Extra Practice Questions",Quiz,,0,0,0,null,null,null
+28,17,"VQ2-F Switch Statements",Quiz,1537247726,0,1,0,null,null,null
+28,19,"VQ3-A Introduction to Iteration",Quiz,,0,0,0,null,null,null
+28,20,"VQ3-B Assignment Operators",Quiz,1537412497,0,3,0,null,null,null
+28,20,"VQ3-B Assignment Operators",Quiz,,0,0,0,null,null,null
+28,20,"VQ3-B Assignment Operators",Quiz,,0,0,0,null,null,null
+28,21,"VQ3-C While Loops",Quiz,1537416533,0,3,0,null,null,null
+28,21,"VQ3-C While Loops",Quiz,,0,0,0,null,null,null
+28,21,"VQ3-C While Loops",Quiz,,0,0,0,null,null,null
+28,22,"VQ3-D While Loop Examples",Quiz,1537423884,0,3,0,null,null,null
+28,22,"VQ3-D While Loop Examples",Quiz,,0,0,0,null,null,null
+28,22,"VQ3-D While Loop Examples",Quiz,,0,0,0,null,null,null
+28,23,"VQ3-E Random Numbers",Quiz,1537672143,2,3,2.87,null,null,null
+28,23,"VQ3-E Random Numbers",Quiz,,0,0,0,null,null,null
+28,23,"VQ3-E Random Numbers",Quiz,,0,0,0,null,null,null
+28,24,"VQ3-F For Loops",Quiz,1537674039,2,3,0.02,null,null,null
+28,24,"VQ3-F For Loops",Quiz,,0,0,0,null,null,null
+28,24,"VQ3-F For Loops",Quiz,,0,0,0,null,null,null
+28,25,"VQ3-G Do While Loops",Quiz,1538281337,2,3,7.01,null,null,null
+28,25,"VQ3-G Do While Loops",Quiz,,0,0,0,null,null,null
+28,25,"VQ3-G Do While Loops",Quiz,,0,0,0,null,null,null
+28,26,"VQ3-H Advanced Loops",Quiz,1538282801,2,3,0.02,null,null,null
+28,26,"VQ3-H Advanced Loops",Quiz,,0,0,0,null,null,null
+28,26,"VQ3-H Advanced Loops",Quiz,,0,0,0,null,null,null
+28,35,"VQ4-A Introduction to File IO",Quiz,1538632588,0,3,4.04,null,null,null
+28,35,"VQ4-A Introduction to File IO",Quiz,,0,0,0,null,null,null
+28,35,"VQ4-A Introduction to File IO",Quiz,,0,0,0,null,null,null
+28,36,"VQ4-B File Processing",Quiz,1538632863,0,3,0,null,null,null
+28,36,"VQ4-B File Processing",Quiz,,0,0,0,null,null,null
+28,36,"VQ4-B File Processing",Quiz,,0,0,0,null,null,null
+28,37,"VQ4-C Advanced File IO",Quiz,1539068340,0,2,5.02,null,null,null
+28,37,"VQ4-C Advanced File IO",Quiz,,0,0,0,null,null,null
+28,38,"VQ5-A Introduction to Functions",Quiz,1539226776,0,3,1.83,null,null,null
+28,38,"VQ5-A Introduction to Functions",Quiz,,0,0,0,null,null,null
+28,38,"VQ5-A Introduction to Functions",Quiz,,0,0,0,null,null,null
+28,39,"VQ5-B Functions",Quiz,1539229237,0,3,0.03,null,null,null
+28,39,"VQ5-B Functions",Quiz,,0,0,0,null,null,null
+28,39,"VQ5-B Functions",Quiz,,0,0,0,null,null,null
+28,40,"VQ5-C Example Problem GPA Computation",Quiz,1539231384,0,3,0.02,null,null,null
+28,40,"VQ5-C Example Problem GPA Computation",Quiz,,0,0,0,null,null,null
+28,40,"VQ5-C Example Problem GPA Computation",Quiz,,0,0,0,null,null,null
+28,41,"VQ5-D Function Details",Quiz,1539479867,2,2,2.87,null,null,null
+28,41,"VQ5-D Function Details",Quiz,,0,0,0,null,null,null
+28,42,"VQ5-E Scope",Quiz,1539481217,2,2,0.01,null,null,null
+28,42,"VQ5-E Scope",Quiz,,0,0,0,null,null,null
+28,43,"VQ5-F Prototypes",Quiz,1539484666,2,2,0.04,null,null,null
+28,43,"VQ5-F Prototypes",Quiz,,0,0,0,null,null,null
+28,44,"VQ5-G Advanced Prototypes",Quiz,1540276029,0,1,9.16,null,null,null
+28,47,"VQ6-A Introduction to Arrays",Quiz,1540449229,0,1,2,null,null,null
+28,48,"VQ6-B Looping through Arrays",Quiz,1540449613,0,1,0,null,null,null
+28,49,"VQ6-C Arrays and Functions",Quiz,1540881942,0,2,5,null,null,null
+28,49,"VQ6-C Arrays and Functions",Quiz,,0,0,0,null,null,null
+28,50,"VQ6-D Parallel Arrays",Quiz,1540882200,0,1,0,null,null,null
+28,51,"VQ6-E Multidimensional Arrays",Quiz,1541490310,0,1,7.04,null,null,null
+28,52,"VQ7-A Introduction to Vectors",Quiz,1541662162,0,3,1.98,null,null,null
+28,53,"VQ7-B Vector Member Functions",Quiz,1541662202,0,3,0,null,null,null
+28,52,"VQ7-A Introduction to Vectors",Quiz,,0,0,0,null,null,null
+28,52,"VQ7-A Introduction to Vectors",Quiz,,0,0,0,null,null,null
+28,53,"VQ7-B Vector Member Functions",Quiz,,0,0,0,null,null,null
+28,53,"VQ7-B Vector Member Functions",Quiz,,0,0,0,null,null,null
+28,54,"VQ7-C Sorting",Quiz,1542094523,0,1,5,null,null,null
+28,57,"VQ8-C String Streams",Quiz,1543304171,0,1,14,null,null,null
+28,58,"VQ8-D String Tokenizing",Quiz,1543304325,0,1,0,null,null,null
+28,58,"VQ8-D String Tokenizing",Quiz,,0,0,0,null,null,null
+28,59,"VQ8-E Binary",Quiz,1543304420,0,1,0,null,null,null
+28,1,CR0,Choice,1536088424,null,null,null,null,null,null
+28,2,CR1,Choice,1536636345,null,null,null,null,null,null
+28,3,CR2,Choice,1537247776,null,null,null,null,null,null
+28,4,CR3,Choice,1537408349,null,null,null,null,null,null
+28,5,CR4,Choice,1539225577,null,null,null,null,null,null
+28,6,CR5,Choice,1541662227,null,null,null,null,null,null
+28,7,CR6,Choice,1541662248,null,null,null,null,null,null
+29,5,PA1,Assignment,1536890220,0,null,null,null,null,null
+29,44,PA2,Assignment,1537818375,1,null,null,null,null,null
+29,75,PA3,Assignment,1538547420,0,null,null,null,null,null
+29,103,PA4,Assignment,1539154304,0,null,null,null,null,null
+29,87,PA5,Assignment,1539759068,0,null,null,null,null,null
+29,154,PA6,Assignment,1541053883,-6,null,null,null,null,null
+29,172,PA7,Assignment,1542007660,-3,null,null,null,null,null
+29,199,PA8,Assignment,1543375255,-7,null,null,null,null,null
+29,219,"Lab Final PRACTICE Submission",Assignment,1544071600,-17871,null,null,null,null,null
+29,257,"Lab Final Submission",Assignment,1544734484,-17879,null,null,null,null,null
+29,262,PA9,Assignment,1544753330,-17879,null,null,null,null,null
+29,3,"VQ0-C Command Line",Quiz,1535924987,,0,0,null,null,null
+29,4,"VQ0-D File Commands",Quiz,1536020235,,0,0,null,null,null
+29,5,"VQ0-E Programming Languages",Quiz,1536016384,,0,0,null,null,null
+29,6,"VQ0-F First C++ Program",Quiz,1536019680,,0,0,null,null,null
+29,6,,Quiz,,,0,0,null,null,null
+29,4,,Quiz,,,0,0,null,null,null
+29,7,"VQ1-A C++ Language Elements",Quiz,1536119002,,0,0,null,null,null
+29,7,,Quiz,,,0,0,null,null,null
+29,8,"VQ1-B User Input Output",Quiz,1536192820,,0,0,null,null,null
+29,9,"VQ1-C Example Problem (Cone Volume)",Quiz,1536197134,,0,0,null,null,null
+29,10,"VQ1-D Arithmetic",Quiz,1536374250,0,1,0,null,null,null
+29,11,"VQ1-E Programming Errors",Quiz,1536451083,0,1,0,null,null,null
+29,12,"VQ2-A Boolean Conditions",Quiz,1536527277,0,1,0,null,null,null
+29,13,"VQ2-B Conditionals",Quiz,1536711615,0,2,0,null,null,null
+29,13,,Quiz,,0,0,0,null,null,null
+29,14,"VQ2-C Example Problem (Guess my Number)",Quiz,1536713617,0,2,0,null,null,null
+29,14,,Quiz,,0,0,0,null,null,null
+29,15,"VQ2-D Nested Conditionals",Quiz,1536795823,0,1,0,null,null,null
+29,16,"VQ2-E Multiple Alternative Conditionals",Quiz,1537037276,3,2,0,null,null,null
+29,16,"VQ2-E Multiple Alternative Conditionals",Quiz,,0,0,0,null,null,null
+29,17,"VQ2-F Switch Statements",Quiz,1537043975,2,2,0,null,null,null
+29,17,"VQ2-F Switch Statements",Quiz,,0,0,0,null,null,null
+29,19,"VQ3-A Introduction to Iteration",Quiz,1537313943,1,1,0,null,null,null
+29,20,"VQ3-B Assignment Operators",Quiz,1537319164,1,2,0,null,null,null
+29,20,"VQ3-B Assignment Operators",Quiz,,0,0,0,null,null,null
+29,21,"VQ3-C While Loops",Quiz,1537324950,1,1,-0,null,null,null
+29,22,"VQ3-D While Loop Examples",Quiz,1537400075,0,1,-0,null,null,null
+29,23,"VQ3-E Random Numbers",Quiz,1537583697,3,1,2.09,null,null,null
+29,24,"VQ3-F For Loops",Quiz,1537839110,0,2,2.87,null,null,null
+29,24,"VQ3-F For Loops",Quiz,,0,0,0,null,null,null
+29,25,"VQ3-G Do While Loops",Quiz,1538186710,3,1,3.98,null,null,null
+29,26,"VQ3-H Advanced Loops",Quiz,1538330089,2,1,1.63,null,null,null
+29,35,"VQ4-A Introduction to File IO",Quiz,1538439900,2,2,1.24,null,null,null
+29,35,"VQ4-A Introduction to File IO",Quiz,,0,0,0,null,null,null
+29,36,"VQ4-B File Processing",Quiz,1538596504,0,2,1.8,null,null,null
+29,36,"VQ4-B File Processing",Quiz,,0,0,0,null,null,null
+29,37,"VQ4-C Advanced File IO",Quiz,1538849060,3,1,2.88,null,null,null
+29,38,"VQ5-A Introduction to Functions",Quiz,1538862169,4,2,0.12,null,null,null
+29,38,"VQ5-A Introduction to Functions",Quiz,,0,0,0,null,null,null
+29,39,"VQ5-B Functions",Quiz,1539056752,2,2,2.17,null,null,null
+29,39,"VQ5-B Functions",Quiz,,0,0,0,null,null,null
+29,40,"VQ5-C Example Problem GPA Computation",Quiz,1539129811,1,2,0.81,null,null,null
+29,40,"VQ5-C Example Problem GPA Computation",Quiz,,0,0,0,null,null,null
+29,41,"VQ5-D Function Details",Quiz,1539216715,5,1,0.98,null,null,null
+29,42,"VQ5-E Scope",Quiz,1539460361,2,2,2.79,null,null,null
+29,42,"VQ5-E Scope",Quiz,,0,0,0,null,null,null
+29,43,"VQ5-F Prototypes",Quiz,1539567121,1,1,1.21,null,null,null
+29,44,"VQ5-G Advanced Prototypes",Quiz,1540082489,2,1,5.94,null,null,null
+29,45,"VQ5-H Pass by Reference",Quiz,1540154986,1,1,0.8,null,null,null
+29,46,"VQ5-I Three File Format",Quiz,1540260135,0,1,1.17,null,null,null
+29,47,"VQ6-A Introduction to Arrays",Quiz,1540356039,1,1,1.07,null,null,null
+29,48,"VQ6-B Looping through Arrays",Quiz,1540429164,0,1,0.8,null,null,null
+29,49,"VQ6-C Arrays and Functions",Quiz,1540791156,1,2,4.16,null,null,null
+29,49,"VQ6-C Arrays and Functions",Quiz,,0,0,0,null,null,null
+29,50,"VQ6-D Parallel Arrays",Quiz,1540869963,0,2,0.76,null,null,null
+29,50,"VQ6-D Parallel Arrays",Quiz,,0,0,0,null,null,null
+29,51,"VQ6-E Multidimensional Arrays",Quiz,1541365170,1,1,5.68,null,null,null
+29,52,"VQ7-A Introduction to Vectors",Quiz,1541557926,1,1,2.2,null,null,null
+29,53,"VQ7-B Vector Member Functions",Quiz,1541560598,1,1,0.01,null,null,null
+29,54,"VQ7-C Sorting",Quiz,1542071413,0,1,5.83,null,null,null
+29,55,"VQ8-A Introduction to Strings",Quiz,1542599715,1,1,6.08,null,null,null
+29,56,"VQ8-B String Member Functions",Quiz,1542675198,0,1,0.82,null,null,null
+29,57,"VQ8-C String Streams",Quiz,1543097117,2,1,4.84,null,null,null
+29,58,"VQ8-D String Tokenizing",Quiz,1543282781,0,1,2.14,null,null,null
+29,59,"VQ8-E Binary",Quiz,1543301290,0,2,0.2,null,null,null
+29,59,"VQ8-E Binary",Quiz,,0,0,0,null,null,null
+29,1,CR0,Choice,1536533690,null,null,null,null,null,null
+29,2,CR1,Choice,1536609683,null,null,null,null,null,null
+29,3,CR2,Choice,1537043555,null,null,null,null,null,null
+29,4,CR3,Choice,1538436624,null,null,null,null,null,null
+29,5,CR4,Choice,1538859440,null,null,null,null,null,null
+29,6,CR5,Choice,1540352463,null,null,null,null,null,null
+29,7,CR6,Choice,1541997220,null,null,null,null,null,null
+29,8,CR7,Choice,1542303029,null,null,null,null,null,null
+29,9,CR8,Choice,1543301326,null,null,null,null,null,null
+29,1,"Forum Response",Forum,1538003219,null,null,null,1,3,1
+29,1,"Forum Response",Forum,1538004160,null,null,null,1,5,1
+29,1,"Forum Response",Forum,1538009241,null,null,null,1,8,1
+29,1,"Test on Advanced Loops",Forum,1539277363,null,null,null,3,11,0
+29,1,PA6,Forum,1539879634,null,null,null,4,12,0

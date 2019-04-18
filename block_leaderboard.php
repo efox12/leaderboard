@@ -78,6 +78,7 @@ class block_leaderboard extends block_base {
                 }
             }
         }*/
+        
         return $this->content;
     }
 

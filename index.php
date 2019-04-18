@@ -144,9 +144,6 @@ if(count($groups) > 0){ //there are groups to display
         if($group_data->id){
             $stored_group_data = $DB->get_record('group_data_table', array('group_id'=> $group_data->id), $fields='*', $strictness=IGNORE_MISSING);
             $stored_group_data->current_standing = (int)($current_standing.$move.$initialPosition);
-            /*if ($stored_group_data->multiplier < floor((time()-7*60)/86400)){
-                $stored_group_data->multiplier = floor((time()-7*60)/86400);
-            }*/
             $DB->update_record('group_data_table', $stored_group_data);
         }
 
@@ -301,14 +298,6 @@ if(count($groups) > 0){ //there are groups to display
                                 }
                             }
 
-                            //include info about extra points from multiplier
-                            /*if($points_module->points_earned - ($attempts_points+$early_points+$spacing_points) > 0){
-                                $multiplier_points = $points_module->points_earned - ($attempts_points+$early_points+$spacing_points);
-                                $module_row = new html_table_row(array("","","","Points from multiplier",$multiplier_points));
-                                $module_row->attributes['class'] = 'contentInfo';
-                                $module_row->attributes['name'] = 'c'.$group_index.'s'.$count.'i'.$infoCount;
-                                $table->data[] = $module_row;
-                            }*/
                             $infoCount++;
                         }
                     }
@@ -368,22 +357,6 @@ echo '<div class="a partone">'.get_string('a2', 'block_leaderboard').'</div>';
 echo '<br/>';
 echo '<div class="a levels">'.get_string('a22', 'block_leaderboard').'</div>';
 echo '<br/>';
-/*
-echo '<div class="q">'.get_string('q3', 'block_leaderboard').'</div>';
-echo '<br/>';
-echo '<div class="a">'.get_string('a3', 'block_leaderboard').'</div>';
-echo '<br/>';
-echo '<div class="q">'.get_string('q4', 'block_leaderboard').'</div>';
-echo '<br/>';
-echo '<div class="a partone">'.get_string('a41', 'block_leaderboard').'</div>';
-echo '<br/>';
-echo '<div class="a levels">'.get_string('a42', 'block_leaderboard').'</div>';
-echo '<br/>';
-echo '<div class="q">'.get_string('q5', 'block_leaderboard').'</div>';
-echo '<br/>';
-echo '<div class="a">'.get_string('a5', 'block_leaderboard').'</div>';
-echo '<br/>';
-*/
 echo '<div class="q">'.get_string('q6', 'block_leaderboard').'</div>';
 echo '<br/>';
 echo '<div class="a">'.get_string('a6', 'block_leaderboard').'</div>';

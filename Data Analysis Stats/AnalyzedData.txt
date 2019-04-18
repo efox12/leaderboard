@@ -1,0 +1,70 @@
+--------------------------------------------
+Comparison of change from fall to spring
+--------------------------------------------
+ASSIGNMENT DATA
+Average days early for assignments: UP 0.05 days
+Assignments submitted 0 days early: UP .5%
+Assignments submitted 1 days early: DOWN 2.5%
+Assignments submitted 2 days early: UP 3.84%
+Assignments submitted 3 days early: DOWN 0.79%
+Assignments submitted 4 days early: DOWN 0.36%
+Assignments submitted 5 or more days early: UP 1.26%
+Assignments submitted late: NO CHANGE
+
+----------------------------------------------
+Spring 2018
+----------------------------------------------
+ASSIGNMENT DATA
+Average days early for assignments: 0.29 days
+Assignments submitted 0 days early: 65.96%
+Assignments submitted 1 days early: 8.71%
+Assignments submitted 2 days early: 2.37%
+Assignments submitted 3 days early: 0.79%
+Assignments submitted 4 days early: 0.26%
+Assignments submitted 5 or more days early: 1.85%
+Assignments submitted late: 20.05%
+						
+----------------------------------------------
+Fall 2018
+----------------------------------------------
+ASSIGNMENT DATA
+Average days early for assignments: 0.34 days
+Assignments submitted 0 days early: 66.46%
+Assignments submitted 1 days early: 6.21%
+Assignments submitted 2 days early: 3.11%
+Assignments submitted 3 days early: 0.0%
+Assignments submitted 4 days early: 0.62%
+Assignments submitted 5 or more days early: 3.11%
+Assignments submitted late: 20.5%
+
+
+
+QUIZ DATA
+Average days early for quizzes: 0.43 days
+Quizzes submitted 0 days early: 77.16%
+Quizzes submitted 1 days early: 12.83%
+Quizzes submitted 2 days early: 4.59%
+Quizzes submitted 3 days early: 2.4%
+Quizzes submitted 4 days early: 1.25%
+Quizzes submitted 5 or more days early: 1.46%
+Quizzes submitted late: 0.31%
+
+Average quiz attempts: 0.98 attempts
+Quizzes attempted 0 times: 15.22%
+Quizzes attempted 1 times: 74.56%
+Quizzes attempted 2 times: 7.19%
+Quizzes attempted 3 times: 2.92%
+Quizzes attempted 4 times: 0.1%
+
+Average quiz spacing: 1.37 days
+Quizzes not spaced out: 61.21%
+Quizzes spaced out 1 hour: 8.45%
+Quizzes spaced out half day: 1.88%
+Quizzes spaced out 1 or more days: 28.47%
+
+
+
+FORUM DATA
+9 Student Forum Contributions
+4 Student Posts
+5 Student Responses

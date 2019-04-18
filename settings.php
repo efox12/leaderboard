@@ -197,49 +197,6 @@ $settings->add(new admin_setting_heading(
     get_string('other_settings', 'block_leaderboard'),
     get_string('other_settings_desc', 'block_leaderboard')
 ));
-
-
-
-//-------------------------------------------------------------------------------------------------------------------//
-// MULTIPLIER
-/*
-$vals = array(100,175,300,500,800);
-$settings->add(new admin_setting_heading(
-    'groupdataheaderconfig',
-    get_string('multiplier_settings', 'block_leaderboard'),
-    get_string('multiplier_settings_desc', 'block_leaderboard')
-));
-    for($x=5; $x>=1; $x--){
-        $settings->add(new admin_setting_configtext(
-            'leaderboard/multiplier'.$x,
-            get_string('level', 'block_leaderboard').$x.get_string('multiplier', 'block_leaderboard'),
-            '',
-            1+(($x-1)*0.25)
-        ));
-        if(get_config('leaderboard','multiplier'.$x) === ''){
-            set_config('multiplier'.$x,1+(($x-1)*0.25),'leaderboard');
-        }
-        
-        if($x === 5){
-            $settings->add(new admin_setting_configtext(
-                'leaderboard/groupdata'.$x,
-                get_string('points_to_stay_at_level', 'block_leaderboard').($x+1),
-                '<br/>',
-                $vals[$x-1]
-            ));
-        } else{
-            $settings->add(new admin_setting_configtext(
-                'leaderboard/groupdata'.$x,
-                get_string('points_to_get_to_level', 'block_leaderboard').($x+1),
-                '<br/>',
-                $vals[$x-1]
-            ));
-        }
-        if(get_config('leaderboard','groupdata'.$x) === ''){
-            set_config('groupdata'.$x,$vals[$x-1],'leaderboard');
-        }
-    }
-*/
     
     
     

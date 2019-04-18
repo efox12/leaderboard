@@ -15,56 +15,6 @@
     font-size: 1.5em;
     color: black;
 }
-/*
-// code pertaining to multipliers
-.block_leaderboard desc {
-    color: black;
-    position: relative;
-    display: block;
-    text-align: right;
-    padding-top: 0;
-    padding-bottom: 0;
-}
-
-.block_leaderboard mult {
-    font-size: 4em;
-    font-weight: bolder;
-    color: black;
-    position: relative;
-    display: block;
-    text-align: center;
-    
-}
-.block_leaderboard div.mult {
-    display: inline-block;
-    margin-bottom: -10px;
-}
-
-.block_leaderboard current_rate {
-    display: block;
-    text-align: center;
-}
-
-.block_leaderboard current_rate unit {
-    font-size: smaller;
-}
-
-.block_leaderboard div.progress-bar {
-    background-color: lightgrey;
-    height: 10px;
-    border-radius: 5px;
-    position: relative;
-    margin-top: 5px;
-    margin-bottom: 10px;
-  }
-    
-.block_leaderboard .progress-bar span {
-    background-color: gray;
-    border-radius: 5px;
-    min-width: 5px;
-    height: 100%;
-}
-*/
 
 div .info {
     font-size: 1.5rem;
