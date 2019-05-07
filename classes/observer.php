@@ -16,12 +16,14 @@ class block_leaderboard_observer {
             
             //The id of the object the event is occuring on
             $eventid = $event->objectid;
+
             //The data of the submission
-            $submission_data = $DB->get_records('assign_submission',array('id'=> $eventid));
-            //All assignments information
-            $all_assignments = $DB->get_records('assign');
-            //The submitted assignemnts information
-            $assignment_data = $all_assignments[$submission_data[$eventid]->assignment];
+            $sql = "SELECT assign.*, assign_submission.userid
+                FROM {assign_submission} AS assign_submission
+                INNER JOIN {assign} AS assign ON assign.id = assign_submission.assignment
+                WHERE assign_submission.id = ?;";
+
+            $assignment_data = $DB->get_record_sql($sql, array($eventid));
             
             //formats the date to ne non-UNIX form
             $dateformat = get_string('strftimedatetime', 'langconfig');
@@ -48,15 +50,16 @@ class block_leaderboard_observer {
                 }
             }
             $eventdata->points_earned = block_leaderboard_functions::calculate_points($event->userid, $points);
-            $eventdata->activity_student = $submission_data[$eventid]->userid;
+            $eventdata->activity_student = $assignment_data->userid;
             $eventdata->activity_id = $eventid;
             $eventdata->time_finished = $event->timecreated;
             $eventdata->module_name = $assignment_data->name;
             $eventdata->days_early = $days_before_submission;
+
+            $activities = $DB->get_records('assignment_table', array('activity_id'=> $eventid,'activity_student' => $assignment_data->userid));
             //Insert the new data into the databese if new, update if old
-            if($DB->get_records('assignment_table', array('activity_id'=> $eventid))){
+            if($activities){
                 //the id of the object is required for update_record();
-                $activities = $DB->get_records('assignment_table', array('activity_id'=> $eventid));
                 foreach ($activities as $activity){
                     if($activity->activity_id == $eventid){
                         $eventdata->id = $activity->id;
@@ -77,15 +80,17 @@ class block_leaderboard_observer {
     public static function quiz_started_handler(\mod_quiz\event\attempt_started $event){
         global $DB, $USER;
         if(user_has_role_assignment($USER->id,5)){
-            //the table of all quiz attempts
-            $quiz_attempts = $DB->get_records('quiz_attempts');
             //the id corresponding to the users current attempt
             $current_id = $event->objectid;
-            //the users current attempt
-            $current_quiz_attempt = $quiz_attempts[$current_id];
-            //the quiz
-            $quiz = $DB->get_record('quiz', array('id'=> $current_quiz_attempt->quiz), $fields='*', $strictness=IGNORE_MISSING);
-            
+        
+            //The data of the submission
+            $sql = "SELECT quiz.*
+                FROM {quiz_attempts} AS quiz_attempts
+                INNER JOIN {quiz} AS quiz ON quiz.id = quiz_attempts.quiz
+                WHERE quiz_attempts.id = ?;";
+
+            $quiz = $DB->get_record_sql($sql, array($current_id));
+
             //create a new quiz
             $quizdata = new \stdClass();
             $quizdata->time_started = $event->timecreated;
@@ -104,17 +109,19 @@ class block_leaderboard_observer {
     public static function quiz_submitted_handler(\mod_quiz\event\attempt_submitted $event){
         global $DB, $USER;
         if(user_has_role_assignment($USER->id,5)){
-            //the table of all quiz attempts
-            $quiz_attempts = $DB->get_records('quiz_attempts');
-            //the id corresponding to the users current attempt
-            $current_id = $event->objectid;
             //the users current attempt
-            $current_quiz_attempt = $quiz_attempts[$current_id];
+            $current_id = $event->objectid;
+            
             //the quiz
-            $this_quiz = $DB->get_record('quiz', array('id'=> $current_quiz_attempt->quiz), $fields='*', $strictness=IGNORE_MISSING);
+            $sql = "SELECT quiz.*
+                FROM {quiz_attempts} AS quiz_attempts
+                INNER JOIN {quiz} AS quiz ON quiz.id = quiz_attempts.quiz
+                WHERE quiz_attempts.id = ?;";
+
+            $this_quiz = $DB->get_record_sql($sql, array($current_id));
             $due_date = $this_quiz->timeclose;
             
-            //the table for the leadder board block
+            //the table for the leader board block
             $quiz_table = $quiz_table = $DB->get_record('quiz_table',
                                     array('quiz_id'=> $this_quiz->id, 'student_id'=> $event->userid),
                                     $fields='*',
@@ -175,7 +182,7 @@ class block_leaderboard_observer {
 
                 //bonus points get awarded for spacing out quizzes instead of cramming (only judges the 2 most recent quizzes)
                 $spacing_points = 0;
-                $quiz_spacing = ($quiz_table->time_started - $recent_time_finished)/86400;
+                $quiz_spacing = ($quiz_table->time_started - $recent_time_finished)/(float)86400;
                 echo("<script>console.log('EVENT1: ".$quiz_spacing."');</script>");
                 //make sure that days spaced doesn't go above a maximum of 5 days
                 $quiz_table->days_spaced = min($quiz_spacing, 5);
@@ -221,12 +228,16 @@ class block_leaderboard_observer {
     public static function choice_submitted_handler(\mod_choice\event\answer_created $event){
         global $DB, $USER;
         if(user_has_role_assignment($USER->id,5)){
-            $choice_id = $DB->get_records('choice_answers')[$event->objectid]->choiceid;
-            $choice = $DB->get_record('choice', array('id'=> $choice_id), $fields='*', $strictness=IGNORE_MISSING);
-            if($DB->get_record('choice_table', array('choice_id'=> $choice_id, 'student_id'=> $event->userid), $fields='*', $strictness=IGNORE_MISSING) == false){ //if new coice then add to database
+            $sql = "SELECT choice_answers.id, choice.name
+                FROM {choice_answers} AS choice_answers
+                INNER JOIN {choice} AS choice ON choice.id = choice_answers.choiceid
+                WHERE choice_answers.id = ?;";
+
+            $choice = $DB->get_record_sql($sql, array($event->objectid));
+            if($DB->get_record('choice_table', array('choice_id'=> $choice->id, 'student_id'=> $event->userid), $fields='*', $strictness=IGNORE_MISSING) == false){ //if new coice then add to database
                 $choicedata = new \stdClass();
                 $choicedata->student_id = $event->userid;
-                $choicedata->choice_id = $choice_id;
+                $choicedata->choice_id = $choice->id;
                 $choicedata->points_earned = block_leaderboard_functions::calculate_points($event->userid, get_config('leaderboard','choicepoints'));
                 $choicedata->time_finished = $event->timecreated;
                 $choicedata->module_name = $choice->name;

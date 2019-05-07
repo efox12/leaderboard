@@ -10,8 +10,8 @@ defined('MOODLE_INTERNAL') || die();
 class block_leaderboard_functions{
     //calculates the points for the student
     public static function calculate_points($student_id, $new_points){
-        global $DB;
-        $groups = $DB->get_records('groups');
+        global $DB, $COURSE;
+        $groups = $DB->get_records('groups',array('courseid'=>$COURSE->id));
         $num_groups = count($groups);
         $calculated_points = 0;
         if($num_groups > 0){
@@ -169,24 +169,20 @@ class block_leaderboard_functions{
             $reset = $reset2;
         }
 
-        $student_activities = $DB->get_records('assignment_table', array('activity_student'=> $student->id));
+        $sql = "SELECT assignment_table.*,assign.duedate
+                FROM {assign_submission} AS assign_submission
+                INNER JOIN {assignment_table} AS assignment_table ON assign_submission.id = assignment_table.activity_id
+                INNER JOIN {assign} AS assign ON assign.id = assignment_table.activity_id
+                WHERE assignment_table.activity_student = ?;";
+
+        $student_activities = $DB->get_records_sql($sql, array($student->id));
+
         foreach($student_activities as $activity){
-            
-            //The data of the submission
-            $submission_data = $DB->get_records('assign_submission',array('id'=> $activity->activity_id));
-            //All assignments information
-            $all_assignments = $DB->get_records('assign');
-            
-            //The submitted assignemnts information
-            $due_date = INF;
-            if(count($submission_data) > 0){
-                $assignment_data = $all_assignments[$submission_data[$activity->activity_id]->assignment];
-                //duedate
-                $due_date = $assignment_data->duedate;
+            $due_date = $activity->duedate;
+            if(is_null($due_date)){
+                $due_date = INF;
             }
-            
             if($time >= $due_date && $due_date > $reset){
-                #echo("<script>console.log('ACTIVITY1: ".json_encode($submission_data)."');</script>");
                 $points->all += $activity->points_earned;
                 if(($time - $activity->time_finished)/86400 <= 7){
                     $points->past_week += $activity->points_earned;
@@ -197,22 +193,23 @@ class block_leaderboard_functions{
                 if($activity->module_name != ''){
                     $student_history[] = $activity;
                 } else {
-                    echo("<script>console.log('BAD ACTIVITY DATA: ".json_encode($activity)."');</script>");
+                    echo("<script>console.log('BAD ACTIVITY DATA: ".json_encode($activity->points_earned)."');</script>");
                 }
             }
         }
-        $student_quizzes = $DB->get_records('quiz_table', array('student_id'=> $student->id));
+
+        $sql = "SELECT quiz_table.*, quiz.timeclose
+                FROM {quiz_table} AS quiz_table
+                INNER JOIN {quiz} AS quiz ON quiz.id = quiz_table.quiz_id
+                WHERE quiz_table.student_id = ? AND quiz_table.points_earned IS NOT NULL;";
+
+        $student_quizzes = $DB->get_records_sql($sql, array($student->id));
+        
         foreach($student_quizzes as $quiz){
-            
-            //the table of all quiz attempts
-            $quiz_attempts = $DB->get_records('quiz_attempts');
-            //the id corresponding to the users current attempt
-            $current_id = $quiz->quiz_id;
-            
-            //the quiz
-            $due_date = INF;
-            if($this_quiz = $DB->get_record('quiz', array('id'=> $current_id), $fields='*', $strictness=IGNORE_MISSING)){
-                $due_date = $this_quiz->timeclose;
+            //echo("<script>console.log('QUIZ DATA: ".json_encode($quiz)."');</script>");
+            $due_date = $quiz->timeclose;
+            if(is_null($due_date)){
+                $due_date = INF;
             }
 
             if($time >= $due_date && $due_date > $reset){
@@ -223,10 +220,12 @@ class block_leaderboard_functions{
                 if(($time - $quiz->time_finished)/86400 <= 14){
                     $points->past_two_weeks += $quiz->points_earned;
                 }
+                //echo("<script>console.log('MOD NAME: ".json_encode($quiz->module_name)."');</script>");
                 if($quiz->module_name != ''){
+                    //echo("<script>console.log('MOD NAME: ".json_encode($quiz)."');</script>");
                     $student_history[] = $quiz;
                 } else {
-                    echo("<script>console.log('BAD QUIZ DATA: ".json_encode($quiz)."');</script>");
+                    echo("<script>console.log('BAD QUIZ: ".json_encode($quiz)."');</script>");
                 }
             }
         }

@@ -36,7 +36,8 @@ if(user_has_role_assignment($USER->id,5)){
 }
 
 echo $OUTPUT->header();
-
+$string = "hello";
+echo("<script>console.log('STRING: ".$string."');</script>");
 //-------------------------------------------------------------------------------------------------------------------//
 // CREATE TABLE
 //create an html table
@@ -194,6 +195,7 @@ if(count($groups) > 0){ //there are groups to display
                         $infoCount = 0;
                         foreach($student_data->history as $points_module){
                             //$module_row = new html_table_row();
+                            //echo("<script>console.log('EVENT1: ".json_encode($points_module)."');</script>");
                             if(property_exists($points_module, "is_response")){
                                 if($points_module->is_response == 0){
                                     $module_row = new html_table_row(array("","","","Forum Post",round($points_module->points_earned)));
@@ -255,9 +257,10 @@ if(count($groups) > 0){ //there are groups to display
                                     $table->data[] = $module_row;
                                 }
                             }
-
+                            echo("<script>console.log('QUIZZZZZZZZ: ".json_encode($points_module)."');</script>");
                             //include info about how many times a quiz was attempted
                             if(property_exists($points_module, "attempts")){
+                                
                                 $attempts_points = get_config('leaderboard','quizattemptspoints')*($points_module->attempts - 1);
                                 if($attempts_points > 0){
                                     $module_row = new html_table_row(array("","","",$points_module->attempts." attempts", $attempts_points));
