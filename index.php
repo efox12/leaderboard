@@ -257,7 +257,6 @@ if(count($groups) > 0){ //there are groups to display
                                     $table->data[] = $module_row;
                                 }
                             }
-                            echo("<script>console.log('QUIZZZZZZZZ: ".json_encode($points_module)."');</script>");
                             //include info about how many times a quiz was attempted
                             if(property_exists($points_module, "attempts")){
                                 

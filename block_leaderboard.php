@@ -78,6 +78,88 @@ class block_leaderboard extends block_base {
                 }
             }
         }*/
+
+        global $DB;
+        $groups = $DB->get_records('groups');
+        $all_assignments = $DB->get_records('assign');
+
+        foreach($groups as $group){
+            //get each member of the group
+            $students = groups_get_members($group->id, $fields='u.*', $sort='lastname ASC');
+            foreach($students as $student){
+                $past_quizzes = $DB->get_records('quiz_table',array('student_id'=> $student->id), $sort='time_started ASC');
+                $clean_quizzes = [];
+                foreach($past_quizzes as $past_quiz){
+                    if ($past_quiz->time_finished != null){
+                        $clean_quizzes[] = $past_quiz;
+                    }
+                }
+                echo("<script>console.log('EVENT1: ".json_encode($clean_quizzes)."');</script>");
+                $previous_time = 0;
+                foreach($clean_quizzes as $quiz){
+                    $days_before_submission = $quiz->days_early;
+                    $points_earned = 0;
+                    if(abs($days_before_submission) < 50){ //quizzes without duedates will produce a value like -17788
+                        $quiz->days_early = $days_before_submission;
+                        for($x=1; $x<=5; $x++){
+                            $current_time = get_config('leaderboard','quiztime'.$x);
+                            if($x < 5) {
+                                $next_time = get_config('leaderboard','quiztime'.($x+1));
+                                if($days_before_submission >= $current_time && $days_before_submission < $next_time){
+                                    $points_earned = get_config('leaderboard','quizpoints'.$x);
+                                }
+                            } else {
+                                if($days_before_submission >= $current_time){
+                                    $points_earned = get_config('leaderboard','quizpoints'.$x);
+                                }
+                            }
+                        }
+                    } else {
+                        $quiz->days_early = 0;
+                        $points_earned = 0;
+                    }
+
+                    $quiz->points_earned = block_leaderboard_functions::calculate_points($student->id, $points_earned);
+
+                    $spacing_points = 0;
+                    //echo("<script>console.log('EVENT1: ".$quiz->days_spaced."');</script>");
+                    $quiz_spacing = ($quiz->time_started - $previous_time)/(float)86400;
+                    
+                    //make sure that days spaced doesn't go above a maximum of 5 days
+                    $quiz->days_spaced = min($quiz_spacing, 5);
+                    //echo("<script>console.log('EVENT1: ".$quiz."');</script>");
+                    
+                    for($x=1; $x<=3; $x++){
+                        $current_spacing = get_config('leaderboard','quizspacing'.$x);
+                        if($x < 3) {
+                            $next_spacing = get_config('leaderboard','quizspacing'.($x+1));
+                            if($quiz_spacing >= $current_spacing && $quiz_spacing < $next_spacing){
+                                $spacing_points = get_config('leaderboard','quizspacingpoints'.$x);
+                                break;
+                            }
+                        } else {
+                            if($current_spacing <= $quiz_spacing){
+                                $spacing_points = get_config('leaderboard','quizspacingpoints'.$x);
+                            }
+                        }
+                    }
+                    $previous_time = $quiz->time_started;
+                    $quiz->points_earned += block_leaderboard_functions::calculate_points($student->id, $spacing_points);
+
+                    $multiple_attempt_points = 0;
+                    $points = 0;
+                    $quiz_attempts = get_config('leaderboard','quizattempts');
+                    
+                    $multiple_attempt_points = get_config('leaderboard','quizattemptspoints');
+                    
+                    for($i=0; $i<$quiz->attempts;$i++){
+                        $points += $multiple_attempt_points;
+                    }
+                    $quiz->points_earned += block_leaderboard_functions::calculate_points($student->id, $multiple_attempt_points);
+                    $DB->update_record('quiz_table', $quiz);
+                }
+            }
+        }
         
         return $this->content;
     }

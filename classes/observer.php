@@ -91,16 +91,24 @@ class block_leaderboard_observer {
 
             $quiz = $DB->get_record_sql($sql, array($current_id));
 
-            //create a new quiz
-            $quizdata = new \stdClass();
-            $quizdata->time_started = $event->timecreated;
-            $quizdata->quiz_id = $quiz->id;
-            $quizdata->student_id = $event->userid;
-            $quizdata->attempts = 0;
-            $quizdata->days_early = 0;
-            $quizdata->days_spaced = 0;
-            $quizdata->module_name = $quiz->name;
-            $DB->insert_record('quiz_table', $quizdata);
+            $sql = "SELECT quiz.*
+                FROM {quiz_attempts} AS quiz_attempts
+                INNER JOIN {quiz} AS quiz ON quiz.id = quiz_attempts.quiz
+                WHERE quiz_attempts.id = ?;";
+
+            $this_quiz = $DB->get_record_sql($sql, array($current_id));
+            if(!$this_quiz){
+                //create a new quiz
+                $quizdata = new \stdClass();
+                $quizdata->time_started = $event->timecreated;
+                $quizdata->quiz_id = $quiz->id;
+                $quizdata->student_id = $event->userid;
+                $quizdata->attempts = 0;
+                $quizdata->days_early = 0;
+                $quizdata->days_spaced = 0;
+                $quizdata->module_name = $quiz->name;
+                $DB->insert_record('quiz_table', $quizdata);
+            }
         }
     }
 
