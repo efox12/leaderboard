@@ -7,7 +7,7 @@
 
 require_once('../../../config.php'); // Specify path to moodle /config.php file.
 require_login(); // require valid moodle login.  Will redirect to login page if not logged in.
-
+$cid = required_param('id', PARAM_INT);
 global $DB, $COURSE;
 $CSV[0] = array(
     'student_id',
@@ -23,7 +23,7 @@ $CSV[0] = array(
     'is_response'
 );
 $count = 1;
-$groups = $DB->get_records('groups', array('courseid'=>$COURSE->id));
+$groups = $DB->get_records('groups', array('courseid'=>$cid));
 foreach($groups as $group){
     //get each member of the group
     $students = groups_get_members($group->id, $fields='u.*', $sort='lastname ASC');

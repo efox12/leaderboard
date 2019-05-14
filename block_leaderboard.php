@@ -78,11 +78,10 @@ class block_leaderboard extends block_base {
                 }
             }
         }*/
-
+        /*
         global $DB;
         $groups = $DB->get_records('groups');
         $all_assignments = $DB->get_records('assign');
-
         foreach($groups as $group){
             //get each member of the group
             $students = groups_get_members($group->id, $fields='u.*', $sort='lastname ASC');
@@ -160,7 +159,7 @@ class block_leaderboard extends block_base {
                 }
             }
         }
-        
+        */
         return $this->content;
     }
 
