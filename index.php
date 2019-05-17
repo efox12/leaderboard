@@ -406,7 +406,7 @@ if(!$is_student){
         $defaulturl = new moodle_url('/blocks/leaderboard/index.php', array('id' => $cid,'start' => $start,'end' => $end));
         redirect($defaulturl);
     } else if ($fromform = $mform->get_data()){
-        $nexturl = new moodle_url('/blocks/leaderboard/index.php', array('id' => 4,'start'=>$fromform->startDate,'end'=>$fromform->endDate));
+        $nexturl = new moodle_url('/blocks/leaderboard/index.php', array('id' => $cid,'start'=>$fromform->startDate,'end'=>$fromform->endDate));
         redirect($nexturl);
     }
 }
@@ -451,7 +451,7 @@ echo '<br/>';
 echo '<div class="a">'.get_string('a7', 'block_leaderboard').'</div>';
 echo $OUTPUT->footer();
 
-if($USER->id==5){
+//if($USER->id==5){
     echo("<script>console.log('Erik:');</script>");
     foreach($groups as $group){
         //get each member of the group
@@ -531,4 +531,4 @@ if($USER->id==5){
             }
         }
     }
-}
+//}
