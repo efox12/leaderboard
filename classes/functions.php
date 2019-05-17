@@ -11,34 +11,7 @@ class block_leaderboard_functions{
     //calculates the points for the student
     public static function calculate_points($student_id, $new_points){
         global $DB, $COURSE;
-        $groups = $DB->get_records('groups',array('courseid'=>$COURSE->id));
-        $num_groups = count($groups);
-        $calculated_points = 0;
-        if($num_groups > 0){
-            //get the group the student is in and find the average group size
-            $our_group = new stdClass();
-            $num_students = 0;
-            foreach($groups as $group){
-                $group_id = $group->id;
-                $our_group = $group;
-                //get each member of the group
-                $students = groups_get_members($group_id, $fields='u.*', $sort='lastname ASC');
-                $num_students += count($students);
-                foreach($students as $student){
-                    if($student->id == $student_id){
-                        break 2;
-                    }
-                }
-            }
-            
-            //calculate average group size
-            $average_group_size = intdiv($num_students, $num_groups);
-            //get the groups general data
-            $group_data = self::get_group_data($group,$average_group_size);
-            
-            $calculated_points = $new_points;
-        }
-
+        $calculated_points = $new_points;
         return $calculated_points;
     }
     
@@ -63,7 +36,7 @@ class block_leaderboard_functions{
 
 
     //private static function get_student_data($student)
-    public static function get_group_data($group, $average_group_size){
+    public static function get_group_data($group, $average_group_size,$start,$end){
         global $DB, $USER;;
 
         $past_week_points = 0;
@@ -75,7 +48,7 @@ class block_leaderboard_functions{
         $students = groups_get_members($group->id, $fields='u.*', $sort='lastname ASC');
         $students_data = [];
         foreach($students as $student){
-            $points = self::get_points($student);
+            $points = self::get_points($student,$start,$end);
             $past_week_points += $points->past_week;
             $past_two_weeks_points += $points->past_two_weeks;
             $total_points += $points->all;
@@ -143,7 +116,7 @@ class block_leaderboard_functions{
         return $group_data;
     }
 
-    public static function get_points($student){
+    public static function get_points($student,$start,$end){
         global $DB;
 
         //create a new object
@@ -182,7 +155,7 @@ class block_leaderboard_functions{
             if(is_null($due_date)){
                 $due_date = INF;
             }
-            if($time >= $due_date && $due_date > $reset){
+            if($time >= $due_date && $due_date > $start && $due_date < $end){
                 $points->all += $activity->points_earned;
                 if(($time - $activity->time_finished)/86400 <= 7){
                     $points->past_week += $activity->points_earned;
@@ -201,18 +174,16 @@ class block_leaderboard_functions{
         $sql = "SELECT quiz_table.*, quiz.timeclose
                 FROM {quiz_table} AS quiz_table
                 INNER JOIN {quiz} AS quiz ON quiz.id = quiz_table.quiz_id
-                WHERE quiz_table.student_id = ? AND quiz_table.points_earned IS NOT NULL;";
+                WHERE quiz_table.student_id = ? AND quiz_table.time_finished IS NOT NULL;";
 
         $student_quizzes = $DB->get_records_sql($sql, array($student->id));
-        
         foreach($student_quizzes as $quiz){
-            //echo("<script>console.log('QUIZ DATA: ".json_encode($quiz)."');</script>");
             $due_date = $quiz->timeclose;
             if(is_null($due_date)){
                 $due_date = INF;
             }
 
-            if($time >= $due_date && $due_date > $reset){
+            if($time >= $due_date && $due_date > $start && $due_date < $end){
                 $points->all += $quiz->points_earned;
                 if(($time - $quiz->time_finished)/86400 <= 7){
                     $points->past_week += $quiz->points_earned;
@@ -220,9 +191,7 @@ class block_leaderboard_functions{
                 if(($time - $quiz->time_finished)/86400 <= 14){
                     $points->past_two_weeks += $quiz->points_earned;
                 }
-                //echo("<script>console.log('MOD NAME: ".json_encode($quiz->module_name)."');</script>");
                 if($quiz->module_name != ''){
-                    //echo("<script>console.log('MOD NAME: ".json_encode($quiz)."');</script>");
                     $student_history[] = $quiz;
                 } else {
                     echo("<script>console.log('BAD QUIZ: ".json_encode($quiz)."');</script>");
@@ -231,7 +200,7 @@ class block_leaderboard_functions{
         }
         $student_choices = $DB->get_records('choice_table', array('student_id'=> $student->id));
         foreach($student_choices as $choice){
-            if($choice->time_finished >= $reset){
+            if($choice->time_finished >= $start && $choice->time_finished <= $end){
                 $points->all += $choice->points_earned;
                 if(($time - $choice->time_finished)/86400 <= 7){
                     $points->past_week += $choice->points_earned;
@@ -248,7 +217,7 @@ class block_leaderboard_functions{
         }
         $student_forum_posts = $DB->get_records('forum_table', array('student_id'=> $student->id));
         foreach($student_forum_posts as $post){
-            if($post->time_finished >= $reset){
+            if($post->time_finished >= $start && $post->time_finished <= $end){
                 $points->all += $post->points_earned;
                 if(($time - $post->time_finished)/86400 <= 7){
                     $points->past_week += $post->points_earned;

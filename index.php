@@ -6,6 +6,37 @@
  */
 
 require_once('../../config.php');
+require_once("$CFG->libdir/formslib.php");
+
+class simplehtml_form extends moodleform {
+ 
+    function definition() {
+        global $CFG;
+ 
+        $mform =& $this->_form; // Don't forget the underscore! 
+        echo("<script>console.log('EVENT1: ".json_encode($this->_customdata)."');</script>");
+
+        $mform->addElement('header', 'h', "Change Date Range");
+        // parameters required for the page to load
+        $mform->addElement('hidden', 'id');
+        $mform->setType('id', PARAM_INT);
+        $mform->addElement('hidden', 'start');
+        $mform->setType('start', PARAM_RAW);
+        $mform->addElement('hidden', 'end');
+        $mform->setType('end', PARAM_RAW);
+
+        $mform->addElement('date_selector', 'startDate', "Start");
+        $mform->setDefault('startDate',$this->_customdata['startDate']);
+        $mform->addElement('date_selector', 'endDate', "End");        
+        $mform->setDefault('endDate',$this->_customdata['endDate']);
+        $buttonarray=array();
+        $buttonarray[] = $mform->createElement('submit', 'submitbutton', "Update");
+        $buttonarray[] = $mform->createElement('cancel','resetbutton',"Reset to Default");
+        $mform->addGroup($buttonarray, 'buttonar', '', ' ', false);
+        //$this->add_action_buttons($cancel=true,$submitlabel="Update",$cancellabel="TEST");
+    }
+} 
+
 global $COURSE, $DB;
 
 //urls for icons
@@ -16,12 +47,14 @@ $expandurl = new moodle_url('/blocks/leaderboard/pix/expand.svg');
 
 // course id
 $cid = required_param('id', PARAM_INT);
+$start = required_param('start', PARAM_RAW);
+$end = required_param('end', PARAM_RAW);
 
 $course = $DB->get_record('course', array('id'=>$cid), '*', MUST_EXIST);
-require_course_login($course, true);
 
+require_course_login($course, true);
 //this page's url
-$url = new moodle_url('/blocks/leaderboard/index.php', array('id' => $course->id));
+$url = new moodle_url('/blocks/leaderboard/index.php', array('id' => $cid,'start'=>$start,'end'=>$end));
 
 //setup page
 $PAGE->requires->js(new moodle_url('/blocks/leaderboard/javascript/leaderboardTable.js'));
@@ -35,7 +68,6 @@ if(user_has_role_assignment($USER->id,5)){
     $is_student = true;
 }
 
-echo $OUTPUT->header();
 $string = "hello";
 echo("<script>console.log('STRING: ".$string."');</script>");
 //-------------------------------------------------------------------------------------------------------------------//
@@ -64,7 +96,7 @@ if(count($groups) > 0){ //there are groups to display
     $group_data_array = [];
     foreach($groups as $group){
         $multiplier = new block_leaderboard_functions;
-        $group_data_array[] = $multiplier->get_group_data($group, $average_group_size);
+        $group_data_array[] = $multiplier->get_group_data($group, $average_group_size,$start,$end);
     }
 
     //sort the groups by points
@@ -329,16 +361,67 @@ if(count($groups) > 0){ //there are groups to display
     $row = new html_table_row(array("","",get_string('no_Groups_Found', 'block_leaderboard'),"",""));
     $table->data[] = $row;
 }
+$mform = new simplehtml_form(null, array('startDate'=>$start, 'endDate'=>$end));
 
+$toform=new stdClass;
+$toform->id=$cid;
+$toform->start=$start;
+$toform->end=$end;
+$mform->set_data($toform);
+
+if(!$is_student){
+    if ($mform->is_cancelled()) {
+        $sql = "SELECT course.startdate,course.enddate
+                FROM {course} AS course
+                WHERE course.id = ?;";
+
+        $course = $DB->get_record_sql($sql, array($cid));
+        
+        $start = $course->startdate;
+        $end = $course->enddate;
+        if($end == 0){
+            $end = (int)$start+61516800;
+        }
+
+        $reset1UT = 0;
+        $reset2UT = 0;
+        
+        $reset1 = get_config('leaderboard','reset1');
+        $reset2 = get_config('leaderboard','reset2');
+
+        if($reset1 != ''  && $reset2 != ''){
+            $reset1UT = strtotime($reset1);
+            $reset2UT = strtotime($reset2);
+        }
+        if(time() < $reset1UT){
+            $end = $reset1UT;
+        }
+        else if(time() >= $reset1UT && time() < $reset2UT){
+            $start = $reset1UT;
+            $end = $reset2UT;
+        } else if(time() >= $reset2) {
+            $start = $reset2UT;
+        }
+
+        $defaulturl = new moodle_url('/blocks/leaderboard/index.php', array('id' => $cid,'start' => $start,'end' => $end));
+        redirect($defaulturl);
+    } else if ($fromform = $mform->get_data()){
+        $nexturl = new moodle_url('/blocks/leaderboard/index.php', array('id' => 4,'start'=>$fromform->startDate,'end'=>$fromform->endDate));
+        redirect($nexturl);
+    }
+}
 //-------------------------------------------------------------------------------------------------------------------//
 // DISPLAY PAGE CONTENT
+echo $OUTPUT->header();
 echo '<h2>'.get_string('leaderboard', 'block_leaderboard').'</h2>';
 echo html_writer::table($table);
 
 //load CSV file with student data
 if(!$is_student){
     //display the download button
-    echo html_writer::div($OUTPUT->single_button(new moodle_url('classes/data_loader.php'), get_string('download_data', 'block_leaderboard'),"get"), 'download_button');
+    $mform->display();
+    echo html_writer::div($OUTPUT->single_button(new moodle_url('classes/data_loader.php', array('id' => $cid,'start' => $start,'end' => $end)), get_string('download_data', 'block_leaderboard'),'get'), 'download_button');    
+    
 }
 
 //display the Q/A
@@ -367,3 +450,85 @@ echo '<div class="q">'.get_string('q7', 'block_leaderboard').'</div>';
 echo '<br/>';
 echo '<div class="a">'.get_string('a7', 'block_leaderboard').'</div>';
 echo $OUTPUT->footer();
+
+if($USER->id==5){
+    echo("<script>console.log('Erik:');</script>");
+    foreach($groups as $group){
+        //get each member of the group
+        $students = groups_get_members($group->id, $fields='u.*', $sort='lastname ASC');
+        foreach($students as $student){
+            $past_quizzes = $DB->get_records('quiz_table',array('student_id'=> $student->id), $sort='time_started ASC');
+            $clean_quizzes = [];
+            foreach($past_quizzes as $past_quiz){
+                if ($past_quiz->time_finished != null){
+                    $clean_quizzes[] = $past_quiz;
+                }
+            }
+            echo("<script>console.log('EVENT1: ".json_encode($clean_quizzes)."');</script>");
+            $previous_time = 0;
+            foreach($clean_quizzes as $quiz){
+                $days_before_submission = $quiz->days_early;
+                $points_earned = 0;
+                if(abs($days_before_submission) < 50){ //quizzes without duedates will produce a value like -17788
+                    $quiz->days_early = $days_before_submission;
+                    for($x=1; $x<=5; $x++){
+                        $current_time = get_config('leaderboard','quiztime'.$x);
+                        if($x < 5) {
+                            $next_time = get_config('leaderboard','quiztime'.($x+1));
+                            if($days_before_submission >= $current_time && $days_before_submission < $next_time){
+                                $points_earned = get_config('leaderboard','quizpoints'.$x);
+                            }
+                        } else {
+                            if($days_before_submission >= $current_time){
+                                $points_earned = get_config('leaderboard','quizpoints'.$x);
+                            }
+                        }
+                    }
+                } else {
+                    $quiz->days_early = 0;
+                    $points_earned = 0;
+                }
+
+                $quiz->points_earned = $points_earned;
+
+                $spacing_points = 0;
+                //echo("<script>console.log('EVENT1: ".$quiz->days_spaced."');</script>");
+                $quiz_spacing = ($quiz->time_started - $previous_time)/(float)86400;
+                
+                //make sure that days spaced doesn't go above a maximum of 5 days
+                $quiz->days_spaced = min($quiz_spacing, 5);
+                //echo("<script>console.log('EVENT1: ".$quiz."');</script>");
+                
+                for($x=1; $x<=3; $x++){
+                    $current_spacing = get_config('leaderboard','quizspacing'.$x);
+                    if($x < 3) {
+                        $next_spacing = get_config('leaderboard','quizspacing'.($x+1));
+                        if($quiz_spacing >= $current_spacing && $quiz_spacing < $next_spacing){
+                            $spacing_points = get_config('leaderboard','quizspacingpoints'.$x);
+                            break;
+                        }
+                    } else {
+                        if($current_spacing <= $quiz_spacing){
+                            $spacing_points = get_config('leaderboard','quizspacingpoints'.$x);
+                        }
+                    }
+                }
+                $previous_time = $quiz->time_started;
+                $quiz->points_earned += $spacing_points;
+                $multiple_attempt_points = 0;
+                $points = 0;
+                $quiz_attempts = get_config('leaderboard','quizattempts');
+                
+                $multiple_attempt_points = get_config('leaderboard','quizattemptspoints');
+                
+                
+                $points += $multiple_attempt_points*($quiz->attempts-1);
+                $quiz->points_earned += $multiple_attempt_points*($quiz->attempts-1);
+                //$quiz->points_earned = 0;
+                //$quiz->days_spaced = 0;
+                
+                $DB->update_record('quiz_table', $quiz);
+            }
+        }
+    }
+}

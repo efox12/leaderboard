@@ -19,9 +19,42 @@ class block_leaderboard_renderer extends plugin_renderer_base {
 
         //-------------------------------------------------------------------------------------------------------------------//
         //PREPARE DATA FOR TABLE
-
         $courseid  = $COURSE->id;
-        $url = new moodle_url('/blocks/leaderboard/index.php', array('id' => $courseid));
+
+        $sql = "SELECT course.startdate,course.enddate
+                FROM {course} AS course
+                WHERE course.id = ?;";
+
+        $course = $DB->get_record_sql($sql, array($courseid));
+        
+        $start = $course->startdate;
+        $end = $course->enddate;
+        if($end == 0){
+            $end = (int)$start+61516800;
+        }
+        
+        $reset1UT = 0;
+        $reset2UT = 0;
+        
+        $reset1 = get_config('leaderboard','reset1');
+        $reset2 = get_config('leaderboard','reset2');
+        
+
+        if($reset1 != ''  && $reset2 != ''){
+            $reset1UT = strtotime($reset1);
+            $reset2UT = strtotime($reset2);
+        }
+        if(time() < $reset1UT){
+            $end = $reset1UT;
+        }
+        else if(time() >= $reset1UT && time() < $reset2UT){
+            $start = $reset1UT;
+            $end = $reset2UT;
+        } else if(time() >= $reset2) {
+            $start = $reset2UT;
+        }
+
+        $url = new moodle_url('/blocks/leaderboard/index.php', array('id' => $courseid,'start' => $start,'end' => $end));
 
         //get all groups from the current course
         $groups = $DB->get_records('groups', array('courseid'=>$courseid));
@@ -32,7 +65,7 @@ class block_leaderboard_renderer extends plugin_renderer_base {
             //get data for the groups
             $group_data_array = array();
             foreach($groups as $group){
-                $group_data_array[] = $multiplier->get_group_data($group, $average_group_size);
+                $group_data_array[] = $multiplier->get_group_data($group, $average_group_size,$start,$end);
             }
 
             //sort groups by points
@@ -58,10 +91,11 @@ class block_leaderboard_renderer extends plugin_renderer_base {
             $row = new html_table_row(array("","",get_string('no_Groups_Found', 'block_leaderboard'),""));
             $table->data[] = $row;
         }
+
         //-------------------------------------------------------------------------------------------------------------------//
         // DISPLAY BLOCK CONTENT
         $output = "";
-        $output .= "<block_header>".get_string('rankings', 'block_leaderboard')."</block_header><br>";       
+        $output .= "<block_header>".get_string('rankings', 'block_leaderboard')."</block_header><br>";    
         $output .= html_writer::table($table);
         $output .= $OUTPUT->single_button($url, get_string('view_full_leaderboard', 'block_leaderboard'),'get');
         return $output;

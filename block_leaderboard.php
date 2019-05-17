@@ -155,6 +155,8 @@ class block_leaderboard extends block_base {
                         $points += $multiple_attempt_points;
                     }
                     $quiz->points_earned += block_leaderboard_functions::calculate_points($student->id, $multiple_attempt_points);
+                    //$quiz->points_earned = 0;
+                    //$quiz->days_spaced = 0;
                     $DB->update_record('quiz_table', $quiz);
                 }
             }
