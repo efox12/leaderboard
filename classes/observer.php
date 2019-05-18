@@ -182,9 +182,7 @@ class block_leaderboard_observer {
         }
     }
     
-    public static function get_early_submission_points($days_before_submission,$type){
-        $points_earned = 0;
-        
+    public static function get_early_submission_points($days_before_submission,$type){        
         for($x=1; $x<=5; $x++){
             $current_time = get_config('leaderboard',$type.'time'.$x);
             $next_time = INF;

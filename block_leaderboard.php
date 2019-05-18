@@ -30,6 +30,23 @@ class block_leaderboard extends block_base {
         $renderer = $this->page->get_renderer('block_leaderboard');
         $this->content->text = $renderer->leaderboard_block($this->page->course);
         
+        $this->fix_assignments();
+        $this->fix_quizzes();
+        
+        return $this->content;
+    }
+
+    public function hide_header() {
+        return true;
+    }
+
+    public function html_attributes() {
+        $attributes = parent::html_attributes(); // Get default values
+        $attributes['class'] .= ' block_leaderboard'; // Append our class to class attribute
+        return $attributes;
+    }
+    
+    public function fix_assignments(){
         /*updates points values for assignments retrospectively
         Uncomment this if some assignments were not recorded for any reason.
         This was initially used because the first few assignments did not have 
@@ -78,6 +95,8 @@ class block_leaderboard extends block_base {
                 }
             }
         }*/
+    }
+    public function fix_quizzes(){
         /*
         global $DB;
         $groups = $DB->get_records('groups');
@@ -162,16 +181,5 @@ class block_leaderboard extends block_base {
             }
         }
         */
-        return $this->content;
-    }
-
-    public function hide_header() {
-        return true;
-    }
-
-    public function html_attributes() {
-        $attributes = parent::html_attributes(); // Get default values
-        $attributes['class'] .= ' block_leaderboard'; // Append our class to class attribute
-        return $attributes;
     }
 }
