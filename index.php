@@ -494,11 +494,14 @@ echo $OUTPUT->footer();
                 $spacing_points = 0;
                 //echo("<script>console.log('EVENT1: ".$quiz->days_spaced."');</script>");
                 $quiz_spacing = ($quiz->time_started - $previous_time)/(float)86400;
-                
+                echo("<script>console.log('SPACING: ".$quiz_spacing."');</script>");
+
                 //make sure that days spaced doesn't go above a maximum of 5 days
                 $quiz->days_spaced = min($quiz_spacing, 5);
                 //echo("<script>console.log('EVENT1: ".$quiz."');</script>");
-                
+                echo("<script>console.log('SPACING: ".$quiz->days_spaced."');</script>");
+
+                echo("<script>console.log('SPACING: ".json_encode($quiz)."');</script>");
                 for($x=1; $x<=3; $x++){
                     $current_spacing = get_config('leaderboard','quizspacing'.$x);
                     if($x < 3) {
