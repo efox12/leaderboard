@@ -50,9 +50,10 @@ class block_leaderboard_observer {
                     }
                 }
                 $DB->update_record('assignment_table', $eventdata);
-            } else{ 
-                $DB->insert_record('assignment_table', $eventdata);
-            }
+                return;
+            } 
+            $DB->insert_record('assignment_table', $eventdata);
+            return;
         }         
     }
 
@@ -127,27 +128,28 @@ class block_leaderboard_observer {
                 $quiz_table->attempts = 0;
                 $quiz_table->days_early = 0;
                 $quiz_table->days_spaced = 0;
+                $quiz_table->time_finished = $event->timecreated;
+                $quiz_table->module_name = $this_quiz->name;
                 $DB->insert_record('quiz_table', $quiz_table);
                 $quiz_table = $quiz_table = $DB->get_record('quiz_table',
                                     array('quiz_id'=> $this_quiz->id, 'student_id'=> $event->userid),
                                     $fields='*',
                                     $strictness=IGNORE_MISSING);
             }
-            $quiz_table->time_finished = $event->timecreated;
-            $quiz_table->module_name = $this_quiz->name;
+            
             if($quiz_table->attempts == 0){ //if this is the first attempt of the quiz
-                $quiz_table->attempts = 1;
+                //$quiz_table->attempts = 1;
                 //EARLY FINISH
                 //assign points for finishing early
                 $days_before_submission = ($due_date - $event->timecreated)/86400;
-                if(abs($days_before_submission) < 50){ //quizzes without duedates will produce a value like -17788
-                    $quiz_table->days_early = $days_before_submission;
-                } else {
+        
+                $quiz_table->days_early = $days_before_submission;
+                if(abs($days_before_submission) > 50){ //quizzes without duedates will produce a value like -17788
                     $quiz_table->days_early = 0;
-                    $days_before_submission = 0;
+                    $days_before_submission = 0;   
                 }
-                $points_earned = get_early_submission_points($days_before_submission,'quiz');
 
+                $points_earned = get_early_submission_points($days_before_submission,'quiz');
                 $quiz_table->points_earned = $points_earned;  
                 
                 //QUIZ SPACING
@@ -168,16 +170,10 @@ class block_leaderboard_observer {
                 $spacing_points = get_quiz_spacing_points($quiz_spacing);
                 $quiz_table->points_earned += $spacing_points;
 
-            } else { //this is another attempt
-                //bonus points for attempting quiz again (need to find a way to limit abuse)
-                $multiple_attempt_points = 0;
-                $quiz_attempts = get_config('leaderboard','quizattempts');
-                if($quiz_table->attempts <= $quiz_attempts){
-                    $multiple_attempt_points = get_config('leaderboard','quizattemptspoints');
-                }
-                $quiz_table->attempts += 1;
-                $quiz_table->points_earned += block_leaderboard_functions::calculate_points($event->userid, $multiple_attempt_points);
             }
+            //bonus points for attempting quiz again
+            $multiple_attempt_points = get_quiz_attempts_points($quiz_table->attempts);
+            $quiz_table->points_earned += $multiple_attempt_points;
             $DB->update_record('quiz_table', $quiz_table);
         }
     }
@@ -208,6 +204,14 @@ class block_leaderboard_observer {
             }
         }
         return 0;
+    }
+
+    public static function get_quiz_attempts_points($attempts){
+        $max_attempts = get_config('leaderboard','quizattempts');
+        if($quiz_table->attempts <= $max_attempts){
+            $multiple_attempt_points = get_config('leaderboard','quizattemptspoints');
+        }
+        $quiz_table->attempts += 1;
     }
 
     //unsure
@@ -262,7 +266,6 @@ class block_leaderboard_observer {
         global $DB, $USER;
         if(user_has_role_assignment($USER->id,5)){
             $discussion = $DB->get_record('moodleoverflow_discussions', array('id'=> $event->objectid), $fields='*', $strictness=IGNORE_MISSING);        
-            $forum_id = $event->other{'forumid'};
             $forumdata = new \stdClass();
             $forumdata->student_id = $event->userid;
             $forumdata->forum_id = $discussion->moodleoverflow;
