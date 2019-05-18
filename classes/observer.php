@@ -25,8 +25,6 @@ class block_leaderboard_observer {
 
             $assignment_data = $DB->get_record_sql($sql, array($eventid));
             
-            //formats the date to ne non-UNIX form
-            $dateformat = get_string('strftimedatetime', 'langconfig');
 
             //86400 seconds per day in unix time
             //intdiv() is integer divinsion for PHP '/' is foating point division

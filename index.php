@@ -11,8 +11,6 @@ require_once "$CFG->libdir/formslib.php";
 class simplehtml_form extends moodleform {
  
     function definition() {
-        global $CFG;
- 
         $mform =& $this->_form; // Don't forget the underscore! 
         echo("<script>console.log('EVENT1: ".json_encode($this->_customdata)."');</script>");
 
@@ -68,8 +66,7 @@ if(user_has_role_assignment($USER->id,5)){
     $is_student = true;
 }
 
-$string = "hello";
-echo("<script>console.log('STRING: ".$string."');</script>");
+
 //-------------------------------------------------------------------------------------------------------------------//
 // CREATE TABLE
 //create an html table
