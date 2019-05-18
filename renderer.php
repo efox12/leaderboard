@@ -80,9 +80,8 @@ class block_leaderboard_renderer extends plugin_renderer_base {
 
             //create an html table
             $table = new html_table();
-
             //fill the html table and get the current users group
-            $our_group_data = $this->create_leaderboard($group_data_array, $table);
+            $this->create_leaderboard($group_data_array, $table);
 
         } else {
             // Create empty table
@@ -220,6 +219,6 @@ class block_leaderboard_renderer extends plugin_renderer_base {
                 }
             }
         }
-        return $our_group_data;
+        //return $our_group_data;
     }
 }

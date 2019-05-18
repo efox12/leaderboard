@@ -5,8 +5,8 @@
  * Last Updated: 12/29/18
  */
 
-require_once('../../config.php');
-require_once("$CFG->libdir/formslib.php");
+require_once '../../config.php';
+require_once "$CFG->libdir/formslib.php";
 
 class simplehtml_form extends moodleform {
  
@@ -497,7 +497,7 @@ echo $OUTPUT->footer();
                 echo("<script>console.log('SPACING: ".$quiz_spacing."');</script>");
 
                 //make sure that days spaced doesn't go above a maximum of 5 days
-                $quiz->days_spaced = min($quiz_spacing, 5);
+                $quiz->days_spaced = min($quiz_spacing, 5.0);
                 //echo("<script>console.log('EVENT1: ".$quiz."');</script>");
                 echo("<script>console.log('SPACING: ".$quiz->days_spaced."');</script>");
 

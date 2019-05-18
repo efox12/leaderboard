@@ -5,7 +5,7 @@
  * Last Updated: 8/21/18
  */
 
-require_once('../../../config.php'); // Specify path to moodle /config.php file.
+require_once '../../../config.php'; // Specify path to moodle /config.php file.
 require_login(); // require valid moodle login.  Will redirect to login page if not logged in.
 $cid = required_param('id', PARAM_INT);
 $start = required_param('start', PARAM_RAW);
@@ -118,7 +118,7 @@ foreach($groups as $group){
 }
 
 global $CFG;
-require_once($CFG->libdir . '/csvlib.class.php');
+require_once $CFG->libdir . '/csvlib.class.php';
 $filename = clean_filename('data');
 $csvexport = new csv_export_writer();
 $csvexport->set_filename($filename);
