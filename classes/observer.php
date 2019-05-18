@@ -31,23 +31,8 @@ class block_leaderboard_observer {
             $days_before_submission = ($assignment_data->duedate - $event->timecreated)/86400;
             
             //Set the point value
-            $points = 0;
-            for($x=1; $x<=5; $x++){
-                $current_time = get_config('leaderboard','assignmenttime'.$x);
-                if($x < 5) {
-                    $next_time = get_config('leaderboard','assignmenttime'.($x+1));
-                    if($days_before_submission >= $current_time && $days_before_submission < $next_time){
-                        $points = get_config('leaderboard','assignmnetpoints'.$x);
-                        break;
-                    }
-                } else {
-                    if($days_before_submission >= $current_time){
-                        $points = get_config('leaderboard','assignmnetpoints'.$x);
-                        break;
-                    }
-                }
-            }
-            $eventdata->points_earned = block_leaderboard_functions::calculate_points($event->userid, $points);
+            $points = get_early_submission_points($days_before_submission,'assignment');
+            $eventdata->points_earned = $points;
             $eventdata->activity_student = $assignment_data->userid;
             $eventdata->activity_id = $eventid;
             $eventdata->time_finished = $event->timecreated;
@@ -152,31 +137,20 @@ class block_leaderboard_observer {
             $quiz_table->module_name = $this_quiz->name;
             if($quiz_table->attempts == 0){ //if this is the first attempt of the quiz
                 $quiz_table->attempts = 1;
+                //EARLY FINISH
                 //assign points for finishing early
                 $days_before_submission = ($due_date - $event->timecreated)/86400;
-                $points_earned = 0;
                 if(abs($days_before_submission) < 50){ //quizzes without duedates will produce a value like -17788
                     $quiz_table->days_early = $days_before_submission;
-                    for($x=1; $x<=5; $x++){
-                        $current_time = get_config('leaderboard','quiztime'.$x);
-                        if($x < 5) {
-                            $next_time = get_config('leaderboard','quiztime'.($x+1));
-                            if($days_before_submission >= $current_time && $days_before_submission < $next_time){
-                                $points_earned = get_config('leaderboard','quizpoints'.$x);
-                            }
-                        } else {
-                            if($days_before_submission >= $current_time){
-                                $points_earned = get_config('leaderboard','quizpoints'.$x);
-                            }
-                        }
-                    }
                 } else {
                     $quiz_table->days_early = 0;
-                    $points_earned = 0;
+                    $days_before_submission = 0;
                 }
+                $points_earned = get_early_submission_points($days_before_submission,'quiz');
 
-                $quiz_table->points_earned = block_leaderboard_functions::calculate_points($event->userid, $points_earned);  
+                $quiz_table->points_earned = $points_earned;  
                 
+                //QUIZ SPACING
                 //gets the most recent completed quiz submission time
                 $past_quizzes = $DB->get_records('quiz_table',array('student_id'=> $event->userid));
                 $recent_time_finished = 0;
@@ -185,30 +159,14 @@ class block_leaderboard_observer {
                         $recent_time_finished = $past_quiz->time_finished;
                     }
                 }
+                //bonus points get awarded for spacing out quizzes instead of cramming (only judges the 2 most recent quizzes)
+                $quiz_spacing = ($quiz_table->time_started - $recent_time_finished)/(float)86400;
+                //make sure that days spaced doesn't go above a maximum of 5 days
+                $quiz_table->days_spaced = min($quiz_spacing, 5.0);
 
                 //bonus points get awarded for spacing out quizzes instead of cramming (only judges the 2 most recent quizzes)
-                $spacing_points = 0;
-                $quiz_spacing = ($quiz_table->time_started - $recent_time_finished)/(float)86400;
-                echo("<script>console.log('EVENT1: ".$quiz_spacing."');</script>");
-                //make sure that days spaced doesn't go above a maximum of 5 days
-                $quiz_table->days_spaced = min($quiz_spacing, 5);
-                
-                for($x=1; $x<=3; $x++){
-                    $current_spacing = get_config('leaderboard','quizspacing'.$x);
-                    if($x < 3) {
-                        $next_spacing = get_config('leaderboard','quizspacing'.($x+1));
-                        if($quiz_spacing >= $current_spacing && $quiz_spacing < $next_spacing){
-                            $spacing_points = get_config('leaderboard','quizspacingpoints'.$x);
-                            break;
-                        }
-                    } else {
-                        if($current_spacing <= $quiz_spacing){
-                            $spacing_points = get_config('leaderboard','quizspacingpoints'.$x);
-                        }
-                    }
-                }
-                echo("<script>console.log('EVENT: ".$quiz_table->days_spaced."');</script>");
-                $quiz_table->points_earned += block_leaderboard_functions::calculate_points($event->userid, $spacing_points);
+                $spacing_points = get_quiz_spacing_points($quiz_spacing);
+                $quiz_table->points_earned += $spacing_points;
 
             } else { //this is another attempt
                 //bonus points for attempting quiz again (need to find a way to limit abuse)
@@ -222,6 +180,36 @@ class block_leaderboard_observer {
             }
             $DB->update_record('quiz_table', $quiz_table);
         }
+    }
+    
+    public static function get_early_submission_points($days_before_submission,$type){
+        $points_earned = 0;
+        
+        for($x=1; $x<=5; $x++){
+            $current_time = get_config('leaderboard',$type.'time'.$x);
+            $next_time = INF;
+            if($x < 5) {
+                $next_time = get_config('leaderboard',$type.'time'.($x+1));
+            }
+            if($days_before_submission >= $current_time && $days_before_submission < $next_time){
+                return get_config('leaderboard',$type.'points'.$x);
+            }
+        }
+        return 0;   
+    }
+
+    public static function get_quiz_spacing_points($quiz_spacing){
+        for($x=1; $x<=3; $x++){
+            $current_spacing = get_config('leaderboard','quizspacing'.$x); 
+            $next_spacing = INF;
+            if($x < 3) {
+                $next_spacing = get_config('leaderboard','quizspacing'.($x+1));
+            }
+            if($quiz_spacing >= $current_spacing && $quiz_spacing < $next_spacing){
+                return get_config('leaderboard','quizspacingpoints'.$x);
+            }
+        }
+        return 0;
     }
 
     //unsure
