@@ -72,6 +72,7 @@ if(user_has_role_assignment($USER->id,5)){
 //create an html table
 //get all groups from the current course
 $groups = $DB->get_records('groups', array('courseid'=>$cid));
+$functions = new block_leaderboard_functions;
 if(count($groups) > 0){ //there are groups to display
     //create the table
     $table = new html_table();
@@ -92,8 +93,7 @@ if(count($groups) > 0){ //there are groups to display
     //get all group data
     $group_data_array = [];
     foreach($groups as $group){
-        $multiplier = new block_leaderboard_functions;
-        $group_data_array[] = $multiplier->get_group_data($group, $average_group_size,$start,$end);
+        $group_data_array[] = $functions->get_group_data($group, $average_group_size,$start,$end);
     }
 
     //sort the groups by points
@@ -368,37 +368,9 @@ $mform->set_data($toform);
 
 if(!$is_student){
     if ($mform->is_cancelled()) {
-        $sql = "SELECT course.startdate,course.enddate
-                FROM {course} AS course
-                WHERE course.id = ?;";
-
-        $course = $DB->get_record_sql($sql, array($cid));
-        
-        $start = $course->startdate;
-        $end = $course->enddate;
-        if($end == 0){
-            $end = (int)$start+61516800;
-        }
-
-        $reset1UT = 0;
-        $reset2UT = 0;
-        
-        $reset1 = get_config('leaderboard','reset1');
-        $reset2 = get_config('leaderboard','reset2');
-
-        if($reset1 != ''  && $reset2 != ''){
-            $reset1UT = strtotime($reset1);
-            $reset2UT = strtotime($reset2);
-        }
-        if(time() < $reset1UT){
-            $end = $reset1UT;
-        }
-        else if(time() >= $reset1UT && time() < $reset2UT){
-            $start = $reset1UT;
-            $end = $reset2UT;
-        } else if(time() >= $reset2) {
-            $start = $reset2UT;
-        }
+        $dateRange = $functions->get_date_range($cid);
+        $start = $dateRange->start;
+        $end = $dateRange->end;
 
         $defaulturl = new moodle_url('/blocks/leaderboard/index.php', array('id' => $cid,'start' => $start,'end' => $end));
         redirect($defaulturl);

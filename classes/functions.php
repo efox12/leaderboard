@@ -16,7 +16,47 @@ class block_leaderboard_functions{
     }
     
 
+    public static function get_date_range($courseid){
+        global $DB;
+        $sql = "SELECT course.startdate,course.enddate
+                FROM {course} AS course
+                WHERE course.id = ?;";
 
+        $course = $DB->get_record_sql($sql, array($courseid));
+        
+        $start = $course->startdate;
+        $end = $course->enddate;
+        if($end == 0){
+            $end = (int)$start+61516800;
+        }
+        
+        $reset1UT = 0;
+        $reset2UT = 0;
+        
+        $reset1 = get_config('leaderboard','reset1');
+        $reset2 = get_config('leaderboard','reset2');
+        
+
+        if($reset1 != ''  && $reset2 != ''){
+            $reset1UT = strtotime($reset1);
+            $reset2UT = strtotime($reset2);
+        }
+
+        if(time() < $reset1UT){
+            $end = $reset1UT;
+        }
+        else if(time() >= $reset1UT && time() < $reset2UT){
+            $start = $reset1UT;
+            $end = $reset2UT;
+        } else if(time() >= $reset2) {
+            $start = $reset2UT;
+        }
+
+        $dateRange = new stdClass();
+        $dateRange->start = $start;
+        $dateRange->end = $end;
+        return $dateRange;
+    }
     public static function get_average_group_size($groups){
         //determine average group size
         $num_groups = count($groups);
