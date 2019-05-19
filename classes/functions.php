@@ -58,13 +58,13 @@ class block_leaderboard_functions{
         return $dateRange;
     }
 
-    public static function update_standing($past_standing,$current_standing){
+    public static function update_standing($past_standing,$current_standing,$time_updated){
         $move = substr($past_standing, -2,1); //0 for up, 1 for down, 2 for stay
         $initialPosition = substr($past_standing, -1);
         $past_standing = substr($past_standing, 0, -2);
         $symbol = " ";
 
-        if ($group_data->time_updated < floor((time()-7*60)/86400)){
+        if ($time_updated < floor((time()-7*60)/86400)){
             if($past_standing > $current_standing){
                 $symbol = '<img src='.$upurl.'>';
                 $move = 0;
