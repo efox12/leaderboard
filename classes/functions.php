@@ -63,51 +63,28 @@ class block_leaderboard_functions{
         $symbol = " ";
 
         if ($group_data->time_updated < floor((time()-7*60)/86400)){
-            if($past_standing > $current_standing){
-                $symbol = '<img src='.$upurl.'>';
-                $move = 0;
-            } else if ($past_standing < $current_standing) {
-                $symbol = '<img src='.$downurl.'>';
-                $move = 1;
-            } else if ($initialPosition == $past_standing) {
-                $symbol = '<img src='.$stayurl.'>';
-                $move = 2;
-            } else {
-                if ($move == 0){
-                    $symbol = '<img src='.$upurl.'>';
-                }
-                else if ($move == 1){
-                    $symbol = '<img src='.$downurl.'>';
-                }
-                else if ($move == 2){
-                    $symbol = '<img src='.$stayurl.'>';
-                }
-            }
             $initialPosition = $past_standing;
-        } else{
-            if($past_standing > $current_standing){
+        }
+        if($past_standing > $current_standing){
+            $symbol = '<img src='.$upurl.'>';
+            $move = 0;
+        } else if ($past_standing < $current_standing) {
+            $symbol = '<img src='.$downurl.'>';
+            $move = 1;
+        } else if ($initialPosition == $past_standing) {
+            $symbol = '<img src='.$stayurl.'>';
+            $move = 2;
+        } else {
+            if ($move == 0){
                 $symbol = '<img src='.$upurl.'>';
-                $move = 0;
-            } else if ($past_standing < $current_standing) {
+            }
+            else if ($move == 1){
                 $symbol = '<img src='.$downurl.'>';
-                $move = 1;
-            } else {
-                if ($move == 0){
-                    $symbol = '<img src='.$upurl.'>';
-                }
-                else if ($move == 1){
-                    $symbol = '<img src='.$downurl.'>';
-                }
-                else if ($move == 2){
-                    $symbol = '<img src='.$stayurl.'>';
-                }
+            }
+            else if ($move == 2){
+                $symbol = '<img src='.$stayurl.'>';
             }
         }
-        /*$standingChanges = new stdClass;
-        $standingChanges->symbol = $symbol;
-        $standingChanges->move = $move;
-        $standingChanges->initialPosition = $initialPosition;
-        */
         //update the groups current standing
         if($group_data->id){
             $stored_group_data = $DB->get_record('group_data_table', array('group_id'=> $group_data->id), $fields='*', $strictness=IGNORE_MISSING);
