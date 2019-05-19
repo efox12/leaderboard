@@ -114,7 +114,7 @@ class block_leaderboard_functions{
         $standingChanges = new stdClass;
         $standingChanges->symbol = $symbol;
         $standingChanges->move = $move;
-        $standingChanges->$initialPosition = $initialPosition;
+        $standingChanges->initialPosition = $initialPosition;
         return $standingChanges;
     }
     public static function get_average_group_size($groups){
