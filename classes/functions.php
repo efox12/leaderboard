@@ -242,7 +242,7 @@ class block_leaderboard_functions{
                 WHERE assignment_table.activity_student = ?;";
 
         $student_activities = $DB->get_records_sql($sql, array($student->id));
-        $points = self::test2($student_activities,$start,$end,$points);
+        $points = self::get_module_points($student_activities,$start,$end,$points);
         
         //QUIZ
         $sql = "SELECT quiz_table.*, quiz.timeclose
@@ -251,15 +251,15 @@ class block_leaderboard_functions{
                 WHERE quiz_table.student_id = ? AND quiz_table.time_finished IS NOT NULL;";
 
         $student_quizzes = $DB->get_records_sql($sql, array($student->id));
-        $points = self::test2($student_quizzes,$start,$end,$points);
+        $points = self::get_module_points($student_quizzes,$start,$end,$points);
         
         //CHOICE
         $student_choices = $DB->get_records('choice_table', array('student_id'=> $student->id));
-        $points = self::test($student_choices,$start,$end,$points);
+        $points = self::get_module_points($student_choices,$start,$end,$points);
         
         //FORUM
         $student_forum_posts = $DB->get_records('forum_table', array('student_id'=> $student->id));
-        $points = self::test($student_forum_posts,$start,$end,$points);
+        $points = self::get_module_points($student_forum_posts,$start,$end,$points);
         
         $student_history = $points->history;
         if(count($student_history) > 1){ //only sort if there is something to sort
@@ -272,36 +272,17 @@ class block_leaderboard_functions{
         return $points;
     }
 
-    public static function test($list,$start,$end,$points){
-        $time = time();
-        foreach($list as $post){
-            if($post->time_finished >= $start && $post->time_finished <= $end){
-                $points->all += $post->points_earned;
-                if(($time - $post->time_finished)/86400 <= 7){
-                    $points->past_week += $post->points_earned;
-                }
-                if(($time - $post->time_finished)/86400 <= 14){
-                    $points->past_two_weeks += $post->points_earned;
-                }
-                if($post->module_name != ''){
-                    $points->history[] = $post;
-                }
-            }
-        }
-        return $points;
-    }
-
-    public static function test2($list,$start,$end,$points){
+    public static function get_module_points($list,$start,$end,$points){
         $time = time();
         foreach($list as $activity){
-            $due_date = INF;
+            $due_date = $activity->time_finished;
             if(isset($activity->duedate)){
                 $due_date = $activity->duedate;
             } else if(isset($activity->timeclose)) {
                 $due_date = $activity->timeclose;
             }
 
-            if($time >= $due_date && $due_date > $start && $due_date < $end){
+            if($time >= $due_date && $due_date >= $start && $due_date <= $end && $activity->module_name != ''){
                 $points->all += $activity->points_earned;
                 if(($time - $activity->time_finished)/86400 <= 7){
                     $points->past_week += $activity->points_earned;
@@ -309,9 +290,7 @@ class block_leaderboard_functions{
                 if(($time - $activity->time_finished)/86400 <= 14){
                     $points->past_two_weeks += $activity->points_earned;
                 }
-                if($activity->module_name != ''){
-                    $points->history[] = $activity;
-                }
+                $points->history[] = $activity;
             }
         }
         return $points;
