@@ -174,6 +174,7 @@ class block_leaderboard_observer {
             //bonus points for attempting quiz again
             $multiple_attempt_points = get_quiz_attempts_points($quiz_table->attempts);
             $quiz_table->points_earned += $multiple_attempt_points;
+            $quiz_table->attempts += 1;
             $DB->update_record('quiz_table', $quiz_table);
         }
     }
@@ -208,10 +209,10 @@ class block_leaderboard_observer {
 
     public static function get_quiz_attempts_points($attempts){
         $max_attempts = get_config('leaderboard','quizattempts');
-        if($quiz_table->attempts <= $max_attempts){
-            $multiple_attempt_points = get_config('leaderboard','quizattemptspoints');
+        if($attempts <= $max_attempts){
+            return get_config('leaderboard','quizattemptspoints');
         }
-        $quiz_table->attempts += 1;
+        return 0;
     }
 
     //unsure
