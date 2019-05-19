@@ -8,7 +8,7 @@
 defined('MOODLE_INTERNAL') || die;
 
 class block_leaderboard_renderer extends plugin_renderer_base {
-    public function leaderboard_block($course){
+    public function leaderboard_block(){
         global $DB, $USER, $OUTPUT, $COURSE;
         
         //determine if the curent user is a student
@@ -75,7 +75,7 @@ class block_leaderboard_renderer extends plugin_renderer_base {
     //FUNCTIONS
     public function create_leaderboard($group_data_array,$table,$functions){
         global $DB;
-        
+        $moreurl = new moodle_url('/blocks/leaderboard/pix/more.svg');
         //create a new object
         $our_group_data = new stdClass();
 
@@ -83,6 +83,7 @@ class block_leaderboard_renderer extends plugin_renderer_base {
         $table->head = array(get_string('num', 'block_leaderboard')," ",get_string('group', 'block_leaderboard'),get_string('points', 'block_leaderboard'));
         //add groups to the table
 
+        //rank the groups
         $rank_array = [];
         $count = 1;
         $position = 1;
@@ -105,7 +106,7 @@ class block_leaderboard_renderer extends plugin_renderer_base {
             $symbol = $standingChanges->symbol;
             $move = $standingChanges->move;
             $initialPosition = $standingChanges->initialPosition;
-            
+
             //update the groups current standing
             if($group_data->id){
                 $stored_group_data = $DB->get_record('group_data_table', array('group_id'=> $group_data->id), $fields='*', $strictness=IGNORE_MISSING);
@@ -144,6 +145,5 @@ class block_leaderboard_renderer extends plugin_renderer_base {
                 }
             }
         }
-        //return $our_group_data;
     }
 }

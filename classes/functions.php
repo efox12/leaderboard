@@ -220,7 +220,6 @@ class block_leaderboard_functions{
 
 
         //add up student points for all points, past week, past two weeks, and fill student history array
-        $time = time();
         $reset = 0;
         $reset1 = get_config('leaderboard','reset1');
         $reset2 = get_config('leaderboard','reset2');
