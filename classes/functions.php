@@ -7,15 +7,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-class block_leaderboard_functions{
-    //calculates the points for the student
-    public static function calculate_points($student_id, $new_points){
-        global $DB, $COURSE;
-        $calculated_points = $new_points;
-        return $calculated_points;
-    }
-    
-
+class block_leaderboard_functions{    
     public static function get_date_range($courseid){
         global $DB;
         $sql = "SELECT course.startdate,course.enddate
@@ -83,10 +75,10 @@ class block_leaderboard_functions{
                 if ($move == 0){
                     $symbol = '<img src='.$upurl.'>';
                 }
-                if ($move == 1){
+                else if ($move == 1){
                     $symbol = '<img src='.$downurl.'>';
                 }
-                if ($move == 2){
+                else if ($move == 2){
                     $symbol = '<img src='.$stayurl.'>';
                 }
             }
@@ -102,10 +94,10 @@ class block_leaderboard_functions{
                 if ($move == 0){
                     $symbol = '<img src='.$upurl.'>';
                 }
-                if ($move == 1){
+                else if ($move == 1){
                     $symbol = '<img src='.$downurl.'>';
                 }
-                if ($move == 2){
+                else if ($move == 2){
                     $symbol = '<img src='.$stayurl.'>';
                 }
             }
@@ -223,6 +215,7 @@ class block_leaderboard_functions{
         $points->all = 0;
         $points->past_week = 0;
         $points->past_two_weeks = 0;
+        $points->history = [];
         $student_history = [];
 
 
@@ -241,6 +234,7 @@ class block_leaderboard_functions{
             $reset = $reset2;
         }
 
+        //ACTIVITY
         $sql = "SELECT assignment_table.*,assign.duedate
                 FROM {assign_submission} AS assign_submission
                 INNER JOIN {assignment_table} AS assignment_table ON assign_submission.id = assignment_table.activity_id
@@ -248,74 +242,39 @@ class block_leaderboard_functions{
                 WHERE assignment_table.activity_student = ?;";
 
         $student_activities = $DB->get_records_sql($sql, array($student->id));
-
-        foreach($student_activities as $activity){
-            $due_date = $activity->duedate;
-            if(is_null($due_date)){
-                $due_date = INF;
-            }
-            if($time >= $due_date && $due_date > $start && $due_date < $end){
-                $points->all += $activity->points_earned;
-                if(($time - $activity->time_finished)/86400 <= 7){
-                    $points->past_week += $activity->points_earned;
-                }
-                if(($time - $activity->time_finished)/86400 <= 14){
-                    $points->past_two_weeks += $activity->points_earned;
-                }
-                if($activity->module_name != ''){
-                    $student_history[] = $activity;
-                } else {
-                    echo("<script>console.log('BAD ACTIVITY DATA: ".json_encode($activity->points_earned)."');</script>");
-                }
-            }
-        }
-
+        $points = self::test2($student_activities,$start,$end,$points);
+        
+        //QUIZ
         $sql = "SELECT quiz_table.*, quiz.timeclose
                 FROM {quiz_table} AS quiz_table
                 INNER JOIN {quiz} AS quiz ON quiz.id = quiz_table.quiz_id
                 WHERE quiz_table.student_id = ? AND quiz_table.time_finished IS NOT NULL;";
 
         $student_quizzes = $DB->get_records_sql($sql, array($student->id));
-        foreach($student_quizzes as $quiz){
-            $due_date = $quiz->timeclose;
-            if(is_null($due_date)){
-                $due_date = INF;
-            }
-
-            if($time >= $due_date && $due_date > $start && $due_date < $end){
-                $points->all += $quiz->points_earned;
-                if(($time - $quiz->time_finished)/86400 <= 7){
-                    $points->past_week += $quiz->points_earned;
-                }
-                if(($time - $quiz->time_finished)/86400 <= 14){
-                    $points->past_two_weeks += $quiz->points_earned;
-                }
-                if($quiz->module_name != ''){
-                    $student_history[] = $quiz;
-                } else {
-                    echo("<script>console.log('BAD QUIZ: ".json_encode($quiz)."');</script>");
-                }
-            }
-        }
+        $points = self::test2($student_quizzes,$start,$end,$points);
+        
+        //CHOICE
         $student_choices = $DB->get_records('choice_table', array('student_id'=> $student->id));
-        foreach($student_choices as $choice){
-            if($choice->time_finished >= $start && $choice->time_finished <= $end){
-                $points->all += $choice->points_earned;
-                if(($time - $choice->time_finished)/86400 <= 7){
-                    $points->past_week += $choice->points_earned;
-                }
-                if(($time - $choice->time_finished)/86400 <= 14){
-                    $points->past_two_weeks += $choice->points_earned;
-                }
-                if($choice->module_name != ''){
-                    $student_history[] = $choice;
-                } else {
-                    echo("<script>console.log('BAD CHOICE DATA: ".json_encode($choice)."');</script>");
-                }
-            }
-        }
+        $points = self::test($student_choices,$start,$end,$points);
+        
+        //FORUM
         $student_forum_posts = $DB->get_records('forum_table', array('student_id'=> $student->id));
-        foreach($student_forum_posts as $post){
+        $points = self::test($student_forum_posts,$start,$end,$points);
+        
+        $student_history = $points->history;
+        if(count($student_history) > 1){ //only sort if there is something to sort
+            usort($student_history, function ($a, $b) {
+                return $b->time_finished <=> $a->time_finished;
+            });
+        }
+        $points->history = $student_history;
+
+        return $points;
+    }
+
+    public static function test($list,$start,$end,$points){
+        $time = time();
+        foreach($list as $post){
             if($post->time_finished >= $start && $post->time_finished <= $end){
                 $points->all += $post->points_earned;
                 if(($time - $post->time_finished)/86400 <= 7){
@@ -325,20 +284,36 @@ class block_leaderboard_functions{
                     $points->past_two_weeks += $post->points_earned;
                 }
                 if($post->module_name != ''){
-                    $student_history[] = $post;
-                } else {
-                    echo("<script>console.log('BAD FORUM DATA: ".json_encode($post)."');</script>");
+                    $points->history[] = $post;
                 }
             }
         }
+        return $points;
+    }
 
-        if(count($student_history) > 1){ //only sort if there is something to sort
-            usort($student_history, function ($a, $b) {
-                return $b->time_finished <=> $a->time_finished;
-            });
+    public static function test2($list,$start,$end,$points){
+        $time = time();
+        foreach($list as $activity){
+            $due_date = INF;
+            if(isset($activity->duedate)){
+                $due_date = $activity->duedate;
+            } else if(isset($activity->timeclose)) {
+                $due_date = $activity->timeclose;
+            }
+
+            if($time >= $due_date && $due_date > $start && $due_date < $end){
+                $points->all += $activity->points_earned;
+                if(($time - $activity->time_finished)/86400 <= 7){
+                    $points->past_week += $activity->points_earned;
+                }
+                if(($time - $activity->time_finished)/86400 <= 14){
+                    $points->past_two_weeks += $activity->points_earned;
+                }
+                if($activity->module_name != ''){
+                    $points->history[] = $activity;
+                }
+            }
         }
-        $points->history = $student_history;
-
         return $points;
     }
 }
