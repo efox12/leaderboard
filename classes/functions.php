@@ -50,18 +50,19 @@ class block_leaderboard_functions{
         return $dateRange;
     }
 
-    public static function update_standing($past_standing,$current_standing,$time_updated){
+    public static function update_standing($group_data,$current_standing){
+        global $DB;
         //table icon urls
         $upurl = new moodle_url('/blocks/leaderboard/pix/up.svg');
         $downurl = new moodle_url('/blocks/leaderboard/pix/down.svg');
         $stayurl = new moodle_url('/blocks/leaderboard/pix/stay.svg');
         
-        $move = substr($past_standing, -2,1); //0 for up, 1 for down, 2 for stay
-        $initialPosition = substr($past_standing, -1);
-        $past_standing = substr($past_standing, 0, -2);
+        $move = substr($group_data->past_standing, -2,1); //0 for up, 1 for down, 2 for stay
+        $initialPosition = substr($group_data->past_standing, -1);
+        $past_standing = substr($group_data->past_standing, 0, -2);
         $symbol = " ";
 
-        if ($time_updated < floor((time()-7*60)/86400)){
+        if ($group_data->time_updated < floor((time()-7*60)/86400)){
             if($past_standing > $current_standing){
                 $symbol = '<img src='.$upurl.'>';
                 $move = 0;
@@ -102,11 +103,19 @@ class block_leaderboard_functions{
                 }
             }
         }
-        $standingChanges = new stdClass;
+        /*$standingChanges = new stdClass;
         $standingChanges->symbol = $symbol;
         $standingChanges->move = $move;
         $standingChanges->initialPosition = $initialPosition;
-        return $standingChanges;
+        */
+        //update the groups current standing
+        if($group_data->id){
+            $stored_group_data = $DB->get_record('group_data_table', array('group_id'=> $group_data->id), $fields='*', $strictness=IGNORE_MISSING);
+            $stored_group_data->current_standing = (int)($current_standing.$move.$initialPosition);
+            $DB->update_record('group_data_table', $stored_group_data);
+        }
+
+        return $symbol;
     }
     public static function get_average_group_size($groups){
         //determine average group size
@@ -270,7 +279,21 @@ class block_leaderboard_functions{
 
         return $points;
     }
-
+    public static function rank_groups($group_data_array){
+        $rank_array = [];
+        $count = 1;
+        $position = 1;
+        for($i = 0; $i<count($group_data_array); $i++){ 
+            $position++;
+            $rank_array[$i] = $count;
+            if($i < (count($group_data_array) - 1)){
+                if($group_data_array[$i]->points != $group_data_array[$i+1]->points){   
+                    $count = $position;
+                }
+            }
+        }
+        return $rank_array;
+    }
     public static function get_module_points($list,$start,$end,$points){
         $time = time();
         foreach($list as $activity){

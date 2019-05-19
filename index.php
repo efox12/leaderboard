@@ -101,18 +101,7 @@ if(count($groups) > 0){ //there are groups to display
     }
 
     //make teams that are tied have the same rank
-    $rank_array = [];
-    $count = 1;
-    $position = 1;
-    for($i = 0; $i<count($group_data_array); $i++){ 
-        $position++;
-        $rank_array[$i] = $count;
-        if($i < (count($group_data_array) - 1)){
-            if($group_data_array[$i]->points != $group_data_array[$i+1]->points){   
-                $count = $position;
-            }
-        }
-    }
+    $rank_array = $functions->rank_groups($group_data_array);
 
     //display each groupin the table
     $group_index = 0;
@@ -120,20 +109,7 @@ if(count($groups) > 0){ //there are groups to display
         //set groups change in position icon
         $current_standing = $rank_array[$group_index];
 
-        $standingChanges = $functions->update_standing($group_data->past_standing,$current_standing,$group_data->time_updated);
-        
-        $symbol = $standingChanges->symbol;
-        $move = $standingChanges->move;
-        $initialPosition = $standingChanges->initialPosition; 
-
-        //update the groups current standing
-        if($group_data->id){
-            $stored_group_data = $DB->get_record('group_data_table', array('group_id'=> $group_data->id), $fields='*', $strictness=IGNORE_MISSING);
-            $stored_group_data->current_standing = (int)($current_standing.$move.$initialPosition);
-            $DB->update_record('group_data_table', $stored_group_data);
-        }
-
-        
+        $symbol = $functions->update_standing($group_data,$current_standing);
 
         //add the groups row to the table
         if($group_data->is_users_group || !$is_student){ //include group students
