@@ -63,7 +63,6 @@ class block_leaderboard_functions{
         $upurl = new moodle_url('/blocks/leaderboard/pix/up.svg');
         $downurl = new moodle_url('/blocks/leaderboard/pix/down.svg');
         $stayurl = new moodle_url('/blocks/leaderboard/pix/stay.svg');
-        $moreurl = new moodle_url('/blocks/leaderboard/pix/more.svg');
         
         $move = substr($past_standing, -2,1); //0 for up, 1 for down, 2 for stay
         $initialPosition = substr($past_standing, -1);
