@@ -123,8 +123,11 @@ if(count($groups) > 0){ //there are groups to display
         //set groups change in position icon
         $current_standing = $rank_array[$group_index];
 
-        $symbol = $functions->update_standing($group_data->past_standing,$current_standing,$group_data->time_updated);
+        $standingChanges = $functions->update_standing($group_data->past_standing,$current_standing,$group_data->time_updated);
         
+        $symbol = $standingChanges->symbol;
+        $move = $standingChanges->move;
+        $initialPosition = $standingChanges->$initialPosition; 
         //update the groups current standing
         if($group_data->id){
             $stored_group_data = $DB->get_record('group_data_table', array('group_id'=> $group_data->id), $fields='*', $strictness=IGNORE_MISSING);

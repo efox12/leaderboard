@@ -59,6 +59,12 @@ class block_leaderboard_functions{
     }
 
     public static function update_standing($past_standing,$current_standing,$time_updated){
+        //table icon urls
+        $upurl = new moodle_url('/blocks/leaderboard/pix/up.svg');
+        $downurl = new moodle_url('/blocks/leaderboard/pix/down.svg');
+        $stayurl = new moodle_url('/blocks/leaderboard/pix/stay.svg');
+        $moreurl = new moodle_url('/blocks/leaderboard/pix/more.svg');
+        
         $move = substr($past_standing, -2,1); //0 for up, 1 for down, 2 for stay
         $initialPosition = substr($past_standing, -1);
         $past_standing = substr($past_standing, 0, -2);
@@ -105,7 +111,11 @@ class block_leaderboard_functions{
                 }
             }
         }
-        return $symbol;
+        $standingChanges = new stdClass;
+        $standingChanges->symbol = $symbol;
+        $standingChanges->move = $move;
+        $standingChanges->$initialPosition = $initialPosition;
+        return $standingChanges;
     }
     public static function get_average_group_size($groups){
         //determine average group size
