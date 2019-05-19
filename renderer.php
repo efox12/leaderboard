@@ -74,7 +74,6 @@ class block_leaderboard_renderer extends plugin_renderer_base {
     //-------------------------------------------------------------------------------------------------------------------//
     //FUNCTIONS
     public function create_leaderboard($group_data_array,$table,$functions){
-        global $DB;
         $moreurl = new moodle_url('/blocks/leaderboard/pix/more.svg');
         //create a new object
         $our_group_data = new stdClass();

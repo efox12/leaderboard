@@ -109,11 +109,11 @@ This section will tell you how to display content to the block and overview what
 
 ### block_leaderboard.php
 The block_leaderboard.php file handles the entire blocks setup. Every block has a similar file with the standard name `block_blockname` located in the blocks root directory. There are 5 functions in this class that are important:
-* `init()` is the first function run by the block. All that is done in this function is setting the block’s title. The title what the block is called when the admin or teacher looks for it in Moodle's list of blocks.
-* `has_config ()` function tells Moodle that this block uses settings located in the settings.php file.
-* `get_content()` function in this file is what the block displays. This function uses a renderer (renderer.php) to get the blocks content.
-* `hide_header()` does exactly what the function states. It hides the blocks header(its title). Return false if you want to display the header.
-* `html_attributes()` sets  the blocks html attributes. Currently the only attribute set is the class attribute so that the block can be located in css and javascript files
+*  `init()` is the first function run by the block. All that is done in this function is setting the block’s title. The title what the block is called when the admin or teacher looks for it in Moodle's list of blocks.
+*  `has_config ()` function tells Moodle that this block uses settings located in the settings.php file.
+*  `get_content()` function in this file is what the block displays. This function uses a renderer (renderer.php) to get the blocks content.
+*  `hide_header()` does exactly what the function states. It hides the blocks header(its title). Return false if you want to display the header.
+*  `html_attributes()` sets  the blocks html attributes. Currently the only attribute set is the class attribute so that the block can be located in css and javascript files
 
 [More info on blocks](https://docs.moodle.org/dev/Blocks)
 ## Display Content
@@ -126,7 +126,7 @@ To add new content to the block go to the `$output` variable and add:
 $output .= ‘new content’;
 ```
 The dot `.` is the operator for string concatenation in PHP and `.=` allows you to concatenate strings on separate lines for easier code readability. 
-* Note: The block displays content in the order of the output strings.
+*  Note: The block displays content in the order of the output strings.
 
 [More info on renderers](https://docs.moodle.org/dev/Renderer)
 
@@ -187,7 +187,7 @@ div.info {
 }
 ```
 You can inspect webpages to see the html hierarchy and how to navigate to certain elements. It is best to be specific when styling elements so you don't change any extra elements.
-* Note: Styling takes some time to update, so you may have to wait a minute to see the results. Every once and a while you many have to use `!important`(eg. `color: black !important;`) to override a style set by Moodle that doesn't want to change.
+*  Note: Styling takes some time to update, so you may have to wait a minute to see the results. Every once and a while you many have to use `!important`(eg. `color: black !important;`) to override a style set by Moodle that doesn't want to change.
   
 [More info on styles](https://docs.moodle.org/dev/CSS_Coding_Style)
 
@@ -229,7 +229,7 @@ $url = new moodle_url('/blocks/leaderboard/filename.php', array('id' => $coursei
 output .= $OUTPUT->single_button($url,get_string('view_full_leaderboard','block_leaderboard'),'get');
 ```
 You need to include the `array('id' => $courseid)`. This adds the course's id as a parameter to the end of the url so that it can be accessed in the new page.
-* Note: `single_button()` is not necessary to navigate to a new page. You can use a link or any other manner of navigation. Also `output .= ` should be changed to whatever display method you happen to be using.
+*  Note: `single_button()` is not necessary to navigate to a new page. You can use a link or any other manner of navigation. Also `output .= ` should be changed to whatever display method you happen to be using.
 
 Include the following code at the start of `/blocks/leaderboard/filename.php`
 ```
@@ -353,9 +353,9 @@ $DB->update_record('database_table_name', $record);
 Moodle suggests that you do not hand code any new field into this file and use their database tool instead.
 
 #### XMLBD Editor
-This is Moodle's preferred way of creating and maintaining database tables. To access it go into admin settings->development->XMLDB-editor. In that page you will see all of the plugins with database tables. Click on '[Load]' and then '[Edit]. From there you will be able to create new tables and update old ones. Changes will be pushed to install.xml when saving.
+This is Moodle's preferred way of creating and maintaining database tables. To access it go into admin settings->development->XMLDB-editor. In that page you will see all of the plugins with database tables. Click on '\[Load]' and then '\[Edit]'. From there you will be able to create new tables and update old ones. Changes will be pushed to install.xml when saving.
 
-* Note: To apply these changes you will need to uninstall and reinstall the plugin, however the entire database will be wiped. The other option is to include an upgrade.php file, and bump the version number to upgrade the database.
+*  Note: To apply these changes you will need to uninstall and reinstall the plugin, however the entire database will be wiped. The other option is to include an upgrade.php file, and bump the version number to upgrade the database.
 [Info on adding upgrade.php](https://docs.moodle.org/dev/Upgrade_API)
 
 [More info on creating database records](https://docs.moodle.org/dev/Using_XMLDB)

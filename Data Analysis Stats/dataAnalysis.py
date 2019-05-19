@@ -11,7 +11,7 @@ with open('data.csv', 'r') as dataFile:
     #build a list of each module type
     for row in data:
         if row[3] == 'Assignment':
-            assignmentList.append(row[0:6])   
+            assignmentList.append(row[0:6])
         elif row[3] == 'Quiz':
             quizList.append(row[0:8])
         elif row[3] == 'Choice':
@@ -34,7 +34,7 @@ for assignment in assignmentList:
     daysEarly = int(assignment[5])
     if abs(daysEarly) <=7:
         assignmentCount += 1
-        #get info on number days assignments submitted early 
+        #get info on number days assignments submitted early
         if daysEarly < 0:
             late += 1
         else:
@@ -124,7 +124,7 @@ for quiz in quizList:
             threeAttempts += 1
         else:
             fourAttempts += 1
-        
+
         #get info on days spaced between quizzes
         if daysSpaced < .02:
             noTimeSpaced += 1
