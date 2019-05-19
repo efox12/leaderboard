@@ -122,53 +122,8 @@ if(count($groups) > 0){ //there are groups to display
     foreach($group_data_array as $group_data){ 
         //set groups change in position icon
         $current_standing = $rank_array[$group_index];
-        $symbol = " ";
 
-        $move = substr($group_data->past_standing, -2,1); //0 for up, 1 for down, 2 for stay
-        $initialPosition = substr($group_data->past_standing, -1);
-        $past_standing = substr($group_data->past_standing, 0, -2);
-        
-        if ($group_data->time_updated < floor((time()-7*60)/86400)){
-            if($past_standing > $current_standing){
-                $symbol = '<img src='.$upurl.'>';
-                $move = 0;
-            } else if ($past_standing < $current_standing) {
-                $symbol = '<img src='.$downurl.'>';
-                $move = 1;
-            } else if ($initialPosition == $past_standing) {
-                $symbol = '<img src='.$stayurl.'>';
-                $move = 2;
-            } else {
-                if ($move == 0){
-                    $symbol = '<img src='.$upurl.'>';
-                }
-                if ($move == 1){
-                    $symbol = '<img src='.$downurl.'>';
-                }
-                if ($move == 2){
-                    $symbol = '<img src='.$stayurl.'>';
-                }
-            }
-            $initialPosition = $past_standing;
-        } else{
-            if($past_standing > $current_standing){
-                $symbol = '<img src='.$upurl.'>';
-                $move = 0;
-            } else if ($past_standing < $current_standing) {
-                $symbol = '<img src='.$downurl.'>';
-                $move = 1;
-            } else {
-                if ($move == 0){
-                    $symbol = '<img src='.$upurl.'>';
-                }
-                if ($move == 1){
-                    $symbol = '<img src='.$downurl.'>';
-                }
-                if ($move == 2){
-                    $symbol = '<img src='.$stayurl.'>';
-                }
-            }
-        }
+        $symbol = $functions->update_standing($group_data->past_standing,$current_standing);
         
         //update the groups current standing
         if($group_data->id){

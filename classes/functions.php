@@ -57,6 +57,56 @@ class block_leaderboard_functions{
         $dateRange->end = $end;
         return $dateRange;
     }
+
+    public static function update_standing($past_standing,$current_standing){
+        $move = substr($past_standing, -2,1); //0 for up, 1 for down, 2 for stay
+        $initialPosition = substr($past_standing, -1);
+        $past_standing = substr($past_standing, 0, -2);
+        $symbol = " ";
+
+        if ($group_data->time_updated < floor((time()-7*60)/86400)){
+            if($past_standing > $current_standing){
+                $symbol = '<img src='.$upurl.'>';
+                $move = 0;
+            } else if ($past_standing < $current_standing) {
+                $symbol = '<img src='.$downurl.'>';
+                $move = 1;
+            } else if ($initialPosition == $past_standing) {
+                $symbol = '<img src='.$stayurl.'>';
+                $move = 2;
+            } else {
+                if ($move == 0){
+                    $symbol = '<img src='.$upurl.'>';
+                }
+                if ($move == 1){
+                    $symbol = '<img src='.$downurl.'>';
+                }
+                if ($move == 2){
+                    $symbol = '<img src='.$stayurl.'>';
+                }
+            }
+            $initialPosition = $past_standing;
+        } else{
+            if($past_standing > $current_standing){
+                $symbol = '<img src='.$upurl.'>';
+                $move = 0;
+            } else if ($past_standing < $current_standing) {
+                $symbol = '<img src='.$downurl.'>';
+                $move = 1;
+            } else {
+                if ($move == 0){
+                    $symbol = '<img src='.$upurl.'>';
+                }
+                if ($move == 1){
+                    $symbol = '<img src='.$downurl.'>';
+                }
+                if ($move == 2){
+                    $symbol = '<img src='.$stayurl.'>';
+                }
+            }
+        }
+        return $symbol;
+    }
     public static function get_average_group_size($groups){
         //determine average group size
         $num_groups = count($groups);
