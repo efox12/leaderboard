@@ -1,21 +1,36 @@
 <?php
+// This file is part of Moodle - http:// moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
 /*
  * Author: Erik Fox
  * Date Created: 5/22/18
  * Last Updated: 12/29/18
  */
 
-require_once '../../config.php';
-require_once "$CFG->libdir/formslib.php";
+require_once('../../config.php');
+require_once("$CFG->libdir/formslib.php");
 
 class simplehtml_form extends moodleform {
- 
-    function definition() {
-        $mform =& $this->_form; // Don't forget the underscore! 
+
+    public function definition() {
+        $mform = & $this->_form; // Don't forget the underscore!
         echo("<script>console.log('EVENT1: ".json_encode($this->_customdata)."');</script>");
 
         $mform->addElement('header', 'h', "Change Date Range");
-        // parameters required for the page to load
+        // Parameters required for the page to load.
         $mform->addElement('hidden', 'id');
         $mform->setType('id', PARAM_INT);
         $mform->addElement('hidden', 'start');
@@ -24,415 +39,423 @@ class simplehtml_form extends moodleform {
         $mform->setType('end', PARAM_RAW);
 
         $mform->addElement('date_selector', 'startDate', "Start");
-        $mform->setDefault('startDate',$this->_customdata['startDate']);
-        $mform->addElement('date_selector', 'endDate', "End");        
-        $mform->setDefault('endDate',$this->_customdata['endDate']);
-        $buttonarray=array();
+        $mform->setDefault('startDate', $this->_customdata['startDate']);
+        $mform->addElement('date_selector', 'endDate', "End");
+        $mform->setDefault('endDate', $this->_customdata['endDate']);
+        $buttonarray = array();
         $buttonarray[] = $mform->createElement('submit', 'submitbutton', "Update");
-        $buttonarray[] = $mform->createElement('cancel','resetbutton',"Reset to Default");
+        $buttonarray[] = $mform->createElement('cancel', 'resetbutton', "Reset to Default");
         $mform->addGroup($buttonarray, 'buttonar', '', ' ', false);
-        //$this->add_action_buttons($cancel=true,$submitlabel="Update",$cancellabel="TEST");
     }
-} 
+}
 
 global $COURSE, $DB;
 
-//urls for icons
+// Urls for icons.
 $expandurl = new moodle_url('/blocks/leaderboard/pix/expand.svg');
 
-// course id
+// Course id.
 $cid = required_param('id', PARAM_INT);
 $start = required_param('start', PARAM_RAW);
 $end = required_param('end', PARAM_RAW);
 
-$course = $DB->get_record('course', array('id'=>$cid), '*', MUST_EXIST);
+$course = $DB->get_record('course', array('id' => $cid), '*', MUST_EXIST);
 
 require_course_login($course, true);
-//this page's url
-$url = new moodle_url('/blocks/leaderboard/index.php', array('id' => $cid,'start'=>$start,'end'=>$end));
+// This page's url.
+$url = new moodle_url('/blocks/leaderboard/index.php', array('id' => $cid, 'start' => $start, 'end' => $end));
 
-//setup page
+// Setup page.
 $PAGE->requires->js(new moodle_url('/blocks/leaderboard/javascript/leaderboardTable.js'));
 $PAGE->set_pagelayout('incourse');
 $PAGE->set_url($url);
 $PAGE->set_title(get_string('leaderboard', 'block_leaderboard'));
 $PAGE->set_heading($course->fullname);
 $PAGE->add_body_class("leaderboard page");
-$is_student = false;
-if(user_has_role_assignment($USER->id,5)){
-    $is_student = true;
+$isstudent = false;
+if (user_has_role_assignment($USER->id, 5)) {
+    $isstudent = true;
 }
 
-
-//-------------------------------------------------------------------------------------------------------------------//
 // CREATE TABLE
-//create an html table
-//get all groups from the current course
-$groups = $DB->get_records('groups', array('courseid'=>$cid));
+// Create an html table.
+// Get all groups from the current course.
+$groups = $DB->get_records('groups', array('courseid' => $cid));
 $functions = new block_leaderboard_functions;
-if(count($groups) > 0){ //there are groups to display
-    //create the table
+if (count($groups) > 0) { // There are groups to display.
+    // Create the table.
     $table = new html_table();
-    $table->head = array("",get_string('rank', 'block_leaderboard'),"",get_string('name', 'block_leaderboard'),get_string('points', 'block_leaderboard'));
+    $table->head = array("", get_string('rank', 'block_leaderboard'), "",
+                    get_string('name', 'block_leaderboard'), get_string('points', 'block_leaderboard'));
     $table->attributes['class'] = 'generaltable leaderboardtable';
 
-    //get average group size
-    $num_groups = count($groups);
-    $num_students = 0;
-    foreach($groups as $group){
-        //get each member of the group
-        $students = groups_get_members($group->id, $fields='u.*', $sort='lastname ASC');
-        $num_students += count($students);
+    // Get average group size.
+    $numgroups = count($groups);
+    $numstudents = 0;
+    foreach ($groups as $group) {
+        // Get each member of the group.
+        $students = groups_get_members($group->id, $fields = 'u.*', $sort = 'lastname ASC');
+        $numstudents += count($students);
     }
-    //get the average group size
-    $average_group_size = ceil($num_students/$num_groups);
+    // Get the average group size.
+    $averagegroupsize = ceil($numstudents / $numgroups);
 
-    //get all group data
-    $group_data_array = [];
-    foreach($groups as $group){
-        $group_data_array[] = $functions->get_group_data($group, $average_group_size,$start,$end);
+    // Get all group data.
+    $groupdataarray = [];
+    foreach ($groups as $group) {
+        $groupdataarray[] = $functions->get_group_data($group, $averagegroupsize, $start, $end);
     }
 
-    //sort the groups by points
-    if(count($group_data_array) > 1){ //only sort if there is something to sort
-        usort($group_data_array, function ($a, $b) {
+    // Sort the groups by points.
+    if (count($groupdataarray) > 1) { // Only sort if there is something to sort.
+        usort($groupdataarray, function ($a, $b) {
             return $b->points <=> $a->points;
         });
     }
 
-    //make teams that are tied have the same rank
-    $rank_array = $functions->rank_groups($group_data_array);
+    // Make teams that are tied have the same rank.
+    $rankarray = $functions->rank_groups($groupdataarray);
 
-    //display each groupin the table
-    $group_index = 0;
-    foreach($group_data_array as $group_data){ 
-        //set groups change in position icon
-        $current_standing = $rank_array[$group_index];
+    // Display each groupin the table.
+    $groupindex = 0;
+    foreach ($groupdataarray as $groupdata) {
+        // Set groups change in position icon.
+        $currentstanding = $rankarray[$groupindex];
 
-        $symbol = $functions->update_standing($group_data,$current_standing);
+        $symbol = $functions->update_standing($groupdata, $currentstanding);
 
-        //add the groups row to the table
-        if($group_data->is_users_group || !$is_student){ //include group students
-            $group_row = new html_table_row(array('<img class="dropdown" src='.$expandurl.'>',$current_standing,$symbol,$group_data->name, round($group_data->points)));
-            if($group_data->is_users_group){ //bold the group
-                $group_row->attributes['class'] = 'group this_group collapsible rank'.$current_standing;
-                $group_row->attributes['name'] = $group_index;
-            } else{ //don't bold the group
-                $group_row->attributes['class'] = 'group collapsible rank'.$current_standing;
-                $group_row->attributes['name'] = $group_index;
+        // Add the groups row to the table.
+        if ($groupdata->isusersgroup || !$isstudent) { // Include group students.
+            $grouprow = new html_table_row(array('<img class = "dropdown" src = '.$expandurl.'>',
+                                            $currentstanding, $symbol, $groupdata->name, round($groupdata->points)));
+            if ($groupdata->isusersgroup) { // Bold the group.
+                $grouprow->attributes['class'] = 'group this_group collapsible rank'.$currentstanding;
+                $grouprow->attributes['name'] = $groupindex;
+            } else { // Don't bold the group.
+                $grouprow->attributes['class'] = 'group collapsible rank'.$currentstanding;
+                $grouprow->attributes['name'] = $groupindex;
             }
-            $table->data[] = $group_row;
+            $table->data[] = $grouprow;
         } else {
-            $group_row = new html_table_row(array('',$current_standing,$symbol,$group_data->name, round($group_data->points)));
-            $group_row->attributes['class'] = 'group rank'.$current_standing;
-            $table->data[] = $group_row;
+            $grouprow = new html_table_row(array('', $currentstanding, $symbol, $groupdata->name, round($groupdata->points)));
+            $grouprow->attributes['class'] = 'group rank'.$currentstanding;
+            $table->data[] = $grouprow;
         }
-        
-        if(!$is_student || $group_data->is_users_group){ //if this is the teacher or current user group
-            //add the students to the table
-            $students_data = $group_data->students_data;
-            $count=0;
-            foreach($students_data as $key=>$value){
-                $student_data = $value;
 
-                //add the student to the table
-                if(!$is_student || $student_data->id == $USER->id){ //include student history
-                    if(empty($student_data->history) != 1){
-                        $individual_row = new html_table_row(array("",'<img class="dropdown" src='.$expandurl.'>',"",$student_data->firstname." ".$student_data->lastname, round($student_data->points)));  
+        if (!$isstudent || $groupdata->isusersgroup) { // If this is the teacher or current user group.
+            // Add the students to the table.
+            $studentsdata = $groupdata->studentsdata;
+            $count = 0;
+            foreach ($studentsdata as $key => $value) {
+                $studentdata = $value;
+
+                // Add the student to the table.
+                if (!$isstudent || $studentdata->id == $USER->id) { // Include student history.
+                    if (empty($studentdata->history) != 1) {
+                        $individualrow = new html_table_row(array("", '<img class = "dropdown" src = '.$expandurl.'>', "",
+                                                $studentdata->firstname." ".$studentdata->lastname, round($studentdata->points)));
                     } else {
-                        $individual_row = new html_table_row(array("","","",$student_data->firstname." ".$student_data->lastname, round($student_data->points)));
+                        $individualrow = new html_table_row(array("", "", "",
+                                                $studentdata->firstname." ".$studentdata->lastname, round($studentdata->points)));
                     }
-                    if($student_data->id === $USER->id){ //bold the current user
-                        $individual_row->attributes['class'] = 'this_user content';
-                    } else{ //don't bold
-                        $individual_row->attributes['class'] = 'content';
+                    if ($studentdata->id === $USER->id) { // Bold the current user.
+                        $individualrow->attributes['class'] = 'this_user content';
+                    } else { // Don't bold.
+                        $individualrow->attributes['class'] = 'content';
                     }
-                    $individual_row->attributes['name'] = 'c'.$group_index;
-                    $individual_row->attributes['child'] = 's'.$count;
-                    $table->data[] = $individual_row;
-                    
-                    if(empty($student_data->history) != 1){
-                        //add the students data to the table
-                        $infoCount = 0;
-                        foreach($student_data->history as $points_module){
-                            //$module_row = new html_table_row();
-                            //echo("<script>console.log('EVENT1: ".json_encode($points_module)."');</script>");
-                            if(property_exists($points_module, "is_response")){
-                                if($points_module->is_response == 0){
-                                    $module_row = new html_table_row(array("","","","Forum Post",round($points_module->points_earned)));
-                                } else if($points_module->is_response == 1){
-                                    $module_row = new html_table_row(array("","","","Forum Response",round($points_module->points_earned)));
-                                } 
+                    $individualrow->attributes['name'] = 'c'.$groupindex;
+                    $individualrow->attributes['child'] = 's'.$count;
+                    $table->data[] = $individualrow;
+
+                    if (empty($studentdata->history) != 1) {
+                        // Add the students data to the table.
+                        $infocount = 0;
+                        foreach ($studentdata->history as $pointsmodule) {
+                            if (property_exists($pointsmodule, "is_response")) {
+                                if ($pointsmodule->is_response == 0) {
+                                    $modulerow = new html_table_row(array("", "", "",
+                                                        "Forum Post", round($pointsmodule->points_earned)));
+                                } else if ($pointsmodule->is_response == 1) {
+                                    $modulerow = new html_table_row(array("", "", "",
+                                                        "Forum Response", round($pointsmodule->points_earned)));
+                                }
                             } else {
-                                if(property_exists($points_module, "days_early") && $points_module->points_earned > 0){
-                                    $module_row = new html_table_row(array("",'<img class="dropdown" src='.$expandurl.'>',"",$points_module->module_name,round($points_module->points_earned)));
+                                if (property_exists($pointsmodule, "days_early") && $pointsmodule->points_earned > 0) {
+                                    $modulerow = new html_table_row(array("", '<img class = "dropdown" src = '.$expandurl.'>', "",
+                                                        $pointsmodule->module_name, round($pointsmodule->points_earned)));
                                 } else {
-                                    $module_row = new html_table_row(array("","","",$points_module->module_name,round($points_module->points_earned)));
+                                    $modulerow = new html_table_row(array("", "", "",
+                                                        $pointsmodule->module_name, round($pointsmodule->points_earned)));
                                 }
                             }
-                            $module_row->attributes['class'] = 'subcontent';
-                            $module_row->attributes['child'] = 'i'.$infoCount;
-                            $module_row->attributes['name'] = 'c'.$group_index.'s'.$count;
-                            $table->data[] = $module_row;
+                            $modulerow->attributes['class'] = 'subcontent';
+                            $modulerow->attributes['child'] = 'i'.$infocount;
+                            $modulerow->attributes['name'] = 'c'.$groupindex.'s'.$count;
+                            $table->data[] = $modulerow;
 
-                            $early_points = 0;
-                            $attempts_points = 0;
-                            $spacing_points = 0;
+                            $earlypoints = 0;
+                            $attemptspoints = 0;
+                            $spacingpoints = 0;
 
-                            //include info about how many days early a task was completed
-                            if(property_exists($points_module, "days_early")){
-                                $days_early = $points_module->days_early;
-                                if(property_exists($points_module, "attempts")){
-                                    for($x=1; $x<=5; $x++){
-                                        $current_time = get_config('leaderboard','quiztime'.$x);
-                                        if($x < 5) {
-                                            $next_time = get_config('leaderboard','quiztime'.($x+1));
-                                            if($days_early >= $current_time && $days_early < $next_time){
-                                                $early_points = get_config('leaderboard','quizpoints'.$x);
+                            // Include info about how many days early a task was completed.
+                            if (property_exists($pointsmodule, "days_early")) {
+                                $daysearly = $pointsmodule->days_early;
+                                if (property_exists($pointsmodule, "attempts")) {
+                                    for ($x = 1; $x <= 5; $x++) {
+                                        $currenttime = get_config('leaderboard', 'quiztime'.$x);
+                                        if ($x < 5) {
+                                            $nexttime = get_config('leaderboard', 'quiztime'.($x + 1));
+                                            if ($daysearly >= $currenttime && $daysearly < $nexttime) {
+                                                $earlypoints = get_config('leaderboard', 'quizpoints'.$x);
                                             }
                                         } else {
-                                            if($days_early >= $current_time){
-                                                $early_points = get_config('leaderboard','quizpoints'.$x);
+                                            if ($daysearly >= $currenttime) {
+                                                $earlypoints = get_config('leaderboard', 'quizpoints'.$x);
                                             }
                                         }
                                     }
                                 } else {
-                                    for($x=1; $x<=5; $x++){
-                                        $current_time = get_config('leaderboard','assignmenttime'.$x);
-                                        if($x < 5) {
-                                            $next_time = get_config('leaderboard','assignmenttime'.($x+1));
-                                            if($days_early >= $current_time && $days_early < $next_time){
-                                                $early_points = get_config('leaderboard','assignmnetpoints'.$x);
+                                    for ($x = 1; $x <= 5; $x++) {
+                                        $currenttime = get_config('leaderboard', 'assignmenttime'.$x);
+                                        if ($x < 5) {
+                                            $nexttime = get_config('leaderboard', 'assignmenttime'.($x + 1));
+                                            if ($daysearly >= $currenttime && $daysearly < $nexttime) {
+                                                $earlypoints = get_config('leaderboard', 'assignmnetpoints'.$x);
                                             }
                                         } else {
-                                            if($days_early >= $current_time){
-                                                $early_points = get_config('leaderboard','assignmnetpoints'.$x);
+                                            if ($daysearly >= $currenttime) {
+                                                $earlypoints = get_config('leaderboard', 'assignmnetpoints'.$x);
                                             }
                                         }
                                     }
                                 }
-                                if($early_points > 0){
-                                    $module_row = new html_table_row(array("","","","Submitted ".abs(round($points_module->days_early))." days early", $early_points));
-                                    $module_row->attributes['class'] = 'contentInfo';
-                                    $module_row->attributes['name'] = 'c'.$group_index.'s'.$count.'i'.$infoCount;
-                                    $table->data[] = $module_row;
+                                if ($earlypoints > 0) {
+                                    $modulerow = new html_table_row(array("", "", "",
+                                                    "Submitted ".abs(round($pointsmodule->days_early))." days early",
+                                                    $earlypoints));
+                                    $modulerow->attributes['class'] = 'contentInfo';
+                                    $modulerow->attributes['name'] = 'c'.$groupindex.'s'.$count.'i'.$infocount;
+                                    $table->data[] = $modulerow;
                                 }
                             }
-                            //include info about how many times a quiz was attempted
-                            if(property_exists($points_module, "attempts")){
-                                
-                                $attempts_points = get_config('leaderboard','quizattemptspoints')*($points_module->attempts - 1);
-                                if($attempts_points > 0){
-                                    $module_row = new html_table_row(array("","","",$points_module->attempts." attempts", $attempts_points));
-                                    $module_row->attributes['class'] = 'contentInfo';
-                                    $module_row->attributes['name'] = 'c'.$group_index.'s'.$count.'i'.$infoCount;
-                                    $table->data[] = $module_row;
+                            // Include info about how many times a quiz was attempted.
+                            if (property_exists($pointsmodule, "attempts")) {
+
+                                $attemptspoints = get_config('leaderboard', 'quizattemptspoints') * ($pointsmodule->attempts - 1);
+                                if ($attemptspoints > 0) {
+                                    $modulerow = new html_table_row(array("", "", "",
+                                                        $pointsmodule->attempts." attempts", $attemptspoints));
+                                    $modulerow->attributes['class'] = 'contentInfo';
+                                    $modulerow->attributes['name'] = 'c'.$groupindex.'s'.$count.'i'.$infocount;
+                                    $table->data[] = $modulerow;
                                 }
                             }
 
-                            //include info about how long quizzes were spaced out
-                            if(property_exists($points_module, "days_spaced")){
-                                $spacing_points = 0;
+                            // Include info about how long quizzes were spaced out.
+                            if (property_exists($pointsmodule, "days_spaced")) {
+                                $spacingpoints = 0;
                                 $unit = " days spaced";
-                                $quiz_spacing = round($points_module->days_spaced,5);    
-                                //get the spacing_points for the given days_spaced
-                                for($x=1; $x<=3; $x++){
-                                    $current_spacing = get_config('leaderboard','quizspacing'.$x);
-                                    if($x < 3) {
-                                        $next_spacing = get_config('leaderboard','quizspacing'.($x+1));
-                                        if($quiz_spacing >= $current_spacing && $quiz_spacing < $next_spacing){
-                                            $spacing_points = get_config('leaderboard','quizspacingpoints'.$x);
+                                $quizspacing = round($pointsmodule->days_spaced, 5);
+                                // Get the spacingpoints for the given days_spaced.
+                                for ($x = 1; $x <= 3; $x++) {
+                                    $currentspacing = get_config('leaderboard', 'quizspacing'.$x);
+                                    if ($x < 3) {
+                                        $nextspacing = get_config('leaderboard', 'quizspacing'.($x + 1));
+                                        if ($quizspacing >= $currentspacing && $quizspacing < $nextspacing) {
+                                            $spacingpoints = get_config('leaderboard', 'quizspacingpoints'.$x);
                                             break;
                                         }
                                     } else {
-                                        if($current_spacing <= $quiz_spacing){
-                                            $spacing_points = get_config('leaderboard','quizspacingpoints'.$x);
-                                            $quiz_spacing = $current_spacing;
+                                        if ($currentspacing <= $quizspacing) {
+                                            $spacingpoints = get_config('leaderboard', 'quizspacingpoints'.$x);
+                                            $quizspacing = $currentspacing;
                                             $unit = " or more days spaced";
                                         }
                                     }
                                 }
-                                
-                                if($spacing_points > 0){
-                                    $module_row = new html_table_row(array("","","",$quiz_spacing.$unit,$spacing_points));
-                                    $module_row->attributes['class'] = 'contentInfo';
-                                    $module_row->attributes['name'] = 'c'.$group_index.'s'.$count.'i'.$infoCount;
-                                    $table->data[] = $module_row;
+
+                                if ($spacingpoints > 0) {
+                                    $modulerow = new html_table_row(array("", "", "", $quizspacing.$unit, $spacingpoints));
+                                    $modulerow->attributes['class'] = 'contentInfo';
+                                    $modulerow->attributes['name'] = 'c'.$groupindex.'s'.$count.'i'.$infocount;
+                                    $table->data[] = $modulerow;
                                 }
                             }
 
-                            $infoCount++;
+                            $infocount++;
                         }
                     }
-                } else { //don't include student history
-                    $individual_row = new html_table_row(array("","","",$student_data->firstname." ".$student_data->lastname, round($student_data->points)));
-                    //don't bold student
-                    $individual_row->attributes['class'] = 'content';
-                    $individual_row->attributes['name'] = 'c'.$group_index;
-                    $table->data[] = $individual_row;
+                } else { // Don't include student history.
+                    $individualrow = new html_table_row(array("", "", "",
+                                        $studentdata->firstname." ".$studentdata->lastname, round($studentdata->points)));
+                    // Don't bold student.
+                    $individualrow->attributes['class'] = 'content';
+                    $individualrow->attributes['name'] = 'c'.$groupindex;
+                    $table->data[] = $individualrow;
                 }
                 $count++;
             }
-            //if the teams are not equal add visible bonus points to the table
-            if($group_data->bonus_points > 0){
-                $individual_row = new html_table_row(array("","","",get_string('extra_points', 'block_leaderboard'), round($group_data->bonus_points)));
-                $individual_row->attributes['class'] = 'content';
-                $individual_row->attributes['name'] = 'c'.$group_index;
-                $individual_row->attributes['child'] = 's'.$count;
-                $table->data[] = $individual_row;
+            // If the teams are not equal add visible bonus points to the table.
+            if ($groupdata->bonuspoints > 0) {
+                $individualrow = new html_table_row(array("", "", "",
+                                    get_string('extra_points', 'block_leaderboard'), round($groupdata->bonuspoints)));
+                $individualrow->attributes['class'] = 'content';
+                $individualrow->attributes['name'] = 'c'.$groupindex;
+                $individualrow->attributes['child'] = 's'.$count;
+                $table->data[] = $individualrow;
             }
         }
-        $group_index++;
-    }    
-} else { //there are no groups in the class
+        $groupindex++;
+    }
+} else { // There are no groups in the class.
     $table = new html_table();
-    $table->head = array("",get_string('rank', 'block_leaderboard'),"",get_string('name', 'block_leaderboard'),get_string('points', 'block_leaderboard'));
-    $row = new html_table_row(array("","",get_string('no_Groups_Found', 'block_leaderboard'),"",""));
+    $table->head = array("", get_string('rank', 'block_leaderboard'), "",
+                    get_string('name', 'block_leaderboard'), get_string('points', 'block_leaderboard'));
+    $row = new html_table_row(array("", "", get_string('no_Groups_Found', 'block_leaderboard'), "", ""));
     $table->data[] = $row;
 }
-$mform = new simplehtml_form(null, array('startDate'=>$start, 'endDate'=>$end));
+$mform = new simplehtml_form(null, array('startDate' => $start, 'endDate' => $end));
 
-$toform=new stdClass;
-$toform->id=$cid;
-$toform->start=$start;
-$toform->end=$end;
+$toform = new stdClass;
+$toform->id = $cid;
+$toform->start = $start;
+$toform->end = $end;
 $mform->set_data($toform);
 
-if(!$is_student){
+if (!$isstudent) {
     if ($mform->is_cancelled()) {
-        $dateRange = $functions->get_date_range($cid);
-        $start = $dateRange->start;
-        $end = $dateRange->end;
+        $daterange = $functions->get_date_range($cid);
+        $start = $daterange->start;
+        $end = $daterange->end;
 
-        $defaulturl = new moodle_url('/blocks/leaderboard/index.php', array('id' => $cid,'start' => $start,'end' => $end));
+        $defaulturl = new moodle_url('/blocks/leaderboard/index.php', array('id' => $cid, 'start' => $start, 'end' => $end));
         redirect($defaulturl);
-    } else if ($fromform = $mform->get_data()){
-        $nexturl = new moodle_url('/blocks/leaderboard/index.php', array('id' => $cid,'start'=>$fromform->startDate,'end'=>$fromform->endDate));
+    } else if ($fromform = $mform->get_data()) {
+        $nexturl = new moodle_url('/blocks/leaderboard/index.php',
+                    array('id' => $cid, 'start' => $fromform->startDate, 'end' => $fromform->endDate));
         redirect($nexturl);
     }
 }
-//-------------------------------------------------------------------------------------------------------------------//
-// DISPLAY PAGE CONTENT
+
+// DISPLAY PAGE CONTENT.
 echo $OUTPUT->header();
 echo '<h2>'.get_string('leaderboard', 'block_leaderboard').'</h2>';
 echo html_writer::table($table);
 
-//load CSV file with student data
-if(!$is_student){
-    //display the download button
+// Load CSV file with student data.
+if (!$isstudent) {
+    // Display the download button.
     $mform->display();
-    echo html_writer::div($OUTPUT->single_button(new moodle_url('classes/data_loader.php', array('id' => $cid,'start' => $start,'end' => $end)), get_string('download_data', 'block_leaderboard'),'get'), 'download_button');    
-    
+    echo html_writer::div($OUTPUT->single_button(new moodle_url('classes/data_loader.php',
+                                                array('id' => $cid, 'start' => $start, 'end' => $end)),
+                                                get_string('download_data', 'block_leaderboard'), 'get'), 'download_button');
 }
 
-//display the Q/A
-echo '<div class="info">'.get_string('info', 'block_leaderboard').'</div>';
-echo '<div class="description">'.get_string('description', 'block_leaderboard').'</div>';
-echo '<div class="info">'.get_string('QA', 'block_leaderboard').'</div>';
-echo '<div class="q">'.get_string('q0', 'block_leaderboard').'</div>';
+// Display the Q/A.
+echo '<div class = "info">'.get_string('info', 'block_leaderboard').'</div>';
+echo '<div class = "description">'.get_string('description', 'block_leaderboard').'</div>';
+echo '<div class = "info">'.get_string('QA', 'block_leaderboard').'</div>';
+echo '<div class = "q">'.get_string('q0', 'block_leaderboard').'</div>';
 echo '<br/>';
-echo '<div class="a">'.get_string('a0', 'block_leaderboard').'</div>';
+echo '<div class = "a">'.get_string('a0', 'block_leaderboard').'</div>';
 echo '<br/>';
-echo '<div class="q">'.get_string('q1', 'block_leaderboard').'</div>';
+echo '<div class = "q">'.get_string('q1', 'block_leaderboard').'</div>';
 echo '<br/>';
-echo '<div class="a">'.get_string('a1', 'block_leaderboard').'</div>';
+echo '<div class = "a">'.get_string('a1', 'block_leaderboard').'</div>';
 echo '<br/>';
-echo '<div class="q">'.get_string('q2', 'block_leaderboard').'</div>';
+echo '<div class = "q">'.get_string('q2', 'block_leaderboard').'</div>';
 echo '<br/>';
-echo '<div class="a partone">'.get_string('a2', 'block_leaderboard').'</div>';
+echo '<div class = "a partone">'.get_string('a2', 'block_leaderboard').'</div>';
 echo '<br/>';
-echo '<div class="a levels">'.get_string('a22', 'block_leaderboard').'</div>';
+echo '<div class = "a levels">'.get_string('a22', 'block_leaderboard').'</div>';
 echo '<br/>';
-echo '<div class="q">'.get_string('q6', 'block_leaderboard').'</div>';
+echo '<div class = "q">'.get_string('q6', 'block_leaderboard').'</div>';
 echo '<br/>';
-echo '<div class="a">'.get_string('a6', 'block_leaderboard').'</div>';
+echo '<div class = "a">'.get_string('a6', 'block_leaderboard').'</div>';
 echo '<br/>';
-echo '<div class="q">'.get_string('q7', 'block_leaderboard').'</div>';
+echo '<div class = "q">'.get_string('q7', 'block_leaderboard').'</div>';
 echo '<br/>';
-echo '<div class="a">'.get_string('a7', 'block_leaderboard').'</div>';
+echo '<div class = "a">'.get_string('a7', 'block_leaderboard').'</div>';
 echo $OUTPUT->footer();
 
-//if($USER->id==5){
-    echo("<script>console.log('Erik:');</script>");
-    foreach($groups as $group){
-        //get each member of the group
-        $students = groups_get_members($group->id, $fields='u.*', $sort='lastname ASC');
-        foreach($students as $student){
-            $past_quizzes = $DB->get_records('quiz_table',array('student_id'=> $student->id), $sort='time_started ASC');
-            $clean_quizzes = [];
-            foreach($past_quizzes as $past_quiz){
-                if ($past_quiz->time_finished != null){
-                    $clean_quizzes[] = $past_quiz;
-                }
-            }
-            echo("<script>console.log('EVENT1: ".json_encode($clean_quizzes)."');</script>");
-            $previous_time = 0;
-            foreach($clean_quizzes as $quiz){
-                $days_before_submission = $quiz->days_early;
-                $points_earned = 0;
-                if(abs($days_before_submission) < 50){ //quizzes without duedates will produce a value like -17788
-                    $quiz->days_early = $days_before_submission;
-                    for($x=1; $x<=5; $x++){
-                        $current_time = get_config('leaderboard','quiztime'.$x);
-                        if($x < 5) {
-                            $next_time = get_config('leaderboard','quiztime'.($x+1));
-                            if($days_before_submission >= $current_time && $days_before_submission < $next_time){
-                                $points_earned = get_config('leaderboard','quizpoints'.$x);
-                            }
-                        } else {
-                            if($days_before_submission >= $current_time){
-                                $points_earned = get_config('leaderboard','quizpoints'.$x);
-                            }
-                        }
-                    }
-                } else {
-                    $quiz->days_early = 0;
-                    $points_earned = 0;
-                }
-
-                $quiz->points_earned = $points_earned;
-
-                $spacing_points = 0;
-                //echo("<script>console.log('EVENT1: ".$quiz->days_spaced."');</script>");
-                $quiz_spacing = ($quiz->time_started - $previous_time)/(float)86400;
-                echo("<script>console.log('SPACING: ".$quiz_spacing."');</script>");
-
-                //make sure that days spaced doesn't go above a maximum of 5 days
-                $quiz->days_spaced = min($quiz_spacing, 5.0);
-                //echo("<script>console.log('EVENT1: ".$quiz."');</script>");
-                echo("<script>console.log('SPACING: ".$quiz->days_spaced."');</script>");
-
-                echo("<script>console.log('SPACING: ".json_encode($quiz)."');</script>");
-                for($x=1; $x<=3; $x++){
-                    $current_spacing = get_config('leaderboard','quizspacing'.$x);
-                    if($x < 3) {
-                        $next_spacing = get_config('leaderboard','quizspacing'.($x+1));
-                        if($quiz_spacing >= $current_spacing && $quiz_spacing < $next_spacing){
-                            $spacing_points = get_config('leaderboard','quizspacingpoints'.$x);
-                            break;
-                        }
-                    } else {
-                        if($current_spacing <= $quiz_spacing){
-                            $spacing_points = get_config('leaderboard','quizspacingpoints'.$x);
-                        }
-                    }
-                }
-                $previous_time = $quiz->time_started;
-                $quiz->points_earned += $spacing_points;
-                $multiple_attempt_points = 0;
-                $points = 0;
-                $quiz_attempts = get_config('leaderboard','quizattempts');
-                
-                $multiple_attempt_points = get_config('leaderboard','quizattemptspoints');
-                
-                
-                $points += $multiple_attempt_points*($quiz->attempts-1);
-                $quiz->points_earned += $multiple_attempt_points*($quiz->attempts-1);
-                //$quiz->points_earned = 0;
-                //$quiz->days_spaced = 0;
-                
-                $DB->update_record('quiz_table', $quiz);
+echo("<script>console.log('Erik:');</script>");
+foreach ($groups as $group) {
+    // Get each member of the group.
+    $students = groups_get_members($group->id, $fields = 'u.*', $sort = 'lastname ASC');
+    foreach ($students as $student) {
+        $pastquizzes = $DB->get_records('quiz_table', array('student_id' => $student->id), $sort = 'time_started ASC');
+        $cleanquizzes = [];
+        foreach ($pastquizzes as $pastquiz) {
+            if ($pastquiz->time_finished != null) {
+                $cleanquizzes[] = $pastquiz;
             }
         }
+        echo("<script>console.log('EVENT1: ".json_encode($cleanquizzes)."');</script>");
+        $previoustime = 0;
+        foreach ($cleanquizzes as $quiz) {
+            $daysbeforesubmission = $quiz->days_early;
+            $pointsearned = 0;
+            if (abs($daysbeforesubmission) < 50) { // Quizzes without duedates will produce a value like -17788.
+                $quiz->days_early = $daysbeforesubmission;
+                for ($x = 1; $x <= 5; $x++) {
+                    $currenttime = get_config('leaderboard', 'quiztime'.$x);
+                    if ($x < 5) {
+                        $nexttime = get_config('leaderboard', 'quiztime'.($x + 1));
+                        if ($daysbeforesubmission >= $currenttime && $daysbeforesubmission < $nexttime) {
+                            $pointsearned = get_config('leaderboard', 'quizpoints'.$x);
+                        }
+                    } else {
+                        if ($daysbeforesubmission >= $currenttime) {
+                            $pointsearned = get_config('leaderboard', 'quizpoints'.$x);
+                        }
+                    }
+                }
+            } else {
+                $quiz->days_early = 0;
+                $pointsearned = 0;
+            }
+
+            $quiz->points_earned = $pointsearned;
+
+            $spacingpoints = 0;
+            $quizspacing = ($quiz->time_started - $previoustime) / (float)86400;
+            echo("<script>console.log('SPACING: ".$quizspacing."');</script>");
+
+            // Make sure that days spaced doesn't go above a maximum of 5 days.
+            $quiz->days_spaced = min($quizspacing, 5.0);
+            echo("<script>console.log('SPACING: ".$quiz->days_spaced."');</script>");
+
+            echo("<script>console.log('SPACING: ".json_encode($quiz)."');</script>");
+            for ($x = 1; $x <= 3; $x++) {
+                $currentspacing = get_config('leaderboard', 'quizspacing'.$x);
+                if ($x < 3) {
+                    $nextspacing = get_config('leaderboard', 'quizspacing'.($x + 1));
+                    if ($quizspacing >= $currentspacing && $quizspacing < $nextspacing) {
+                        $spacingpoints = get_config('leaderboard', 'quizspacingpoints'.$x);
+                        break;
+                    }
+                } else {
+                    if ($currentspacing <= $quizspacing) {
+                        $spacingpoints = get_config('leaderboard', 'quizspacingpoints'.$x);
+                    }
+                }
+            }
+            $previoustime = $quiz->time_started;
+            $quiz->points_earned += $spacingpoints;
+            $multipleattemptpoints = 0;
+            $points = 0;
+            $quizattempts = get_config('leaderboard', 'quizattempts');
+
+            $multipleattemptpoints = get_config('leaderboard', 'quizattemptspoints');
+
+            $points += $multipleattemptpoints * ($quiz->attempts - 1);
+            $quiz->points_earned += $multipleattemptpoints * ($quiz->attempts - 1);
+            /*
+            $quiz->points_earned = 0;
+            $quiz->days_spaced = 0;
+            */
+
+            $DB->update_record('quiz_table', $quiz);
+        }
     }
-//}
+}

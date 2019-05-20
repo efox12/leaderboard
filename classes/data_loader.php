@@ -1,12 +1,27 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
 /*
  * Author: Erik Fox
  * Date Created: 5/22/18
  * Last Updated: 8/21/18
  */
 
-require_once '../../../config.php'; // Specify path to moodle /config.php file.
-require_login(); // require valid moodle login.  Will redirect to login page if not logged in.
+require_once('../../../config.php'); // Specify path to moodle /config.php file.
+require_login(); // Require valid moodle login.  Will redirect to login page if not logged in.
 $cid = required_param('id', PARAM_INT);
 $start = required_param('start', PARAM_RAW);
 $end = required_param('end', PARAM_RAW);
@@ -15,7 +30,7 @@ $url = new moodle_url('/blocks/leaderboard/classes/data_loader.php', array('id' 
 $PAGE->set_url($url);
 
 global $DB, $COURSE;
-$CSV[0] = array(
+$csv[0] = array(
     'student_id',
     'module_id',
     'module_name',
@@ -29,18 +44,16 @@ $CSV[0] = array(
     'is_response'
 );
 $count = 1;
-$groups = $DB->get_records('groups', array('courseid'=>$cid));
-foreach($groups as $group){
-    //get each member of the group
-    $students = groups_get_members($group->id, $fields='u.*', $sort='lastname ASC');
-    $group_points = 0;
-    foreach($students as $student){
-        //get each members past contributions and add them to an array
-        $individual_points = 0;
-        $student_activities = $DB->get_records('assignment_table', array('activity_student'=> $student->id));
-        foreach($student_activities as $activity){
-            if($activity->time_finished >= $start && $activity->time_finished <= $end){
-                $CSV[$count] = array(
+$groups = $DB->get_records('groups', array('courseid' => $cid));
+foreach ($groups as $group) {
+    // Get each member of the group.
+    $students = groups_get_members($group->id, $fields = 'u.*', $sort = 'lastname ASC');
+    foreach ($students as $student) {
+        // Get each members past contributions and add them to an array.
+        $studentactivities = $DB->get_records('assignment_table', array('activity_student' => $student->id));
+        foreach ($studentactivities as $activity) {
+            if ($activity->time_finished >= $start && $activity->time_finished <= $end) {
+                $csv[$count] = array(
                     $activity->activity_student,
                     $activity->activity_id,
                     $activity->module_name,
@@ -56,10 +69,10 @@ foreach($groups as $group){
                 $count++;
             }
         }
-        $student_quizzes = $DB->get_records('quiz_table', array('student_id'=> $student->id));
-        foreach($student_quizzes as $quiz){
-            if($quiz->time_finished >= $start && $quiz->time_finished <= $end){
-                $CSV[$count] = array(
+        $studentquizzes = $DB->get_records('quiz_table', array('student_id' => $student->id));
+        foreach ($studentquizzes as $quiz) {
+            if ($quiz->time_finished >= $start && $quiz->time_finished <= $end) {
+                $csv[$count] = array(
                     $quiz->student_id,
                     $quiz->quiz_id,
                     $quiz->module_name,
@@ -67,7 +80,7 @@ foreach($groups as $group){
                     $quiz->time_finished,
                     $quiz->days_early,
                     $quiz->attempts,
-                    round($quiz->days_spaced,2),
+                    round($quiz->days_spaced, 2),
                     'null',
                     'null',
                     'null'
@@ -75,10 +88,10 @@ foreach($groups as $group){
                 $count++;
             }
         }
-        $student_choices = $DB->get_records('choice_table', array('student_id'=> $student->id));
-        foreach($student_choices as $choice){
-            if($choice->time_finished >= $start && $choice->time_finished <= $end){
-                $CSV[$count] = array(
+        $studentchoices = $DB->get_records('choice_table', array('student_id' => $student->id));
+        foreach ($studentchoices as $choice) {
+            if ($choice->time_finished >= $start && $choice->time_finished <= $end) {
+                $csv[$count] = array(
                     $choice->student_id,
                     $choice->choice_id,
                     $choice->module_name,
@@ -94,10 +107,10 @@ foreach($groups as $group){
                 $count++;
             }
         }
-        $student_forum_posts = $DB->get_records('forum_table', array('student_id'=> $student->id));
-        foreach($student_forum_posts as $post){
-            if($post->time_finished >= $start && $post->time_finished <= $end){
-                $CSV[$count] = array(
+        $studentforumposts = $DB->get_records('forum_table', array('student_id' => $student->id));
+        foreach ($studentforumposts as $post) {
+            if ($post->time_finished >= $start && $post->time_finished <= $end) {
+                $csv[$count] = array(
                     $post->student_id,
                     $post->forum_id,
                     $post->module_name,
@@ -118,11 +131,11 @@ foreach($groups as $group){
 }
 
 global $CFG;
-require_once $CFG->libdir . '/csvlib.class.php';
+require_once($CFG->libdir . '/csvlib.class.php');
 $filename = clean_filename('data');
 $csvexport = new csv_export_writer();
 $csvexport->set_filename($filename);
-foreach ($CSV as $line) {
+foreach ($csv as $line) {
     $csvexport->add_data($line);
 }
 $csvexport->download_file();

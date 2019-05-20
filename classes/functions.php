@@ -1,4 +1,19 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
 /*
  * Author: Erik Fox
  * Date Created: 5/22/18
@@ -7,287 +22,271 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-class block_leaderboard_functions{    
-    public static function get_date_range($courseid){
+class block_leaderboard_functions{
+    public static function get_date_range($courseid) {
         global $DB;
         $sql = "SELECT course.startdate,course.enddate
-                FROM {course} AS course
+                FROM {course} course
                 WHERE course.id = ?;";
 
         $course = $DB->get_record_sql($sql, array($courseid));
-        
+
         $start = $course->startdate;
         $end = $course->enddate;
-        if($end == 0){
-            $end = (int)$start+61516800;
-        }
-        
-        $reset1UT = 0;
-        $reset2UT = 0;
-        
-        $reset1 = get_config('leaderboard','reset1');
-        $reset2 = get_config('leaderboard','reset2');
-        
-
-        if($reset1 != ''  && $reset2 != ''){
-            $reset1UT = strtotime($reset1);
-            $reset2UT = strtotime($reset2);
+        if ($end == 0) {
+            $end = (int)$start + 61516800;
         }
 
-        if(time() < $reset1UT){
-            $end = $reset1UT;
-        }
-        else if(time() >= $reset1UT && time() < $reset2UT){
-            $start = $reset1UT;
-            $end = $reset2UT;
-        } else if(time() >= $reset2) {
-            $start = $reset2UT;
+        $reset1ut = 0;
+        $reset2ut = 0;
+
+        $reset1 = get_config('leaderboard', 'reset1');
+        $reset2 = get_config('leaderboard', 'reset2');
+
+        if ($reset1 != ''  && $reset2 != '') {
+            $reset1ut = strtotime($reset1);
+            $reset2ut = strtotime($reset2);
         }
 
-        $dateRange = new stdClass();
-        $dateRange->start = $start;
-        $dateRange->end = $end;
-        return $dateRange;
+        if (time() < $reset1ut) {
+            $end = $reset1ut;
+        } else if (time() >= $reset1ut && time() < $reset2ut) {
+            $start = $reset1ut;
+            $end = $reset2ut;
+        } else if (time() >= $reset2) {
+            $start = $reset2ut;
+        }
+
+        $daterange = new stdClass();
+        $daterange->start = $start;
+        $daterange->end = $end;
+        return $daterange;
     }
 
-    public static function update_standing($group_data,$current_standing){
+    public static function update_standing($groupdata, $currentstanding) {
         global $DB;
-        //table icon urls
+        // Table icon urls.
         $upurl = new moodle_url('/blocks/leaderboard/pix/up.svg');
         $downurl = new moodle_url('/blocks/leaderboard/pix/down.svg');
         $stayurl = new moodle_url('/blocks/leaderboard/pix/stay.svg');
-        
-        $move = substr($group_data->past_standing, -2,1); //0 for up, 1 for down, 2 for stay
-        $initialPosition = substr($group_data->past_standing, -1);
-        $past_standing = substr($group_data->past_standing, 0, -2);
+
+        $move = substr($groupdata->paststanding, -2, 1); // 0 for up, 1 for down, 2 for stay.
+        $initialposition = substr($groupdata->paststanding, -1);
+        $paststanding = substr($groupdata->paststanding, 0, -2);
         $symbol = " ";
 
-        if ($group_data->time_updated < floor((time()-7*60)/86400)){
-            $initialPosition = $past_standing;
+        if ($groupdata->time_updated < floor((time() - 7 * 60) / 86400)) {
+            $initialposition = $paststanding;
         }
-        if($past_standing > $current_standing){
+        if ($paststanding > $currentstanding) {
             $symbol = '<img src='.$upurl.'>';
             $move = 0;
-        } else if ($past_standing < $current_standing) {
+        } else if ($paststanding < $currentstanding) {
             $symbol = '<img src='.$downurl.'>';
             $move = 1;
-        } else if ($initialPosition == $past_standing) {
+        } else if ($initialposition == $paststanding) {
             $symbol = '<img src='.$stayurl.'>';
             $move = 2;
         } else {
-            if ($move == 0){
+            if ($move == 0) {
                 $symbol = '<img src='.$upurl.'>';
-            }
-            else if ($move == 1){
+            } else if ($move == 1) {
                 $symbol = '<img src='.$downurl.'>';
-            }
-            else if ($move == 2){
+            } else if ($move == 2) {
                 $symbol = '<img src='.$stayurl.'>';
             }
         }
-        //update the groups current standing
-        if($group_data->id){
-            $stored_group_data = $DB->get_record('group_data_table', array('group_id'=> $group_data->id), $fields='*', $strictness=IGNORE_MISSING);
-            $stored_group_data->current_standing = (int)($current_standing.$move.$initialPosition);
-            $DB->update_record('group_data_table', $stored_group_data);
+        // Update the groups current standing.
+        if ($groupdata->id) {
+            $storedgroupdata = $DB->get_record('group_data_table',
+                                    array('group_id' => $groupdata->id), $fields = '*', $strictness = IGNORE_MISSING);
+            $storedgroupdata->currentstanding = (int)($currentstanding.$move.$initialposition);
+            $DB->update_record('group_data_table', $storedgroupdata);
         }
 
         return $symbol;
     }
-    public static function get_average_group_size($groups){
-        //determine average group size
-        $num_groups = count($groups);
-        $num_students = 0;
-        if($num_groups > 0){
-            foreach($groups as $group){
-                //get each member of the group
-                $students = groups_get_members($group->id, $fields='u.*', $sort='lastname ASC');
-                $num_students += count($students);
+    public static function get_average_group_size($groups) {
+        // Determine average group size.
+        $numgroups = count($groups);
+        $numstudents = 0;
+        if ($numgroups > 0) {
+            foreach ($groups as $group) {
+                // Get each member of the group.
+                $students = groups_get_members($group->id, $fields = 'u.*', $sort = 'lastname ASC');
+                $numstudents += count($students);
             }
-            $average_group_size = ceil($num_students/$num_groups);
-            return $average_group_size;
+            $averagegroupsize = ceil($numstudents / $numgroups);
+            return $averagegroupsize;
         } else {
             return 0;
         }
     }
 
+    public static function get_group_data($group, $averagegroupsize, $start, $end) {
+        global $DB, $USER;
 
-    //private static function get_student_data($student)
-    public static function get_group_data($group, $average_group_size,$start,$end){
-        global $DB, $USER;;
+        $pastweekpoints = 0;
+        $pasttwoweekspoints = 0;
+        $totalpoints = 0;
+        $isusersgroup = false;
 
-        $past_week_points = 0;
-        $past_two_weeks_points = 0;
-        $total_points = 0;
-        $is_users_group = false;
+        // Add up all of the members points.
+        $students = groups_get_members($group->id, $fields = 'u.*', $sort = 'lastname ASC');
+        $studentsdata = [];
+        foreach ($students as $student) {
+            $points = self::get_points($student, $start, $end);
+            $pastweekpoints += $points->pastweek;
+            $pasttwoweekspoints += $points->pasttwoweeks;
+            $totalpoints += $points->all;
 
-        //add up all of the members points
-        $students = groups_get_members($group->id, $fields='u.*', $sort='lastname ASC');
-        $students_data = [];
-        foreach($students as $student){
-            $points = self::get_points($student,$start,$end);
-            $past_week_points += $points->past_week;
-            $past_two_weeks_points += $points->past_two_weeks;
-            $total_points += $points->all;
+            $studentdata = new stdClass();
+            $studentdata->points = $points->all;
+            $studentdata->history = $points->history;
+            $studentdata->id = $student->id;
+            $studentdata->firstname = $student->firstname;
+            $studentdata->lastname = $student->lastname;
+            $studentsdata[] = $studentdata;
 
-            $student_data = new stdClass();
-            $student_data->points = $points->all;
-            $student_data->history = $points->history;
-            $student_data->id = $student->id;
-            $student_data->firstname = $student->firstname;
-            $student_data->lastname = $student->lastname;
-            $students_data[] = $student_data;
-            
-            //set to true if this student matches the current logged in $USER
-            if($student->id === $USER->id){
-                $is_users_group = true;
+            // Set to true if this student matches the current logged in $USER.
+            if ($student->id === $USER->id) {
+                $isusersgroup = true;
             }
         }
 
-        //if the teams are not equal size make it a fair size
-        $group_size = count($students);
-        $bonus_points = 0;
-        
-        if($group_size != $average_group_size){
-            $bonus_points = $total_points/$group_size * $average_group_size - $total_points;
-            $past_week_points = $past_week_points / $group_size * $average_group_size;
-            $past_two_weeks_points = $past_two_weeks_points / $group_size * $average_group_size;
-            $total_points = $total_points / $group_size * $average_group_size;
-        }
-        //calculate the points per week
-        $points_per_week = $past_week_points;
-        $points_per_two_weeks = $past_two_weeks_points / 2;
+        // If the teams are not equal size make it a fair size.
+        $groupsize = count($students);
+        $bonuspoints = 0;
 
-        //take the one week rate if it is higher to account for slow weeks or fall/spring breaks
-        if($points_per_week > $points_per_two_weeks){
-            $points_per_week = $points_per_week;
+        if ($groupsize != $averagegroupsize) {
+            $bonuspoints = $totalpoints / $groupsize * $averagegroupsize - $totalpoints;
+            $pastweekpoints = $pastweekpoints / $groupsize * $averagegroupsize;
+            $pasttwoweekspoints = $pasttwoweekspoints / $groupsize * $averagegroupsize;
+            $totalpoints = $totalpoints / $groupsize * $averagegroupsize;
+        }
+        // Calculate the points per week.
+        $pointsperweek = $pastweekpoints;
+        $pointspertwoweeks = $pasttwoweekspoints / 2;
+
+        // Take the one week rate if it is higher to account for slow weeks or fall/spring breaks.
+        if ($pointsperweek > $pointspertwoweeks) {
+            $pointsperweek = $pointsperweek;
         } else {
-            $points_per_week = $points_per_two_weeks;
+            $pointsperweek = $pointspertwoweeks;
         }
-        $points_per_week = round($points_per_week);
-        
-        $stored_group_data = $DB->get_record('group_data_table', array('group_id'=> $group->id), $fields='*', $strictness=IGNORE_MISSING);
-        if(!$stored_group_data){
-            $stored_group_data = new stdClass();
-            $stored_group_data->current_standing = 020;
-            $stored_group_data->multiplier = floor((time()-7*60)/86400);
-            $stored_group_data->group_id = $group->id;
-            $DB->insert_record('group_data_table',$stored_group_data);
-        } else if(strlen((string)$stored_group_data->current_standing) < 3){
-            $stored_group_data->current_standing = (int)($stored_group_data->current_standing.'2'.$stored_group_data->current_standing);
-            $stored_group_data->group_id = $group->id;
-            $DB->update_record('group_data_table',$stored_group_data);
+        $pointsperweek = round($pointsperweek);
+
+        $storedgroupdata = $DB->get_record('group_data_table',
+                                array('group_id' => $group->id), $fields = '*', $strictness = IGNORE_MISSING);
+        if (!$storedgroupdata) {
+            $storedgroupdata = new stdClass();
+            $storedgroupdata->current_standing = 020;
+            $storedgroupdata->multiplier = floor((time() - 7 * 60) / 86400);
+            $storedgroupdata->group_id = $group->id;
+            $DB->insert_record('group_data_table', $storedgroupdata);
+        } else if (strlen((string)$storedgroupdata->current_standing) < 3) {
+            $storedgroupdata->current_standing = (int)($storedgroupdata->current_standing.'2'.$storedgroupdata->current_standing);
+            $storedgroupdata->group_id = $group->id;
+            $DB->update_record('group_data_table', $storedgroupdata);
         }
 
-        //load the groups data into an object
-        $group_data = new stdClass();
-        $group_data->name = $group->name;
-        $group_data->id = $group->id;
-        $group_data->past_standing = $stored_group_data->current_standing;
-        $group_data->time_updated = $stored_group_data->multiplier;
-        $group_data->points = $total_points;
-        $group_data->is_users_group = $is_users_group;
-        $group_data->points_per_week = $points_per_week;
-        $group_data->students_data = $students_data;
-        $group_data->bonus_points = $bonus_points;
-        return $group_data;
+        // Load the groups data into an object.
+        $groupdata = new stdClass();
+        $groupdata->name = $group->name;
+        $groupdata->id = $group->id;
+        $groupdata->paststanding = $storedgroupdata->current_standing;
+        $groupdata->time_updated = $storedgroupdata->multiplier;
+        $groupdata->points = $totalpoints;
+        $groupdata->isusersgroup = $isusersgroup;
+        $groupdata->pointsperweek = $pointsperweek;
+        $groupdata->studentsdata = $studentsdata;
+        $groupdata->bonuspoints = $bonuspoints;
+        return $groupdata;
     }
 
-    public static function get_points($student,$start,$end){
+    public static function get_points($student, $start, $end) {
         global $DB;
 
-        //create a new object
+        // Create a new object.
         $points = new stdClass();
         $points->all = 0;
-        $points->past_week = 0;
-        $points->past_two_weeks = 0;
+        $points->pastweek = 0;
+        $points->pasttwoweeks = 0;
         $points->history = [];
-        $student_history = [];
+        $studenthistory = [];
 
+        // Add up student points for all points, past week, past two weeks, and fill student history array.
 
-        //add up student points for all points, past week, past two weeks, and fill student history array
-        $reset = 0;
-        $reset1 = get_config('leaderboard','reset1');
-        $reset2 = get_config('leaderboard','reset2');
-        if($reset1 != ''  && $reset2 != ''){
-            $reset1 = strtotime($reset1);
-            $reset2 = strtotime($reset2);
-        }
-        if(time() >= $reset1 && time() < $reset2){
-            $reset = $reset1;
-        } else if(time() >= $reset2) {
-            $reset = $reset2;
-        }
-
-        //ACTIVITY
+        // ACTIVITY.
         $sql = "SELECT assignment_table.*,assign.duedate
-                FROM {assign_submission} AS assign_submission
-                INNER JOIN {assignment_table} AS assignment_table ON assign_submission.id = assignment_table.activity_id
-                INNER JOIN {assign} AS assign ON assign.id = assignment_table.activity_id
+                FROM {assign_submission} assign_submission
+                INNER JOIN {assignment_table} assignment_table ON assign_submission.id = assignment_table.activity_id
+                INNER JOIN {assign} assign ON assign.id = assignment_table.activity_id
                 WHERE assignment_table.activity_student = ?;";
 
-        $student_activities = $DB->get_records_sql($sql, array($student->id));
-        $points = self::get_module_points($student_activities,$start,$end,$points);
-        
-        //QUIZ
+        $studentactivities = $DB->get_records_sql($sql, array($student->id));
+        $points = self::get_module_points($studentactivities, $start, $end, $points);
+
+        // QUIZ.
         $sql = "SELECT quiz_table.*, quiz.timeclose
-                FROM {quiz_table} AS quiz_table
-                INNER JOIN {quiz} AS quiz ON quiz.id = quiz_table.quiz_id
+                FROM {quiz_table} quiz_table
+                INNER JOIN {quiz} quiz ON quiz.id = quiz_table.quiz_id
                 WHERE quiz_table.student_id = ? AND quiz_table.time_finished IS NOT NULL;";
 
-        $student_quizzes = $DB->get_records_sql($sql, array($student->id));
-        $points = self::get_module_points($student_quizzes,$start,$end,$points);
-        
-        //CHOICE
-        $student_choices = $DB->get_records('choice_table', array('student_id'=> $student->id));
-        $points = self::get_module_points($student_choices,$start,$end,$points);
-        
-        //FORUM
-        $student_forum_posts = $DB->get_records('forum_table', array('student_id'=> $student->id));
-        $points = self::get_module_points($student_forum_posts,$start,$end,$points);
-        
-        $student_history = $points->history;
-        if(count($student_history) > 1){ //only sort if there is something to sort
-            usort($student_history, function ($a, $b) {
+        $studentquizzes = $DB->get_records_sql($sql, array($student->id));
+        $points = self::get_module_points($studentquizzes, $start, $end, $points);
+
+        // CHOICE.
+        $studentchoices = $DB->get_records('choice_table', array('student_id' => $student->id));
+        $points = self::get_module_points($studentchoices, $start, $end, $points);
+
+        // FORUM.
+        $studentforumposts = $DB->get_records('forum_table', array('student_id' => $student->id));
+        $points = self::get_module_points($studentforumposts, $start, $end, $points);
+
+        $studenthistory = $points->history;
+        if (count($studenthistory) > 1) { // Only sort if there is something to sort.
+            usort($studenthistory, function ($a, $b) {
                 return $b->time_finished <=> $a->time_finished;
             });
         }
-        $points->history = $student_history;
+        $points->history = $studenthistory;
 
         return $points;
     }
-    public static function rank_groups($group_data_array){
-        $rank_array = [];
+    public static function rank_groups($groupdataarray) {
+        $rankarray = [];
         $count = 1;
         $position = 1;
-        for($i = 0; $i<count($group_data_array); $i++){ 
+        for ($i = 0; $i < count($groupdataarray); $i++) {
             $position++;
-            $rank_array[$i] = $count;
-            if($i < (count($group_data_array) - 1)){
-                if($group_data_array[$i]->points != $group_data_array[$i+1]->points){   
+            $rankarray[$i] = $count;
+            if ($i < (count($groupdataarray) - 1)) {
+                if ($groupdataarray[$i]->points != $groupdataarray[$i + 1]->points) {
                     $count = $position;
                 }
             }
         }
-        return $rank_array;
+        return $rankarray;
     }
-    public static function get_module_points($list,$start,$end,$points){
+
+    public static function get_module_points($list, $start, $end, $points) {
         $time = time();
-        foreach($list as $activity){
-            $due_date = $activity->time_finished;
-            if(isset($activity->duedate)){
-                $due_date = $activity->duedate;
-            } else if(isset($activity->timeclose)) {
-                $due_date = $activity->timeclose;
+        foreach ($list as $activity) {
+            $duedate = $activity->time_finished;
+            if (isset($activity->duedate)) {
+                $duedate = $activity->duedate;
+            } else if (isset($activity->timeclose)) {
+                $duedate = $activity->timeclose;
             }
 
-            if($time >= $due_date && $due_date >= $start && $due_date <= $end && $activity->module_name != ''){
+            if ($time >= $duedate && $duedate >= $start && $duedate <= $end && $activity->module_name != '') {
                 $points->all += $activity->points_earned;
-                if(($time - $activity->time_finished)/86400 <= 7){
-                    $points->past_week += $activity->points_earned;
+                if (($time - $activity->time_finished) / 86400 <= 7) {
+                    $points->pastweek += $activity->points_earned;
                 }
-                if(($time - $activity->time_finished)/86400 <= 14){
-                    $points->past_two_weeks += $activity->points_earned;
+                if (($time - $activity->time_finished) / 86400 <= 14) {
+                    $points->pasttwoweeks += $activity->points_earned;
                 }
                 $points->history[] = $activity;
             }

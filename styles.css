@@ -3,7 +3,7 @@
  * Date Created: 5/22/18
  * Last Updated: 9/25/18
  */
- 
+
 
  .block_leaderboard table thhead .header{
     font-size: 1em;
@@ -45,7 +45,7 @@ div .a {
 
 div .a.partone {
     display: inline-table;
-    padding-bottom: 0;   
+    padding-bottom: 0;
     border:none;
 }
 
@@ -60,7 +60,7 @@ table.generaltable th.header.c1,
 table.generaltable th.header.c2,
 table.generaltable th.header.c3,
 table.generaltable th.header.c4 {
-    border-bottom: 1px solid rgba(0,0,0,.05) !important; 
+    border-bottom: 1px solid rgba(0,0,0,.05) !important;
 }
 table.generaltable.leaderboardtable {
     width: 100%
@@ -69,7 +69,7 @@ table.generaltable.leaderboardtable {
 table.generaltable td.cell {
     table-layout: fixed;
     font-size: 90%;
-    border: 0 none; 
+    border: 0 none;
 }
 
 .block_leaderboard table tr.rank1,
@@ -101,11 +101,11 @@ table.leaderboardtable tr.rank3 {
     padding-left: 5px;
     padding-right: 5px;
     text-align: center;
-    border-bottom: 1px solid rgba(0,0,0,.05) !important; 
+    border-bottom: 1px solid rgba(0,0,0,.05) !important;
 }
 
 .block_leaderboard table .cell.c0 {
-    font-weight: bold; 
+    font-weight: bold;
 }
 
 .block_leaderboard table .header.c1,
@@ -114,30 +114,30 @@ table.leaderboardtable tr.rank3 {
     padding-left: 5px;
     padding-right: 5px;
     vertical-align: middle;
-    border-bottom: 1px solid rgba(0,0,0,.05) !important; 
+    border-bottom: 1px solid rgba(0,0,0,.05) !important;
 }
 
 .block_leaderboard table .header.c2,
 .block_leaderboard table .cell.c2 {
     width: 50%;
     padding-left: 5px;
-    padding-right: 5px; 
-    border-bottom: 1px solid rgba(0,0,0,.05) !important; 
+    padding-right: 5px;
+    border-bottom: 1px solid rgba(0,0,0,.05) !important;
 }
 
 .block_leaderboard table .header.c3,
 .block_leaderboard table .cell.c3 {
     width: 30%;
     padding-left: 5px;
-    padding-right: 5px; 
-    border-bottom: 1px solid rgba(0,0,0,.05) !important; 
+    padding-right: 5px;
+    border-bottom: 1px solid rgba(0,0,0,.05) !important;
 }
 
 table.leaderboardtable tr.content.this_user,
 table.leaderboardtable tr.collapsible.this_group,
 .block_leaderboard table .this_group {
     border: 3px;
-    font-weight: bold; 
+    font-weight: bold;
 }
 
 table.leaderboardtable tr.collapsible {
@@ -152,26 +152,26 @@ table.leaderboardtable tr.collapsible {
 
 tr.group {
     background-color: rgba(0,0,0,.06) !important;
-    border-bottom: 1px solid rgba(0,0,0,.05) !important; 
+    border-bottom: 1px solid rgba(0,0,0,.05) !important;
 }
 
 tr.content {
     background-color: rgba(0,0,0,.04) !important;
-    border-bottom: 1px solid rgba(0,0,0,.05) !important; 
+    border-bottom: 1px solid rgba(0,0,0,.05) !important;
     visibility: collapse;
     overflow: hidden;
 }
 
 tr.subcontent {
     background-color: rgba(0,0,0,.02) !important;
-    border-bottom: 1px solid rgba(0,0,0,.05) !important; 
+    border-bottom: 1px solid rgba(0,0,0,.05) !important;
     visibility: collapse;
     overflow: hidden;
 }
 
 tr.contentInfo {
     background-color: rgba(0,0,0,.00) !important;
-    border-bottom: 1px solid rgba(0,0,0,.05) !important; 
+    border-bottom: 1px solid rgba(0,0,0,.05) !important;
     visibility: collapse;
     overflow: hidden;
 }
@@ -244,7 +244,7 @@ table.leaderboardtable .header.c4,
 table.leaderboardtable tr.collapsible .cell.c4,
 table.leaderboardtable tr.content .cell.c4,
 table.leaderboardtable tr.subcontent .cell.c4 {
-    width: 30%; 
+    width: 30%;
 }
 
 table.leaderboardtable tr.content td.cell,
