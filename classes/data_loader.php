@@ -14,22 +14,31 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-/*
- * Author: Erik Fox
- * Date Created: 5/22/18
- * Last Updated: 8/21/18
+/**
+ * Downloads all leaderboard data into a csv file.
+ *
+ * @package    blocks_leaderboard
+ * @copyright  2019 Erik Fox
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+defined('MOODLE_INTERNAL') || die();
+
+global $DB, $CFG;
 
 require_once('../../../config.php'); // Specify path to moodle /config.php file.
+require_once($CFG->libdir . '/csvlib.class.php'); // Require csv library for exporting a csv file.
 require_login(); // Require valid moodle login.  Will redirect to login page if not logged in.
+
+// Get required parameters from the url.
 $cid = required_param('id', PARAM_INT);
 $start = required_param('start', PARAM_RAW);
 $end = required_param('end', PARAM_RAW);
 
-$url = new moodle_url('/blocks/leaderboard/classes/data_loader.php', array('id' => $cid));
+// Set the url for this page.
+$url = new moodle_url('/blocks/leaderboard/classes/data_loader.php', array('id' => $cid, 'start' => $start, 'end' => $end));
 $PAGE->set_url($url);
 
-global $DB, $COURSE;
+// The row for all column names in the csv.
 $csv[0] = array(
     'student_id',
     'module_id',
@@ -43,7 +52,9 @@ $csv[0] = array(
     'post_id',
     'is_response'
 );
+
 $count = 1;
+// Get all groups from the course.
 $groups = $DB->get_records('groups', array('courseid' => $cid));
 foreach ($groups as $group) {
     // Get each member of the group.
@@ -130,13 +141,16 @@ foreach ($groups as $group) {
     }
 }
 
-global $CFG;
-require_once($CFG->libdir . '/csvlib.class.php');
+// Create a new file.
 $filename = clean_filename('data');
 $csvexport = new csv_export_writer();
 $csvexport->set_filename($filename);
+
+// Add data to the file.
 foreach ($csv as $line) {
     $csvexport->add_data($line);
 }
+
+// Download the file.
 $csvexport->download_file();
 die;

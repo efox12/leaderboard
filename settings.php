@@ -40,13 +40,13 @@ for ($x = 5; $x >= 1; $x--) {
     }
 
     $settings->add(new admin_setting_configtext(
-        'leaderboard/assignmnetpoints'.$x,
+        'leaderboard/assignmentpoints'.$x,
         get_string('points_earned', 'block_leaderboard'),
         '<br/>',
         $x * 5
     ));
-    if (get_config('leaderboard', 'assignmnetpoints'.$x) === '') {
-        set_config('assignmnetpoints'.$x, $x * 5, 'leaderboard');
+    if (get_config('leaderboard', 'assignmentpoints'.$x) === '') {
+        set_config('assignmentpoints'.$x, $x * 5, 'leaderboard');
     }
 }
 

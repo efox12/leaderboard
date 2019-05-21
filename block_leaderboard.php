@@ -14,26 +14,42 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-/*
- * Author: Erik Fox
- * Date Created: 5/22/18
- * Last Updated: 12/29/18
+/**
+ * Base file for leaderboard block.
+ *
+ * @package    blocks_leaderboard
+ * @copyright  2019 Erik Fox
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 defined('MOODLE_INTERNAL') || die;
 
 class block_leaderboard extends block_base {
 
+    /**
+     * Init.
+     *
+     * @return void
+     */
     public function init() {
         $this->title = get_string('leaderboard', 'block_leaderboard');
     }
     // The PHP tag and the curly bracket for the class definition
     // will only be closed after there is another function added in the next section.
 
+    /**
+     * The plugin has a settings.php file.
+     *
+     * @return boolean True.
+     */
     public function has_config() {
         return true;
     }
 
+    /**
+     * Get content.
+     *
+     * @return stdClass
+     */
     public function get_content() {
 
         if ($this->content !== null) {
@@ -48,6 +64,7 @@ class block_leaderboard extends block_base {
         $this->content->text = $renderer->leaderboard_block($this->page->course);
 
         /*
+        // If the point values for assignments or quizzes get lost somehow, uncomment this code.
         $this->fix_assignments();
         $this->fix_quizzes();
         */
@@ -55,19 +72,33 @@ class block_leaderboard extends block_base {
         return $this->content;
     }
 
+    /**
+     * Hide the header.
+     *
+     * @return boolean True
+     */
     public function hide_header() {
         return true;
     }
 
+    /**
+     * Add special html attributes.
+     *
+     * @return stdClass
+     */
     public function html_attributes() {
         $attributes = parent::html_attributes(); // Get default values.
         $attributes['class'] .= ' block_leaderboard'; // Append our class to class attribute.
         return $attributes;
     }
 
+    /**
+     * Updates points values for assignments retrospectively.
+     *
+     * @return void
+     */
     public function fix_assignments() {
         /*
-        updates points values for assignments retrospectively
         Uncomment this if some assignments were not recorded for any reason.
         This was initially used because the first few assignments did not have
         due dates so no points were recorded.
@@ -118,6 +149,12 @@ class block_leaderboard extends block_base {
             }
         }*/
     }
+
+    /**
+     * Updates points values for quizzes retrospectively.
+     *
+     * @return void
+     */
     public function fix_quizzes() {
         /*global $DB;
         $groups = $DB->get_records('groups');

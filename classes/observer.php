@@ -21,10 +21,24 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
+
+/**
+ * Block Leaderboard observer class.
+ *
+ * @package    block_leaderboard
+ */
 class block_leaderboard_observer {
-    // ASSIGNMENT EVENTS.
+
+    /**
+     * Add points when an assignment is submitted early.
+     *
+     * @param \mod_assign\event\assessable_submitted $event The event.
+     * @return void
+     */
     public static function assignment_submitted_handler(\mod_assign\event\assessable_submitted $event) {
         global $DB, $USER;
+        $functions = new block_leaderboard_functions;
+
         if (user_has_role_assignment($USER->id, 5)) {
             $eventdata = new \stdClass();
 
@@ -41,10 +55,10 @@ class block_leaderboard_observer {
 
             // 86400 seconds per day in unix time.
             // The function intdiv() is integer divinsion for PHP '/' is foating point division.
-            $daysbeforesubmission = ($assignmentdata->duedate - $event->timecreated) / 86400;
+            $daysbeforesubmission = intdiv(($assignmentdata->duedate - $event->timecreated), 86400);
 
             // Set the point value.
-            $points = get_early_submission_points($daysbeforesubmission, 'assignment');
+            $points = $functions->get_early_submission_points($daysbeforesubmission, 'assignment');
             $eventdata->points_earned = $points;
             $eventdata->activity_student = $assignmentdata->userid;
             $eventdata->activity_id = $eventid;
@@ -52,17 +66,13 @@ class block_leaderboard_observer {
             $eventdata->module_name = $assignmentdata->name;
             $eventdata->days_early = $daysbeforesubmission;
 
-            $activities = $DB->get_records('assignment_table',
-                            array('activity_id' => $eventid, 'activity_student' => $assignmentdata->userid));
+            $activity = $DB->get_record('assignment_table',
+                            array('activity_id' => $eventid, 'activity_student' => $assignmentdata->userid),
+                            $fields = '*', $strictness = IGNORE_MISSING);
+
             // Insert the new data into the databese if new, update if old.
-            if ($activities) {
-                // The id of the object is required for update_record().
-                foreach ($activities as $activity) {
-                    if ($activity->activity_id == $eventid) {
-                        $eventdata->id = $activity->id;
-                        break;
-                    }
-                }
+            if ($activity) {
+                $eventdata->id = $activity->id;
                 $DB->update_record('assignment_table', $eventdata);
                 return;
             }
@@ -71,16 +81,19 @@ class block_leaderboard_observer {
         }
     }
 
-    // QUIZ EVENTS.
-    // When officially starting the quiz.
-    // Use this to add the starting time of the quiz to the database and create questions data table.
+    /**
+     * Create a new table when a quiz is started.
+     *
+     * @param \mod_quiz\event\attempt_started $event The event.
+     * @return void
+     */
     public static function quiz_started_handler(\mod_quiz\event\attempt_started $event) {
         global $DB, $USER;
         if (user_has_role_assignment($USER->id, 5)) {
             // The id corresponding to the users current attempt.
             $currentid = $event->objectid;
 
-            // The data of the submission.
+            // Get the data of the quiz submission.
             $sql = "SELECT quiz.*
                 FROM {quiz_attempts} quiz_attempts
                 INNER JOIN {quiz} quiz ON quiz.id = quiz_attempts.quiz
@@ -88,13 +101,13 @@ class block_leaderboard_observer {
 
             $quiz = $DB->get_record_sql($sql, array($currentid));
 
-            $sql = "SELECT quiz.*
-                FROM {quiz_attempts} quiz_attempts
-                INNER JOIN {quiz} quiz ON quiz.id = quiz_attempts.quiz
-                WHERE quiz_attempts.id = ?;";
+            // See if data for this quiz and student have already been submitted.
+            $quiztable = $DB->get_record('quiz_table',
+                array('quiz_id' => $quiz->id, 'student_id' => $event->userid),
+                $fields = '*',
+                $strictness = IGNORE_MISSING);
 
-            $thisquiz = $DB->get_record_sql($sql, array($currentid));
-            if (!$thisquiz) {
+            if (!$quiztable) {
                 // Create a new quiz.
                 $quizdata = new \stdClass();
                 $quizdata->time_started = $event->timecreated;
@@ -109,10 +122,16 @@ class block_leaderboard_observer {
         }
     }
 
-    // When clicking the confirmation button to submit the quiz
-    // use this to retroactively determine points.
+    /**
+     * Add points when a student clicks the confirmation button to submit a quiz.
+     *
+     * @param \mod_quiz\event\attempt_submitted $event The event.
+     * @return void
+     */
     public static function quiz_submitted_handler(\mod_quiz\event\attempt_submitted $event) {
         global $DB, $USER;
+        $functions = new block_leaderboard_functions;
+
         if (user_has_role_assignment($USER->id, 5)) {
             // The users current attempt.
             $currentid = $event->objectid;
@@ -125,46 +144,22 @@ class block_leaderboard_observer {
 
             $thisquiz = $DB->get_record_sql($sql, array($currentid));
             $duedate = $thisquiz->timeclose;
+            echo("<script>console.log('EVENT1: ".json_encode($thisquiz)."');</script>");
 
             // The table for the leader board block.
-            $quiztable = $quiztable = $DB->get_record('quiz_table',
-                                    array('quiz_id' => $thisquiz->id, 'student_id' => $event->userid),
-                                    $fields = '*',
-                                    $strictness = IGNORE_MISSING);
+            $quiztable = $DB->get_record('quiz_table',
+                array('quiz_id' => $thisquiz->id, 'student_id' => $event->userid),
+                $fields = '*',
+                $strictness = IGNORE_MISSING);
 
             // Add a quiz to the database if one doesn't already exist.
-            if ($quiztable === false) {
-                $quiztable = new \stdClass();
-                $quiztable->time_started = $event->timecreated;
-                $quiztable->quiz_id = $thisquiz->id;
-                $quiztable->student_id = $event->userid;
-                $quiztable->attempts = 0;
-                $quiztable->days_early = 0;
-                $quiztable->days_spaced = 0;
-                $quiztable->time_finished = $event->timecreated;
-                $quiztable->module_name = $thisquiz->name;
-                $DB->insert_record('quiz_table', $quiztable);
-                $quiztable = $quiztable = $DB->get_record('quiz_table',
-                                    array('quiz_id' => $thisquiz->id, 'student_id' => $event->userid),
-                                    $fields = '*',
-                                    $strictness = IGNORE_MISSING);
-            }
-
-            if ($quiztable->attempts == 0) { // If this is the first attempt of the quiz.
-                // EARLY FINISH.
-                // Assign points for finishing early.
-                $daysbeforesubmission = ($duedate - $event->timecreated) / 86400;
-
-                $quiztable->days_early = $daysbeforesubmission;
+            if ($quiztable->time_finished === null) {
+                // ensure that a full day has passed with floor function to stop from rounding up.
+                $daysbeforesubmission = intdiv(($duedate - $event->timecreated), 86400);
                 if (abs($daysbeforesubmission) > 50) { // Quizzes without duedates will produce a value like -17788.
-                    $quiztable->days_early = 0;
                     $daysbeforesubmission = 0;
                 }
 
-                $pointsearned = get_early_submission_points($daysbeforesubmission, 'quiz');
-                $quiztable->points_earned = $pointsearned;
-
-                // QUIZ SPACING.
                 // Gets the most recent completed quiz submission time.
                 $pastquizzes = $DB->get_records('quiz_table', array('student_id' => $event->userid));
                 $recenttimefinished = 0;
@@ -173,77 +168,59 @@ class block_leaderboard_observer {
                         $recenttimefinished = $pastquiz->time_finished;
                     }
                 }
-                // Bonus points get awarded for spacing out quizzes instead of cramming (only judges the 2 most recent quizzes).
-                $quizspacing = ($quiztable->time_started - $recenttimefinished) / (float)86400;
                 // Make sure that days spaced doesn't go above a maximum of 5 days.
-                $quiztable->days_spaced = min($quizspacing, 5.0);
+                $quizspacing = min(($quiztable->time_started - $recenttimefinished) / (float)86400, 5.0);
 
-                // Bonus points get awarded for spacing out quizzes instead of cramming (only judges the 2 most recent quizzes).
-                $spacingpoints = get_quiz_spacing_points($quizspacing);
-                $quiztable->points_earned += $spacingpoints;
-
+                // Create data for table.
+                $quiztable->days_early = $daysbeforesubmission;
+                $quiztable->days_spaced = $quizspacing;
+                $quiztable->time_finished = $event->timecreated;
+                echo("<script>console.log('EVENT0: ".json_encode($quiztable)."');</script>");
             }
+
+            // Assign points for finishing early.
+            echo("<script>console.log('EVENT1: ".json_encode($quiztable)."');</script>");
+            $pointsearned = $functions->get_early_submission_points($quiztable->days_early, 'quiz');
+            echo("<script>console.log('EVENT2: ".json_encode($pointsearned)."');</script>");
+            $quiztable->points_earned = $pointsearned;
+            echo("<script>console.log('EVENT3: ".json_encode($quiztable)."');</script>");
+
+            // Bonus points get awarded for spacing out quizzes instead of cramming (only judges the 2 most recent quizzes).
+            $spacingpoints = $functions->get_quiz_spacing_points($quiztable->days_spaced);
+            $quiztable->points_earned += $spacingpoints;
+
             // Bonus points for attempting quiz again.
-            $multipleattemptpoints = get_quiz_attempts_points($quiztable->attempts);
-            $quiztable->points_earned += $multipleattemptpoints;
             $quiztable->attempts += 1;
+            $multipleattemptpoints = $functions->get_quiz_attempts_points($quiztable->attempts);
+            echo("<script>console.log('EVENT4: ".$multipleattemptpoints."');</script>");
+            $quiztable->points_earned += $multipleattemptpoints;
+            echo("<script>console.log('EVENT5: ".json_encode($quiztable)."');</script>");
+
             $DB->update_record('quiz_table', $quiztable);
+            echo("<script>console.log('EVENT5: ".json_encode($DB->get_records('quiz_table', array('student_id' => $event->userid)))."');</script>");
         }
     }
 
-    public static function get_early_submission_points($daysbeforesubmission, $type) {
-        for ($x = 1; $x <= 5; $x++) {
-            $currenttime = get_config('leaderboard', $type.'time'.$x);
-            $nexttime = INF;
-            if ($x < 5) {
-                $nexttime = get_config('leaderboard', $type.'time'.($x + 1));
-            }
-            if ($daysbeforesubmission >= $currenttime && $daysbeforesubmission < $nexttime) {
-                return get_config('leaderboard', $type.'points'.$x);
-            }
-        }
-        return 0;
-    }
-
-    public static function get_quiz_spacing_points($quizspacing) {
-        for ($x = 1; $x <= 3; $x++) {
-            $currentspacing = get_config('leaderboard', 'quizspacing'.$x);
-            $nextspacing = INF;
-            if ($x < 3) {
-                $nextspacing = get_config('leaderboard', 'quizspacing'.($x + 1));
-            }
-            if ($quizspacing >= $currentspacing && $quizspacing < $nextspacing) {
-                return get_config('leaderboard', 'quizspacingpoints'.$x);
-            }
-        }
-        return 0;
-    }
-
-    public static function get_quiz_attempts_points($attempts) {
-        $maxattempts = get_config('leaderboard', 'quizattempts');
-        if ($attempts <= $maxattempts) {
-            return get_config('leaderboard', 'quizattemptspoints');
-        }
-        return 0;
-    }
-
-    // Unsure.
-    public static function quiz_overdue_handler(\mod_quiz\event\attempt_becameoverdue $event) {
-        echo("<script>console.log('EVENT: ".json_encode($event->get_data())."');</script>");
-    }
-
-    // CHOICE EVENTS.
+    /**
+     * Add points when a student contributes to a choice module.
+     *
+     * @param \mod_choice\event\answer_created $event The event.
+     * @return void
+     */
     public static function choice_submitted_handler(\mod_choice\event\answer_created $event) {
         global $DB, $USER;
         if (user_has_role_assignment($USER->id, 5)) {
+            // Get data on this choice and the current answers
             $sql = "SELECT choice_answers.id, choice.name
                 FROM {choice_answers} choice_answers
                 INNER JOIN {choice} choice ON choice.id = choice_answers.choiceid
                 WHERE choice_answers.id = ?;";
 
             $choice = $DB->get_record_sql($sql, array($event->objectid));
+
             if ($DB->get_record('choice_table', array('choice_id' => $choice->id, 'student_id' => $event->userid),
                     $fields = '*', $strictness = IGNORE_MISSING) == false) { // If new choice then add to database.
+                // Create data for table.
                 $choicedata = new \stdClass();
                 $choicedata->student_id = $event->userid;
                 $choicedata->choice_id = $choice->id;
@@ -256,10 +233,16 @@ class block_leaderboard_observer {
         }
     }
 
-    // FORUM EVENTS.
+    /**
+     * Add points when a student responds to a discussion.
+     *
+     * @param \mod_moodleoverflow\event\post_created $event The event.
+     * @return void
+     */
     public static function forum_posted_handler(\mod_moodleoverflow\event\post_created $event) {
         global $DB, $USER;
         if (user_has_role_assignment($USER->id, 5)) {
+            // Create data for table.
             $forumdata = new \stdClass();
             $forumdata->student_id = $event->userid;
             $forumdata->forum_id = $event->other{'moodleoverflowid'};
@@ -274,11 +257,19 @@ class block_leaderboard_observer {
         }
     }
 
+    /**
+     * Add points when a student creates a discussion.
+     *
+     * @param \mod_moodleoverflow\event\discussion_created $event The event.
+     * @return void
+     */
     public static function discussion_created_handler(\mod_moodleoverflow\event\discussion_created $event) {
         global $DB, $USER;
         if (user_has_role_assignment($USER->id, 5)) {
+            // Get information on the this discussion.
             $discussion = $DB->get_record('moodleoverflow_discussions',
                             array('id' => $event->objectid), $fields = '*', $strictness = IGNORE_MISSING);
+            // Create data for table
             $forumdata = new \stdClass();
             $forumdata->student_id = $event->userid;
             $forumdata->forum_id = $discussion->moodleoverflow;

@@ -113,11 +113,11 @@ $string['q1'] = '<strong>Q1</strong>: What are ways that we can earn points?';
 $string['a1'] = '<strong>A1</strong>: Your team can earn points by practicing good study habits. Turning in assignments and completing quizzes early will award the most points. Other ways of earning points include spacing out quizzes instead of cramming them into one, retaking quizzes for extra practice, posting and responding to questions on the forum, and even rating your understanding in the choice module will all award points.';
 $string['q2'] = '<strong>Q2</strong>: What are the exact point breakdowns?';
 $string['a2'] = '<strong>A2</strong>: Here is a breakdown of the points before multipliers:';
-$string['a22'] = 'Submit Assignments <strong>'.get_config('leaderboard', 'assignmenttime5').'</strong> days early to earn <strong>'.get_config('leaderboard', 'assignmnetpoints5').'</strong> points,
-                    <br/>Submit Assignments <strong>'.get_config('leaderboard', 'assignmenttime4').'</strong> days early to earn <strong>'.get_config('leaderboard', 'assignmnetpoints4').'</strong> points,
-                    <br/>Submit Assignments <strong>'.get_config('leaderboard', 'assignmenttime3').'</strong> days early to earn <strong>'.get_config('leaderboard', 'assignmnetpoints3').'</strong> points,
-                    <br/>Submit Assignments <strong>'.get_config('leaderboard', 'assignmenttime2').'</strong> days early to earn <strong>'.get_config('leaderboard', 'assignmnetpoints2').'</strong> points,
-                    <br/>Submit Assignments <strong>'.get_config('leaderboard', 'assignmenttime1').'</strong> day early to earn <strong>'.get_config('leaderboard', 'assignmnetpoints1').'</strong> points.
+$string['a22'] = 'Submit Assignments <strong>'.get_config('leaderboard', 'assignmenttime5').'</strong> days early to earn <strong>'.get_config('leaderboard', 'assignmentpoints5').'</strong> points,
+                    <br/>Submit Assignments <strong>'.get_config('leaderboard', 'assignmenttime4').'</strong> days early to earn <strong>'.get_config('leaderboard', 'assignmentpoints4').'</strong> points,
+                    <br/>Submit Assignments <strong>'.get_config('leaderboard', 'assignmenttime3').'</strong> days early to earn <strong>'.get_config('leaderboard', 'assignmentpoints3').'</strong> points,
+                    <br/>Submit Assignments <strong>'.get_config('leaderboard', 'assignmenttime2').'</strong> days early to earn <strong>'.get_config('leaderboard', 'assignmentpoints2').'</strong> points,
+                    <br/>Submit Assignments <strong>'.get_config('leaderboard', 'assignmenttime1').'</strong> day early to earn <strong>'.get_config('leaderboard', 'assignmentpoints1').'</strong> points.
                     <br/><br/>Submit Quizzes <strong>'.get_config('leaderboard', 'quiztime5').'</strong> days early to earn <strong>'.get_config('leaderboard', 'quizpoints5').'</strong> points,
                     <br/>Submit Quizzes <strong>'.get_config('leaderboard', 'quiztime4').'</strong> days early to earn <strong>'.get_config('leaderboard', 'quizpoints4').'</strong> points,
                     <br/>Submit Quizzes <strong>'.get_config('leaderboard', 'quiztime3').'</strong> days early to earn <strong>'.get_config('leaderboard', 'quizpoints3').'</strong> points,

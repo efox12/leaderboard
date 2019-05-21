@@ -23,6 +23,66 @@
 defined('MOODLE_INTERNAL') || die();
 
 class block_leaderboard_functions{
+    /**
+     * Gets the number of points earned given a number of days submitted early.
+     *
+     * @param int $daysbeforesubmission The number days submitted early.
+     * @param string $type Either 'assignment' or 'quiz' indicating which point scale to look at.
+     * @return int The number of points earned.
+     */
+    public static function get_early_submission_points($daysbeforesubmission, $type) {
+        for ($x = 1; $x <= 5; $x++) {
+            $currenttime = get_config('leaderboard', $type.'time'.$x);
+            $nexttime = INF;
+            if ($x < 5) {
+                $nexttime = get_config('leaderboard', $type.'time'.($x + 1));
+            }
+            if ($daysbeforesubmission >= $currenttime && $daysbeforesubmission < $nexttime) {
+                return get_config('leaderboard', $type.'points'.$x);
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * Gets the number of points earned given a number of quiz attempts.
+     *
+     * @param int $attempts The number of attempts.
+     * @return int The number of points earned.
+     */
+    public static function get_quiz_attempts_points($attempts) {
+        $maxattempts = get_config('leaderboard', 'quizattempts');
+        if ($attempts == 0) {
+            return 0;
+        } else if ($attempts <= $maxattempts) {
+            return get_config('leaderboard', 'quizattemptspoints') * ($attempts - 1);
+        }
+        return get_config('leaderboard', 'quizattemptspoints') * ($maxattempts);
+    }
+    /**
+     * Gets the number of points earned given an amount of time spaced since the last quiz.
+     *
+     * @param float $quizspacing The amount of time spaced in days.
+     * @return int The number of points earned.
+     */
+    public static function get_quiz_spacing_points($quizspacing) {
+        for ($x = 1; $x <= 3; $x++) {
+            $currentspacing = get_config('leaderboard', 'quizspacing'.$x);
+            $nextspacing = INF;
+            if ($x < 3) {
+                $nextspacing = get_config('leaderboard', 'quizspacing'.($x + 1));
+            }
+            if ($quizspacing >= $currentspacing && $quizspacing < $nextspacing) {
+                return get_config('leaderboard', 'quizspacingpoints'.$x);
+            }
+        }
+        return 0;
+    }
+    /**
+     * Gets a the current range of dates the leaderboard will look at and indicates the range with a start and end in unix time.
+     * @param int $coursid The id of the current course.
+     * @return stdClass An object with a range indicated by integer values 'start' and 'end'.
+     */
     public static function get_date_range($courseid) {
         global $DB;
         $sql = "SELECT course.startdate,course.enddate
@@ -63,6 +123,12 @@ class block_leaderboard_functions{
         return $daterange;
     }
 
+    /**
+     * Updates a groups standing in the leaderboard indicating whether they moved up, down, or stayed.
+     * @param stdClass $groupdata Various data about the group
+     * @param int $currentstanding The groups current standing.
+     * @return string An html element with the image for the appropriate icon to display.
+     */
     public static function update_standing($groupdata, $currentstanding) {
         global $DB;
         // Table icon urls.
@@ -106,6 +172,12 @@ class block_leaderboard_functions{
 
         return $symbol;
     }
+
+    /**
+     * Calculates the average group size based on a list of groups.
+     * @param array $groups A list of groups.
+     * @return int The average number of students per group.
+     */
     public static function get_average_group_size($groups) {
         // Determine average group size.
         $numgroups = count($groups);
@@ -123,6 +195,14 @@ class block_leaderboard_functions{
         }
     }
 
+    /**
+     * Gets all of the data about a group of students during a specific date range.
+     * @param stdClass $group A group of students.
+     * @param int $averagegroupsize The average number of students per group.
+     * @param int $start A unit timestamp.
+     * @param int $end A unix timestamp.
+     * @return stdClass All important data about a group of students.
+     */
     public static function get_group_data($group, $averagegroupsize, $start, $end) {
         global $DB, $USER;
 
@@ -204,6 +284,13 @@ class block_leaderboard_functions{
         return $groupdata;
     }
 
+    /**
+     * Gets all of the points for a student during a specific date range.
+     * @param stdClass $student A student and it's data.
+     * @param int $start A unix timestamp.
+     * @param int $end A unix timestamp.
+     * @return stdClass An object with data about points earned by the student.
+     */
     public static function get_points($student, $start, $end) {
         global $DB;
 
@@ -218,6 +305,7 @@ class block_leaderboard_functions{
         // Add up student points for all points, past week, past two weeks, and fill student history array.
 
         // ACTIVITY.
+        echo("<script>console.log('STUDENT ID: ".json_encode($student->id)."');</script>");
         $sql = "SELECT assignment_table.*,assign.duedate
                 FROM {assign_submission} assign_submission
                 INNER JOIN {assignment_table} assignment_table ON assign_submission.id = assignment_table.activity_id
@@ -225,7 +313,11 @@ class block_leaderboard_functions{
                 WHERE assignment_table.activity_student = ?;";
 
         $studentactivities = $DB->get_records_sql($sql, array($student->id));
-        $points = self::get_module_points($studentactivities, $start, $end, $points);
+        $points_data = self::get_module_points($studentactivities, $start, $end);
+        $points->all += $points_data->all;
+        $points->pastweek += $points_data->pastweek;
+        $points->pasttwoweeks += $points_data->pasttwoweeks;
+        $points->history = $points_data->history;
 
         // QUIZ.
         $sql = "SELECT quiz_table.*, quiz.timeclose
@@ -234,15 +326,27 @@ class block_leaderboard_functions{
                 WHERE quiz_table.student_id = ? AND quiz_table.time_finished IS NOT NULL;";
 
         $studentquizzes = $DB->get_records_sql($sql, array($student->id));
-        $points = self::get_module_points($studentquizzes, $start, $end, $points);
+        $points_data = self::get_module_points($studentquizzes, $start, $end);
+        $points->all += $points_data->all;
+        $points->pastweek += $points_data->pastweek;
+        $points->pasttwoweeks += $points_data->pasttwoweeks;
+        $points->history += array_merge($points->history, $points_data->history);
 
         // CHOICE.
         $studentchoices = $DB->get_records('choice_table', array('student_id' => $student->id));
-        $points = self::get_module_points($studentchoices, $start, $end, $points);
+        $points_data = self::get_module_points($studentchoices, $start, $end);
+        $points->all += $points_data->all;
+        $points->pastweek += $points_data->pastweek;
+        $points->pasttwoweeks += $points_data->pasttwoweeks;
+        $points->history += array_merge($points->history, $points_data->history);
 
         // FORUM.
         $studentforumposts = $DB->get_records('forum_table', array('student_id' => $student->id));
-        $points = self::get_module_points($studentforumposts, $start, $end, $points);
+        $points_data = self::get_module_points($studentforumposts, $start, $end);
+        $points->all += $points_data->all;
+        $points->pastweek += $points_data->pastweek;
+        $points->pasttwoweeks += $points_data->pasttwoweeks;
+        $points->history = array_merge($points->history, $points_data->history);
 
         $studenthistory = $points->history;
         if (count($studenthistory) > 1) { // Only sort if there is something to sort.
@@ -251,9 +355,14 @@ class block_leaderboard_functions{
             });
         }
         $points->history = $studenthistory;
-
         return $points;
     }
+
+    /**
+     * Rankes the sorted groups accounting for ties.
+     * @param array $groupdataarray An array of group data sorted from most to least points earned.
+     * @return array An array of ranks corresponding by index to each group in $groupdataarray.
+     */
     public static function rank_groups($groupdataarray) {
         $rankarray = [];
         $count = 1;
@@ -270,7 +379,20 @@ class block_leaderboard_functions{
         return $rankarray;
     }
 
-    public static function get_module_points($list, $start, $end, $points) {
+    /**
+     * Gets information on all points for a specific module given a date range.
+     * @param array $coursid The id of the current course.
+     * @param int $start A unix timestamp.
+     * @param int $end A unix timestamp.
+     * @param stdClass $points An object containing running data about points information from other sources
+     * @return stdClass An object with all points information from this source added on to it.
+     */
+    public static function get_module_points($list, $start, $end) {
+        $points = new stdClass;
+        $points->all = 0;
+        $points->pastweek = 0;
+        $points->pasttwoweeks = 0;
+        $points->history = [];
         $time = time();
         foreach ($list as $activity) {
             $duedate = $activity->time_finished;
@@ -279,8 +401,8 @@ class block_leaderboard_functions{
             } else if (isset($activity->timeclose)) {
                 $duedate = $activity->timeclose;
             }
-
-            if ($time >= $duedate && $duedate >= $start && $duedate <= $end && $activity->module_name != '') {
+            // $time >= $duedate && $duedate >= $start && $duedate <= $end && $activity->module_name != ''
+            if ($duedate >= $start && $duedate <= $end && $activity->module_name != '') {
                 $points->all += $activity->points_earned;
                 if (($time - $activity->time_finished) / 86400 <= 7) {
                     $points->pastweek += $activity->points_earned;
@@ -294,4 +416,3 @@ class block_leaderboard_functions{
         return $points;
     }
 }
-

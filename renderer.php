@@ -23,17 +23,15 @@
 defined('MOODLE_INTERNAL') || die;
 
 class block_leaderboard_renderer extends plugin_renderer_base {
+    /**
+     * Gets the content to be displayed in the block.
+     *
+     * @return string The content to be displayed in the block.
+     */
     public function leaderboard_block() {
-        global $DB, $USER, $OUTPUT, $COURSE;
+        global $DB, $OUTPUT, $COURSE;
 
-        // Determine if the curent user is a student.
-        $isstudent = false;
-        if (user_has_role_assignment($USER->id, 5)) {
-            $isstudent = true;
-        }
-
-        // PREPARE DATA FOR TABLE.
-
+        // Prepare the data for the table.
         $courseid  = $COURSE->id;
         $functions = new block_leaderboard_functions;
         $daterange = $functions->get_date_range($courseid);
@@ -60,8 +58,6 @@ class block_leaderboard_renderer extends plugin_renderer_base {
                 });
             }
 
-            // CREATE TABLE.
-
             // Create an html table.
             $table = new html_table();
             // Fill the html table and get the current users group.
@@ -75,7 +71,7 @@ class block_leaderboard_renderer extends plugin_renderer_base {
             $table->data[] = $row;
         }
 
-        // DISPLAY BLOCK CONTENT.
+        // Display the block content..
         $output = "";
         $output .= "<block_header>".get_string('rankings', 'block_leaderboard')."</block_header><br>";
         $output .= html_writer::table($table);
@@ -83,11 +79,16 @@ class block_leaderboard_renderer extends plugin_renderer_base {
         return $output;
     }
 
-    // FUNCTIONS.
+    /**
+     * Gets the number of points earned given an amount of time spaced since the last quiz.
+     *
+     * @param array $groupdataarray An array of group data.
+     * @param html_table $table A html table to put data into.
+     * @param block_leaderboard_functions $functions A class of helper functions.
+     * @return int The number of points earned.
+     */
     public function create_leaderboard($groupdataarray, $table, $functions) {
         $moreurl = new moodle_url('/blocks/leaderboard/pix/more.svg');
-        // Create a new object.
-        $ourgroupdata = new stdClass();
 
         // Add table header.
         $table->head = array(get_string('num', 'block_leaderboard'), " ",
@@ -109,7 +110,6 @@ class block_leaderboard_renderer extends plugin_renderer_base {
                 // Add the group to the table.
                 $row = new html_table_row(array($currentstanding, $symbol, $groupdata->name, round($groupdata->points)));
                 if ($groupdata->isusersgroup) { // Bold current users group.
-                    $ourgroupdata = $groupdata;
                     $row->attributes['class'] = 'this_group rank'.$currentstanding;
                 } else { // Don't bold.
                     $row->attributes['class'] = 'rank'.$currentstanding;
@@ -124,7 +124,6 @@ class block_leaderboard_renderer extends plugin_renderer_base {
                         $table->data[] = $breakrow;
                     }
                     // Add the current users group to the table.
-                    $ourgroupdata = $groupdata;
                     $row = new html_table_row(array($currentstanding, $symbol, $groupdata->name, round($groupdata->points)));
                     $row->attributes['class'] = 'this_group';
                     $table->data[] = $row;
