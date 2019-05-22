@@ -353,7 +353,7 @@ echo $OUTPUT->footer();
 
 
 // TEMPORARY CODE TO FIX ISSUES
-/*
+
 echo("<script>console.log('Erik:');</script>");
 foreach ($groups as $group) {
     // Get each member of the group.
@@ -427,12 +427,12 @@ foreach ($groups as $group) {
             $points += $multipleattemptpoints * ($quiz->attempts - 1);
             $quiz->points_earned += $multipleattemptpoints * ($quiz->attempts - 1);
 
-            $quiz->points_earned = 0;
-            $quiz->days_spaced = 0;
+            //$quiz->points_earned = 0;
+            //$quiz->days_spaced = 0;
 
 
             $DB->update_record('quiz_table', $quiz);
         }
     }
 }
-*/
+

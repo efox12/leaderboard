@@ -130,6 +130,7 @@ class block_leaderboard_functions{
      * @return string An html element with the image for the appropriate icon to display.
      */
     public static function update_standing($groupdata, $currentstanding) {
+        //TODO: Fix this function by adding tables to database.
         global $DB;
         // Table icon urls.
         $upurl = new moodle_url('/blocks/leaderboard/pix/up.svg');
@@ -140,6 +141,7 @@ class block_leaderboard_functions{
         $initialposition = substr($groupdata->paststanding, -1);
         $paststanding = substr($groupdata->paststanding, 0, -2);
         $symbol = " ";
+
 
         if ($groupdata->time_updated < floor((time() - 7 * 60) / 86400)) {
             $initialposition = $paststanding;
@@ -305,7 +307,6 @@ class block_leaderboard_functions{
         // Add up student points for all points, past week, past two weeks, and fill student history array.
 
         // ACTIVITY.
-        echo("<script>console.log('STUDENT ID: ".json_encode($student->id)."');</script>");
         $sql = "SELECT assignment_table.*,assign.duedate
                 FROM {assign_submission} assign_submission
                 INNER JOIN {assignment_table} assignment_table ON assign_submission.id = assignment_table.activity_id
