@@ -61,7 +61,7 @@ foreach ($groups as $group) {
     $students = groups_get_members($group->id, $fields = 'u.*', $sort = 'lastname ASC');
     foreach ($students as $student) {
         // Get each members past contributions and add them to an array.
-        $studentactivities = $DB->get_records('assignment_table', array('activity_student' => $student->id));
+        $studentactivities = $DB->get_records('block_leaderboard_assignment', array('activity_student' => $student->id));
         foreach ($studentactivities as $activity) {
             if ($activity->time_finished >= $start && $activity->time_finished <= $end) {
                 $csv[$count] = array(
@@ -80,7 +80,7 @@ foreach ($groups as $group) {
                 $count++;
             }
         }
-        $studentquizzes = $DB->get_records('quiz_table', array('student_id' => $student->id));
+        $studentquizzes = $DB->get_records('block_leaderboard_quiz', array('student_id' => $student->id));
         foreach ($studentquizzes as $quiz) {
             if ($quiz->time_finished >= $start && $quiz->time_finished <= $end) {
                 $csv[$count] = array(
@@ -99,7 +99,7 @@ foreach ($groups as $group) {
                 $count++;
             }
         }
-        $studentchoices = $DB->get_records('choice_table', array('student_id' => $student->id));
+        $studentchoices = $DB->get_records('block_leaderboard_choice', array('student_id' => $student->id));
         foreach ($studentchoices as $choice) {
             if ($choice->time_finished >= $start && $choice->time_finished <= $end) {
                 $csv[$count] = array(
@@ -118,7 +118,7 @@ foreach ($groups as $group) {
                 $count++;
             }
         }
-        $studentforumposts = $DB->get_records('forum_table', array('student_id' => $student->id));
+        $studentforumposts = $DB->get_records('block_leaderboard_forum', array('student_id' => $student->id));
         foreach ($studentforumposts as $post) {
             if ($post->time_finished >= $start && $post->time_finished <= $end) {
                 $csv[$count] = array(

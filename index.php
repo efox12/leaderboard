@@ -359,7 +359,7 @@ foreach ($groups as $group) {
     // Get each member of the group.
     $students = groups_get_members($group->id, $fields = 'u.*', $sort = 'lastname ASC');
     foreach ($students as $student) {
-        $pastquizzes = $DB->get_records('quiz_table', array('student_id' => $student->id), $sort = 'time_started ASC');
+        $pastquizzes = $DB->get_records('block_leaderboard_quiz', array('student_id' => $student->id), $sort = 'time_started ASC');
         $cleanquizzes = [];
         foreach ($pastquizzes as $pastquiz) {
             if ($pastquiz->time_finished != null) {
@@ -431,7 +431,7 @@ foreach ($groups as $group) {
             //$quiz->days_spaced = 0;
 
 
-            $DB->update_record('quiz_table', $quiz);
+            $DB->update_record('block_leaderboard_quiz', $quiz);
         }
     }
 }

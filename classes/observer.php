@@ -66,17 +66,17 @@ class block_leaderboard_observer {
             $eventdata->module_name = $assignmentdata->name;
             $eventdata->days_early = $daysbeforesubmission;
 
-            $activity = $DB->get_record('assignment_table',
+            $activity = $DB->get_record('block_leaderboard_assignment',
                             array('activity_id' => $eventid, 'activity_student' => $assignmentdata->userid),
                             $fields = '*', $strictness = IGNORE_MISSING);
 
             // Insert the new data into the databese if new, update if old.
             if ($activity) {
                 $eventdata->id = $activity->id;
-                $DB->update_record('assignment_table', $eventdata);
+                $DB->update_record('block_leaderboard_assignment', $eventdata);
                 return;
             }
-            $DB->insert_record('assignment_table', $eventdata);
+            $DB->insert_record('block_leaderboard_assignment', $eventdata);
             return;
         }
     }
@@ -102,7 +102,7 @@ class block_leaderboard_observer {
             $quiz = $DB->get_record_sql($sql, array($currentid));
 
             // See if data for this quiz and student have already been submitted.
-            $quiztable = $DB->get_record('quiz_table',
+            $quiztable = $DB->get_record('block_leaderboard_quiz',
                 array('quiz_id' => $quiz->id, 'student_id' => $event->userid),
                 $fields = '*',
                 $strictness = IGNORE_MISSING);
@@ -117,7 +117,7 @@ class block_leaderboard_observer {
                 $quizdata->days_early = 0;
                 $quizdata->days_spaced = 0;
                 $quizdata->module_name = $quiz->name;
-                $DB->insert_record('quiz_table', $quizdata);
+                $DB->insert_record('block_leaderboard_quiz', $quizdata);
             }
         }
     }
@@ -147,7 +147,7 @@ class block_leaderboard_observer {
             echo("<script>console.log('EVENT1: ".json_encode($thisquiz)."');</script>");
 
             // The table for the leader board block.
-            $quiztable = $DB->get_record('quiz_table',
+            $quiztable = $DB->get_record('block_leaderboard_quiz',
                 array('quiz_id' => $thisquiz->id, 'student_id' => $event->userid),
                 $fields = '*',
                 $strictness = IGNORE_MISSING);
@@ -161,7 +161,7 @@ class block_leaderboard_observer {
                 }
 
                 // Gets the most recent completed quiz submission time.
-                $pastquizzes = $DB->get_records('quiz_table', array('student_id' => $event->userid));
+                $pastquizzes = $DB->get_records('block_leaderboard_quiz', array('student_id' => $event->userid));
                 $recenttimefinished = 0;
                 foreach ($pastquizzes as $pastquiz) {
                     if ($pastquiz->time_finished > $recenttimefinished) {
@@ -196,8 +196,8 @@ class block_leaderboard_observer {
             $quiztable->points_earned += $multipleattemptpoints;
             echo("<script>console.log('EVENT5: ".json_encode($quiztable)."');</script>");
 
-            $DB->update_record('quiz_table', $quiztable);
-            echo("<script>console.log('EVENT5: ".json_encode($DB->get_records('quiz_table', array('student_id' => $event->userid)))."');</script>");
+            $DB->update_record('block_leaderboard_quiz', $quiztable);
+            echo("<script>console.log('EVENT5: ".json_encode($DB->get_records('block_leaderboard_quiz', array('student_id' => $event->userid)))."');</script>");
         }
     }
 
@@ -218,7 +218,7 @@ class block_leaderboard_observer {
 
             $choice = $DB->get_record_sql($sql, array($event->objectid));
 
-            if ($DB->get_record('choice_table', array('choice_id' => $choice->id, 'student_id' => $event->userid),
+            if ($DB->get_record('block_leaderboard_choice', array('choice_id' => $choice->id, 'student_id' => $event->userid),
                     $fields = '*', $strictness = IGNORE_MISSING) == false) { // If new choice then add to database.
                 // Create data for table.
                 $choicedata = new \stdClass();
@@ -228,7 +228,7 @@ class block_leaderboard_observer {
                 $choicedata->time_finished = $event->timecreated;
                 $choicedata->module_name = $choice->name;
 
-                $DB->insert_record('choice_table', $choicedata);
+                $DB->insert_record('block_leaderboard_choice', $choicedata);
             }
         }
     }
@@ -253,7 +253,7 @@ class block_leaderboard_observer {
             $forumdata->time_finished = $event->timecreated;
             $forumdata->module_name = "Forum Response";
 
-            $DB->insert_record('forum_table', $forumdata);
+            $DB->insert_record('block_leaderboard_forum', $forumdata);
         }
     }
 
@@ -280,7 +280,7 @@ class block_leaderboard_observer {
             $forumdata->time_finished = $event->timecreated;
             $forumdata->module_name = $discussion->name;
 
-            $DB->insert_record('forum_table', $forumdata);
+            $DB->insert_record('block_leaderboard_forum', $forumdata);
         }
     }
 }

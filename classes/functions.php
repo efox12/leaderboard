@@ -137,25 +137,33 @@ class block_leaderboard_functions{
         $downurl = new moodle_url('/blocks/leaderboard/pix/down.svg');
         $stayurl = new moodle_url('/blocks/leaderboard/pix/stay.svg');
 
-        $move = substr($groupdata->paststanding, -2, 1); // 0 for up, 1 for down, 2 for stay.
-        $initialposition = substr($groupdata->paststanding, -1);
-        $paststanding = substr($groupdata->paststanding, 0, -2);
+        $move = $groupdata->lastmove; // 0 for up, 1 for down, 2 for stay.
+        $paststanding = $groupdata->currentstanding;
         $symbol = " ";
-
-
-        if ($groupdata->time_updated < floor((time() - 7 * 60) / 86400)) {
-            $initialposition = $paststanding;
+        if(strlen((string)$groupdata->time_updated) > 8){
+            $groupdata->time_updated = (int)date("Ymd");
         }
+        if($paststanding === null){
+            $paststanding = $currentstanding;
+            $move = 2;
+        }
+
+        if ($groupdata->time_updated < (int)date("Ymd")) {
+            // Use neutral visual queue if a group hasn't moved standings in a set amount of time.
+            if ($currentstanding == $paststanding) {
+                $symbol = '<img src='.$stayurl.'>';
+                $move = 2;
+            }
+            $groupdata->time_updated = (int)date("Ymd");
+        }
+        // Only allow change in visual queues for moving up or down when page loads.
         if ($paststanding > $currentstanding) {
             $symbol = '<img src='.$upurl.'>';
             $move = 0;
         } else if ($paststanding < $currentstanding) {
             $symbol = '<img src='.$downurl.'>';
             $move = 1;
-        } else if ($initialposition == $paststanding) {
-            $symbol = '<img src='.$stayurl.'>';
-            $move = 2;
-        } else {
+        } else { // Otherwise look at the last move taken by the group.
             if ($move == 0) {
                 $symbol = '<img src='.$upurl.'>';
             } else if ($move == 1) {
@@ -166,10 +174,12 @@ class block_leaderboard_functions{
         }
         // Update the groups current standing.
         if ($groupdata->id) {
-            $storedgroupdata = $DB->get_record('group_data_table',
-                                    array('group_id' => $groupdata->id), $fields = '*', $strictness = IGNORE_MISSING);
-            $storedgroupdata->currentstanding = (int)($currentstanding.$move.$initialposition);
-            $DB->update_record('group_data_table', $storedgroupdata);
+            $storedgroupdata = $DB->get_record('block_leaderboard_group_data',
+                                    array('groupid' => $groupdata->id), $fields = '*', $strictness = IGNORE_MISSING);
+            $storedgroupdata->currentstanding = $currentstanding;
+            $storedgroupdata->lastmove = $move;
+            $storedgroupdata->multiplier = $groupdata->time_updated ;
+            $DB->update_record('block_leaderboard_group_data', $storedgroupdata);
         }
 
         return $symbol;
@@ -258,25 +268,29 @@ class block_leaderboard_functions{
         }
         $pointsperweek = round($pointsperweek);
 
-        $storedgroupdata = $DB->get_record('group_data_table',
-                                array('group_id' => $group->id), $fields = '*', $strictness = IGNORE_MISSING);
+        $storedgroupdata = $DB->get_record('block_leaderboard_group_data',
+                                array('groupid' => $group->id), $fields = '*', $strictness = IGNORE_MISSING);
         if (!$storedgroupdata) {
             $storedgroupdata = new stdClass();
-            $storedgroupdata->current_standing = 020;
+            $storedgroupdata->currentstanding = 0;
+            $storedgroupdata->prevoiusstanding = 0;
+            $storedgroupdata->lastmove = 2;
             $storedgroupdata->multiplier = floor((time() - 7 * 60) / 86400);
-            $storedgroupdata->group_id = $group->id;
-            $DB->insert_record('group_data_table', $storedgroupdata);
-        } else if (strlen((string)$storedgroupdata->current_standing) < 3) {
-            $storedgroupdata->current_standing = (int)($storedgroupdata->current_standing.'2'.$storedgroupdata->current_standing);
-            $storedgroupdata->group_id = $group->id;
-            $DB->update_record('group_data_table', $storedgroupdata);
+            $storedgroupdata->groupid = $group->id;
+            $DB->insert_record('block_leaderboard_group_data', $storedgroupdata);
+        } else if (strlen((string)$storedgroupdata->currentstanding) < 3) {
+            $storedgroupdata->currentstanding = $storedgroupdata->currentstanding;
+            $storedgroupdata->groupid = $group->id;
+            $DB->update_record('block_leaderboard_group_data', $storedgroupdata);
         }
 
         // Load the groups data into an object.
         $groupdata = new stdClass();
         $groupdata->name = $group->name;
         $groupdata->id = $group->id;
-        $groupdata->paststanding = $storedgroupdata->current_standing;
+        $groupdata->currentstanding = $storedgroupdata->currentstanding;
+        $groupdata->previousstanding = $storedgroupdata->prevoiusstanding;
+        $groupdata->lastmove = $storedgroupdata->lastmove;
         $groupdata->time_updated = $storedgroupdata->multiplier;
         $groupdata->points = $totalpoints;
         $groupdata->isusersgroup = $isusersgroup;
@@ -307,11 +321,11 @@ class block_leaderboard_functions{
         // Add up student points for all points, past week, past two weeks, and fill student history array.
 
         // ACTIVITY.
-        $sql = "SELECT assignment_table.*,assign.duedate
+        $sql = "SELECT block_leaderboard_assignment.*,assign.duedate
                 FROM {assign_submission} assign_submission
-                INNER JOIN {assignment_table} assignment_table ON assign_submission.id = assignment_table.activity_id
-                INNER JOIN {assign} assign ON assign.id = assignment_table.activity_id
-                WHERE assignment_table.activity_student = ?;";
+                INNER JOIN {block_leaderboard_assignment} block_leaderboard_assignment ON assign_submission.id = block_leaderboard_assignment.activity_id
+                INNER JOIN {assign} assign ON assign.id = block_leaderboard_assignment.activity_id
+                WHERE block_leaderboard_assignment.activity_student = ?;";
 
         $studentactivities = $DB->get_records_sql($sql, array($student->id));
         $points_data = self::get_module_points($studentactivities, $start, $end);
@@ -321,10 +335,10 @@ class block_leaderboard_functions{
         $points->history = $points_data->history;
 
         // QUIZ.
-        $sql = "SELECT quiz_table.*, quiz.timeclose
-                FROM {quiz_table} quiz_table
-                INNER JOIN {quiz} quiz ON quiz.id = quiz_table.quiz_id
-                WHERE quiz_table.student_id = ? AND quiz_table.time_finished IS NOT NULL;";
+        $sql = "SELECT block_leaderboard_quiz.*, quiz.timeclose
+                FROM {block_leaderboard_quiz} block_leaderboard_quiz
+                INNER JOIN {quiz} quiz ON quiz.id = block_leaderboard_quiz.quiz_id
+                WHERE block_leaderboard_quiz.student_id = ? AND block_leaderboard_quiz.time_finished IS NOT NULL;";
 
         $studentquizzes = $DB->get_records_sql($sql, array($student->id));
         $points_data = self::get_module_points($studentquizzes, $start, $end);
@@ -334,7 +348,7 @@ class block_leaderboard_functions{
         $points->history += array_merge($points->history, $points_data->history);
 
         // CHOICE.
-        $studentchoices = $DB->get_records('choice_table', array('student_id' => $student->id));
+        $studentchoices = $DB->get_records('block_leaderboard_choice', array('student_id' => $student->id));
         $points_data = self::get_module_points($studentchoices, $start, $end);
         $points->all += $points_data->all;
         $points->pastweek += $points_data->pastweek;
@@ -342,7 +356,7 @@ class block_leaderboard_functions{
         $points->history += array_merge($points->history, $points_data->history);
 
         // FORUM.
-        $studentforumposts = $DB->get_records('forum_table', array('student_id' => $student->id));
+        $studentforumposts = $DB->get_records('block_leaderboard_forum', array('student_id' => $student->id));
         $points_data = self::get_module_points($studentforumposts, $start, $end);
         $points->all += $points_data->all;
         $points->pastweek += $points_data->pastweek;
