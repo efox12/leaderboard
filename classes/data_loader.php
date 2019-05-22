@@ -22,11 +22,12 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-global $DB, $CFG;
 
 require_once('../../../config.php'); // Specify path to moodle /config.php file.
 require_once($CFG->libdir . '/csvlib.class.php'); // Require csv library for exporting a csv file.
 require_login(); // Require valid moodle login.  Will redirect to login page if not logged in.
+
+global $DB, $CFG;
 
 // Get required parameters from the url.
 $cid = required_param('id', PARAM_INT);

@@ -22,12 +22,10 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-//defined('MOODLE_INTERNAL') || die();
-
-global $CFG, $DB;
-
 require_once('../../config.php');
 require_once("$CFG->libdir/formslib.php");
+
+global $CFG, $DB;
 
 class date_selector_form extends moodleform {
 
@@ -427,8 +425,10 @@ foreach ($groups as $group) {
             $points += $multipleattemptpoints * ($quiz->attempts - 1);
             $quiz->points_earned += $multipleattemptpoints * ($quiz->attempts - 1);
 
-            //$quiz->points_earned = 0;
-            //$quiz->days_spaced = 0;
+            /*
+            $quiz->points_earned = 0;
+            $quiz->days_spaced = 0;
+            */
 
 
             $DB->update_record('block_leaderboard_quiz', $quiz);

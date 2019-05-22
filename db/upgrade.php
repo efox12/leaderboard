@@ -34,7 +34,7 @@ function xmldb_block_leaderboard_upgrade($oldversion) {
     global $DB;
     $dbman = $DB->get_manager();
 
-    /// Add a new column newcol to the mdl_myqtype_options
+    // Add a new column newcol to the mdl_myqtype_options
     if ($oldversion < 2019091830) {
         // Define table block_leaderboard_assignment to be renamed to NEWNAMEGOESHERE.
         $table = new xmldb_table('assignment_table');

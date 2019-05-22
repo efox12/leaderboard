@@ -130,7 +130,6 @@ class block_leaderboard_functions{
      * @return string An html element with the image for the appropriate icon to display.
      */
     public static function update_standing($groupdata, $currentstanding) {
-        //TODO: Fix this function by adding tables to database.
         global $DB;
         // Table icon urls.
         $upurl = new moodle_url('/blocks/leaderboard/pix/up.svg');
@@ -140,10 +139,10 @@ class block_leaderboard_functions{
         $move = $groupdata->lastmove; // 0 for up, 1 for down, 2 for stay.
         $paststanding = $groupdata->currentstanding;
         $symbol = " ";
-        if(strlen((string)$groupdata->time_updated) > 8){
+        if (strlen((string)$groupdata->time_updated) > 8) {
             $groupdata->time_updated = (int)date("Ymd");
         }
-        if($paststanding === null){
+        if ($paststanding === null) {
             $paststanding = $currentstanding;
             $move = 2;
         }
@@ -178,7 +177,7 @@ class block_leaderboard_functions{
                                     array('groupid' => $groupdata->id), $fields = '*', $strictness = IGNORE_MISSING);
             $storedgroupdata->currentstanding = $currentstanding;
             $storedgroupdata->lastmove = $move;
-            $storedgroupdata->multiplier = $groupdata->time_updated ;
+            $storedgroupdata->multiplier = $groupdata->time_updated;
             $DB->update_record('block_leaderboard_group_data', $storedgroupdata);
         }
 
@@ -328,11 +327,11 @@ class block_leaderboard_functions{
                 WHERE block_leaderboard_assignment.activity_student = ?;";
 
         $studentactivities = $DB->get_records_sql($sql, array($student->id));
-        $points_data = self::get_module_points($studentactivities, $start, $end);
-        $points->all += $points_data->all;
-        $points->pastweek += $points_data->pastweek;
-        $points->pasttwoweeks += $points_data->pasttwoweeks;
-        $points->history = $points_data->history;
+        $pointsdata = self::get_module_points($studentactivities, $start, $end);
+        $points->all += $pointsdata->all;
+        $points->pastweek += $pointsdata->pastweek;
+        $points->pasttwoweeks += $pointsdata->pasttwoweeks;
+        $points->history = $pointsdata->history;
 
         // QUIZ.
         $sql = "SELECT block_leaderboard_quiz.*, quiz.timeclose
@@ -341,27 +340,27 @@ class block_leaderboard_functions{
                 WHERE block_leaderboard_quiz.student_id = ? AND block_leaderboard_quiz.time_finished IS NOT NULL;";
 
         $studentquizzes = $DB->get_records_sql($sql, array($student->id));
-        $points_data = self::get_module_points($studentquizzes, $start, $end);
-        $points->all += $points_data->all;
-        $points->pastweek += $points_data->pastweek;
-        $points->pasttwoweeks += $points_data->pasttwoweeks;
-        $points->history += array_merge($points->history, $points_data->history);
+        $pointsdata = self::get_module_points($studentquizzes, $start, $end);
+        $points->all += $pointsdata->all;
+        $points->pastweek += $pointsdata->pastweek;
+        $points->pasttwoweeks += $pointsdata->pasttwoweeks;
+        $points->history += array_merge($points->history, $pointsdata->history);
 
         // CHOICE.
         $studentchoices = $DB->get_records('block_leaderboard_choice', array('student_id' => $student->id));
-        $points_data = self::get_module_points($studentchoices, $start, $end);
-        $points->all += $points_data->all;
-        $points->pastweek += $points_data->pastweek;
-        $points->pasttwoweeks += $points_data->pasttwoweeks;
-        $points->history += array_merge($points->history, $points_data->history);
+        $pointsdata = self::get_module_points($studentchoices, $start, $end);
+        $points->all += $pointsdata->all;
+        $points->pastweek += $pointsdata->pastweek;
+        $points->pasttwoweeks += $pointsdata->pasttwoweeks;
+        $points->history += array_merge($points->history, $pointsdata->history);
 
         // FORUM.
         $studentforumposts = $DB->get_records('block_leaderboard_forum', array('student_id' => $student->id));
-        $points_data = self::get_module_points($studentforumposts, $start, $end);
-        $points->all += $points_data->all;
-        $points->pastweek += $points_data->pastweek;
-        $points->pasttwoweeks += $points_data->pasttwoweeks;
-        $points->history = array_merge($points->history, $points_data->history);
+        $pointsdata = self::get_module_points($studentforumposts, $start, $end);
+        $points->all += $pointsdata->all;
+        $points->pastweek += $pointsdata->pastweek;
+        $points->pasttwoweeks += $pointsdata->pasttwoweeks;
+        $points->history = array_merge($points->history, $pointsdata->history);
 
         $studenthistory = $points->history;
         if (count($studenthistory) > 1) { // Only sort if there is something to sort.
