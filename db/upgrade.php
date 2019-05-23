@@ -33,9 +33,10 @@ defined('MOODLE_INTERNAL') || die();
 function xmldb_block_leaderboard_upgrade($oldversion) {
     global $DB;
     $dbman = $DB->get_manager();
-    /*
+
     // Add a new column newcol to the mdl_myqtype_options
-    if ($oldversion < 2019091830) {
+    if ($oldversion < 2019091840) {
+        /*
         // Define table block_leaderboard_assignment to be renamed to NEWNAMEGOESHERE.
         $table = new xmldb_table('assignment_table');
         // Launch rename table for block_leaderboard_assignment.
@@ -57,7 +58,7 @@ function xmldb_block_leaderboard_upgrade($oldversion) {
 
         // Launch rename table for group_data_table.
         $dbman->rename_table($table, 'block_leaderboard_group_data');
-
+        */
         $table = new xmldb_table('group_data_table');
 
         $field = new xmldb_field('prevoiusstanding', XMLDB_TYPE_INTEGER, '10', null, null, null, null, 'current_standing');
@@ -82,8 +83,8 @@ function xmldb_block_leaderboard_upgrade($oldversion) {
         $dbman->rename_field($table, $field, 'groupid');
 
         // Leaderboard savepoint reached.
-        upgrade_block_savepoint(true, 2019091830, 'leaderboard');
+        //upgrade_block_savepoint(true, 2019091830, 'leaderboard');
     }
-    return true;*/
+    return true;
 
 }
