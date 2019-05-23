@@ -529,3 +529,95 @@ foreach($groups as $group){
     }
 }
 
+foreach($groups as $group){
+    //get each member of the group
+    $students = groups_get_members($group->id, $fields='u.*', $sort='lastname ASC');
+    foreach($students as $student){
+        $sql = "SELECT choice_answers.*, choice.name
+            FROM {choice_answers} choice_answers
+            INNER JOIN {choice} choice ON choice.id = choice_answers.choiceid
+            WHERE choice_answers.userid = ?;";
+
+        $choices = $DB->get_records_sql($sql, array($student->id));
+        foreach ($choices as $choice) {
+            $choicetable = $DB->get_record('block_leaderboard_choice', array('choice_id' => $choice->id, 'student_id' => $student->id),
+                $fields = '*', $strictness = IGNORE_MISSING);
+            if (!$choicetable) {
+                $choicedata = new \stdClass();
+                $choicedata->student_id = $choice->userid;
+                $choicedata->choice_id = $choice->id;
+                $choicedata->points_earned = get_config('leaderboard', 'choicepoints');
+                $choicedata->time_finished = $choice->timemodified;
+                $choicedata->module_name = $choice->name;
+
+                $DB->insert_record('block_leaderboard_choice', $choicedata);
+                $choicetable = $DB->get_record('block_leaderboard_choice', array('choice_id' => $choice->id, 'student_id' => $student->id),
+                    $fields = '*', $strictness = IGNORE_MISSING);
+            }
+            echo("<script>console.log('SPACING: ".json_encode($choicetable)."');</script>");
+
+        }
+    }
+}
+
+foreach($groups as $group){
+    //get each member of the group
+    $students = groups_get_members($group->id, $fields='u.*', $sort='lastname ASC');
+    foreach($students as $student){
+        $sql = "SELECT moodleoverflow_discussions.*
+            FROM {moodleoverflow_discussions} moodleoverflow_discussions
+            WHERE moodleoverflow_discussions.userid = ?;";
+
+        $discussions = $DB->get_records_sql($sql, array($student->id));
+        foreach ($discussions as $discussion) {
+            $discussiontable = $DB->get_record('block_leaderboard_forum',
+            array('student_id' => $student->id, 'discussion_id' => $discussion->id, 'is_response' => false), $fields = '*', $strictness = IGNORE_MISSING);
+            
+            if (!$discussiontable) {
+                // Create data for table
+                $forumdata = new \stdClass();
+                $forumdata->student_id = $student->id;
+                $forumdata->forum_id = $discussion->moodleoverflow;
+                $forumdata->post_id = $discussion->firstpost;
+                $forumdata->discussion_id = $discussion->id;
+                $forumdata->is_response = false;
+                $forumdata->points_earned = get_config('leaderboard', 'forumpostpoints');
+                $forumdata->time_finished = $discussion->timestart;
+                $forumdata->module_name = $discussion->name;
+                $DB->insert_record('block_leaderboard_forum', $forumdata);
+            }
+        }
+    }
+}
+
+foreach($groups as $group){
+    //get each member of the group
+    $students = groups_get_members($group->id, $fields='u.*', $sort='lastname ASC');
+    foreach($students as $student){
+        $sql = "SELECT moodleoverflow_posts.*, moodleoverflow_discussions.moodleoverflow
+            FROM {moodleoverflow_posts} moodleoverflow_posts
+            INNER JOIN {moodleoverflow_discussions} moodleoverflow_discussions ON moodleoverflow_posts.discussion = moodleoverflow_discussions.id
+            WHERE moodleoverflow_posts.userid = ?;";
+
+        $discussions = $DB->get_records_sql($sql, array($student->id));
+        foreach ($discussions as $discussion) {
+            $discussiontable = $DB->get_record('block_leaderboard_forum',
+            array('student_id' => $student->id, 'post_id' => $discussion->id, 'is_response' => true), $fields = '*', $strictness = IGNORE_MISSING);
+            
+            if (!$discussiontable) {
+                // Create data for table
+                $forumdata = new \stdClass();
+                $forumdata->student_id = $student->id;
+                $forumdata->forum_id = $discussion->moodleoverflow;
+                $forumdata->post_id = $discussion->id;
+                $forumdata->discussion_id = $discussion->discussion;
+                $forumdata->is_response = true;
+                $forumdata->points_earned = get_config('leaderboard', 'forumresponsepoints');
+                $forumdata->time_finished = $discussion->created;
+                $forumdata->module_name = "Forum Post";
+                $DB->insert_record('block_leaderboard_forum', $forumdata);
+            }
+        }
+    }
+}
+

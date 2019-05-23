@@ -278,7 +278,7 @@ class block_leaderboard_observer {
             $forumdata->is_response = false;
             $forumdata->points_earned = get_config('leaderboard', 'forumpostpoints');
             $forumdata->time_finished = $event->timecreated;
-            $forumdata->module_name = $discussion->name;
+            $forumdata->module_name = "Forum Post";
 
             $DB->insert_record('block_leaderboard_forum', $forumdata);
         }

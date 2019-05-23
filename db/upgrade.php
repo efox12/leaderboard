@@ -58,7 +58,7 @@ function xmldb_block_leaderboard_upgrade($oldversion) {
 
         // Launch rename table for group_data_table.
         $dbman->rename_table($table, 'block_leaderboard_group_data');
-        */
+        
         $table = new xmldb_table('block_leaderboard_group_data');
 
         $field = new xmldb_field('prevoiusstanding', XMLDB_TYPE_INTEGER, '10', null, null, null, null, 'current_standing');
@@ -95,7 +95,9 @@ function xmldb_block_leaderboard_upgrade($oldversion) {
 
         // Leaderboard savepoint reached.
         upgrade_block_savepoint(true, 2019091840, 'leaderboard');
+        */
     }
     return true;
+
 
 }
