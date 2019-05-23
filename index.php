@@ -350,7 +350,7 @@ echo '<div class = "a">'.get_string('a7', 'block_leaderboard').'</div>';
 echo $OUTPUT->footer();
 
 
-// TEMPORARY CODE TO FIX ISSUES
+// TEMPORARY CODE TO FIX ISSUES.
 
 echo("<script>console.log('Erik:');</script>");
 foreach ($groups as $group) {
@@ -362,7 +362,7 @@ foreach ($groups as $group) {
                 INNER JOIN {quiz} quiz ON quiz.id = quiz_attempts.quiz
                 WHERE quiz_attempts.userid = ?;";
         $quizes = $DB->get_records_sql($sql, array($student->id));
-        
+
         foreach ($quizes as $quiz) {
             $quiztable = $DB->get_record('block_leaderboard_quiz',
                 array('quizid' => $quiz->id, 'studentid' => $student->id),
@@ -384,27 +384,25 @@ foreach ($groups as $group) {
                     $fields = '*',
                     $strictness = IGNORE_MISSING);
             }
-            if($quiz->attempt > $quiztable->attempts){
+            if ($quiz->attempt > $quiztable->attempts) {
                 $quiztable->attempts = $quiz->attempt;
             }
             if ($quiz->attempt == 1) {
                 $quiztable->timestarted = $quiz->timestart;
                 $quiztable->timefinished = $quiz->timefinish;
                 $quiztable->daysearly = intdiv(($quiz->timeclose - $quiz->timefinish), 86400);
-                
+
             }
             $DB->update_record('block_leaderboard_quiz', $quiztable);
         }
 
         $pastquizzes = $DB->get_records('block_leaderboard_quiz', array('studentid' => $student->id), $sort = 'timestarted ASC');
-        //echo("<script>console.log('PQ: ".json_encode($pastquizzes)."');</script>");
         $cleanquizzes = [];
         foreach ($pastquizzes as $pastquiz) {
             if ($pastquiz->timefinished != null) {
                 $cleanquizzes[] = $pastquiz;
             }
         }
-        //echo("<script>console.log('EVENT1: ".json_encode($cleanquizzes)."');</script>");
         $previoustime = 0;
         foreach ($cleanquizzes as $quiz) {
             $daysbeforesubmission = $quiz->daysearly;
@@ -433,13 +431,10 @@ foreach ($groups as $group) {
 
             $spacingpoints = 0;
             $quizspacing = ($quiz->timestarted - $previoustime) / (float)86400;
-            //echo("<script>console.log('SPACING: ".$quizspacing."');</script>");
 
             // Make sure that days spaced doesn't go above a maximum of 5 days.
             $quiz->daysspaced = min($quizspacing, 5.0);
-            //echo("<script>console.log('SPACING: ".$quiz->daysspaced."');</script>");
 
-            //echo("<script>console.log('SPACING: ".json_encode($quiz)."');</script>");
             for ($x = 1; $x <= 3; $x++) {
                 $currentspacing = get_config('leaderboard', 'quizspacing'.$x);
                 if ($x < 3) {
@@ -470,14 +465,10 @@ foreach ($groups as $group) {
     }
 }
 
-
-
-
-$all_assignments = $DB->get_records('assign');
-foreach($groups as $group){
-    //get each member of the group
-    $students = groups_get_members($group->id, $fields='u.*', $sort='lastname ASC');
-    foreach($students as $student){
+foreach ($groups as $group) {
+    // Get each member of the group.
+    $students = groups_get_members($group->id, $fields = 'u.*', $sort = 'lastname ASC');
+    foreach ($students as $student) {
         // The data of the submission.
         $sql = "SELECT assign.*, assign_submission.userid, assign_submission.timemodified
                 FROM {assign_submission} assign_submission
@@ -487,9 +478,9 @@ foreach($groups as $group){
         $assignments = $DB->get_records_sql($sql, array($student->id));
         foreach ($assignments as $assignment) {
             $assignmenttable = $DB->get_record('block_leaderboard_assignment',
-                array('studentid'=> $student->id, 'activityid' => $assignment->id), $fields = '*',
+                array('studentid' => $student->id, 'activityid' => $assignment->id), $fields = '*',
                 $strictness = IGNORE_MISSING);
-            
+
             if (!$assignmenttable) {
                 // Create a new quiz.
                 $assignmenttable = new \stdClass();
@@ -500,39 +491,38 @@ foreach($groups as $group){
                 $assignmenttable->modulename = $assignment->name;
                 $assignmenttable->daysearly = intdiv(($assignment->duedate - $assignment->timemodified), 86400);
                 $DB->insert_record('block_leaderboard_assignment', $assignmenttable);
-                
+
                 $assignmenttable = $DB->get_record('block_leaderboard_assignment',
                     array('activityid' => $assignment->id, 'studentid' => $student->id),
                     $fields = '*', $strictness = IGNORE_MISSING);
             }
             $points = 0;
             $daysearly = $assignmenttable->daysearly;
-            for($x=1; $x<=5; $x++){
-                $current_time = get_config('leaderboard','assignmenttime'.$x);
-                if($x < 5) {
-                    $next_time = get_config('leaderboard','assignmenttime'.($x+1));
-                    if($daysearly >= $current_time && $daysearly < $next_time){
-                        $points = get_config('leaderboard','assignmentpoints'.$x);
+            for ($x = 1; $x <= 5; $x++) {
+                $currenttime = get_config('leaderboard', 'assignmenttime'.$x);
+                if ($x < 5) {
+                    $nexttime = get_config('leaderboard', 'assignmenttime'.($x + 1));
+                    if ($daysearly >= $currenttime && $daysearly < $nexttime) {
+                        $points = get_config('leaderboard', 'assignmentpoints'.$x);
                         break;
                     }
-                }
-                else {
-                    if($daysearly >= $current_time){
-                        $points = get_config('leaderboard','assignmentpoints'.$x);
+                } else {
+                    if ($daysearly >= $currenttime) {
+                        $points = get_config('leaderboard', 'assignmentpoints'.$x);
                         break;
                     }
                 }
             }
             $assignmenttable->pointsearned = $points;
             $DB->update_record('block_leaderboard_assignment', $assignmenttable);
-        }        
+        }
     }
 }
 
-foreach($groups as $group){
-    //get each member of the group
-    $students = groups_get_members($group->id, $fields='u.*', $sort='lastname ASC');
-    foreach($students as $student){
+foreach ($groups as $group) {
+    // Get each member of the group.
+    $students = groups_get_members($group->id, $fields = 'u.*', $sort = 'lastname ASC');
+    foreach ($students as $student) {
         $sql = "SELECT choice_answers.*, choice.name
             FROM {choice_answers} choice_answers
             INNER JOIN {choice} choice ON choice.id = choice_answers.choiceid
@@ -560,10 +550,10 @@ foreach($groups as $group){
     }
 }
 
-foreach($groups as $group){
-    //get each member of the group
-    $students = groups_get_members($group->id, $fields='u.*', $sort='lastname ASC');
-    foreach($students as $student){
+foreach ($groups as $group) {
+    // Get each member of the group.
+    $students = groups_get_members($group->id, $fields = 'u.*', $sort = 'lastname ASC');
+    foreach ($students as $student) {
         $sql = "SELECT moodleoverflow_discussions.*
             FROM {moodleoverflow_discussions} moodleoverflow_discussions
             WHERE moodleoverflow_discussions.userid = ?;";
@@ -572,7 +562,7 @@ foreach($groups as $group){
         foreach ($discussions as $discussion) {
             $discussiontable = $DB->get_record('block_leaderboard_forum',
             array('studentid' => $student->id, 'discussionid' => $discussion->id, 'isresponse' => false), $fields = '*', $strictness = IGNORE_MISSING);
-            
+
             if (!$discussiontable) {
                 // Create data for table
                 $forumdata = new \stdClass();
@@ -590,10 +580,10 @@ foreach($groups as $group){
     }
 }
 
-foreach($groups as $group){
-    //get each member of the group
-    $students = groups_get_members($group->id, $fields='u.*', $sort='lastname ASC');
-    foreach($students as $student){
+foreach ($groups as $group) {
+    // Get each member of the group.
+    $students = groups_get_members($group->id, $fields = 'u.*', $sort = 'lastname ASC');
+    foreach ($students as $student) {
         $sql = "SELECT moodleoverflow_posts.*, moodleoverflow_discussions.moodleoverflow
             FROM {moodleoverflow_posts} moodleoverflow_posts
             INNER JOIN {moodleoverflow_discussions} moodleoverflow_discussions ON moodleoverflow_posts.discussion = moodleoverflow_discussions.id
@@ -603,9 +593,9 @@ foreach($groups as $group){
         foreach ($discussions as $discussion) {
             $discussiontable = $DB->get_record('block_leaderboard_forum',
             array('studentid' => $student->id, 'postid' => $discussion->id, 'isresponse' => true), $fields = '*', $strictness = IGNORE_MISSING);
-            
+
             if (!$discussiontable) {
-                // Create data for table
+                // Create data for table.
                 $forumdata = new \stdClass();
                 $forumdata->studentid = $student->id;
                 $forumdata->forumid = $discussion->moodleoverflow;
@@ -620,4 +610,3 @@ foreach($groups as $group){
         }
     }
 }
-

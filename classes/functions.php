@@ -329,7 +329,6 @@ class block_leaderboard_functions{
         $points->pastweek += $pointsdata->pastweek;
         $points->pasttwoweeks += $pointsdata->pasttwoweeks;
         $points->history = $pointsdata->history;
-        
 
         // QUIZ.
         $sql = "SELECT block_leaderboard_quiz.*, quiz.timeclose
