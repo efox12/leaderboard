@@ -36,7 +36,7 @@ function xmldb_block_leaderboard_upgrade($oldversion) {
 
     // Add a new column newcol to the mdl_myqtype_options
     if ($oldversion < 2019091840) {
-
+        /*
         // Define table block_leaderboard_assignment to be renamed to NEWNAMEGOESHERE.
         $table = new xmldb_table('assignment_table');
         // Launch rename table for block_leaderboard_assignment.
@@ -58,8 +58,8 @@ function xmldb_block_leaderboard_upgrade($oldversion) {
 
         // Launch rename table for group_data_table.
         $dbman->rename_table($table, 'block_leaderboard_group_data');
-        /*
-        $table = new xmldb_table('group_data_table');
+        */
+        $table = new xmldb_table('block_leaderboard_group_data');
 
         $field = new xmldb_field('prevoiusstanding', XMLDB_TYPE_INTEGER, '10', null, null, null, null, 'current_standing');
         // Conditionally launch add field prevoiusstanding.
@@ -81,7 +81,7 @@ function xmldb_block_leaderboard_upgrade($oldversion) {
 
         // Launch rename field group_id.
         $dbman->rename_field($table, $field, 'groupid');
-        */
+
         // Leaderboard savepoint reached.
         upgrade_block_savepoint(true, 2019091840, 'leaderboard');
 
