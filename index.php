@@ -36,7 +36,7 @@ class date_selector_form extends moodleform {
      */
     public function definition() {
         $mform = & $this->_form; // Don't forget the underscore!
-        $mform->addElement('header', 'h', "Change Date Range");
+        $mform->addElement('header', 'h', get_string('leaderboard', 'changedaterange'));
 
         // Parameters required for the page to load.
         $mform->addElement('hidden', 'id');
@@ -47,15 +47,15 @@ class date_selector_form extends moodleform {
         $mform->setType('end', PARAM_RAW);
 
         // The form elements for selecting dates with defaults set to the current date range.
-        $mform->addElement('date_selector', 'startDate', "Start");
+        $mform->addElement('date_selector', 'startDate', (get_string('leaderboard', 'start'));
         $mform->setDefault('startDate', $this->_customdata['startDate']);
-        $mform->addElement('date_selector', 'endDate', "End");
+        $mform->addElement('date_selector', 'endDate', (get_string('leaderboard', 'end'));
         $mform->setDefault('endDate', $this->_customdata['endDate']);
 
         // The buttons to update the leaderboard with new dates or reset to the default dates.
         $buttonarray = array();
-        $buttonarray[] = $mform->createElement('submit', 'submitbutton', "Update");
-        $buttonarray[] = $mform->createElement('cancel', 'resetbutton', "Reset to Default");
+        $buttonarray[] = $mform->createElement('submit', 'submitbutton', (get_string('leaderboard', 'update'));
+        $buttonarray[] = $mform->createElement('cancel', 'resetbutton', (get_string('leaderboard', 'resettodefault'));
         $mform->addGroup($buttonarray, 'buttonar', '', ' ', false);
     }
 }

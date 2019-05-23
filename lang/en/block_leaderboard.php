@@ -60,11 +60,6 @@ $string['pointsearned'] = 'Pointes Earned';
 $string['daysbetweenquizzes'] = 'Days Between Quizzes';
 $string['numberofattempts'] = 'Number of Attempts';
 
-$string['level'] = 'Level ';
-$string['multiplier'] = ' Multiplier';
-$string['points_to_get_to_level'] = ' Points to Get to Level ';
-$string['points_to_stay_at_level'] = ' Points to Stay at Level ';
-
 $string['label_choicepoints'] = 'Choice Points';
 $string['desc_choicepoints'] = 'Points earned for participating in a choice';
 
@@ -84,11 +79,6 @@ $string['label_reset2'] = 'Second Reset';
 $string['desc_reset2'] = 'Type using format MM/DD/YYYY';
 
 // Block strings.
-$string['group_multiplier'] = 'Group Multiplier';
-$string['mult'] = 'Info';
-$string['mult_help'] = '&nbsp;&nbsp;&nbsp; The group multiplier will reward your team with bonus points for continual good study habits. <br/>
-                        &nbsp;&nbsp;&nbsp; Increase your team\'s average points per week to increase how many extra points you get, but your team can loose it if your team\'s average points per week drops too low!<br/>
-                        &nbsp;&nbsp;&nbsp; Your team\'s current points per week and progress to the next multiplier are shown in the progress bar below.';
 $string['rankings'] = 'Rankings';
 $string['num'] = '#';
 $string['group'] = 'Group';
@@ -104,6 +94,12 @@ $string['extrapoints'] = 'Extra Points';
 $string['nogroupsfound'] = 'No Groups Found';
 $string['info'] = 'Info';
 $string['description'] = 'On this Page you can see your full teams points breakdown as well as each of your individual contributions.';
+
+$string['start'] = 'Start';
+$string['end'] = 'End';
+$string['update'] =  'Update';
+$string['resettodefault'] = 'Reset To Default';
+$string['changedaterange'] =  'Change Date Range';
 
 $string['QA'] = 'Q/A';
 $string['q0'] = '<strong>Q0</strong>: What if my team is smaller than other teams? Will we be at a disadvantage?';
@@ -129,17 +125,6 @@ $string['a22'] = 'Submit Assignments <strong>'.get_config('leaderboard', 'assign
                     <br/><br/>Earn <strong>'.get_config('leaderboard', 'forumpostpoints').'</strong> points for posting in a Forum
                     <br/>Earn <strong>'.get_config('leaderboard', 'forumresponsepoints').'</strong> points for responding to a Forum
                     <br/><br/>Earn <strong>'.get_config('leaderboard', 'choicepoints').'</strong> points for participating in a Choice';
-$string['q3'] = '<strong>Q3</strong>: What are the multipliers for?';
-$string['a3'] = '<strong>A3</strong>: The multipliers are there to encourage continual good study habits. If your team is averaging many points a week then they will be rewarded with a multiplier that will increase all of their pointes earned by that exact amount. If your team continues to earn points the multiplier will increase even more, however you can loose the multiplier if your teams weekly point average drops enough.';
-$string['q4'] = '<strong>Q4</strong>: What are the different multiplier values and how many points are needed to reach them?';
-$string['a41'] = '<strong>A4</strong>: The multiplier levels are currently set to:';
-$string['a42'] = '<strong>'.get_config('leaderboard', 'groupdata1').'</strong> points per week to reach <strong>'.get_config('leaderboard', 'multiplier2').'x</strong> points,
-                    <br/><strong>'.get_config('leaderboard', 'groupdata2').'</strong> points per week to reach <strong>'.get_config('leaderboard', 'multiplier3').'x </strong> points,
-                    <br/><strong>'.get_config('leaderboard', 'groupdata3').'</strong> points per week to reach <strong>'.get_config('leaderboard', 'multiplier4').'x </strong> points,
-                    <br/><strong>'.get_config('leaderboard', 'groupdata4').'</strong> points per week to reach <strong>'.get_config('leaderboard', 'multiplier5').'x </strong> points,
-                    <br/><strong>'.get_config('leaderboard', 'groupdata5').'</strong> points per week to stay at <strong>'.get_config('leaderboard', 'multiplier5').'x</strong> points.';
-$string['q5'] = '<strong>Q5</strong>: How is the weekly point average for my team determined?';
-$string['a5'] = '<strong>A5</strong>: The weekly point average only takes the two most recent weeks into account so that teams can get stuck with low averages or secure high averages throughout the semester. If the teams most recent week has a higher average than the last 2 weeks, the 1 week average is used instead so that teams don\'t loose their multiplier due to a school break.';
 $string['q6'] = '<strong>Q3</strong>: I submitted an assignment early, why don\'t I see any points?';
 $string['a6'] = '<strong>A3</strong>: This is normal. Your points will not be recorded in the leaderboard until after the due date for an assignment or quiz has passed. This is in place to so that an assignment cannot earn points for submission both before and after a reset.';
 $string['q7'] = '<strong>Q4</strong>: Is my data being logged?';
