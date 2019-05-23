@@ -7,12 +7,12 @@
     <TABLE NAME="block_leaderboard_assignment" COMMENT="A table for student assignments">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
-        <FIELD NAME="activity_id" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The id of the activity the student completed."/>
-        <FIELD NAME="activity_student" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The id of the student who completed this activity."/>
-        <FIELD NAME="points_earned" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The number of points earned when the student completed the activity."/>
-        <FIELD NAME="time_finished" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The time the assignment was most recently submitted."/>
-        <FIELD NAME="module_name" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="The title of the assignment."/>
-        <FIELD NAME="days_early" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The number of days early an assignment was turned in."/>
+        <FIELD NAME="activityid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The id of the activity the student completed."/>
+        <FIELD NAME="studentid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The id of the student who completed this activity."/>
+        <FIELD NAME="pointsearned" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The number of points earned when the student completed the activity."/>
+        <FIELD NAME="timefinished" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The time the assignment was most recently submitted."/>
+        <FIELD NAME="modulename" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="The title of the assignment."/>
+        <FIELD NAME="daysearly" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The number of days early an assignment was turned in."/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
@@ -21,15 +21,15 @@
     <TABLE NAME="block_leaderboard_quiz" COMMENT="A table containing high level data about a quiz">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
-        <FIELD NAME="time_started" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The timestamp when the quiz is started."/>
-        <FIELD NAME="time_finished" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The timestamp when the quiz gets finished."/>
+        <FIELD NAME="timestarted" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The timestamp when the quiz is started."/>
+        <FIELD NAME="timefinished" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The timestamp when the quiz gets finished."/>
         <FIELD NAME="attempts" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The number times the student has attempted the quiz"/>
-        <FIELD NAME="student_id" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The id of the student"/>
-        <FIELD NAME="quiz_id" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The id of the quiz in 'quiz_attempts'"/>
-        <FIELD NAME="points_earned" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The number of points earned by the student"/>
-        <FIELD NAME="module_name" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="The title of the quiz instance."/>
-        <FIELD NAME="days_early" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The number of days early a quiz is submitted."/>
-        <FIELD NAME="days_spaced" TYPE="number" LENGTH="10" NOTNULL="false" SEQUENCE="false" DECIMALS="5" COMMENT="The number of days since the last quiz taken."/>
+        <FIELD NAME="studentid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The id of the student"/>
+        <FIELD NAME="quizid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The id of the quiz in 'quiz_attempts'"/>
+        <FIELD NAME="pointsearned" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The number of points earned by the student"/>
+        <FIELD NAME="modulename" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="The title of the quiz instance."/>
+        <FIELD NAME="daysearly" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The number of days early a quiz is submitted."/>
+        <FIELD NAME="daysspaced" TYPE="number" LENGTH="10" NOTNULL="false" SEQUENCE="false" DECIMALS="5" COMMENT="The number of days since the last quiz taken."/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
@@ -38,11 +38,11 @@
     <TABLE NAME="block_leaderboard_choice" COMMENT="A table with data about student participation in choices">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
-        <FIELD NAME="student_id" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The id of the student submitting this choice"/>
-        <FIELD NAME="choice_id" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The id of the choice"/>
-        <FIELD NAME="points_earned" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The amount of points earned upon completing the choice"/>
-        <FIELD NAME="module_name" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="The title of the choice module."/>
-        <FIELD NAME="time_finished" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The timestamp of when the choice was completed."/>
+        <FIELD NAME="studentid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The id of the student submitting this choice"/>
+        <FIELD NAME="choiceid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The id of the choice"/>
+        <FIELD NAME="pointsearned" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The amount of points earned upon completing the choice"/>
+        <FIELD NAME="modulename" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="The title of the choice module."/>
+        <FIELD NAME="timefinished" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The timestamp of when the choice was completed."/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
@@ -51,14 +51,14 @@
     <TABLE NAME="block_leaderboard_forum" COMMENT="A table with data about student posts">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
-        <FIELD NAME="student_id" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The id of the student making the post"/>
-        <FIELD NAME="forum_id" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The id of the forum module the student is posting in"/>
-        <FIELD NAME="post_id" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The id of the post the student made"/>
-        <FIELD NAME="is_response" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="0 if this is a new thread, 1 if this is a response"/>
-        <FIELD NAME="points_earned" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The number of points earned upon creating the post"/>
-        <FIELD NAME="module_name" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="The title of the forum."/>
-        <FIELD NAME="time_finished" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The time the post was submitted."/>
-        <FIELD NAME="discussion_id" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The id of the discussion the post is in"/>
+        <FIELD NAME="studentid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The id of the student making the post"/>
+        <FIELD NAME="forumid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The id of the forum module the student is posting in"/>
+        <FIELD NAME="postid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The id of the post the student made"/>
+        <FIELD NAME="isresponse" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="0 if this is a new thread, 1 if this is a response"/>
+        <FIELD NAME="pointsearned" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The number of points earned upon creating the post"/>
+        <FIELD NAME="modulename" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="The title of the forum."/>
+        <FIELD NAME="timefinished" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The time the post was submitted."/>
+        <FIELD NAME="discussionid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The id of the discussion the post is in"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
@@ -68,9 +68,8 @@
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="groupid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The groups id."/>
-        <FIELD NAME="multiplier" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The current multiplier associated with the group."/>
+        <FIELD NAME="timeupdated" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The current timeupdated associated with the group."/>
         <FIELD NAME="currentstanding" TYPE="int" LENGTH="10" NOTNULL="false" DEFAULT="1" SEQUENCE="false" COMMENT="The groups current standing in the leaderboard."/>
-        <FIELD NAME="prevoiusstanding" TYPE="int" LENGTH="10" NOTNULL="false" DEFAULT="1" SEQUENCE="false" COMMENT="The groups last standing in the leaderboard."/>
         <FIELD NAME="lastmove" TYPE="int" LENGTH="10" NOTNULL="false" DEFAULT="1" SEQUENCE="false" COMMENT="The last move the group made '0' up '1' down '2' stay."/>
       </FIELDS>
       <KEYS>

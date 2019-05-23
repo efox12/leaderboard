@@ -25,13 +25,13 @@ defined('MOODLE_INTERNAL') || die();
 
 $settings->add(new admin_setting_heading(
     'assignmentheaderconfig',
-    get_string('assignment_early_submission', 'block_leaderboard'),
-    get_string('assignment_early_submission_desc', 'block_leaderboard')
+    get_string('assignmentearlysubmission', 'block_leaderboard'),
+    get_string('assignmentearlysubmission_desc', 'block_leaderboard')
 ));
 for ($x = 5; $x >= 1; $x--) {
     $settings->add(new admin_setting_configtext(
         'leaderboard/assignmenttime'.$x,
-        get_string('days_submitted_early', 'block_leaderboard'),
+        get_string('dayssubmittedearly', 'block_leaderboard'),
         '',
         $x
     ));
@@ -41,7 +41,7 @@ for ($x = 5; $x >= 1; $x--) {
 
     $settings->add(new admin_setting_configtext(
         'leaderboard/assignmentpoints'.$x,
-        get_string('points_earned', 'block_leaderboard'),
+        get_string('pointsearned', 'block_leaderboard'),
         '<br/>',
         $x * 5
     ));
@@ -53,13 +53,13 @@ for ($x = 5; $x >= 1; $x--) {
 // QUIZ.
 $settings->add(new admin_setting_heading(
     'quizheaderconfig',
-    get_string('quiz_early_submission', 'block_leaderboard'),
-    get_string('quiz_early_submission_desc', 'block_leaderboard')
+    get_string('quizearlysubmission', 'block_leaderboard'),
+    get_string('quizearlysubmission_desc', 'block_leaderboard')
 ));
 for ($x = 5; $x >= 1; $x--) {
     $settings->add(new admin_setting_configtext(
         'leaderboard/quiztime'.$x,
-        get_string('days_submitted_early', 'block_leaderboard'),
+        get_string('dayssubmittedearly', 'block_leaderboard'),
         '',
         $x
     ));
@@ -69,7 +69,7 @@ for ($x = 5; $x >= 1; $x--) {
 
     $settings->add(new admin_setting_configtext(
         'leaderboard/quizpoints'.$x,
-        get_string('points_earned', 'block_leaderboard'),
+        get_string('pointsearned', 'block_leaderboard'),
         '<br/>',
         $x * 2
     ));
@@ -79,15 +79,15 @@ for ($x = 5; $x >= 1; $x--) {
 }
 $settings->add(new admin_setting_heading(
     'quizheaderconfig2',
-    get_string('quiz_spacing', 'block_leaderboard'),
-    get_string('quiz_spacing_desc', 'block_leaderboard')
+    get_string('quizspacing', 'block_leaderboard'),
+    get_string('quizspacing_desc', 'block_leaderboard')
 ));
 
 $vals = array(round(1 / 48, 2), 1 / 2, 1);
 for ($x = 3; $x >= 1; $x--) {
     $settings->add(new admin_setting_configtext(
         'leaderboard/quizspacing'.$x,
-        get_string('days_between_quizzes', 'block_leaderboard'),
+        get_string('daysbetweenquizzes', 'block_leaderboard'),
         '',
         $vals[$x - 1]
     ));
@@ -97,7 +97,7 @@ for ($x = 3; $x >= 1; $x--) {
 
     $settings->add(new admin_setting_configtext(
         'leaderboard/quizspacingpoints'.$x,
-        get_string('points_earned', 'block_leaderboard'),
+        get_string('pointsearned', 'block_leaderboard'),
         '<br/>',
         $x * 2
     ));
@@ -107,12 +107,12 @@ for ($x = 3; $x >= 1; $x--) {
 }
 $settings->add(new admin_setting_heading(
     'quizheaderconfig3',
-    get_string('quiz_attempts', 'block_leaderboard'),
-    get_string('quiz_attempts_desc', 'block_leaderboard')
+    get_string('quizattempts', 'block_leaderboard'),
+    get_string('quizattempts_desc', 'block_leaderboard')
 ));
 $settings->add(new admin_setting_configtext(
     'leaderboard/quizattempts',
-    get_string('number_of_attempts', 'block_leaderboard'),
+    get_string('numberofattempts', 'block_leaderboard'),
     '',
     3
 ));
@@ -122,7 +122,7 @@ if (get_config('leaderboard', 'quizattempts') === '') {
 
 $settings->add(new admin_setting_configtext(
     'leaderboard/quizattemptspoints',
-    get_string('points_earned', 'block_leaderboard'),
+    get_string('pointsearned', 'block_leaderboard'),
     '<br/>',
     2
 ));
@@ -133,14 +133,14 @@ if (get_config('leaderboard', 'quizattemptspoints') === '') {
 // CHOICE.
 $settings->add(new admin_setting_heading(
 'choiceheaderconfig',
-get_string('choice_settings', 'block_leaderboard'),
-get_string('choice_settings_desc', 'block_leaderboard')
+get_string('choicesettings', 'block_leaderboard'),
+get_string('choicesettings_desc', 'block_leaderboard')
 ));
 
 $settings->add(new admin_setting_configtext(
     'leaderboard/choicepoints',
-    get_string('label_choice_points', 'block_leaderboard'),
-    get_string('desc_choice_points', 'block_leaderboard'),
+    get_string('label_choicepoints', 'block_leaderboard'),
+    get_string('desc_choicepoints', 'block_leaderboard'),
     5
 ));
 if (get_config('leaderboard', 'choicepoints') === '') {
@@ -156,8 +156,8 @@ $settings->add(new admin_setting_heading(
 
 $settings->add(new admin_setting_configtext(
     'leaderboard/forumpostpoints',
-    get_string('label_forum_post_points', 'block_leaderboard'),
-    get_string('desc_forum_post_points', 'block_leaderboard'),
+    get_string('label_forumpostpoints', 'block_leaderboard'),
+    get_string('desc_forumpostpoints', 'block_leaderboard'),
     1
 ));
 if (get_config('leaderboard', 'forumpostpoints') === '') {
@@ -166,8 +166,8 @@ if (get_config('leaderboard', 'forumpostpoints') === '') {
 
 $settings->add(new admin_setting_configtext(
     'leaderboard/forumresponsepoints',
-    get_string('label_forum_response_points', 'block_leaderboard'),
-    get_string('desc_forum_response_points', 'block_leaderboard'),
+    get_string('label_forumresponsepoints', 'block_leaderboard'),
+    get_string('desc_forumresponsepoints', 'block_leaderboard'),
     2
 ));
 if (get_config('leaderboard', 'forumresponsepoints') === '') {
@@ -177,8 +177,8 @@ if (get_config('leaderboard', 'forumresponsepoints') === '') {
 // MISC.
 $settings->add(new admin_setting_heading(
     'resetheaderconfig',
-    get_string('reset_settings', 'block_leaderboard'),
-    get_string('reset_settings_desc', 'block_leaderboard')
+    get_string('resetsettings', 'block_leaderboard'),
+    get_string('resetsettings_desc', 'block_leaderboard')
 ));
 $settings->add(new admin_setting_configtext(
     'leaderboard/reset1',
@@ -196,14 +196,14 @@ $settings->add(new admin_setting_configtext(
 
 $settings->add(new admin_setting_heading(
     'glossaryheaderconfig',
-    get_string('glossary_settings', 'block_leaderboard'),
-    get_string('glossary_settings_desc', 'block_leaderboard')
+    get_string('glossarysettings', 'block_leaderboard'),
+    get_string('glossarysettings_desc', 'block_leaderboard')
 ));
 
 $settings->add(new admin_setting_heading(
     'mischeaderconfig',
-    get_string('other_settings', 'block_leaderboard'),
-    get_string('other_settings_desc', 'block_leaderboard')
+    get_string('othersettings', 'block_leaderboard'),
+    get_string('othersettings_desc', 'block_leaderboard')
 ));
 
 

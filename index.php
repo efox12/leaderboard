@@ -182,21 +182,21 @@ if (count($groups) > 0) { // There are groups to display.
                         $infocount = 0;
                         foreach ($studentdata->history as $pointsmodule) {
                             // Add a row to the table with the name of the module and the number of points earned.
-                            if (property_exists($pointsmodule, "is_response")) { // Forum modules.
-                                if ($pointsmodule->is_response == 0) {
+                            if (property_exists($pointsmodule, "isresponse")) { // Forum modules.
+                                if ($pointsmodule->isresponse == 0) {
                                     $modulerow = new html_table_row(array("", "", "",
-                                                        "Forum Post", round($pointsmodule->points_earned)));
-                                } else if ($pointsmodule->is_response == 1) {
+                                                        "Forum Post", round($pointsmodule->pointsearned)));
+                                } else if ($pointsmodule->isresponse == 1) {
                                     $modulerow = new html_table_row(array("", "", "",
-                                                        "Forum Response", round($pointsmodule->points_earned)));
+                                                        "Forum Response", round($pointsmodule->pointsearned)));
                                 }
                             } else { // Modules with their own names.
-                                if (property_exists($pointsmodule, "days_early") && $pointsmodule->points_earned > 0) {
+                                if (property_exists($pointsmodule, "daysearly") && $pointsmodule->pointsearned > 0) {
                                     $modulerow = new html_table_row(array("", '<img class = "dropdown" src = '.$expandurl.'>', "",
-                                                        $pointsmodule->module_name, round($pointsmodule->points_earned)));
+                                                        $pointsmodule->modulename, round($pointsmodule->pointsearned)));
                                 } else {
                                     $modulerow = new html_table_row(array("", "", "",
-                                                        $pointsmodule->module_name, round($pointsmodule->points_earned)));
+                                                        $pointsmodule->modulename, round($pointsmodule->pointsearned)));
                                 }
                             }
                             $modulerow->attributes['class'] = 'subcontent';
@@ -210,8 +210,8 @@ if (count($groups) > 0) { // There are groups to display.
                             $spacingpoints = 0;
 
                             // Include info about how many days early a task was completed.
-                            if (property_exists($pointsmodule, "days_early")) {
-                                $daysearly = $pointsmodule->days_early;
+                            if (property_exists($pointsmodule, "daysearly")) {
+                                $daysearly = $pointsmodule->daysearly;
                                 if (property_exists($pointsmodule, "attempts")) {
                                     $earlypoints = $functions->get_early_submission_points($daysearly, 'quiz');
                                 } else {
@@ -219,7 +219,7 @@ if (count($groups) > 0) { // There are groups to display.
                                 }
                                 if ($earlypoints > 0) {
                                     $modulerow = new html_table_row(array("", "", "",
-                                                    "Submitted ".abs(round($pointsmodule->days_early))." days early",
+                                                    "Submitted ".abs(round($pointsmodule->daysearly))." days early",
                                                     $earlypoints));
                                     $modulerow->attributes['class'] = 'contentInfo';
                                     $modulerow->attributes['name'] = 'c'.$groupindex.'s'.$count.'i'.$infocount;
@@ -239,8 +239,8 @@ if (count($groups) > 0) { // There are groups to display.
                             }
 
                             // Include info about how long quizzes were spaced out.
-                            if (property_exists($pointsmodule, "days_spaced")) {
-                                $quizspacing = round($pointsmodule->days_spaced, 5);
+                            if (property_exists($pointsmodule, "daysspaced")) {
+                                $quizspacing = round($pointsmodule->daysspaced, 5);
                                 $unit = " days spaced";
                                 if ($quizspacing >= 5) {
                                     $unit = " or more days spaced";
@@ -270,7 +270,7 @@ if (count($groups) > 0) { // There are groups to display.
             // If the teams are not equal add visible bonus points to the table.
             if ($groupdata->bonuspoints > 0) {
                 $individualrow = new html_table_row(array("", "", "",
-                                    get_string('extra_points', 'block_leaderboard'), round($groupdata->bonuspoints)));
+                                    get_string('extrapoints', 'block_leaderboard'), round($groupdata->bonuspoints)));
                 $individualrow->attributes['class'] = 'content';
                 $individualrow->attributes['name'] = 'c'.$groupindex;
                 $individualrow->attributes['child'] = 's'.$count;
@@ -283,7 +283,7 @@ if (count($groups) > 0) { // There are groups to display.
     $table = new html_table();
     $table->head = array("", get_string('rank', 'block_leaderboard'), "",
                     get_string('name', 'block_leaderboard'), get_string('points', 'block_leaderboard'));
-    $row = new html_table_row(array("", "", get_string('no_Groups_Found', 'block_leaderboard'), "", ""));
+    $row = new html_table_row(array("", "", get_string('nogroupsfound', 'block_leaderboard'), "", ""));
     $table->data[] = $row;
 }
 
@@ -319,7 +319,7 @@ if (!$isstudent) {
     $mform->display();
     echo html_writer::div($OUTPUT->single_button(new moodle_url('classes/data_loader.php',
                                                 array('id' => $cid, 'start' => $start, 'end' => $end)),
-                                                get_string('download_data', 'block_leaderboard'), 'get'), 'download_button');
+                                                get_string('downloaddata', 'block_leaderboard'), 'get'), 'download_button');
 }
 
 // Display the Q/A.
@@ -365,22 +365,22 @@ foreach ($groups as $group) {
         
         foreach ($quizes as $quiz) {
             $quiztable = $DB->get_record('block_leaderboard_quiz',
-                array('quiz_id' => $quiz->id, 'student_id' => $student->id),
+                array('quizid' => $quiz->id, 'studentid' => $student->id),
                 $fields = '*',
                 $strictness = IGNORE_MISSING);
             if (!$quiztable) {
                 // Create a new quiz.
                 $quiztable = new \stdClass();
-                $quiztable->time_started = 0;
-                $quiztable->quiz_id = $quiz->id;
-                $quiztable->student_id = $student->id;
+                $quiztable->timestarted = 0;
+                $quiztable->quizid = $quiz->id;
+                $quiztable->studentid = $student->id;
                 $quiztable->attempts = $quiz->attempt;
-                $quiztable->days_early = 0;
-                $quiztable->days_spaced = 0;
-                $quiztable->module_name = $quiz->name;
+                $quiztable->daysearly = 0;
+                $quiztable->daysspaced = 0;
+                $quiztable->modulename = $quiz->name;
                 $DB->insert_record('block_leaderboard_quiz', $quiztable);
                 $quiztable = $DB->get_record('block_leaderboard_quiz',
-                    array('quiz_id' => $quiz->id, 'student_id' => $student->id),
+                    array('quizid' => $quiz->id, 'studentid' => $student->id),
                     $fields = '*',
                     $strictness = IGNORE_MISSING);
             }
@@ -388,29 +388,29 @@ foreach ($groups as $group) {
                 $quiztable->attempts = $quiz->attempt;
             }
             if ($quiz->attempt == 1) {
-                $quiztable->time_started = $quiz->timestart;
-                $quiztable->time_finished = $quiz->timefinish;
-                $quiztable->days_early = intdiv(($quiz->timeclose - $quiz->timefinish), 86400);
+                $quiztable->timestarted = $quiz->timestart;
+                $quiztable->timefinished = $quiz->timefinish;
+                $quiztable->daysearly = intdiv(($quiz->timeclose - $quiz->timefinish), 86400);
                 
             }
             $DB->update_record('block_leaderboard_quiz', $quiztable);
         }
 
-        $pastquizzes = $DB->get_records('block_leaderboard_quiz', array('student_id' => $student->id), $sort = 'time_started ASC');
+        $pastquizzes = $DB->get_records('block_leaderboard_quiz', array('studentid' => $student->id), $sort = 'timestarted ASC');
         //echo("<script>console.log('PQ: ".json_encode($pastquizzes)."');</script>");
         $cleanquizzes = [];
         foreach ($pastquizzes as $pastquiz) {
-            if ($pastquiz->time_finished != null) {
+            if ($pastquiz->timefinished != null) {
                 $cleanquizzes[] = $pastquiz;
             }
         }
         //echo("<script>console.log('EVENT1: ".json_encode($cleanquizzes)."');</script>");
         $previoustime = 0;
         foreach ($cleanquizzes as $quiz) {
-            $daysbeforesubmission = $quiz->days_early;
+            $daysbeforesubmission = $quiz->daysearly;
             $pointsearned = 0;
             if (abs($daysbeforesubmission) < 50) { // Quizzes without duedates will produce a value like -17788.
-                $quiz->days_early = $daysbeforesubmission;
+                $quiz->daysearly = $daysbeforesubmission;
                 for ($x = 1; $x <= 5; $x++) {
                     $currenttime = get_config('leaderboard', 'quiztime'.$x);
                     if ($x < 5) {
@@ -425,19 +425,19 @@ foreach ($groups as $group) {
                     }
                 }
             } else {
-                $quiz->days_early = 0;
+                $quiz->daysearly = 0;
                 $pointsearned = 0;
             }
 
-            $quiz->points_earned = $pointsearned;
+            $quiz->pointsearned = $pointsearned;
 
             $spacingpoints = 0;
-            $quizspacing = ($quiz->time_started - $previoustime) / (float)86400;
+            $quizspacing = ($quiz->timestarted - $previoustime) / (float)86400;
             //echo("<script>console.log('SPACING: ".$quizspacing."');</script>");
 
             // Make sure that days spaced doesn't go above a maximum of 5 days.
-            $quiz->days_spaced = min($quizspacing, 5.0);
-            //echo("<script>console.log('SPACING: ".$quiz->days_spaced."');</script>");
+            $quiz->daysspaced = min($quizspacing, 5.0);
+            //echo("<script>console.log('SPACING: ".$quiz->daysspaced."');</script>");
 
             //echo("<script>console.log('SPACING: ".json_encode($quiz)."');</script>");
             for ($x = 1; $x <= 3; $x++) {
@@ -454,8 +454,8 @@ foreach ($groups as $group) {
                     }
                 }
             }
-            $previoustime = $quiz->time_started;
-            $quiz->points_earned += $spacingpoints;
+            $previoustime = $quiz->timestarted;
+            $quiz->pointsearned += $spacingpoints;
             $multipleattemptpoints = 0;
             $points = 0;
             $quizattempts = get_config('leaderboard', 'quizattempts');
@@ -463,7 +463,7 @@ foreach ($groups as $group) {
             $multipleattemptpoints = get_config('leaderboard', 'quizattemptspoints');
 
             $points += $multipleattemptpoints * ($quiz->attempts - 1);
-            $quiz->points_earned += $multipleattemptpoints * ($quiz->attempts - 1);
+            $quiz->pointsearned += $multipleattemptpoints * ($quiz->attempts - 1);
 
             $DB->update_record('block_leaderboard_quiz', $quiz);
         }
@@ -487,43 +487,43 @@ foreach($groups as $group){
         $assignments = $DB->get_records_sql($sql, array($student->id));
         foreach ($assignments as $assignment) {
             $assignmenttable = $DB->get_record('block_leaderboard_assignment',
-                array('activity_student'=> $student->id, 'activity_id' => $assignment->id), $fields = '*',
+                array('studentid'=> $student->id, 'activityid' => $assignment->id), $fields = '*',
                 $strictness = IGNORE_MISSING);
             
             if (!$assignmenttable) {
                 // Create a new quiz.
                 $assignmenttable = new \stdClass();
-                $assignmenttable->points_earned = 0;
-                $assignmenttable->activity_student = $student->id;
-                $assignmenttable->activity_id = $assignment->id;
-                $assignmenttable->time_finished = $assignment->timemodified;
-                $assignmenttable->module_name = $assignment->name;
-                $assignmenttable->days_early = intdiv(($assignment->duedate - $assignment->timemodified), 86400);
+                $assignmenttable->pointsearned = 0;
+                $assignmenttable->studentid = $student->id;
+                $assignmenttable->activityid = $assignment->id;
+                $assignmenttable->timefinished = $assignment->timemodified;
+                $assignmenttable->modulename = $assignment->name;
+                $assignmenttable->daysearly = intdiv(($assignment->duedate - $assignment->timemodified), 86400);
                 $DB->insert_record('block_leaderboard_assignment', $assignmenttable);
                 
                 $assignmenttable = $DB->get_record('block_leaderboard_assignment',
-                    array('activity_id' => $assignment->id, 'activity_student' => $student->id),
+                    array('activityid' => $assignment->id, 'studentid' => $student->id),
                     $fields = '*', $strictness = IGNORE_MISSING);
             }
             $points = 0;
-            $days_early = $assignmenttable->days_early;
+            $daysearly = $assignmenttable->daysearly;
             for($x=1; $x<=5; $x++){
                 $current_time = get_config('leaderboard','assignmenttime'.$x);
                 if($x < 5) {
                     $next_time = get_config('leaderboard','assignmenttime'.($x+1));
-                    if($days_early >= $current_time && $days_early < $next_time){
-                        $points = get_config('leaderboard','assignmnetpoints'.$x);
+                    if($daysearly >= $current_time && $daysearly < $next_time){
+                        $points = get_config('leaderboard','assignmentpoints'.$x);
                         break;
                     }
                 }
                 else {
-                    if($days_early >= $current_time){
-                        $points = get_config('leaderboard','assignmnetpoints'.$x);
+                    if($daysearly >= $current_time){
+                        $points = get_config('leaderboard','assignmentpoints'.$x);
                         break;
                     }
                 }
             }
-            $assignmenttable->points_earned = $points;
+            $assignmenttable->pointsearned = $points;
             $DB->update_record('block_leaderboard_assignment', $assignmenttable);
         }        
     }
@@ -540,18 +540,18 @@ foreach($groups as $group){
 
         $choices = $DB->get_records_sql($sql, array($student->id));
         foreach ($choices as $choice) {
-            $choicetable = $DB->get_record('block_leaderboard_choice', array('choice_id' => $choice->id, 'student_id' => $student->id),
+            $choicetable = $DB->get_record('block_leaderboard_choice', array('choiceid' => $choice->id, 'studentid' => $student->id),
                 $fields = '*', $strictness = IGNORE_MISSING);
             if (!$choicetable) {
                 $choicedata = new \stdClass();
-                $choicedata->student_id = $choice->userid;
-                $choicedata->choice_id = $choice->id;
-                $choicedata->points_earned = get_config('leaderboard', 'choicepoints');
-                $choicedata->time_finished = $choice->timemodified;
-                $choicedata->module_name = $choice->name;
+                $choicedata->studentid = $choice->userid;
+                $choicedata->choiceid = $choice->id;
+                $choicedata->pointsearned = get_config('leaderboard', 'choicepoints');
+                $choicedata->timefinished = $choice->timemodified;
+                $choicedata->modulename = $choice->name;
 
                 $DB->insert_record('block_leaderboard_choice', $choicedata);
-                $choicetable = $DB->get_record('block_leaderboard_choice', array('choice_id' => $choice->id, 'student_id' => $student->id),
+                $choicetable = $DB->get_record('block_leaderboard_choice', array('choiceid' => $choice->id, 'studentid' => $student->id),
                     $fields = '*', $strictness = IGNORE_MISSING);
             }
             echo("<script>console.log('SPACING: ".json_encode($choicetable)."');</script>");
@@ -571,19 +571,19 @@ foreach($groups as $group){
         $discussions = $DB->get_records_sql($sql, array($student->id));
         foreach ($discussions as $discussion) {
             $discussiontable = $DB->get_record('block_leaderboard_forum',
-            array('student_id' => $student->id, 'discussion_id' => $discussion->id, 'is_response' => false), $fields = '*', $strictness = IGNORE_MISSING);
+            array('studentid' => $student->id, 'discussionid' => $discussion->id, 'isresponse' => false), $fields = '*', $strictness = IGNORE_MISSING);
             
             if (!$discussiontable) {
                 // Create data for table
                 $forumdata = new \stdClass();
-                $forumdata->student_id = $student->id;
-                $forumdata->forum_id = $discussion->moodleoverflow;
-                $forumdata->post_id = $discussion->firstpost;
-                $forumdata->discussion_id = $discussion->id;
-                $forumdata->is_response = false;
-                $forumdata->points_earned = get_config('leaderboard', 'forumpostpoints');
-                $forumdata->time_finished = $discussion->timestart;
-                $forumdata->module_name = $discussion->name;
+                $forumdata->studentid = $student->id;
+                $forumdata->forumid = $discussion->moodleoverflow;
+                $forumdata->postid = $discussion->firstpost;
+                $forumdata->discussionid = $discussion->id;
+                $forumdata->isresponse = false;
+                $forumdata->pointsearned = get_config('leaderboard', 'forumpostpoints');
+                $forumdata->timefinished = $discussion->timestart;
+                $forumdata->modulename = $discussion->name;
                 $DB->insert_record('block_leaderboard_forum', $forumdata);
             }
         }
@@ -602,19 +602,19 @@ foreach($groups as $group){
         $discussions = $DB->get_records_sql($sql, array($student->id));
         foreach ($discussions as $discussion) {
             $discussiontable = $DB->get_record('block_leaderboard_forum',
-            array('student_id' => $student->id, 'post_id' => $discussion->id, 'is_response' => true), $fields = '*', $strictness = IGNORE_MISSING);
+            array('studentid' => $student->id, 'postid' => $discussion->id, 'isresponse' => true), $fields = '*', $strictness = IGNORE_MISSING);
             
             if (!$discussiontable) {
                 // Create data for table
                 $forumdata = new \stdClass();
-                $forumdata->student_id = $student->id;
-                $forumdata->forum_id = $discussion->moodleoverflow;
-                $forumdata->post_id = $discussion->id;
-                $forumdata->discussion_id = $discussion->discussion;
-                $forumdata->is_response = true;
-                $forumdata->points_earned = get_config('leaderboard', 'forumresponsepoints');
-                $forumdata->time_finished = $discussion->created;
-                $forumdata->module_name = "Forum Post";
+                $forumdata->studentid = $student->id;
+                $forumdata->forumid = $discussion->moodleoverflow;
+                $forumdata->postid = $discussion->id;
+                $forumdata->discussionid = $discussion->discussion;
+                $forumdata->isresponse = true;
+                $forumdata->pointsearned = get_config('leaderboard', 'forumresponsepoints');
+                $forumdata->timefinished = $discussion->created;
+                $forumdata->modulename = "Forum Post";
                 $DB->insert_record('block_leaderboard_forum', $forumdata);
             }
         }

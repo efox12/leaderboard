@@ -88,9 +88,9 @@ function xmldb_block_leaderboard_upgrade($oldversion) {
     }
     if ($oldversion < 2019091840) {
         $table = new xmldb_table('block_leaderboard_quiz');
-        $field = new xmldb_field('days_spaced', XMLDB_TYPE_NUMBER, '10, 10', null, null, null, null, 'days_early');
+        $field = new xmldb_field('daysspaced', XMLDB_TYPE_NUMBER, '10, 10', null, null, null, null, 'daysearly');
 
-        // Launch change of type for field days_spaced.
+        // Launch change of type for field daysspaced.
         $dbman->change_field_type($table, $field);
 
         // Leaderboard savepoint reached.

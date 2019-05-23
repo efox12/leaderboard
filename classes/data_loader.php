@@ -40,17 +40,17 @@ $PAGE->set_url($url);
 
 // The row for all column names in the csv.
 $csv[0] = array(
-    'student_id',
+    'studentid',
     'module_id',
-    'module_name',
+    'modulename',
     'module_type',
-    'time_finished',
-    'days_early',
+    'timefinished',
+    'daysearly',
     'attempts',
-    'days_spaced',
-    'discussion_id',
-    'post_id',
-    'is_response'
+    'daysspaced',
+    'discussionid',
+    'postid',
+    'isresponse'
 );
 
 $count = 1;
@@ -61,16 +61,16 @@ foreach ($groups as $group) {
     $students = groups_get_members($group->id, $fields = 'u.*', $sort = 'lastname ASC');
     foreach ($students as $student) {
         // Get each members past contributions and add them to an array.
-        $studentactivities = $DB->get_records('block_leaderboard_assignment', array('activity_student' => $student->id));
+        $studentactivities = $DB->get_records('block_leaderboard_assignment', array('studentid' => $student->id));
         foreach ($studentactivities as $activity) {
-            if ($activity->time_finished >= $start && $activity->time_finished <= $end) {
+            if ($activity->timefinished >= $start && $activity->timefinished <= $end) {
                 $csv[$count] = array(
-                    $activity->activity_student,
-                    $activity->activity_id,
-                    $activity->module_name,
+                    $activity->studentid,
+                    $activity->activityid,
+                    $activity->modulename,
                     'Assignment',
-                    $activity->time_finished,
-                    $activity->days_early,
+                    $activity->timefinished,
+                    $activity->daysearly,
                     'null',
                     'null',
                     'null',
@@ -80,18 +80,18 @@ foreach ($groups as $group) {
                 $count++;
             }
         }
-        $studentquizzes = $DB->get_records('block_leaderboard_quiz', array('student_id' => $student->id));
+        $studentquizzes = $DB->get_records('block_leaderboard_quiz', array('studentid' => $student->id));
         foreach ($studentquizzes as $quiz) {
-            if ($quiz->time_finished >= $start && $quiz->time_finished <= $end) {
+            if ($quiz->timefinished >= $start && $quiz->timefinished <= $end) {
                 $csv[$count] = array(
-                    $quiz->student_id,
-                    $quiz->quiz_id,
-                    $quiz->module_name,
+                    $quiz->studentid,
+                    $quiz->quizid,
+                    $quiz->modulename,
                     'Quiz',
-                    $quiz->time_finished,
-                    $quiz->days_early,
+                    $quiz->timefinished,
+                    $quiz->daysearly,
                     $quiz->attempts,
-                    round($quiz->days_spaced, 2),
+                    round($quiz->daysspaced, 2),
                     'null',
                     'null',
                     'null'
@@ -99,15 +99,15 @@ foreach ($groups as $group) {
                 $count++;
             }
         }
-        $studentchoices = $DB->get_records('block_leaderboard_choice', array('student_id' => $student->id));
+        $studentchoices = $DB->get_records('block_leaderboard_choice', array('studentid' => $student->id));
         foreach ($studentchoices as $choice) {
-            if ($choice->time_finished >= $start && $choice->time_finished <= $end) {
+            if ($choice->timefinished >= $start && $choice->timefinished <= $end) {
                 $csv[$count] = array(
-                    $choice->student_id,
-                    $choice->choice_id,
-                    $choice->module_name,
+                    $choice->studentid,
+                    $choice->choiceid,
+                    $choice->modulename,
                     'Choice',
-                    $choice->time_finished,
+                    $choice->timefinished,
                     'null',
                     'null',
                     'null',
@@ -118,21 +118,21 @@ foreach ($groups as $group) {
                 $count++;
             }
         }
-        $studentforumposts = $DB->get_records('block_leaderboard_forum', array('student_id' => $student->id));
+        $studentforumposts = $DB->get_records('block_leaderboard_forum', array('studentid' => $student->id));
         foreach ($studentforumposts as $post) {
-            if ($post->time_finished >= $start && $post->time_finished <= $end) {
+            if ($post->timefinished >= $start && $post->timefinished <= $end) {
                 $csv[$count] = array(
-                    $post->student_id,
-                    $post->forum_id,
-                    $post->module_name,
+                    $post->studentid,
+                    $post->forumid,
+                    $post->modulename,
                     'Forum',
-                    $post->time_finished,
+                    $post->timefinished,
                     'null',
                     'null',
                     'null',
-                    $post->discussion_id,
-                    $post->post_id,
-                    $post->is_response
+                    $post->discussionid,
+                    $post->postid,
+                    $post->isresponse
 
                 );
                 $count++;

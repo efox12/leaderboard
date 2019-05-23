@@ -59,15 +59,15 @@ class block_leaderboard_observer {
 
             // Set the point value.
             $points = $functions->get_early_submission_points($daysbeforesubmission, 'assignment');
-            $eventdata->points_earned = $points;
-            $eventdata->activity_student = $assignmentdata->userid;
-            $eventdata->activity_id = $eventid;
-            $eventdata->time_finished = $event->timecreated;
-            $eventdata->module_name = $assignmentdata->name;
-            $eventdata->days_early = $daysbeforesubmission;
+            $eventdata->pointsearned = $points;
+            $eventdata->studentid = $assignmentdata->userid;
+            $eventdata->activityid = $eventid;
+            $eventdata->timefinished = $event->timecreated;
+            $eventdata->modulename = $assignmentdata->name;
+            $eventdata->daysearly = $daysbeforesubmission;
 
             $activity = $DB->get_record('block_leaderboard_assignment',
-                            array('activity_id' => $eventid, 'activity_student' => $assignmentdata->userid),
+                            array('activityid' => $eventid, 'studentid' => $assignmentdata->userid),
                             $fields = '*', $strictness = IGNORE_MISSING);
 
             // Insert the new data into the databese if new, update if old.
@@ -103,20 +103,20 @@ class block_leaderboard_observer {
 
             // See if data for this quiz and student have already been submitted.
             $quiztable = $DB->get_record('block_leaderboard_quiz',
-                array('quiz_id' => $quiz->id, 'student_id' => $event->userid),
+                array('quizid' => $quiz->id, 'studentid' => $event->userid),
                 $fields = '*',
                 $strictness = IGNORE_MISSING);
 
             if (!$quiztable) {
                 // Create a new quiz.
                 $quizdata = new \stdClass();
-                $quizdata->time_started = $event->timecreated;
-                $quizdata->quiz_id = $quiz->id;
-                $quizdata->student_id = $event->userid;
+                $quizdata->timestarted = $event->timecreated;
+                $quizdata->quizid = $quiz->id;
+                $quizdata->studentid = $event->userid;
                 $quizdata->attempts = 0;
-                $quizdata->days_early = 0;
-                $quizdata->days_spaced = 0;
-                $quizdata->module_name = $quiz->name;
+                $quizdata->daysearly = 0;
+                $quizdata->daysspaced = 0;
+                $quizdata->modulename = $quiz->name;
                 $DB->insert_record('block_leaderboard_quiz', $quizdata);
             }
         }
@@ -148,12 +148,12 @@ class block_leaderboard_observer {
 
             // The table for the leader board block.
             $quiztable = $DB->get_record('block_leaderboard_quiz',
-                array('quiz_id' => $thisquiz->id, 'student_id' => $event->userid),
+                array('quizid' => $thisquiz->id, 'studentid' => $event->userid),
                 $fields = '*',
                 $strictness = IGNORE_MISSING);
 
             // Add a quiz to the database if one doesn't already exist.
-            if ($quiztable->time_finished === null) {
+            if ($quiztable->timefinished === null) {
                 // ensure that a full day has passed with floor function to stop from rounding up.
                 $daysbeforesubmission = intdiv(($duedate - $event->timecreated), 86400);
                 if (abs($daysbeforesubmission) > 50) { // Quizzes without duedates will produce a value like -17788.
@@ -161,43 +161,43 @@ class block_leaderboard_observer {
                 }
 
                 // Gets the most recent completed quiz submission time.
-                $pastquizzes = $DB->get_records('block_leaderboard_quiz', array('student_id' => $event->userid));
+                $pastquizzes = $DB->get_records('block_leaderboard_quiz', array('studentid' => $event->userid));
                 $recenttimefinished = 0;
                 foreach ($pastquizzes as $pastquiz) {
-                    if ($pastquiz->time_finished > $recenttimefinished) {
-                        $recenttimefinished = $pastquiz->time_finished;
+                    if ($pastquiz->timefinished > $recenttimefinished) {
+                        $recenttimefinished = $pastquiz->timefinished;
                     }
                 }
                 // Make sure that days spaced doesn't go above a maximum of 5 days.
-                $quizspacing = min(($quiztable->time_started - $recenttimefinished) / (float)86400, 5.0);
+                $quizspacing = min(($quiztable->timestarted - $recenttimefinished) / (float)86400, 5.0);
 
                 // Create data for table.
-                $quiztable->days_early = $daysbeforesubmission;
-                $quiztable->days_spaced = $quizspacing;
-                $quiztable->time_finished = $event->timecreated;
+                $quiztable->daysearly = $daysbeforesubmission;
+                $quiztable->daysspaced = $quizspacing;
+                $quiztable->timefinished = $event->timecreated;
                 echo("<script>console.log('EVENT0: ".json_encode($quiztable)."');</script>");
             }
 
             // Assign points for finishing early.
             echo("<script>console.log('EVENT1: ".json_encode($quiztable)."');</script>");
-            $pointsearned = $functions->get_early_submission_points($quiztable->days_early, 'quiz');
+            $pointsearned = $functions->get_early_submission_points($quiztable->daysearly, 'quiz');
             echo("<script>console.log('EVENT2: ".json_encode($pointsearned)."');</script>");
-            $quiztable->points_earned = $pointsearned;
+            $quiztable->pointsearned = $pointsearned;
             echo("<script>console.log('EVENT3: ".json_encode($quiztable)."');</script>");
 
             // Bonus points get awarded for spacing out quizzes instead of cramming (only judges the 2 most recent quizzes).
-            $spacingpoints = $functions->get_quiz_spacing_points($quiztable->days_spaced);
-            $quiztable->points_earned += $spacingpoints;
+            $spacingpoints = $functions->get_quiz_spacing_points($quiztable->daysspaced);
+            $quiztable->pointsearned += $spacingpoints;
 
             // Bonus points for attempting quiz again.
             $quiztable->attempts += 1;
             $multipleattemptpoints = $functions->get_quiz_attempts_points($quiztable->attempts);
             echo("<script>console.log('EVENT4: ".$multipleattemptpoints."');</script>");
-            $quiztable->points_earned += $multipleattemptpoints;
+            $quiztable->pointsearned += $multipleattemptpoints;
             echo("<script>console.log('EVENT5: ".json_encode($quiztable)."');</script>");
 
             $DB->update_record('block_leaderboard_quiz', $quiztable);
-            echo("<script>console.log('EVENT5: ".json_encode($DB->get_records('block_leaderboard_quiz', array('student_id' => $event->userid)))."');</script>");
+            echo("<script>console.log('EVENT5: ".json_encode($DB->get_records('block_leaderboard_quiz', array('studentid' => $event->userid)))."');</script>");
         }
     }
 
@@ -218,15 +218,15 @@ class block_leaderboard_observer {
 
             $choice = $DB->get_record_sql($sql, array($event->objectid));
 
-            if ($DB->get_record('block_leaderboard_choice', array('choice_id' => $choice->id, 'student_id' => $event->userid),
+            if ($DB->get_record('block_leaderboard_choice', array('choiceid' => $choice->id, 'studentid' => $event->userid),
                     $fields = '*', $strictness = IGNORE_MISSING) == false) { // If new choice then add to database.
                 // Create data for table.
                 $choicedata = new \stdClass();
-                $choicedata->student_id = $event->userid;
-                $choicedata->choice_id = $choice->id;
-                $choicedata->points_earned = get_config('leaderboard', 'choicepoints');
-                $choicedata->time_finished = $event->timecreated;
-                $choicedata->module_name = $choice->name;
+                $choicedata->studentid = $event->userid;
+                $choicedata->choiceid = $choice->id;
+                $choicedata->pointsearned = get_config('leaderboard', 'choicepoints');
+                $choicedata->timefinished = $event->timecreated;
+                $choicedata->modulename = $choice->name;
 
                 $DB->insert_record('block_leaderboard_choice', $choicedata);
             }
@@ -244,14 +244,14 @@ class block_leaderboard_observer {
         if (user_has_role_assignment($USER->id, 5)) {
             // Create data for table.
             $forumdata = new \stdClass();
-            $forumdata->student_id = $event->userid;
-            $forumdata->forum_id = $event->other{'moodleoverflowid'};
-            $forumdata->discussion_id = $event->other{'discussionid'};
-            $forumdata->post_id = $event->objectid;
-            $forumdata->is_response = true;
-            $forumdata->points_earned = get_config('leaderboard', 'forumresponsepoints');
-            $forumdata->time_finished = $event->timecreated;
-            $forumdata->module_name = "Forum Response";
+            $forumdata->studentid = $event->userid;
+            $forumdata->forumid = $event->other{'moodleoverflowid'};
+            $forumdata->discussionid = $event->other{'discussionid'};
+            $forumdata->postid = $event->objectid;
+            $forumdata->isresponse = true;
+            $forumdata->pointsearned = get_config('leaderboard', 'forumresponsepoints');
+            $forumdata->timefinished = $event->timecreated;
+            $forumdata->modulename = "Forum Response";
 
             $DB->insert_record('block_leaderboard_forum', $forumdata);
         }
@@ -271,14 +271,14 @@ class block_leaderboard_observer {
                             array('id' => $event->objectid), $fields = '*', $strictness = IGNORE_MISSING);
             // Create data for table
             $forumdata = new \stdClass();
-            $forumdata->student_id = $event->userid;
-            $forumdata->forum_id = $discussion->moodleoverflow;
-            $forumdata->post_id = $discussion->firstpost;
-            $forumdata->discussion_id = $event->objectid;
-            $forumdata->is_response = false;
-            $forumdata->points_earned = get_config('leaderboard', 'forumpostpoints');
-            $forumdata->time_finished = $event->timecreated;
-            $forumdata->module_name = "Forum Post";
+            $forumdata->studentid = $event->userid;
+            $forumdata->forumid = $discussion->moodleoverflow;
+            $forumdata->postid = $discussion->firstpost;
+            $forumdata->discussionid = $event->objectid;
+            $forumdata->isresponse = false;
+            $forumdata->pointsearned = get_config('leaderboard', 'forumpostpoints');
+            $forumdata->timefinished = $event->timecreated;
+            $forumdata->modulename = "Forum Post";
 
             $DB->insert_record('block_leaderboard_forum', $forumdata);
         }

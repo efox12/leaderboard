@@ -67,7 +67,7 @@ class block_leaderboard_renderer extends plugin_renderer_base {
             $table = new html_table();
             $table->head = array(get_string('num', 'block_leaderboard'), " ",
                             get_string('group', 'block_leaderboard'), get_string('points', 'block_leaderboard'));
-            $row = new html_table_row(array("", "", get_string('no_Groups_Found', 'block_leaderboard'), ""));
+            $row = new html_table_row(array("", "", get_string('nogroupsfound', 'block_leaderboard'), ""));
             $table->data[] = $row;
         }
 
@@ -75,7 +75,7 @@ class block_leaderboard_renderer extends plugin_renderer_base {
         $output = "";
         $output .= "<block_header>".get_string('rankings', 'block_leaderboard')."</block_header><br>";
         $output .= html_writer::table($table);
-        $output .= $OUTPUT->single_button($url, get_string('view_full_leaderboard', 'block_leaderboard'), 'get');
+        $output .= $OUTPUT->single_button($url, get_string('viewfullleaderboard', 'block_leaderboard'), 'get');
         return $output;
     }
 

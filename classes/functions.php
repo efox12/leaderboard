@@ -177,7 +177,7 @@ class block_leaderboard_functions{
                                     array('groupid' => $groupdata->id), $fields = '*', $strictness = IGNORE_MISSING);
             $storedgroupdata->currentstanding = $currentstanding;
             $storedgroupdata->lastmove = $move;
-            $storedgroupdata->multiplier = $groupdata->time_updated;
+            $storedgroupdata->timeupdated = $groupdata->time_updated;
             $DB->update_record('block_leaderboard_group_data', $storedgroupdata);
         }
 
@@ -272,9 +272,8 @@ class block_leaderboard_functions{
         if (!$storedgroupdata) {
             $storedgroupdata = new stdClass();
             $storedgroupdata->currentstanding = 0;
-            $storedgroupdata->prevoiusstanding = 0;
             $storedgroupdata->lastmove = 2;
-            $storedgroupdata->multiplier = floor((time() - 7 * 60) / 86400);
+            $storedgroupdata->timeupdated = floor((time() - 7 * 60) / 86400);
             $storedgroupdata->groupid = $group->id;
             $DB->insert_record('block_leaderboard_group_data', $storedgroupdata);
         } else if (strlen((string)$storedgroupdata->currentstanding) < 3) {
@@ -288,9 +287,8 @@ class block_leaderboard_functions{
         $groupdata->name = $group->name;
         $groupdata->id = $group->id;
         $groupdata->currentstanding = $storedgroupdata->currentstanding;
-        $groupdata->previousstanding = $storedgroupdata->prevoiusstanding;
         $groupdata->lastmove = $storedgroupdata->lastmove;
-        $groupdata->time_updated = $storedgroupdata->multiplier;
+        $groupdata->time_updated = $storedgroupdata->timeupdated;
         $groupdata->points = $totalpoints;
         $groupdata->isusersgroup = $isusersgroup;
         $groupdata->pointsperweek = $pointsperweek;
@@ -322,8 +320,8 @@ class block_leaderboard_functions{
         // ACTIVITY.
         $sql = "SELECT block_leaderboard_assignment.*, assign.duedate
                 FROM {block_leaderboard_assignment} block_leaderboard_assignment
-                INNER JOIN {assign} assign ON assign.id = block_leaderboard_assignment.activity_id
-                WHERE block_leaderboard_assignment.activity_student = ?;";
+                INNER JOIN {assign} assign ON assign.id = block_leaderboard_assignment.activityid
+                WHERE block_leaderboard_assignment.studentid = ?;";
 
         $studentactivities = $DB->get_records_sql($sql, array($student->id));
         $pointsdata = self::get_module_points($studentactivities, $start, $end);
@@ -336,8 +334,8 @@ class block_leaderboard_functions{
         // QUIZ.
         $sql = "SELECT block_leaderboard_quiz.*, quiz.timeclose
                 FROM {block_leaderboard_quiz} block_leaderboard_quiz
-                INNER JOIN {quiz} quiz ON quiz.id = block_leaderboard_quiz.quiz_id
-                WHERE block_leaderboard_quiz.student_id = ? AND block_leaderboard_quiz.time_finished IS NOT NULL;";
+                INNER JOIN {quiz} quiz ON quiz.id = block_leaderboard_quiz.quizid
+                WHERE block_leaderboard_quiz.studentid = ? AND block_leaderboard_quiz.timefinished IS NOT NULL;";
 
         $studentquizzes = $DB->get_records_sql($sql, array($student->id));
         $pointsdata = self::get_module_points($studentquizzes, $start, $end);
@@ -347,7 +345,7 @@ class block_leaderboard_functions{
         $points->history += array_merge($points->history, $pointsdata->history);
 
         // CHOICE.
-        $studentchoices = $DB->get_records('block_leaderboard_choice', array('student_id' => $student->id));
+        $studentchoices = $DB->get_records('block_leaderboard_choice', array('studentid' => $student->id));
         $pointsdata = self::get_module_points($studentchoices, $start, $end);
         $points->all += $pointsdata->all;
         $points->pastweek += $pointsdata->pastweek;
@@ -355,7 +353,7 @@ class block_leaderboard_functions{
         $points->history += array_merge($points->history, $pointsdata->history);
 
         // FORUM.
-        $studentforumposts = $DB->get_records('block_leaderboard_forum', array('student_id' => $student->id));
+        $studentforumposts = $DB->get_records('block_leaderboard_forum', array('studentid' => $student->id));
         $pointsdata = self::get_module_points($studentforumposts, $start, $end);
         $points->all += $pointsdata->all;
         $points->pastweek += $pointsdata->pastweek;
@@ -365,7 +363,7 @@ class block_leaderboard_functions{
         $studenthistory = $points->history;
         if (count($studenthistory) > 1) { // Only sort if there is something to sort.
             usort($studenthistory, function ($a, $b) {
-                return $b->time_finished <=> $a->time_finished;
+                return $b->timefinished <=> $a->timefinished;
             });
         }
         $points->history = $studenthistory;
@@ -409,20 +407,20 @@ class block_leaderboard_functions{
         $points->history = [];
         $time = time();
         foreach ($list as $activity) {
-            $duedate = $activity->time_finished;
+            $duedate = $activity->timefinished;
             if (isset($activity->duedate)) {
                 $duedate = $activity->duedate;
             } else if (isset($activity->timeclose)) {
                 $duedate = $activity->timeclose;
             }
-            // $time >= $duedate && $duedate >= $start && $duedate <= $end && $activity->module_name != ''
-            if ($duedate >= $start && $duedate <= $end && $activity->module_name != '') {
-                $points->all += $activity->points_earned;
-                if (($time - $activity->time_finished) / 86400 <= 7) {
-                    $points->pastweek += $activity->points_earned;
+            // $time >= $duedate && $duedate >= $start && $duedate <= $end && $activity->modulename != ''
+            if ($duedate >= $start && $duedate <= $end && $activity->modulename != '') {
+                $points->all += $activity->pointsearned;
+                if (($time - $activity->timefinished) / 86400 <= 7) {
+                    $points->pastweek += $activity->pointsearned;
                 }
-                if (($time - $activity->time_finished) / 86400 <= 14) {
-                    $points->pasttwoweeks += $activity->points_earned;
+                if (($time - $activity->timefinished) / 86400 <= 14) {
+                    $points->pasttwoweeks += $activity->pointsearned;
                 }
                 $points->history[] = $activity;
             }

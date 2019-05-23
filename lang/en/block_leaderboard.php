@@ -27,55 +27,55 @@ $string['pluginname'] = 'Leaderboard';
 $string['leaderboard'] = 'Leaderboard';
 
 // Settings strings.
-$string['assignment_early_submission'] = 'Assignments Early Submission';
-$string['assignment_early_submission_desc'] = 'Set the points awarded for submitting an assignment early. (Order from most to least days early)';
+$string['assignmentearlysubmission'] = 'Assignments Early Submission';
+$string['assignmentearlysubmission_desc'] = 'Set the points awarded for submitting an assignment early. (Order from most to least days early)';
 
-$string['quiz_early_submission'] = 'Quiz Early Submission';
-$string['quiz_early_submission_desc'] = 'Set the points awarded for submitting a quiz early. (Order from most to least days early)';
+$string['quizearlysubmission'] = 'Quiz Early Submission';
+$string['quizearlysubmission_desc'] = 'Set the points awarded for submitting a quiz early. (Order from most to least days early)';
 
-$string['quiz_spacing'] = 'Quiz Spacing';
-$string['quiz_spacing_desc'] = 'Set the points awarded for spacing out quizzes. (Order from most to least days spaced)';
+$string['quizspacing'] = 'Quiz Spacing';
+$string['quizspacing_desc'] = 'Set the points awarded for spacing out quizzes. (Order from most to least days spaced)';
 
-$string['quiz_attempts'] = 'Quiz Attempts';
-$string['quiz_attempts_desc'] = 'Set the points awarded for retaking quizzes. (Order from most to least retakes)';
+$string['quizattempts'] = 'Quiz Attempts';
+$string['quizattempts_desc'] = 'Set the points awarded for retaking quizzes. (Order from most to least retakes)';
 
-$string['choice_settings'] = 'Choice Settings';
-$string['choice_settings_desc'] = 'Set points values and how those points values are assigned.';
+$string['choicesettings'] = 'Choice Settings';
+$string['choicesettings_desc'] = 'Set points values and how those points values are assigned.';
 
 $string['forum_settings'] = 'Forum Settings';
 $string['forum_settings_desc'] = 'Set points values and how those points values are assigned.';
 
-$string['glossary_settings'] = 'Glossary Settings';
-$string['glossary_settings_desc'] = 'Set points values and how those points values are assigned.';
+$string['glossarysettings'] = 'Glossary Settings';
+$string['glossarysettings_desc'] = 'Set points values and how those points values are assigned.';
 
-$string['other_settings'] = 'Other Settings';
-$string['other_settings_desc'] = 'Set points values and how those points values are assigned.';
+$string['othersettings'] = 'Other Settings';
+$string['othersettings_desc'] = 'Set points values and how those points values are assigned.';
 
-$string['multiplier_settings'] = 'Multiplier Settings';
-$string['multiplier_settings_desc'] = 'Set the points required to reach the next level and multiplier. (Order from highest to lowest level)';
+$string['multipliersettings'] = 'Multiplier Settings';
+$string['multipliersettings_desc'] = 'Set the points required to reach the next level and multiplier. (Order from highest to lowest level)';
 
-$string['days_submitted_early'] = 'Days Submitted Early';
-$string['points_earned'] = 'Pointes Earned';
+$string['dayssubmittedearly'] = 'Days Submitted Early';
+$string['pointsearned'] = 'Pointes Earned';
 
-$string['days_between_quizzes'] = 'Days Between Quizzes';
-$string['number_of_attempts'] = 'Number of Attempts';
+$string['daysbetweenquizzes'] = 'Days Between Quizzes';
+$string['numberofattempts'] = 'Number of Attempts';
 
 $string['level'] = 'Level ';
 $string['multiplier'] = ' Multiplier';
 $string['points_to_get_to_level'] = ' Points to Get to Level ';
 $string['points_to_stay_at_level'] = ' Points to Stay at Level ';
 
-$string['label_choice_points'] = 'Choice Points';
-$string['desc_choice_points'] = 'Points earned for participating in a choice';
+$string['label_choicepoints'] = 'Choice Points';
+$string['desc_choicepoints'] = 'Points earned for participating in a choice';
 
-$string['label_forum_post_points'] = 'Post Points';
-$string['desc_forum_post_points'] = 'Points earned for posting a question';
+$string['label_forumpostpoints'] = 'Post Points';
+$string['desc_forumpostpoints'] = 'Points earned for posting a question';
 
-$string['label_forum_response_points'] = 'Response Points';
-$string['desc_forum_response_points'] = 'Points earned for responding to a question';
+$string['label_forumresponsepoints'] = 'Response Points';
+$string['desc_forumresponsepoints'] = 'Points earned for responding to a question';
 
-$string['reset_settings'] = 'Leaderboard Reset Settings';
-$string['reset_settings_desc'] = 'Set the dates when you want the leaderboard to reset.';
+$string['resetsettings'] = 'Leaderboard Reset Settings';
+$string['resetsettings_desc'] = 'Set the dates when you want the leaderboard to reset.';
 
 $string['label_reset1'] = 'First Reset';
 $string['desc_reset1'] = 'Type using format MM/DD/YYYY';
@@ -89,20 +89,19 @@ $string['mult'] = 'Info';
 $string['mult_help'] = '&nbsp;&nbsp;&nbsp; The group multiplier will reward your team with bonus points for continual good study habits. <br/>
                         &nbsp;&nbsp;&nbsp; Increase your team\'s average points per week to increase how many extra points you get, but your team can loose it if your team\'s average points per week drops too low!<br/>
                         &nbsp;&nbsp;&nbsp; Your team\'s current points per week and progress to the next multiplier are shown in the progress bar below.';
-$string['points_week'] = 'points/week';
 $string['rankings'] = 'Rankings';
 $string['num'] = '#';
 $string['group'] = 'Group';
 $string['points'] = 'Points';
-$string['view_full_leaderboard'] = 'View Full Leaderboard';
+$string['viewfullleaderboard'] = 'View Full Leaderboard';
 
 // Full leaderboard page strings.
 $string['leaderboard'] = 'Leaderboard';
 $string['rank'] = 'Rank';
 $string['name'] = 'Name';
-$string['download_data'] = 'Download Data';
-$string['extra_points'] = 'Extra Points';
-$string['no_Groups_Found'] = 'No Groups Found';
+$string['downloaddata'] = 'Download Data';
+$string['extrapoints'] = 'Extra Points';
+$string['nogroupsfound'] = 'No Groups Found';
 $string['info'] = 'Info';
 $string['description'] = 'On this Page you can see your full teams points breakdown as well as each of your individual contributions.';
 
