@@ -357,6 +357,44 @@ foreach ($groups as $group) {
     // Get each member of the group.
     $students = groups_get_members($group->id, $fields = 'u.*', $sort = 'lastname ASC');
     foreach ($students as $student) {
+        $sql = "SELECT quiz.* quiz_attempts.attempt, quiz_attempts.timestart, quiz_attempts.timefinish
+                FROM {quiz_attempts} quiz_attempts
+                INNER JOIN {quiz} quiz ON quiz.id = quiz_attempts.quiz
+                WHERE quiz_attempts.userid = ?;";
+        $quizes = $DB->get_record_sql($sql, array($student->id));
+        
+        foreach ($quizzes as $quiz) {
+            $quiztable = $DB->get_record('block_leaderboard_quiz',
+                array('quiz_id' => $quiz->id, 'student_id' => $event->userid),
+                $fields = '*',
+                $strictness = IGNORE_MISSING);
+            if (!$quiztable) {
+                // Create a new quiz.
+                $quiztable = new \stdClass();
+                $quiztable->time_started = 0;
+                $quiztable->quiz_id = $quiz->id;
+                $quiztable->student_id = $event->userid;
+                $quiztable->attempts = $quiz->attempt;
+                $quiztable->days_early = 0;
+                $quiztable->days_spaced = 0;
+                $quiztable->module_name = $quiz->name;
+                $DB->insert_record('block_leaderboard_quiz', $quiztable);
+                $quiztable = $DB->get_record('block_leaderboard_quiz',
+                    array('quiz_id' => $thisquiz->id, 'student_id' => $event->userid),
+                    $fields = '*',
+                    $strictness = IGNORE_MISSING);
+            }
+            if ($quiz->attempt == 0) {
+                echo("<script>console.log('USE ATTEMPT 0!!!');</script>");
+            }
+            if ($quiz->attempt == 1){
+                $quiztable->time_started = $quiz->timestart;
+                $quiztable->time_finished = $quiz->timefinish;
+                $quiztable->days_early = intdiv(($quiz->timeclose - $quiz->timefinish), 86400)
+                $DB->update_record('block_leaderboard_quiz', $quiztable);
+            }
+        }
+
         $pastquizzes = $DB->get_records('block_leaderboard_quiz', array('student_id' => $student->id), $sort = 'time_started ASC');
         $cleanquizzes = [];
         foreach ($pastquizzes as $pastquiz) {
