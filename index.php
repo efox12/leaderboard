@@ -384,12 +384,16 @@ foreach ($groups as $group) {
                     $fields = '*',
                     $strictness = IGNORE_MISSING);
             }
-            if ($quiz->attempt == 0) {
+            if($quiz->attempt > $quiztable->attempts){
+                $quiztable->attempts = $quiz->attempt;
+            }
+            if ($quiz->attempt == 1) {
                 $quiztable->time_started = $quiz->timestart;
                 $quiztable->time_finished = $quiz->timefinish;
                 $quiztable->days_early = intdiv(($quiz->timeclose - $quiz->timefinish), 86400);
-                $DB->update_record('block_leaderboard_quiz', $quiztable);
+                
             }
+            $DB->update_record('block_leaderboard_quiz', $quiztable);
         }
 
         $pastquizzes = $DB->get_records('block_leaderboard_quiz', array('student_id' => $student->id), $sort = 'time_started ASC');
