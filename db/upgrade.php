@@ -81,10 +81,10 @@ function xmldb_block_leaderboard_upgrade($oldversion) {
 
         // Launch rename field group_id.
         $dbman->rename_field($table, $field, 'groupid');
-
-        // Leaderboard savepoint reached.
-        //upgrade_block_savepoint(true, 2019091830, 'leaderboard');
         */
+        // Leaderboard savepoint reached.
+        upgrade_block_savepoint(true, 2019091840, 'leaderboard');
+
     }
     return true;
 
