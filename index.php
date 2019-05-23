@@ -425,10 +425,10 @@ foreach ($groups as $group) {
             $points += $multipleattemptpoints * ($quiz->attempts - 1);
             $quiz->points_earned += $multipleattemptpoints * ($quiz->attempts - 1);
 
-            /*
+            
             $quiz->points_earned = 0;
             $quiz->days_spaced = 0;
-            */
+            
 
 
             $DB->update_record('block_leaderboard_quiz', $quiz);
