@@ -320,9 +320,8 @@ class block_leaderboard_functions{
         // Add up student points for all points, past week, past two weeks, and fill student history array.
 
         // ACTIVITY.
-        $sql = "SELECT block_leaderboard_assignment.*,assign.duedate
-                FROM {assign_submission} assign_submission
-                INNER JOIN {block_leaderboard_assignment} block_leaderboard_assignment ON assign_submission.id = block_leaderboard_assignment.activity_id
+        $sql = "SELECT block_leaderboard_assignment.*, assign.duedate
+                FROM {block_leaderboard_assignment} block_leaderboard_assignment
                 INNER JOIN {assign} assign ON assign.id = block_leaderboard_assignment.activity_id
                 WHERE block_leaderboard_assignment.activity_student = ?;";
 
@@ -332,6 +331,7 @@ class block_leaderboard_functions{
         $points->pastweek += $pointsdata->pastweek;
         $points->pasttwoweeks += $pointsdata->pasttwoweeks;
         $points->history = $pointsdata->history;
+        
 
         // QUIZ.
         $sql = "SELECT block_leaderboard_quiz.*, quiz.timeclose

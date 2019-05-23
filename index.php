@@ -397,14 +397,14 @@ foreach ($groups as $group) {
         }
 
         $pastquizzes = $DB->get_records('block_leaderboard_quiz', array('student_id' => $student->id), $sort = 'time_started ASC');
-        echo("<script>console.log('PQ: ".json_encode($pastquizzes)."');</script>");
+        //echo("<script>console.log('PQ: ".json_encode($pastquizzes)."');</script>");
         $cleanquizzes = [];
         foreach ($pastquizzes as $pastquiz) {
             if ($pastquiz->time_finished != null) {
                 $cleanquizzes[] = $pastquiz;
             }
         }
-        echo("<script>console.log('EVENT1: ".json_encode($cleanquizzes)."');</script>");
+        //echo("<script>console.log('EVENT1: ".json_encode($cleanquizzes)."');</script>");
         $previoustime = 0;
         foreach ($cleanquizzes as $quiz) {
             $daysbeforesubmission = $quiz->days_early;
@@ -433,13 +433,13 @@ foreach ($groups as $group) {
 
             $spacingpoints = 0;
             $quizspacing = ($quiz->time_started - $previoustime) / (float)86400;
-            echo("<script>console.log('SPACING: ".$quizspacing."');</script>");
+            //echo("<script>console.log('SPACING: ".$quizspacing."');</script>");
 
             // Make sure that days spaced doesn't go above a maximum of 5 days.
             $quiz->days_spaced = min($quizspacing, 5.0);
-            echo("<script>console.log('SPACING: ".$quiz->days_spaced."');</script>");
+            //echo("<script>console.log('SPACING: ".$quiz->days_spaced."');</script>");
 
-            echo("<script>console.log('SPACING: ".json_encode($quiz)."');</script>");
+            //echo("<script>console.log('SPACING: ".json_encode($quiz)."');</script>");
             for ($x = 1; $x <= 3; $x++) {
                 $currentspacing = get_config('leaderboard', 'quizspacing'.$x);
                 if ($x < 3) {
@@ -467,6 +467,65 @@ foreach ($groups as $group) {
 
             $DB->update_record('block_leaderboard_quiz', $quiz);
         }
+    }
+}
+
+
+
+
+$all_assignments = $DB->get_records('assign');
+foreach($groups as $group){
+    //get each member of the group
+    $students = groups_get_members($group->id, $fields='u.*', $sort='lastname ASC');
+    foreach($students as $student){
+        // The data of the submission.
+        $sql = "SELECT assign.*, assign_submission.userid, assign_submission.timemodified
+                FROM {assign_submission} assign_submission
+                INNER JOIN {assign} assign ON assign.id = assign_submission.assignment
+                WHERE assign_submission.userid = ? AND assign_submission.latest = 1;";
+
+        $assignments = $DB->get_records_sql($sql, array($student->id));
+        foreach ($assignments as $assignment) {
+            $assignmenttable = $DB->get_record('block_leaderboard_assignment',
+                array('activity_student'=> $student->id, 'activity_id' => $assignment->id), $fields = '*',
+                $strictness = IGNORE_MISSING);
+            
+            if (!$assignmenttable) {
+                // Create a new quiz.
+                $assignmenttable = new \stdClass();
+                $assignmenttable->points_earned = 0;
+                $assignmenttable->activity_student = $student->id;
+                $assignmenttable->activity_id = $assignment->id;
+                $assignmenttable->time_finished = $assignment->timemodified;
+                $assignmenttable->module_name = $assignment->name;
+                $assignmenttable->days_early = intdiv(($assignment->duedate - $assignment->timemodified), 86400);
+                $DB->insert_record('block_leaderboard_assignment', $assignmenttable);
+                
+                $assignmenttable = $DB->get_record('block_leaderboard_assignment',
+                    array('activity_id' => $assignment->id, 'activity_student' => $student->id),
+                    $fields = '*', $strictness = IGNORE_MISSING);
+            }
+            $points = 0;
+            $days_early = $assignmenttable->days_early;
+            for($x=1; $x<=5; $x++){
+                $current_time = get_config('leaderboard','assignmenttime'.$x);
+                if($x < 5) {
+                    $next_time = get_config('leaderboard','assignmenttime'.($x+1));
+                    if($days_early >= $current_time && $days_early < $next_time){
+                        $points = get_config('leaderboard','assignmnetpoints'.$x);
+                        break;
+                    }
+                }
+                else {
+                    if($days_early >= $current_time){
+                        $points = get_config('leaderboard','assignmnetpoints'.$x);
+                        break;
+                    }
+                }
+            }
+            $assignmenttable->points_earned = $points;
+            $DB->update_record('block_leaderboard_assignment', $assignmenttable);
+        }        
     }
 }
 
