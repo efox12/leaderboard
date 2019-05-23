@@ -412,8 +412,7 @@ class block_leaderboard_functions{
             } else if (isset($activity->timeclose)) {
                 $duedate = $activity->timeclose;
             }
-            // $time >= $duedate && $duedate >= $start && $duedate <= $end && $activity->modulename != ''
-            if ($duedate >= $start && $duedate <= $end && $activity->modulename != '') {
+            if ($time >= $duedate && $duedate >= $start && $duedate <= $end && $activity->modulename != '') {
                 $points->all += $activity->pointsearned;
                 if (($time - $activity->timefinished) / 86400 <= 7) {
                     $points->pastweek += $activity->pointsearned;

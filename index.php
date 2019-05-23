@@ -287,7 +287,7 @@ if (count($groups) > 0) { // There are groups to display.
     $table->data[] = $row;
 }
 
-// Prepare the date selector to be displayed
+// Prepare the date selector to be displayed.
 $mform = new date_selector_form(null, array('startDate' => $start, 'endDate' => $end));
 $toform = new stdClass;
 $toform->id = $cid;
@@ -351,8 +351,6 @@ echo $OUTPUT->footer();
 
 
 // TEMPORARY CODE TO FIX ISSUES.
-
-echo("<script>console.log('Erik:');</script>");
 foreach ($groups as $group) {
     // Get each member of the group.
     $students = groups_get_members($group->id, $fields = 'u.*', $sort = 'lastname ASC');
@@ -530,7 +528,8 @@ foreach ($groups as $group) {
 
         $choices = $DB->get_records_sql($sql, array($student->id));
         foreach ($choices as $choice) {
-            $choicetable = $DB->get_record('block_leaderboard_choice', array('choiceid' => $choice->id, 'studentid' => $student->id),
+            $choicetable = $DB->get_record('block_leaderboard_choice',
+                array('choiceid' => $choice->id, 'studentid' => $student->id),
                 $fields = '*', $strictness = IGNORE_MISSING);
             if (!$choicetable) {
                 $choicedata = new \stdClass();
@@ -541,11 +540,10 @@ foreach ($groups as $group) {
                 $choicedata->modulename = $choice->name;
 
                 $DB->insert_record('block_leaderboard_choice', $choicedata);
-                $choicetable = $DB->get_record('block_leaderboard_choice', array('choiceid' => $choice->id, 'studentid' => $student->id),
+                $choicetable = $DB->get_record('block_leaderboard_choice',
+                    array('choiceid' => $choice->id, 'studentid' => $student->id),
                     $fields = '*', $strictness = IGNORE_MISSING);
             }
-            echo("<script>console.log('SPACING: ".json_encode($choicetable)."');</script>");
-
         }
     }
 }
@@ -561,10 +559,11 @@ foreach ($groups as $group) {
         $discussions = $DB->get_records_sql($sql, array($student->id));
         foreach ($discussions as $discussion) {
             $discussiontable = $DB->get_record('block_leaderboard_forum',
-            array('studentid' => $student->id, 'discussionid' => $discussion->id, 'isresponse' => false), $fields = '*', $strictness = IGNORE_MISSING);
+            array('studentid' => $student->id, 'discussionid' => $discussion->id, 'isresponse' => false),
+                $fields = '*', $strictness = IGNORE_MISSING);
 
             if (!$discussiontable) {
-                // Create data for table
+                // Create data for table.
                 $forumdata = new \stdClass();
                 $forumdata->studentid = $student->id;
                 $forumdata->forumid = $discussion->moodleoverflow;
@@ -586,13 +585,15 @@ foreach ($groups as $group) {
     foreach ($students as $student) {
         $sql = "SELECT moodleoverflow_posts.*, moodleoverflow_discussions.moodleoverflow
             FROM {moodleoverflow_posts} moodleoverflow_posts
-            INNER JOIN {moodleoverflow_discussions} moodleoverflow_discussions ON moodleoverflow_posts.discussion = moodleoverflow_discussions.id
+            INNER JOIN {moodleoverflow_discussions} moodleoverflow_discussions
+            ON moodleoverflow_posts.discussion = moodleoverflow_discussions.id
             WHERE moodleoverflow_posts.userid = ?;";
 
         $discussions = $DB->get_records_sql($sql, array($student->id));
         foreach ($discussions as $discussion) {
             $discussiontable = $DB->get_record('block_leaderboard_forum',
-            array('studentid' => $student->id, 'postid' => $discussion->id, 'isresponse' => true), $fields = '*', $strictness = IGNORE_MISSING);
+            array('studentid' => $student->id, 'postid' => $discussion->id, 'isresponse' => true),
+                $fields = '*', $strictness = IGNORE_MISSING);
 
             if (!$discussiontable) {
                 // Create data for table.

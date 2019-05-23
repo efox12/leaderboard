@@ -144,7 +144,6 @@ class block_leaderboard_observer {
 
             $thisquiz = $DB->get_record_sql($sql, array($currentid));
             $duedate = $thisquiz->timeclose;
-            echo("<script>console.log('EVENT1: ".json_encode($thisquiz)."');</script>");
 
             // The table for the leader board block.
             $quiztable = $DB->get_record('block_leaderboard_quiz',
@@ -154,7 +153,7 @@ class block_leaderboard_observer {
 
             // Add a quiz to the database if one doesn't already exist.
             if ($quiztable->timefinished === null) {
-                // ensure that a full day has passed with floor function to stop from rounding up.
+                // Ensure that a full day has passed with floor function to stop from rounding up.
                 $daysbeforesubmission = intdiv(($duedate - $event->timecreated), 86400);
                 if (abs($daysbeforesubmission) > 50) { // Quizzes without duedates will produce a value like -17788.
                     $daysbeforesubmission = 0;
@@ -175,15 +174,11 @@ class block_leaderboard_observer {
                 $quiztable->daysearly = $daysbeforesubmission;
                 $quiztable->daysspaced = $quizspacing;
                 $quiztable->timefinished = $event->timecreated;
-                echo("<script>console.log('EVENT0: ".json_encode($quiztable)."');</script>");
             }
 
             // Assign points for finishing early.
-            echo("<script>console.log('EVENT1: ".json_encode($quiztable)."');</script>");
             $pointsearned = $functions->get_early_submission_points($quiztable->daysearly, 'quiz');
-            echo("<script>console.log('EVENT2: ".json_encode($pointsearned)."');</script>");
             $quiztable->pointsearned = $pointsearned;
-            echo("<script>console.log('EVENT3: ".json_encode($quiztable)."');</script>");
 
             // Bonus points get awarded for spacing out quizzes instead of cramming (only judges the 2 most recent quizzes).
             $spacingpoints = $functions->get_quiz_spacing_points($quiztable->daysspaced);
@@ -192,12 +187,9 @@ class block_leaderboard_observer {
             // Bonus points for attempting quiz again.
             $quiztable->attempts += 1;
             $multipleattemptpoints = $functions->get_quiz_attempts_points($quiztable->attempts);
-            echo("<script>console.log('EVENT4: ".$multipleattemptpoints."');</script>");
             $quiztable->pointsearned += $multipleattemptpoints;
-            echo("<script>console.log('EVENT5: ".json_encode($quiztable)."');</script>");
 
             $DB->update_record('block_leaderboard_quiz', $quiztable);
-            echo("<script>console.log('EVENT5: ".json_encode($DB->get_records('block_leaderboard_quiz', array('studentid' => $event->userid)))."');</script>");
         }
     }
 
@@ -210,7 +202,7 @@ class block_leaderboard_observer {
     public static function choice_submitted_handler(\mod_choice\event\answer_created $event) {
         global $DB, $USER;
         if (user_has_role_assignment($USER->id, 5)) {
-            // Get data on this choice and the current answers
+            // Get data on this choice and the current answers.
             $sql = "SELECT choice_answers.id, choice.name
                 FROM {choice_answers} choice_answers
                 INNER JOIN {choice} choice ON choice.id = choice_answers.choiceid
@@ -269,7 +261,7 @@ class block_leaderboard_observer {
             // Get information on the this discussion.
             $discussion = $DB->get_record('moodleoverflow_discussions',
                             array('id' => $event->objectid), $fields = '*', $strictness = IGNORE_MISSING);
-            // Create data for table
+            // Create data for table.
             $forumdata = new \stdClass();
             $forumdata->studentid = $event->userid;
             $forumdata->forumid = $discussion->moodleoverflow;

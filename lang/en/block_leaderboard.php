@@ -97,9 +97,9 @@ $string['description'] = 'On this Page you can see your full teams points breakd
 
 $string['start'] = 'Start';
 $string['end'] = 'End';
-$string['update'] =  'Update';
+$string['update'] = 'Update';
 $string['resettodefault'] = 'Reset To Default';
-$string['changedaterange'] =  'Change Date Range';
+$string['changedaterange'] = 'Change Date Range';
 
 $string['QA'] = 'Q/A';
 $string['q0'] = '<strong>Q0</strong>: What if my team is smaller than other teams? Will we be at a disadvantage?';
