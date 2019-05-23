@@ -86,6 +86,16 @@ function xmldb_block_leaderboard_upgrade($oldversion) {
         upgrade_block_savepoint(true, 2019091840, 'leaderboard');
 
     }
+    if ($oldversion < 2019091841) {
+        $table = new xmldb_table('block_leaderboard_quiz');
+        $field = new xmldb_field('days_spaced', XMLDB_TYPE_NUMBER, '10, 5', null, null, null, null, 'days_early');
+
+        // Launch change of type for field days_spaced.
+        $dbman->change_field_type($table, $field);
+
+        // Leaderboard savepoint reached.
+        upgrade_block_savepoint(true, 2019091841, 'leaderboard');
+    }
     return true;
 
 }
