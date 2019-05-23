@@ -4,7 +4,7 @@
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
   <TABLES>
-    <TABLE NAME="assignment_table" COMMENT="A table for student assignments">
+    <TABLE NAME="block_leaderboard_assignment" COMMENT="A table for student assignments">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="activity_id" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The id of the activity the student completed."/>
@@ -18,7 +18,7 @@
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
       </KEYS>
     </TABLE>
-    <TABLE NAME="quiz_table" COMMENT="A table containing high level data about a quiz">
+    <TABLE NAME="block_leaderboard_quiz" COMMENT="A table containing high level data about a quiz">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="time_started" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The timestamp when the quiz is started."/>
@@ -35,7 +35,7 @@
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
       </KEYS>
     </TABLE>
-    <TABLE NAME="choice_table" COMMENT="A table with data about student participation in choices">
+    <TABLE NAME="block_leaderboard_choice" COMMENT="A table with data about student participation in choices">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="student_id" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The id of the student submitting this choice"/>
@@ -48,7 +48,7 @@
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
       </KEYS>
     </TABLE>
-    <TABLE NAME="forum_table" COMMENT="A table with data about student posts">
+    <TABLE NAME="block_leaderboard_forum" COMMENT="A table with data about student posts">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="student_id" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The id of the student making the post"/>
@@ -64,12 +64,14 @@
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
       </KEYS>
     </TABLE>
-    <TABLE NAME="group_data_table" COMMENT="Data about the groups needed by the leaderboard block.">
+    <TABLE NAME="block_leaderboard_group_data" COMMENT="Data about the groups needed by the leaderboard block.">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
-        <FIELD NAME="group_id" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The groups id."/>
+        <FIELD NAME="groupid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The groups id."/>
         <FIELD NAME="multiplier" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The current multiplier associated with the group."/>
-        <FIELD NAME="current_standing" TYPE="int" LENGTH="10" NOTNULL="false" DEFAULT="1" SEQUENCE="false" COMMENT="The groups current standing in the leaderboard."/>
+        <FIELD NAME="currentstanding" TYPE="int" LENGTH="10" NOTNULL="false" DEFAULT="1" SEQUENCE="false" COMMENT="The groups current standing in the leaderboard."/>
+        <FIELD NAME="prevoiusstanding" TYPE="int" LENGTH="10" NOTNULL="false" DEFAULT="1" SEQUENCE="false" COMMENT="The groups last standing in the leaderboard."/>
+        <FIELD NAME="lastmove" TYPE="int" LENGTH="10" NOTNULL="false" DEFAULT="1" SEQUENCE="false" COMMENT="The last move the group made '0' up '1' down '2' stay."/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
