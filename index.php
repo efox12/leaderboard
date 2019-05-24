@@ -447,7 +447,7 @@ foreach ($groups as $group) {
                     }
                 }
             }
-            $previoustime = $quiz->timestarted;
+            $previoustime = $quiz->timefinished;
             $quiz->pointsearned += $spacingpoints;
             $multipleattemptpoints = 0;
             $points = 0;
