@@ -318,10 +318,14 @@ class block_leaderboard_functions{
         // Add up student points for all points, past week, past two weeks, and fill student history array.
 
         // ACTIVITY.
-        $sql = "SELECT block_leaderboard_assignment.*, assign.duedate
-                FROM {block_leaderboard_assignment} block_leaderboard_assignment
-                INNER JOIN {assign} assign ON assign.id = block_leaderboard_assignment.activityid
-                WHERE block_leaderboard_assignment.studentid = ?;";
+//        $sql = "SELECT block_leaderboard_assignment.*, assign.duedate
+//                FROM {block_leaderboard_assignment} block_leaderboard_assignment
+//                INNER JOIN {assign} assign ON assign.id = block_leaderboard_assignment.activityid
+//                WHERE block_leaderboard_assignment.studentid = ?;";
+          $sql = "SELECT block_leaderboard_assignment.*, assign.duedate
+                  FROM {block_leaderboard_assignment} block_leaderboard_assignment
+                  INNER JOIN {assign} assign ON assign.name = block_leaderboard_assignment.modulename
+                  WHERE block_leaderboard_assignment.studentid = ?;";
 
         $studentactivities = $DB->get_records_sql($sql, array($student->id));
         $pointsdata = self::get_module_points($studentactivities, $start, $end);
@@ -424,5 +428,81 @@ class block_leaderboard_functions{
             }
         }
         return $points;
+    }
+
+
+    /**
+     * Alternate assignment_submitted handler for when assignments are submitted to github
+     * Creates and stores and stdClass object with assignment data in 
+     * block_leaderboard_assignment table
+     * Add points when an assignment is submitted early.
+     *
+     * @param \mod_assign\event\assessable_submitted $event The event.
+     * @return void
+     */
+    public static function assignment_submitted_github($event) {
+        global $DB;
+        
+        $user = get_user_by_email($event->committeremail); //in moodle library
+        
+        //specifically checks if user is a student. if not, nothing happens.
+        if (user_has_role_assignment($user->id, 5)) { //in moodle library
+             
+            $eventdata = new \stdClass(); //fine
+
+            // The id of the object the event is occuring on.
+            $eventid = $event->objectid; //fine
+
+            // The data of the submission. sql query. 
+            // Gets all columns from assign and userid from assign_submission (moodle stuff), joining them together.
+            // I think for when the id is the current one
+            $sql = "SELECT assign.*, assign_submission.userid
+                FROM {assign_submission} assign_submission
+                INNER JOIN {assign} assign ON assign.id = assign_submission.assignment
+                WHERE assign_submission.id = ?;";
+
+            $assignmentdata = $DB->get_record_sql($sql, array($eventid));
+
+            // 86400 seconds per day in unix time.
+            // The function intdiv() is integer divinsion for PHP '/' is foating point division.
+            $daysbeforesubmission = intdiv(($assignmentdata->duedate - $event->timecreated), 86400);
+
+            
+            // Searches for previous records of this assignment being submitted
+            $activity = $DB->get_record('block_leaderboard_assignment',
+                    array('activityid' => $eventid, 'studentid' => $assignmentdata->userid),
+                    $fields = '*', $strictness = IGNORE_MISSING);
+            
+            $testspassed = 0;
+            if ($activity) {
+                $testspassed = $activity->testspassed;
+            }
+
+            // Set the point value.
+            $points = self::get_early_submission_points($daysbeforesubmission, 'assignment');
+            if ($assignmentdata->testspassed > $testspassed) {
+                $points += self::get_early_submission_points($daysbeforesubmission, 'assignmenttests');
+            }
+
+            // Assign data to stdClass
+            $eventdata->pointsearned = $points;
+            $eventdata->studentid = $assignmentdata->userid;
+            $eventdata->activityid = $eventid;
+            $eventdata->timefinished = $event->timecreated;
+            $eventdata->modulename = $assignmentdata->name;
+            $eventdata->daysearly = $daysbeforesubmission;
+            $eventdata->testspassed = $testspassed;
+
+
+            // Insert the new data into the databese if new, update if old.
+            // also if update, add points based on when tests succeeded.
+            if ($activity) {
+                $eventdata->id = $activity->id;
+                $DB->update_record('block_leaderboard_assignment', $eventdata);
+                return;
+            }
+            $DB->insert_record('block_leaderboard_assignment', $eventdata);
+            return;
+        }
     }
 }

@@ -224,6 +224,22 @@ if (count($groups) > 0) { // There are groups to display.
                                     $modulerow->attributes['class'] = 'contentInfo';
                                     $modulerow->attributes['name'] = 'c'.$groupindex.'s'.$count.'i'.$infocount;
                                     $table->data[] = $modulerow;
+
+                                
+                                    //Include info on points from tests passed
+                                    if(property_exists($pointsmodule, "testspassed")) {
+                                        $totalpoints = round($pointsmodule->pointsearned);
+                                        $earlypoints = $totalpoints - $earlypoints;
+
+                                        if ($earlypoints > 0) {
+                                            $modulerow = new html_table_row(array("", "", "",
+                                                            "Number of tests passed ".$pointsmodule->testspassed,
+                                                            $earlypoints));
+                                            $modulerow->attributes['class'] = 'contentInfo';
+                                            $modulerow->attributes['name'] = 'c'.$groupindex.'s'.$count.'i'.$infocount;
+                                            $table->data[] = $modulerow;
+                                        }
+                                    }
                                 }
                             }
                             // Include info about how many times a quiz was attempted.

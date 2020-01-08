@@ -50,6 +50,34 @@ for ($x = 5; $x >= 1; $x--) {
     }
 }
 
+// ASSIGNMENT TESTS
+$settings->add(new admin_setting_heading(
+    'assignmenttestsheaderconfig',
+    get_string('assignmenttestsearlysubmission', 'block_leaderboard'),
+    get_string('assignmenttestsearlysubmission_desc', 'block_leaderboard')
+));
+for ($x = 5; $x >= 1; $x--) {
+    $settings->add(new admin_setting_configtext(
+        'leaderboard/assignmentteststime'.$x,
+        get_string('dayssubmittedearly', 'block_leaderboard'),
+        '',
+        $x
+    ));
+    if (get_config('leaderboard', 'assignmentteststime'.$x) === '') {
+        set_config('assignmentteststime'.$x, $x, 'leaderboard');
+    }
+
+    $settings->add(new admin_setting_configtext(
+        'leaderboard/assignmenttestspoints'.$x,
+        get_string('pointsearned', 'block_leaderboard'),
+        '<br/>',
+        $x * 2
+    ));
+    if (get_config('leaderboard', 'assignmenttestspoints'.$x) === '') {
+        set_config('assignmenttestspoints'.$x, $x * 2, 'leaderboard');
+    }
+}
+
 // QUIZ.
 $settings->add(new admin_setting_heading(
     'quizheaderconfig',

@@ -30,6 +30,9 @@ $string['leaderboard'] = 'Leaderboard';
 $string['assignmentearlysubmission'] = 'Assignments Early Submission';
 $string['assignmentearlysubmission_desc'] = 'Set the points awarded for submitting an assignment early. (Order from most to least days early)';
 
+$string['assignmenttestsearlysubmission'] = 'Assignments Tests Early Submission';
+$string['assignmenttestsearlysubmission_desc'] = 'Set the points awarded for passing an assignment test early. (Order from most to least days early)';
+
 $string['quizearlysubmission'] = 'Quiz Early Submission';
 $string['quizearlysubmission_desc'] = 'Set the points awarded for submitting a quiz early. (Order from most to least days early)';
 
