@@ -37,7 +37,8 @@ class block_leaderboard_renderer extends plugin_renderer_base {
         $daterange = $functions->get_date_range($courseid);
         $start = $daterange->start;
         $end = $daterange->end;
-
+            $string = 'in renderer';
+            echo("<script>console.log('STRING: ".$string."');</script>");
         $url = new moodle_url('/blocks/leaderboard/index.php', array('id' => $courseid, 'start' => $start, 'end' => $end));
 
         // Get all groups from the current course.
@@ -50,6 +51,8 @@ class block_leaderboard_renderer extends plugin_renderer_base {
             foreach ($groups as $group) {
                 $groupdataarray[] = $functions->get_group_data($group, $averagegroupsize, $start, $end);
             }
+                        $string = 'get_group_data worked';
+            echo("<script>console.log('STRING: ".$string."');</script>");
 
             // Sort groups by points.
             if (count($groupdataarray) > 1) { // Only sort if there is something to sort.

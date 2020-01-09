@@ -266,9 +266,13 @@ class block_leaderboard_functions{
             $pointsperweek = $pointspertwoweeks;
         }
         $pointsperweek = round($pointsperweek);
-
+            $string = '1';
+            echo("<script>console.log('STRING: ".$string."');</script>");
+        //FIXME error!
         $storedgroupdata = $DB->get_record('block_leaderboard_group_data',
                                 array('groupid' => $group->id), $fields = '*', $strictness = IGNORE_MISSING);
+                    $string = '2';
+            echo("<script>console.log('STRING: ".$string."');</script>");
         if (!$storedgroupdata) {
             $storedgroupdata = new stdClass();
             $storedgroupdata->currentstanding = 0;
@@ -435,6 +439,7 @@ class block_leaderboard_functions{
      * Alternate assignment_submitted handler for when assignments are submitted to github
      * Creates and stores and stdClass object with assignment data in 
      * block_leaderboard_assignment table
+     * Data is from | id | build_id | commit_timestamp | committer_email | commit_message | pa | organization_name | total_tests | passed_tests |
      * Add points when an assignment is submitted early.
      *
      * @param \mod_assign\event\assessable_submitted $event The event.
@@ -443,34 +448,32 @@ class block_leaderboard_functions{
     public static function assignment_submitted_github($event) {
         global $DB;
         
-        $user = get_user_by_email($event->committeremail); //in moodle library
+        $user = $event->userid;
         
         //specifically checks if user is a student. if not, nothing happens.
         if (user_has_role_assignment($user->id, 5)) { //in moodle library
+            
+            //convert commit_timestamp from UTC time (2019-12-02T05:06:20Z format) to unixtime
+            $timecreated = strtotime($event->commit_timestamp);
              
             $eventdata = new \stdClass(); //fine
+            // The id of the build.
+            $eventid = $event->build_id; 
 
-            // The id of the object the event is occuring on.
-            $eventid = $event->objectid; //fine
-
-            // The data of the submission. sql query. 
-            // Gets all columns from assign and userid from assign_submission (moodle stuff), joining them together.
-            // I think for when the id is the current one
-            $sql = "SELECT assign.*, assign_submission.userid
-                FROM {assign_submission} assign_submission
-                INNER JOIN {assign} assign ON assign.id = assign_submission.assignment
-                WHERE assign_submission.id = ?;";
-
-            $assignmentdata = $DB->get_record_sql($sql, array($eventid));
+            // Gets the data of the assignment
+            $sql = "SELECT assign.*
+                FROM {assign} assign
+                WHERE assign.name = event->pa;";
+            $assignmentdata = $DB->get_record_sql($sql);
 
             // 86400 seconds per day in unix time.
             // The function intdiv() is integer divinsion for PHP '/' is foating point division.
-            $daysbeforesubmission = intdiv(($assignmentdata->duedate - $event->timecreated), 86400);
+            $daysbeforesubmission = intdiv(($assignmentdata->duedate - $timecreated), 86400);
 
             
             // Searches for previous records of this assignment being submitted
             $activity = $DB->get_record('block_leaderboard_assignment',
-                    array('activityid' => $eventid, 'studentid' => $assignmentdata->userid),
+                    array('activityid' => $eventid, 'studentid' => $user->id),
                     $fields = '*', $strictness = IGNORE_MISSING);
             
             $testspassed = 0;
