@@ -437,75 +437,110 @@ class block_leaderboard_functions{
 
     /**
      * Alternate assignment_submitted handler for when assignments are submitted to github
-     * Creates and stores and stdClass object with assignment data in 
-     * block_leaderboard_assignment table
-     * Data is from | id | build_id | commit_timestamp | committer_email | commit_message | pa | organization_name | total_tests | passed_tests |
-     * Add points when an assignment is submitted early.
+     * Looks through all commits from the block_leaderboard_travis_build table for assignments 
+     * due in a given date range and updates the block_leaderboard_assignment table accordingly.
+     * 
+     * 
+     * travis table:
+     * | id | build_id | commit_timestamp | committer_email | github_assignment_acceptor | 
+     *  commit_message | pa | organization_name | total_tests | passed_tests |
      *
-     * @param \mod_assign\event\assessable_submitted $event The event.
+     * @param $start = the start of the time period for data to compute.
+     * @param $end = the end of the time period for data to compute.
      * @return void
      */
-    public static function assignment_submitted_github($event) {
+    public static function update_assignment_submitted_github($start, $end) {
         global $DB;
         
-        $user = $event->userid;
+        // Gets all assignments within the given date range
+        $sql = "SELECT assign.*
+            FROM {assign} assign
+            WHERE assign.duedate BETWEEN $start AND $end;";
+        $assignments = $DB->get_records_sql($sql);
         
-        //specifically checks if user is a student. if not, nothing happens.
-        if (user_has_role_assignment($user->id, 5)) { //in moodle library
+        // Gets all commits that are for assignments within the given range
+        $sql = "SELECT * 
+            FROM {block_leaderboard_travis_builds} block_leaderboard_travis_builds
+            WHERE block_leaderboard_travis_builds.pa IN ({implode(',', $assignments)})";
+        $commits = $DB->get_records_sql($sql);
             
-            //convert commit_timestamp from UTC time (2019-12-02T05:06:20Z format) to unixtime
-            $timecreated = strtotime($event->commit_timestamp);
-             
-            $eventdata = new \stdClass(); //fine
-            // The id of the build.
-            $eventid = $event->build_id; 
+        foreach($commits as $commit) {
+            $user = $DB->get_record('user', array('url' => $commit->github_assignment_acceptor));
 
+            //specifically checks if user is a student. if not, nothing happens.
+            if (user_has_role_assignment($user->id, 5)) { //in moodle library
+                //convert commit_timestamp from UTC time (2019-12-02T05:06:20Z format) to unixtime
+                $commit_timestamp = strtotime($event->commit_timestamp);
+
+                // Searches for previous records of this assignment being submitted
+                $activity = $DB->get_record('block_leaderboard_assignment',
+                        array('modulename' => $commit->pa, 'studentid' => $user->id),
+                        $fields = '*', $strictness = IGNORE_MISSING);
+
+                // If there was previous records, and the commit is new, update them
+                if ($activity && ($commit_timestamp > $activity->timefinished)) {
+                    
+                    $eventdata = create_assignment_record($commit, $user->id, $commit_timestamp, 
+                            $activity->testspassed, $activity->testpoints);
+                    
+                    $eventdata->id = $activity->id;
+                    $DB->update_record('block_leaderboard_assignment', $eventdata);
+                }
+                // else create new record 
+                else {     
+                    $eventdata = create_assignment_record($commit, $user->id, $commit_timestamp);
+                    $DB->insert_record('block_leaderboard_assignment', $eventdata);
+                }  
+            }
+        }
+    }
+    
+    
+    /**
+     * Given parameters, creates an stdClass to store assignment data
+     * 
+     * @param $commit = stdClass of a commit
+     * @param $userid = the userid of the one who completed the assignment
+     * @param $commit_timestamp = the time the commit occured, in unixtime
+     * @param $passed_tests = number of tests passed in the assignment previously
+     * @param $existing_tests_points = already earned points for tests only
+     * @return $eventdata
+     */
+    public static function create_assignment_record($commit, $userid, $commit_timestamp, 
+                $passed_tests = 0, $existing_tests_points = 0) {
+        
+            $eventdata = new stdClass;
+        
             // Gets the data of the assignment
             $sql = "SELECT assign.*
                 FROM {assign} assign
-                WHERE assign.name = event->pa;";
+                WHERE assign.name = $commit->pa;";
             $assignmentdata = $DB->get_record_sql($sql);
 
             // 86400 seconds per day in unix time.
             // The function intdiv() is integer divinsion for PHP '/' is foating point division.
-            $daysbeforesubmission = intdiv(($assignmentdata->duedate - $timecreated), 86400);
-
+            $daysbeforesubmission = intdiv(($assignmentdata->duedate - $commit_timestamp), 86400);
             
-            // Searches for previous records of this assignment being submitted
-            $activity = $DB->get_record('block_leaderboard_assignment',
-                    array('activityid' => $eventid, 'studentid' => $user->id),
-                    $fields = '*', $strictness = IGNORE_MISSING);
-            
-            $testspassed = 0;
-            if ($activity) {
-                $testspassed = $activity->testspassed;
-            }
-
             // Set the point value.
             $points = self::get_early_submission_points($daysbeforesubmission, 'assignment');
-            if ($assignmentdata->testspassed > $testspassed) {
-                $points += self::get_early_submission_points($daysbeforesubmission, 'assignmenttests');
+            
+            $test_points = $existing_tests_points;
+            // If more tests have been passed than previously, adds points to total
+            if ($commit->passed_tests > $passed_tests) {
+                $test_points += self::get_early_submission_points($daysbeforesubmission, 'assignmenttests');
             }
+            $points += $test_points;
 
             // Assign data to stdClass
             $eventdata->pointsearned = $points;
-            $eventdata->studentid = $assignmentdata->userid;
-            $eventdata->activityid = $eventid;
-            $eventdata->timefinished = $event->timecreated;
-            $eventdata->modulename = $assignmentdata->name;
+            $eventdata->studentid = $user;
+            $eventdata->activityid = $commit->build_id;
+            $eventdata->timefinished = $commit_timestamp;
+            $eventdata->modulename = $commit->pa;
             $eventdata->daysearly = $daysbeforesubmission;
-            $eventdata->testspassed = $testspassed;
-
-
-            // Insert the new data into the databese if new, update if old.
-            // also if update, add points based on when tests succeeded.
-            if ($activity) {
-                $eventdata->id = $activity->id;
-                $DB->update_record('block_leaderboard_assignment', $eventdata);
-                return;
-            }
-            $DB->insert_record('block_leaderboard_assignment', $eventdata);
-            return;
-        }
+            $eventdata->testspassed = $commit->passed_tests;
+            $eventdata->testpoints = $test_points;
+            
+            return eventdata;
     }
 }

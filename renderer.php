@@ -40,6 +40,9 @@ class block_leaderboard_renderer extends plugin_renderer_base {
             $string = 'in renderer';
             echo("<script>console.log('STRING: ".$string."');</script>");
         $url = new moodle_url('/blocks/leaderboard/index.php', array('id' => $courseid, 'start' => $start, 'end' => $end));
+        
+        //updates assignment table with commits from github
+        update_assignment_submitted_github($start, $end);
 
         // Get all groups from the current course.
         $groups = $DB->get_records('groups', array('courseid' => $courseid));

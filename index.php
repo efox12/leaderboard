@@ -90,6 +90,9 @@ if (user_has_role_assignment($USER->id, 5)) {
     $isstudent = true;
 }
 
+//updates assignment table with commits from github
+update_assignment_submitted_github($start, $end);
+
 // CREATE LEADERBOARD TABLE.
 $groups = $DB->get_records('groups', array('courseid' => $cid));
 if (count($groups) > 0) { // There are groups to display.
@@ -228,8 +231,7 @@ if (count($groups) > 0) { // There are groups to display.
                                 
                                     //Include info on points from tests passed
                                     if(property_exists($pointsmodule, "testspassed")) {
-                                        $totalpoints = round($pointsmodule->pointsearned);
-                                        $earlypoints = $totalpoints - $earlypoints;
+                                        $earlypoints = $pointsmodule->testpoints;
 
                                         if ($earlypoints > 0) {
                                             $modulerow = new html_table_row(array("", "", "",
