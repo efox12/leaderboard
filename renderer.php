@@ -37,12 +37,12 @@ class block_leaderboard_renderer extends plugin_renderer_base {
         $daterange = $functions->get_date_range($courseid);
         $start = $daterange->start;
         $end = $daterange->end;
-            $string = 'in renderer';
-            echo("<script>console.log('STRING: ".$string."');</script>");
+                
         $url = new moodle_url('/blocks/leaderboard/index.php', array('id' => $courseid, 'start' => $start, 'end' => $end));
         
         //updates assignment table with commits from github
-        update_assignment_submitted_github($start, $end);
+        //$functions->update_assignment_submitted_github($start, $end);
+        $functions->test_create_assignment_record();
 
         // Get all groups from the current course.
         $groups = $DB->get_records('groups', array('courseid' => $courseid));

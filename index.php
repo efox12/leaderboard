@@ -91,7 +91,7 @@ if (user_has_role_assignment($USER->id, 5)) {
 }
 
 //updates assignment table with commits from github
-update_assignment_submitted_github($start, $end);
+//$functions->update_assignment_submitted_github($start, $end);
 
 // CREATE LEADERBOARD TABLE.
 $groups = $DB->get_records('groups', array('courseid' => $cid));
@@ -365,4 +365,8 @@ echo '<br/>';
 echo '<div class = "q">'.get_string('q7', 'block_leaderboard').'</div>';
 echo '<br/>';
 echo '<div class = "a">'.get_string('a7', 'block_leaderboard').'</div>';
+echo '<br/>';
+echo '<div class = "q">'.get_string('q8', 'block_leaderboard').'</div>';
+echo '<br/>';
+echo '<div class = "a">'.get_string('a8', 'block_leaderboard').'</div>';
 echo $OUTPUT->footer();

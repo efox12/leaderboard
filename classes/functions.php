@@ -434,10 +434,9 @@ class block_leaderboard_functions{
         return $points;
     }
 
-
     /**
      * Alternate assignment_submitted handler for when assignments are submitted to github
-     * Looks through all commits from the block_leaderboard_travis_build table for assignments 
+     * Looks through all commits from the block_leaderboard_travis_bui table for assignments 
      * due in a given date range and updates the block_leaderboard_assignment table accordingly.
      * 
      * 
@@ -445,32 +444,60 @@ class block_leaderboard_functions{
      * | id | build_id | commit_timestamp | committer_email | github_assignment_acceptor | 
      *  commit_message | pa | organization_name | total_tests | passed_tests |
      *
-     * @param $start = the start of the time period for data to compute.
-     * @param $end = the end of the time period for data to compute.
+     * @param $startdate = the start of the time period for data to compute.
+     * @param $enddate = the end of the time period for data to compute.
      * @return void
      */
     public static function update_assignment_submitted_github($start, $end) {
         global $DB;
-        
+       
+        // TODO convert all the jury rigged get all then for loop it strategies 
+        // to proper sql statements.
         // Gets all assignments within the given date range
-        $sql = "SELECT assign.*
-            FROM {assign} assign
-            WHERE assign.duedate BETWEEN $start AND $end;";
-        $assignments = $DB->get_records_sql($sql);
+        //$sql = "SELECT assign.*
+        //    FROM {assign};";
+        $all_assignments = $DB->get_records('assign');
+        $assignments= array();
+        
+        foreach($all_assignments as $assignment) {
+            if($assignment->duedate >= $start && $assignment->duedate <= $end)
+                $assignments[]= $assignment;
+        }
+        
+
+        $dbman = $DB->get_manager();
+        if (!($dbman->table_exists('block_leaderboard_assignment'))) {
+            $string = 'table doesnt exists';
+        } else {
+            $string = 'table exists';
+        }
+        echo("<script>console.log('STRING: ".$string."');</script>");
         
         // Gets all commits that are for assignments within the given range
-        $sql = "SELECT * 
-            FROM {block_leaderboard_travis_builds} block_leaderboard_travis_builds
-            WHERE block_leaderboard_travis_builds.pa IN ({implode(',', $assignments)})";
-        $commits = $DB->get_records_sql($sql);
+//        $sql = "SELECT * 
+//            FROM {block_leaderboard_travis_bui} block_leaderboard_travis_bui
+//            WHERE block_leaderboard_travis_bui.pa IN ({implode(',', $assignments)})
+//            ORDER BY block_leaderboard_travis_bui.commit_timestamp ASC;";
+        $all_commits = $DB->get_records('block_leaderboard_travis_bui');
+                $string = 'has commits';
+            echo("<script>console.log('STRING: ".$string."');</script>");
+        $commits = array();
+        foreach($all_commits as $commit) {
+            foreach($assignments as $assignment)
+                if($commit->pa == $assignment->modulename)
+                    $commits[]= $commit;
+        }
             
+        $string = 'has commits';
+        echo("<script>console.log('STRING: ".$string."');</script>");
+        
         foreach($commits as $commit) {
             $user = $DB->get_record('user', array('url' => $commit->github_assignment_acceptor));
 
             //specifically checks if user is a student. if not, nothing happens.
             if (user_has_role_assignment($user->id, 5)) { //in moodle library
                 //convert commit_timestamp from UTC time (2019-12-02T05:06:20Z format) to unixtime
-                $commit_timestamp = strtotime($event->commit_timestamp);
+                $commit_timestamp = strtotime($commit->commit_timestamp);
 
                 // Searches for previous records of this assignment being submitted
                 $activity = $DB->get_record('block_leaderboard_assignment',
@@ -480,7 +507,7 @@ class block_leaderboard_functions{
                 // If there was previous records, and the commit is new, update them
                 if ($activity && ($commit_timestamp > $activity->timefinished)) {
                     
-                    $eventdata = create_assignment_record($commit, $user->id, $commit_timestamp, 
+                    $eventdata = self::create_assignment_record($commit, $user->id, $commit_timestamp, 
                             $activity->testspassed, $activity->testpoints);
                     
                     $eventdata->id = $activity->id;
@@ -488,7 +515,7 @@ class block_leaderboard_functions{
                 }
                 // else create new record 
                 else {     
-                    $eventdata = create_assignment_record($commit, $user->id, $commit_timestamp);
+                    $eventdata = self::create_assignment_record($commit, $user->id, $commit_timestamp);
                     $DB->insert_record('block_leaderboard_assignment', $eventdata);
                 }  
             }
@@ -508,39 +535,125 @@ class block_leaderboard_functions{
      */
     public static function create_assignment_record($commit, $userid, $commit_timestamp, 
                 $passed_tests = 0, $existing_tests_points = 0) {
-        
-            $eventdata = new stdClass;
-        
-            // Gets the data of the assignment
-            $sql = "SELECT assign.*
-                FROM {assign} assign
-                WHERE assign.name = $commit->pa;";
-            $assignmentdata = $DB->get_record_sql($sql);
+        global $DB;
 
-            // 86400 seconds per day in unix time.
-            // The function intdiv() is integer divinsion for PHP '/' is foating point division.
-            $daysbeforesubmission = intdiv(($assignmentdata->duedate - $commit_timestamp), 86400);
-            
-            // Set the point value.
-            $points = self::get_early_submission_points($daysbeforesubmission, 'assignment');
-            
-            $test_points = $existing_tests_points;
-            // If more tests have been passed than previously, adds points to total
-            if ($commit->passed_tests > $passed_tests) {
-                $test_points += self::get_early_submission_points($daysbeforesubmission, 'assignmenttests');
-            }
-            $points += $test_points;
+        $eventdata = new stdClass;
 
-            // Assign data to stdClass
-            $eventdata->pointsearned = $points;
-            $eventdata->studentid = $user;
-            $eventdata->activityid = $commit->build_id;
-            $eventdata->timefinished = $commit_timestamp;
-            $eventdata->modulename = $commit->pa;
-            $eventdata->daysearly = $daysbeforesubmission;
-            $eventdata->testspassed = $commit->passed_tests;
-            $eventdata->testpoints = $test_points;
-            
-            return eventdata;
+        // Gets the data of the assignment
+        $sql = "SELECT assign.*
+            FROM {assign} assign
+            WHERE assign.name = ?;";
+        $assignmentdata = $DB->get_record_sql($sql, array($commit->pa));
+
+        // 86400 seconds per day in unix time.
+        // The function intdiv() is integer divinsion for PHP '/' is foating point division.
+        $daysbeforesubmission = intdiv(($assignmentdata->duedate - $commit_timestamp), 86400);
+
+        // Set the point value.
+        $points = self::get_early_submission_points($daysbeforesubmission, 'assignment');
+
+        $test_points = $existing_tests_points;
+        // If more tests have been passed than previously, adds points to total
+        if ($commit->passed_tests > $passed_tests) {
+            $test_points += self::get_early_submission_points($daysbeforesubmission, 'assignmenttests');
+        }
+        $points += $test_points;
+
+        // Assign data to stdClass
+        $eventdata->pointsearned = $points;
+        $eventdata->studentid = $userid;
+        $eventdata->activityid = $commit->build_id;
+        $eventdata->timefinished = $commit_timestamp;
+        $eventdata->modulename = $commit->pa;
+        $eventdata->daysearly = $daysbeforesubmission;
+        $eventdata->testspassed = $commit->passed_tests;
+        $eventdata->testpoints = $test_points;
+
+        echo("<script>console.log(". json_encode($output, JSON_HEX_TAG) .");</script>");
+        
+        return eventdata;
+    }
+    
+    public static function test_create_assignment_record() {
+        //| id | build_id | commit_timestamp | committer_email | github_assignment_acceptor | 
+        //commit_message | pa | organization_name | total_tests | passed_tests |
+        
+        $commit = new stdClass;
+        $commit->build_id = 262019864;
+        $commit->commit_timestamp = '2019-12-02T05:06:20Z';
+        $commit->committer_email = 'sprint.gonzaga.edu';
+        $commit->commit_message = 'NULL';
+        $commit->github_assignment_acceptor = sprint;
+        $commit->pa = 'pa1';
+        $commit->organization_name = 'cs122';
+        $commit->total_tests = 2;
+        $commit->passed_tests = 1;
+        
+        $commit_timestamp = strtotime($commit->commit_timestamp);
+        $string = $commit_timestamp;
+        echo("<script>console.log('STRING: ".$string."');</script>");
+        
+        $assignment = new stdClass;
+        $user = $commit->github_assignment_acceptor;
+        $assignment = self::create_assignment_record($commit, $user, $commit_timestamp, 0, 0);
+        $string = '';
+        if($assignment->pointsearned == 15) {
+            $string = 'points correct\n';
+        }
+        else {
+            $string = 'points not correct\n';
+        }
+        echo("<script>console.log('STRING: ".$string."');</script>");
+        
+        if($assignment->studentid == $user) {
+            $string = 'studentid correct\n';
+        }
+        else {
+            $string = 'studentid not correct\n';
+        }
+        echo("<script>console.log('STRING: ".$string."');</script>");
+        
+        if($assignment->activityid == $commit->build_id) {
+            $string = 'activityid correct\n';
+        }
+        else {
+            $string = 'activityid not correct\n';
+        }
+        echo("<script>console.log('STRING: ".$string."');</script>");
+       
+        
+        if($assignment->timefinished == $commit->github_assignment_acceptor) {
+            $string = 'timefinished correct\n';
+        }
+        else {
+            $string = 'timefinished not correct\n';
+        }
+        echo("<script>console.log('STRING: ".$string."');</script>");
+        
+        if($assignment->modulename == $commit->github_assignment_acceptor) {
+            $string = 'modulename correct\n';
+        }
+        else {
+            $string = 'modulename not correct\n';
+        }
+        echo("<script>console.log('STRING: ".$string."');</script>");
+        
+        if($assignment->daysearly == $commit->github_assignment_acceptor) {
+            $string = 'daysearly correct\n';
+        }
+        else {
+            $string = 'daysearly not correct\n';
+        }
+        echo("<script>console.log('STRING: ".$string."');</script>");
+        
+        if($assignment->testpoints == $commit->github_assignment_acceptor) {
+            $string = 'testpoints correct\n';
+        }
+        else {
+            $string = 'testpoints not correct\n';
+        }
+        echo("<script>console.log('STRING: ".$string."');</script>");
+       
     }
 }
+

@@ -43,7 +43,7 @@ for ($x = 5; $x >= 1; $x--) {
         'leaderboard/assignmentpoints'.$x,
         get_string('pointsearned', 'block_leaderboard'),
         '<br/>',
-        $x * 5
+        $x
     ));
     if (get_config('leaderboard', 'assignmentpoints'.$x) === '') {
         set_config('assignmentpoints'.$x, $x * 5, 'leaderboard');
