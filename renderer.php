@@ -41,8 +41,8 @@ class block_leaderboard_renderer extends plugin_renderer_base {
         $url = new moodle_url('/blocks/leaderboard/index.php', array('id' => $courseid, 'start' => $start, 'end' => $end));
         
         //updates assignment table with commits from github
-        //$functions->update_assignment_submitted_github($start, $end);
-        $functions->test_create_assignment_record();
+        $functions->update_assignment_submitted_github($start, $end);
+        //$functions->test_create_assignment_record();
 
         // Get all groups from the current course.
         $groups = $DB->get_records('groups', array('courseid' => $courseid));
@@ -54,8 +54,6 @@ class block_leaderboard_renderer extends plugin_renderer_base {
             foreach ($groups as $group) {
                 $groupdataarray[] = $functions->get_group_data($group, $averagegroupsize, $start, $end);
             }
-                        $string = 'get_group_data worked';
-            echo("<script>console.log('STRING: ".$string."');</script>");
 
             // Sort groups by points.
             if (count($groupdataarray) > 1) { // Only sort if there is something to sort.

@@ -266,13 +266,9 @@ class block_leaderboard_functions{
             $pointsperweek = $pointspertwoweeks;
         }
         $pointsperweek = round($pointsperweek);
-            $string = '1';
-            echo("<script>console.log('STRING: ".$string."');</script>");
-        //FIXME error!
+
         $storedgroupdata = $DB->get_record('block_leaderboard_group_data',
                                 array('groupid' => $group->id), $fields = '*', $strictness = IGNORE_MISSING);
-                    $string = '2';
-            echo("<script>console.log('STRING: ".$string."');</script>");
         if (!$storedgroupdata) {
             $storedgroupdata = new stdClass();
             $storedgroupdata->currentstanding = 0;
@@ -488,8 +484,6 @@ class block_leaderboard_functions{
                     $commits[]= $commit;
         }
             
-        $string = 'has commits';
-        echo("<script>console.log('STRING: ".$string."');</script>");
         
         foreach($commits as $commit) {
             $user = $DB->get_record('user', array('url' => $commit->github_assignment_acceptor));
@@ -569,9 +563,7 @@ class block_leaderboard_functions{
         $eventdata->testspassed = $commit->passed_tests;
         $eventdata->testpoints = $test_points;
 
-        echo("<script>console.log(". json_encode($output, JSON_HEX_TAG) .");</script>");
-        
-        return eventdata;
+        return $eventdata;
     }
     
     public static function test_create_assignment_record() {
@@ -580,23 +572,27 @@ class block_leaderboard_functions{
         
         $commit = new stdClass;
         $commit->build_id = 262019864;
-        $commit->commit_timestamp = '2019-12-02T05:06:20Z';
+        $commit->commit_timestamp = '2020-01-10T05:06:20Z';
         $commit->committer_email = 'sprint.gonzaga.edu';
         $commit->commit_message = 'NULL';
         $commit->github_assignment_acceptor = sprint;
         $commit->pa = 'pa1';
         $commit->organization_name = 'cs122';
         $commit->total_tests = 2;
-        $commit->passed_tests = 1;
+        $commit->passed_tests = 2;
+        
+        echo("<script>console.log(". json_encode($commit, JSON_HEX_TAG) .");</script>");
+
         
         $commit_timestamp = strtotime($commit->commit_timestamp);
-        $string = $commit_timestamp;
-        echo("<script>console.log('STRING: ".$string."');</script>");
+        //gets 1575263180
+
         
         $assignment = new stdClass;
         $user = $commit->github_assignment_acceptor;
         $assignment = self::create_assignment_record($commit, $user, $commit_timestamp, 0, 0);
         $string = '';
+        echo("<script>console.log(". json_encode($assignment, JSON_HEX_TAG) .");</script>");
         if($assignment->pointsearned == 15) {
             $string = 'points correct\n';
         }
@@ -604,6 +600,9 @@ class block_leaderboard_functions{
             $string = 'points not correct\n';
         }
         echo("<script>console.log('STRING: ".$string."');</script>");
+        $output = $assignment->pointsearned;
+        echo('<script>console.log(' . json_encode($output, JSON_HEX_TAG) . ');</script>');
+        
         
         if($assignment->studentid == $user) {
             $string = 'studentid correct\n';
@@ -622,7 +621,7 @@ class block_leaderboard_functions{
         echo("<script>console.log('STRING: ".$string."');</script>");
        
         
-        if($assignment->timefinished == $commit->github_assignment_acceptor) {
+        if($assignment->timefinished == $commit_timestamp) {
             $string = 'timefinished correct\n';
         }
         else {
@@ -630,7 +629,7 @@ class block_leaderboard_functions{
         }
         echo("<script>console.log('STRING: ".$string."');</script>");
         
-        if($assignment->modulename == $commit->github_assignment_acceptor) {
+        if($assignment->modulename == $commit->pa) {
             $string = 'modulename correct\n';
         }
         else {
@@ -638,7 +637,7 @@ class block_leaderboard_functions{
         }
         echo("<script>console.log('STRING: ".$string."');</script>");
         
-        if($assignment->daysearly == $commit->github_assignment_acceptor) {
+        if($assignment->daysearly == $commit->total_tests) {
             $string = 'daysearly correct\n';
         }
         else {
@@ -646,7 +645,7 @@ class block_leaderboard_functions{
         }
         echo("<script>console.log('STRING: ".$string."');</script>");
         
-        if($assignment->testpoints == $commit->github_assignment_acceptor) {
+        if($assignment->testpoints == 10) {
             $string = 'testpoints correct\n';
         }
         else {
