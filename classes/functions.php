@@ -317,7 +317,7 @@ class block_leaderboard_functions{
 
         // Add up student points for all points, past week, past two weeks, and fill student history array.
 
-        // ACTIVITY.
+        // ACTIVITY. FIXME, this isn't working right
 //        $sql = "SELECT block_leaderboard_assignment.*, assign.duedate
 //                FROM {block_leaderboard_assignment} block_leaderboard_assignment
 //                INNER JOIN {assign} assign ON assign.id = block_leaderboard_assignment.activityid
@@ -440,6 +440,7 @@ class block_leaderboard_functions{
      * | id | build_id | commit_timestamp | committer_email | github_assignment_acceptor | 
      *  commit_message | pa | organization_name | total_tests | passed_tests |
      *
+     * 
      * @param $startdate = the start of the time period for data to compute.
      * @param $enddate = the end of the time period for data to compute.
      * @return void
@@ -447,75 +448,96 @@ class block_leaderboard_functions{
     public static function update_assignment_submitted_github($start, $end) {
         global $DB;
        
-        // TODO convert all the jury rigged get all then for loop it strategies 
-        // to proper sql statements.
-        // Gets all assignments within the given date range
-        //$sql = "SELECT assign.*
-        //    FROM {assign};";
+        // Get all commits
         $all_assignments = $DB->get_records('assign');
-        $assignments= array();
+        $commits = array();
         
+        // For all assignments, if it is within the given due date, then it will
+        // call a function that will search and add all commits associated with
+        // that assignment to $commits        
         foreach($all_assignments as $assignment) {
-            if($assignment->duedate >= $start && $assignment->duedate <= $end)
-                $assignments[]= $assignment;
+            if($assignment->duedate >= $start && $assignment->duedate <= $end) {
+                $commits = self::select_travis_commits($commits, $assignment->name);
+            }
         }
-        
+        echo("<script>console.log(". json_encode('all assignments:', JSON_HEX_TAG) .");</script>");
+        echo("<script>console.log(". json_encode($all_assignments, JSON_HEX_TAG) .");</script>");
 
-        $dbman = $DB->get_manager();
-        if (!($dbman->table_exists('block_leaderboard_assignment'))) {
-            $string = 'table doesnt exists';
-        } else {
-            $string = 'table exists';
-        }
-        echo("<script>console.log('STRING: ".$string."');</script>");
+        echo("<script>console.log(". json_encode('all commits:', JSON_HEX_TAG) .");</script>");
+        $all_commits = $DB->get_records('block_leaderboard_travis_bui');
+        echo("<script>console.log(". json_encode($all_commits, JSON_HEX_TAG) .");</script>");
+        echo("<script>console.log(". json_encode('commits:', JSON_HEX_TAG) .");</script>");
+        echo("<script>console.log(". json_encode($commits, JSON_HEX_TAG) .");</script>");
         
         // Gets all commits that are for assignments within the given range
-//        $sql = "SELECT * 
-//            FROM {block_leaderboard_travis_bui} block_leaderboard_travis_bui
-//            WHERE block_leaderboard_travis_bui.pa IN ({implode(',', $assignments)})
-//            ORDER BY block_leaderboard_travis_bui.commit_timestamp ASC;";
-        $all_commits = $DB->get_records('block_leaderboard_travis_bui');
-                $string = 'has commits';
-            echo("<script>console.log('STRING: ".$string."');</script>");
-        $commits = array();
-        foreach($all_commits as $commit) {
-            foreach($assignments as $assignment)
-                if($commit->pa == $assignment->modulename)
-                    $commits[]= $commit;
-        }
-            
+        // Commits must be in order time wise for this to work properly
+        // WHERE block_leaderboard_travis_bui.pa IN ({implode(',', $assignments)})            
         
         foreach($commits as $commit) {
-            $user = $DB->get_record('user', array('url' => $commit->github_assignment_acceptor));
-
+            //Gets user 
+            $user = $DB->get_record_sql('SELECT * FROM {user} '
+                    . 'WHERE ' . $DB->sql_compare_text('description') . ' = ?', 
+                    array('description' => $commit->github_assignment_acceptor));
+        
             //specifically checks if user is a student. if not, nothing happens.
             if (user_has_role_assignment($user->id, 5)) { //in moodle library
                 //convert commit_timestamp from UTC time (2019-12-02T05:06:20Z format) to unixtime
-                $commit_timestamp = strtotime($commit->commit_timestamp);
+                $commit_timestamp = $commit->commit_timestamp;
 
                 // Searches for previous records of this assignment being submitted
-                $activity = $DB->get_record('block_leaderboard_assignment',
-                        array('modulename' => $commit->pa, 'studentid' => $user->id),
-                        $fields = '*', $strictness = IGNORE_MISSING);
+                $activity = $DB->get_record_sql('SELECT * FROM {block_leaderboard_assignment}
+                    WHERE ' . $DB->sql_compare_text('modulename') . ' = ? AND studentid = ?;',
+                        array('modulename' => $commit->pa, 'studentid' => $user->id));
 
+                //CHECK obviously
                 // If there was previous records, and the commit is new, update them
-                if ($activity && ($commit_timestamp > $activity->timefinished)) {
-                    
-                    $eventdata = self::create_assignment_record($commit, $user->id, $commit_timestamp, 
-                            $activity->testspassed, $activity->testpoints);
-                    
-                    $eventdata->id = $activity->id;
-                    $DB->update_record('block_leaderboard_assignment', $eventdata);
+                if ($activity) {
+                    if ($commit_timestamp > $activity->timefinished) {
+                        $eventdata = self::create_assignment_record($commit, $user->id, $commit_timestamp, 
+                                $activity->testspassed, $activity->testpoints);
+
+                        $eventdata->id = $activity->id;
+                        $DB->update_record('block_leaderboard_assignment', $eventdata);
+                        echo("<script>console.log(". json_encode('Update new record', JSON_HEX_TAG) .");</script>");
+                        echo("<script>console.log(". json_encode($eventdata, JSON_HEX_TAG) .");</script>");
+                    }
                 }
                 // else create new record 
                 else {     
                     $eventdata = self::create_assignment_record($commit, $user->id, $commit_timestamp);
                     $DB->insert_record('block_leaderboard_assignment', $eventdata);
-                }  
+                    echo("<script>console.log(". json_encode('Insert new record', JSON_HEX_TAG) .");</script>");
+                    echo("<script>console.log(". json_encode($eventdata, JSON_HEX_TAG) .");</script>");
+                } 
+                
             }
         }
+        $all_assignments = $DB->get_records('block_leaderboard_assignment');
+        echo("<script>console.log(". json_encode('leaderboard assignments:', JSON_HEX_TAG) .");</script>");
+        echo("<script>console.log(". json_encode($all_assignments, JSON_HEX_TAG) .");</script>");
     }
     
+    /**
+     * Given an array of commits and a pa, finds commits from the pa and attaches
+     * them to the existing array.
+     * 
+     * @param $chosen_commits = array of previously selected commits
+     * @param $pa = the new assignment to be selected
+     * @return all commits, new and previous
+     */
+    public static function select_travis_commits($chosen_commits, $pa) {
+        global $DB;
+                
+        $sql = "SELECT * 
+            FROM {block_leaderboard_travis_bui} block_leaderboard_travis_bui
+            WHERE block_leaderboard_travis_bui.pa = ?
+            ORDER BY commit_timestamp ASC;";
+        $new_commits = $DB->get_records_sql($sql, array($pa));
+        
+        $new_commits = array_merge($chosen_commits, $new_commits);
+        
+        return $new_commits;
+    }
     
     /**
      * Given parameters, creates an stdClass to store assignment data
@@ -542,7 +564,7 @@ class block_leaderboard_functions{
         // 86400 seconds per day in unix time.
         // The function intdiv() is integer divinsion for PHP '/' is foating point division.
         $daysbeforesubmission = intdiv(($assignmentdata->duedate - $commit_timestamp), 86400);
-
+        
         // Set the point value.
         $points = self::get_early_submission_points($daysbeforesubmission, 'assignment');
 
@@ -566,13 +588,46 @@ class block_leaderboard_functions{
         return $eventdata;
     }
     
+    /**
+     * Adds data to leaderboard global tables. Be very careful with
+     * @return none
+     */
+    public static function test_add_to_globals($string) {
+        global $DB;
+        
+        if($string == 'add') {
+            $commit = new stdClass;
+            $commit->build_id = 262019864;
+            $commit->commit_timestamp = 1578787200;
+            $commit->committer_email = 'sprint.gonzaga.edu';
+            $commit->commit_message = 'NULL';
+            $commit->github_assignment_acceptor = sprint;
+            $commit->pa = 'pa2';
+            $commit->organization_name = 'cs122';
+            $commit->total_tests = 10;
+            $commit->passed_tests = 100;
+            
+            $DB->insert_record('block_leaderboard_travis_bui', $commit);
+        }
+        //purge commit and assignment globals
+        else if($string == 'delete') {
+            $DB->delete_records('block_leaderboard_travis_bui');
+            $DB->delete_records('block_leaderboard_assignment');
+        }
+        
+    }
+    
+    /**
+     * function for testing the create_assignment_record helper function
+     * @return none
+     */
     public static function test_create_assignment_record() {
         //| id | build_id | commit_timestamp | committer_email | github_assignment_acceptor | 
         //commit_message | pa | organization_name | total_tests | passed_tests |
         
         $commit = new stdClass;
         $commit->build_id = 262019864;
-        $commit->commit_timestamp = '2020-01-10T05:06:20Z';
+        $commit->commit_timestamp = 1575263180;
         $commit->committer_email = 'sprint.gonzaga.edu';
         $commit->commit_message = 'NULL';
         $commit->github_assignment_acceptor = sprint;
@@ -582,15 +637,10 @@ class block_leaderboard_functions{
         $commit->passed_tests = 2;
         
         echo("<script>console.log(". json_encode($commit, JSON_HEX_TAG) .");</script>");
-
-        
-        $commit_timestamp = strtotime($commit->commit_timestamp);
-        //gets 1575263180
-
         
         $assignment = new stdClass;
         $user = $commit->github_assignment_acceptor;
-        $assignment = self::create_assignment_record($commit, $user, $commit_timestamp, 0, 0);
+        $assignment = self::create_assignment_record($commit, $user, $commit->commit_timestamp, 0, 0);
         $string = '';
         echo("<script>console.log(". json_encode($assignment, JSON_HEX_TAG) .");</script>");
         if($assignment->pointsearned == 15) {
@@ -654,5 +704,7 @@ class block_leaderboard_functions{
         echo("<script>console.log('STRING: ".$string."');</script>");
        
     }
+    
+    
 }
 

@@ -116,6 +116,18 @@ function xmldb_block_leaderboard_upgrade($oldversion) {
         upgrade_block_savepoint(true, 2020011034, 'leaderboard');
     }
 
+    if ($oldversion < 2020180101) {
+
+        // Changing type of field commit_timestamp on table block_leaderboard_travis_bui to int.
+        $table = new xmldb_table('block_leaderboard_travis_bui');
+        $field = new xmldb_field('commit_timestamp', XMLDB_TYPE_INTEGER, '10', null, null, null, null, 'build_id');
+
+        // Launch change of type for field commit_timestamp.
+        $dbman->change_field_type($table, $field);
+
+        // Leaderboard savepoint reached.
+        upgrade_block_savepoint(true, 2020180101, 'leaderboard');
+    }
     
     return true;
 }
