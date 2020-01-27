@@ -317,11 +317,7 @@ class block_leaderboard_functions{
 
         // Add up student points for all points, past week, past two weeks, and fill student history array.
 
-        // ACTIVITY. FIXME, this isn't working right
-//        $sql = "SELECT block_leaderboard_assignment.*, assign.duedate
-//                FROM {block_leaderboard_assignment} block_leaderboard_assignment
-//                INNER JOIN {assign} assign ON assign.id = block_leaderboard_assignment.activityid
-//                WHERE block_leaderboard_assignment.studentid = ?;";
+        // ACTIVITY. FIXME determine if this is a problem of the sql request or the leaderboard
           $sql = "SELECT block_leaderboard_assignment.*, assign.duedate
                   FROM {block_leaderboard_assignment} block_leaderboard_assignment
                   INNER JOIN {assign} assign ON assign.name = block_leaderboard_assignment.modulename
@@ -513,8 +509,8 @@ class block_leaderboard_functions{
             }
         }
         $all_assignments = $DB->get_records('block_leaderboard_assignment');
-        echo("<script>console.log(". json_encode('leaderboard assignments:', JSON_HEX_TAG) .");</script>");
-        echo("<script>console.log(". json_encode($all_assignments, JSON_HEX_TAG) .");</script>");
+//        echo("<script>console.log(". json_encode('leaderboard assignments:', JSON_HEX_TAG) .");</script>");
+//        echo("<script>console.log(". json_encode($all_assignments, JSON_HEX_TAG) .");</script>");
     }
     
     /**
