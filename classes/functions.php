@@ -324,6 +324,9 @@ class block_leaderboard_functions{
                   WHERE block_leaderboard_assignment.studentid = ?;";
 
         $studentactivities = $DB->get_records_sql($sql, array($student->id));
+        echo("<script>console.log(". json_encode('error are:', JSON_HEX_TAG) .");</script>");
+        echo("<script>console.log(". json_encode($studentactivities, JSON_HEX_TAG) .");</script>");
+        
         $pointsdata = self::get_module_points($studentactivities, $start, $end);
         $points->all += $pointsdata->all;
         $points->pastweek += $pointsdata->pastweek;
@@ -439,13 +442,14 @@ class block_leaderboard_functions{
      * 
      * @param $startdate = the start of the time period for data to compute.
      * @param $enddate = the end of the time period for data to compute.
+     * @param $courseid = the id of the course we want
      * @return void
      */
-    public static function update_assignment_submitted_github($start, $end) {
+    public static function update_assignment_submitted_github($start, $end, $courseid) {
         global $DB;
        
-        // Get all commits
-        $all_assignments = $DB->get_records('assign');
+        // Get all commits from course
+        $all_assignments = $DB->get_records('assign', array('course' => $courseid));
         $commits = array();
         
         // For all assignments, if it is within the given due date, then it will

@@ -91,7 +91,7 @@ if (user_has_role_assignment($USER->id, 5)) {
 }
 
 //updates assignment table with commits from github
-//$functions->update_assignment_submitted_github($start, $end);
+$functions->update_assignment_submitted_github($start, $end, $cid);
 
 // CREATE LEADERBOARD TABLE.
 $groups = $DB->get_records('groups', array('courseid' => $cid));

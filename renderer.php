@@ -43,7 +43,7 @@ class block_leaderboard_renderer extends plugin_renderer_base {
         //updates assignment table with commits from github
         //$functions->test_add_to_globals('add');
         //$functions->test_add_to_globals('delete');
-        $functions->update_assignment_submitted_github($start, $end);
+        $functions->update_assignment_submitted_github($start, $end, $courseid);
         //$functions->test_create_assignment_record();
 
         // Get all groups from the current course.
