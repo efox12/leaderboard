@@ -460,12 +460,12 @@ class block_leaderboard_functions{
                 $commits = self::select_travis_commits($commits, $assignment->name);
             }
         }
-//        echo("<script>console.log(". json_encode('all assignments:', JSON_HEX_TAG) .");</script>");
-//        echo("<script>console.log(". json_encode($all_assignments, JSON_HEX_TAG) .");</script>");
-//
-//        echo("<script>console.log(". json_encode('all commits:', JSON_HEX_TAG) .");</script>");
-//        $all_commits = $DB->get_records('block_leaderboard_travis_builds');
-//        echo("<script>console.log(". json_encode($all_commits, JSON_HEX_TAG) .");</script>");
+        echo("<script>console.log(". json_encode('all assignments:', JSON_HEX_TAG) .");</script>");
+        echo("<script>console.log(". json_encode($all_assignments, JSON_HEX_TAG) .");</script>");
+
+        echo("<script>console.log(". json_encode('all commits:', JSON_HEX_TAG) .");</script>");
+        $all_commits = $DB->get_records('block_leaderboard_travis_builds');
+        echo("<script>console.log(". json_encode($all_commits, JSON_HEX_TAG) .");</script>");
         echo("<script>console.log(". json_encode('commits:', JSON_HEX_TAG) .");</script>");
         echo("<script>console.log(". json_encode($commits, JSON_HEX_TAG) .");</script>");
         
