@@ -321,7 +321,8 @@ class block_leaderboard_functions{
           $sql = "SELECT block_leaderboard_assignment.*, assign.duedate
                   FROM {block_leaderboard_assignment} block_leaderboard_assignment
                   INNER JOIN {assign} assign ON assign.name = block_leaderboard_assignment.modulename
-                  WHERE block_leaderboard_assignment.studentid = ? AND assign.duedate >= ? AND assign.duedate <= ?;";
+                  WHERE block_leaderboard_assignment.studentid = ? AND assign.duedate >= ? AND assign.duedate <= ? 
+                  AND block_leaderboard_assignment.timefinished >= assign.allowsubmissionsfromdate ;";
 
         $studentactivities = $DB->get_records_sql($sql, array($student->id, $start, $end));
         echo("<script>console.log(". json_encode('error are:', JSON_HEX_TAG) .");</script>");
