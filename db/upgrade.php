@@ -64,20 +64,20 @@ function xmldb_block_leaderboard_upgrade($oldversion) {
         upgrade_block_savepoint(true, 2020011030, 'leaderboard');
     }
     
-    if ($oldversion < 2020011031) {
+    if ($oldversion < 2020011032) {
 
-        // Changing the default of field testspassed on table block_leaderboard_assignment to 0.
+        // Changing the default of field testpoints on table block_leaderboard_assignment to 0.
         $table = new xmldb_table('block_leaderboard_assignment');
-        $field = new xmldb_field('testspassed', XMLDB_TYPE_INTEGER, '10', null, null, null, '0', 'daysearly');
+        $field = new xmldb_field('testpoints', XMLDB_TYPE_INTEGER, '10', null, null, null, '0', 'testspassed');
 
-        // Launch change of default for field testspassed.
+        // Launch change of default for field testpoints.
         $dbman->change_field_default($table, $field);
 
         // Leaderboard savepoint reached.
-        upgrade_block_savepoint(true, 2020011031, 'leaderboard');
+        upgrade_block_savepoint(true, 2020011032, 'leaderboard');
     }
     
-    if ($oldversion < 2020011032) {
+    if ($oldversion < 2020011033) {
 
         // Changing nullability of field testspassed on table block_leaderboard_assignment to not null.
         $table = new xmldb_table('block_leaderboard_assignment');
@@ -87,10 +87,10 @@ function xmldb_block_leaderboard_upgrade($oldversion) {
         $dbman->change_field_notnull($table, $field);
 
         // Leaderboard savepoint reached.
-        upgrade_block_savepoint(true, 2020011032, 'leaderboard');
+        upgrade_block_savepoint(true, 2020011033, 'leaderboard');
     }
 
-    if ($oldversion < 2020011033) {
+    if ($oldversion < 2020011034) {
 
         // Changing nullability of field testpoints on table block_leaderboard_assignment to not null.
         $table = new xmldb_table('block_leaderboard_assignment');
@@ -98,19 +98,6 @@ function xmldb_block_leaderboard_upgrade($oldversion) {
 
         // Launch change of nullability for field testpoints.
         $dbman->change_field_notnull($table, $field);
-
-        // Leaderboard savepoint reached.
-        upgrade_block_savepoint(true, 2020011033, 'leaderboard');
-    }
-
-    if ($oldversion < 2020011034) {
-
-        // Changing the default of field testpoints on table block_leaderboard_assignment to 0.
-        $table = new xmldb_table('block_leaderboard_assignment');
-        $field = new xmldb_field('testpoints', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'testspassed');
-
-        // Launch change of default for field testpoints.
-        $dbman->change_field_default($table, $field);
 
         // Leaderboard savepoint reached.
         upgrade_block_savepoint(true, 2020011034, 'leaderboard');
