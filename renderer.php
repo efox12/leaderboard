@@ -29,7 +29,7 @@ class block_leaderboard_renderer extends plugin_renderer_base {
      * @return string The content to be displayed in the block.
      */
     public function leaderboard_block() {
-        global $DB, $OUTPUT, $COURSE;
+        global $DB, $OUTPUT, $COURSE, $USER;
 
         // Prepare the data for the table.
         $courseid  = $COURSE->id;
@@ -48,6 +48,13 @@ class block_leaderboard_renderer extends plugin_renderer_base {
 
         // Get all groups from the current course.
         $groups = $DB->get_records('groups', array('courseid' => $courseid));
+        
+        //if user is a student and is not in a group, disable viewing the leaderboard for them
+        if(user_has_role_assignment($USER->id, 5) && 
+                !($functions->is_user_in_a_group($groups, $USER->id))) {
+            return "";
+        }
+        
         // Only display content in the block if there are groups.
         if (count($groups) > 0) {
             $averagegroupsize = $functions->get_average_group_size($groups);

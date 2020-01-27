@@ -588,6 +588,28 @@ class block_leaderboard_functions{
         return $eventdata;
     }
     
+    /*Determines if a user is an any of the groups entered in and returns a boolean
+     * @param groups = array of group objects
+     * @param userid = id of the given user
+     * @return whether they are or aren't
+     * 
+     */
+    public static function is_user_in_a_group($groups, $userid) {
+        
+        //for all groups
+        foreach($groups as $group) {
+            //get group members
+            $students = groups_get_members($group->id, $fields = 'u.*', $sort = 'lastname ASC');
+            //and see if one of their students is the user
+            foreach($students as $student) {
+                if($student->id === $userid) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
     /**
      * Adds data to leaderboard global tables. Be very careful with
      * @return none
