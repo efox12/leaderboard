@@ -317,17 +317,14 @@ class block_leaderboard_functions{
 
         // Add up student points for all points, past week, past two weeks, and fill student history array.
 
-        // ACTIVITY. FIXME determine if this is a problem of the sql request or the leaderboard
+        // ACTIVITY.
           $sql = "SELECT block_leaderboard_assignment.*, assign.duedate
                   FROM {block_leaderboard_assignment} block_leaderboard_assignment
                   INNER JOIN {assign} assign ON assign.name = block_leaderboard_assignment.modulename
                   WHERE block_leaderboard_assignment.studentid = ? AND assign.duedate >= ? AND assign.duedate <= ? 
                   AND block_leaderboard_assignment.timefinished >= assign.allowsubmissionsfromdate ;";
 
-        $studentactivities = $DB->get_records_sql($sql, array($student->id, $start, $end));
-        echo("<script>console.log(". json_encode('error are:', JSON_HEX_TAG) .");</script>");
-        echo("<script>console.log(". json_encode($studentactivities, JSON_HEX_TAG) .");</script>");
-        
+        $studentactivities = $DB->get_records_sql($sql, array($student->id, $start, $end));        
         $pointsdata = self::get_module_points($studentactivities, $start, $end);
         $points->all += $pointsdata->all;
         $points->pastweek += $pointsdata->pastweek;
@@ -461,14 +458,14 @@ class block_leaderboard_functions{
                 $commits = self::select_travis_commits($commits, $assignment->name);
             }
         }
-        echo("<script>console.log(". json_encode('all assignments:', JSON_HEX_TAG) .");</script>");
-        echo("<script>console.log(". json_encode($all_assignments, JSON_HEX_TAG) .");</script>");
-
-        echo("<script>console.log(". json_encode('all commits:', JSON_HEX_TAG) .");</script>");
-        $all_commits = $DB->get_records('block_leaderboard_travis_builds');
-        echo("<script>console.log(". json_encode($all_commits, JSON_HEX_TAG) .");</script>");
-        echo("<script>console.log(". json_encode('commits:', JSON_HEX_TAG) .");</script>");
-        echo("<script>console.log(". json_encode($commits, JSON_HEX_TAG) .");</script>");
+//        echo("<script>console.log(". json_encode('all assignments:', JSON_HEX_TAG) .");</script>");
+//        echo("<script>console.log(". json_encode($all_assignments, JSON_HEX_TAG) .");</script>");
+//
+//        echo("<script>console.log(". json_encode('all commits:', JSON_HEX_TAG) .");</script>");
+//        $all_commits = $DB->get_records('block_leaderboard_travis_builds');
+//        echo("<script>console.log(". json_encode($all_commits, JSON_HEX_TAG) .");</script>");
+//        echo("<script>console.log(". json_encode('commits:', JSON_HEX_TAG) .");</script>");
+//        echo("<script>console.log(". json_encode($commits, JSON_HEX_TAG) .");</script>");
         
         // Gets all commits that are for assignments within the given range
         // Commits must be in order time wise for this to work properly
