@@ -77,32 +77,6 @@ function xmldb_block_leaderboard_upgrade($oldversion) {
         upgrade_block_savepoint(true, 2020011032, 'leaderboard');
     }
     
-    if ($oldversion < 2020011033) {
-
-        // Changing nullability of field testspassed on table block_leaderboard_assignment to not null.
-        $table = new xmldb_table('block_leaderboard_assignment');
-        $field = new xmldb_field('testspassed', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'daysearly');
-
-        // Launch change of nullability for field testspassed.
-        $dbman->change_field_notnull($table, $field);
-
-        // Leaderboard savepoint reached.
-        upgrade_block_savepoint(true, 2020011033, 'leaderboard');
-    }
-
-    if ($oldversion < 2020011034) {
-
-        // Changing nullability of field testpoints on table block_leaderboard_assignment to not null.
-        $table = new xmldb_table('block_leaderboard_assignment');
-        $field = new xmldb_field('testpoints', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'testspassed');
-
-        // Launch change of nullability for field testpoints.
-        $dbman->change_field_notnull($table, $field);
-
-        // Leaderboard savepoint reached.
-        upgrade_block_savepoint(true, 2020011034, 'leaderboard');
-    }
-
     if ($oldversion < 2020270101) {
 
         // Changing type of field commit_timestamp on table block_leaderboard_travis_builds to int.
