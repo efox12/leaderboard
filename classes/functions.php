@@ -466,8 +466,8 @@ class block_leaderboard_functions{
 //        echo("<script>console.log(". json_encode('all commits:', JSON_HEX_TAG) .");</script>");
 //        $all_commits = $DB->get_records('block_leaderboard_travis_builds');
 //        echo("<script>console.log(". json_encode($all_commits, JSON_HEX_TAG) .");</script>");
-//        echo("<script>console.log(". json_encode('commits:', JSON_HEX_TAG) .");</script>");
-//        echo("<script>console.log(". json_encode($commits, JSON_HEX_TAG) .");</script>");
+        echo("<script>console.log(". json_encode('commits:', JSON_HEX_TAG) .");</script>");
+        echo("<script>console.log(". json_encode($commits, JSON_HEX_TAG) .");</script>");
         
         // Gets all commits that are for assignments within the given range
         // Commits must be in order time wise for this to work properly
