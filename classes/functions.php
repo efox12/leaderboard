@@ -432,7 +432,7 @@ class block_leaderboard_functions{
 
     /**
      * Alternate assignment_submitted handler for when assignments are submitted to github
-     * Looks through all commits from the block_leaderboard_travis_build table for assignments 
+     * Looks through all commits from the block_leaderboard_travis_builds table for assignments 
      * due in a given date range and updates the block_leaderboard_assignment table accordingly.
      * 
      * 
@@ -464,14 +464,14 @@ class block_leaderboard_functions{
         echo("<script>console.log(". json_encode($all_assignments, JSON_HEX_TAG) .");</script>");
 
         echo("<script>console.log(". json_encode('all commits:', JSON_HEX_TAG) .");</script>");
-        $all_commits = $DB->get_records('block_leaderboard_travis_build');
+        $all_commits = $DB->get_records('block_leaderboard_travis_builds');
         echo("<script>console.log(". json_encode($all_commits, JSON_HEX_TAG) .");</script>");
         echo("<script>console.log(". json_encode('commits:', JSON_HEX_TAG) .");</script>");
         echo("<script>console.log(". json_encode($commits, JSON_HEX_TAG) .");</script>");
         
         // Gets all commits that are for assignments within the given range
         // Commits must be in order time wise for this to work properly
-        // WHERE block_leaderboard_travis_build.pa IN ({implode(',', $assignments)})            
+        // WHERE block_leaderboard_travis_builds.pa IN ({implode(',', $assignments)})            
         
         foreach($commits as $commit) {
             //Gets user 
@@ -529,8 +529,8 @@ class block_leaderboard_functions{
         global $DB;
                 
         $sql = "SELECT * 
-            FROM {block_leaderboard_travis_build} block_leaderboard_travis_build
-            WHERE block_leaderboard_travis_build.pa = ?
+            FROM {block_leaderboard_travis_builds} block_leaderboard_travis_builds
+            WHERE block_leaderboard_travis_builds.pa = ?
             ORDER BY commit_timestamp ASC;";
         $new_commits = $DB->get_records_sql($sql, array($pa));
         
@@ -629,11 +629,11 @@ class block_leaderboard_functions{
             $commit->total_tests = 10;
             $commit->passed_tests = 100;
             
-            $DB->insert_record('block_leaderboard_travis_build', $commit);
+            $DB->insert_record('block_leaderboard_travis_builds', $commit);
         }
         //purge commit and assignment globals
         else if($string == 'delete') {
-            $DB->delete_records('block_leaderboard_travis_build');
+            $DB->delete_records('block_leaderboard_travis_builds');
             $DB->delete_records('block_leaderboard_assignment');
         }
         

@@ -66,25 +66,25 @@ function xmldb_block_leaderboard_upgrade($oldversion) {
     
     if ($oldversion < 2020011031) {
 
+        // Changing the default of field testspassed on table block_leaderboard_assignment to 0.
+        $table = new xmldb_table('block_leaderboard_assignment');
+        $field = new xmldb_field('testspassed', XMLDB_TYPE_INTEGER, '10', null, null, null, '0', 'daysearly');
+
+        // Launch change of default for field testspassed.
+        $dbman->change_field_default($table, $field);
+
+        // Leaderboard savepoint reached.
+        upgrade_block_savepoint(true, 2020011031, 'leaderboard');
+    }
+    
+    if ($oldversion < 2020011032) {
+
         // Changing nullability of field testspassed on table block_leaderboard_assignment to not null.
         $table = new xmldb_table('block_leaderboard_assignment');
         $field = new xmldb_field('testspassed', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'daysearly');
 
         // Launch change of nullability for field testspassed.
         $dbman->change_field_notnull($table, $field);
-
-        // Leaderboard savepoint reached.
-        upgrade_block_savepoint(true, 2020011031, 'leaderboard');
-    }
-
-    if ($oldversion < 2020011032) {
-
-        // Changing the default of field testspassed on table block_leaderboard_assignment to 0.
-        $table = new xmldb_table('block_leaderboard_assignment');
-        $field = new xmldb_field('testspassed', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'daysearly');
-
-        // Launch change of default for field testspassed.
-        $dbman->change_field_default($table, $field);
 
         // Leaderboard savepoint reached.
         upgrade_block_savepoint(true, 2020011032, 'leaderboard');
@@ -118,8 +118,8 @@ function xmldb_block_leaderboard_upgrade($oldversion) {
 
     if ($oldversion < 2020270101) {
 
-        // Changing type of field commit_timestamp on table block_leaderboard_travis_build to int.
-        $table = new xmldb_table('block_leaderboard_travis_build');
+        // Changing type of field commit_timestamp on table block_leaderboard_travis_builds to int.
+        $table = new xmldb_table('block_leaderboard_travis_builds');
         $field = new xmldb_field('commit_timestamp', XMLDB_TYPE_INTEGER, '10', null, null, null, null, 'build_id');
 
         // Launch change of type for field commit_timestamp.
