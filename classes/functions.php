@@ -476,15 +476,6 @@ class block_leaderboard_functions{
             $user = $DB->get_record_sql('SELECT * FROM {user} '
                     . 'WHERE ' . $DB->sql_compare_text('description') . ' = ?', 
                     array('description' => $commit->github_assignment_acceptor));
-        
-            $whatisuser = $DB->get_record('user', array('firstname' => 'Gina'));
-            echo("<script>console.log(". json_encode('database user:', JSON_HEX_TAG) .");</script>");
-            echo("<script>console.log(". json_encode($whatisuser, JSON_HEX_TAG) .");</script>");
-            
-            
-            echo("<script>console.log(". json_encode('userdata:', JSON_HEX_TAG) .");</script>");
-            echo("<script>console.log(". json_encode($commit->github_assignment_acceptor, JSON_HEX_TAG) .");</script>");
-            echo("<script>console.log(". json_encode($user, JSON_HEX_TAG) .");</script>");
             
             //specifically checks if user is a student. if not, nothing happens.
             if ($user && user_has_role_assignment($user->id, 5)) { //in moodle library
