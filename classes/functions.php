@@ -477,8 +477,14 @@ class block_leaderboard_functions{
                     . 'WHERE ' . $DB->sql_compare_text('description') . ' = ?', 
                     array('description' => $commit->github_assignment_acceptor));
         
+//            $user = $DB->get_record('user', array('name' => 'Gina Sprint'));
+            
+            echo("<script>console.log(". json_encode('userdata:', JSON_HEX_TAG) .");</script>");
+            echo("<script>console.log(". json_encode($commit->github_assignment_acceptor, JSON_HEX_TAG) .");</script>");
+            echo("<script>console.log(". json_encode($user, JSON_HEX_TAG) .");</script>");
+            
             //specifically checks if user is a student. if not, nothing happens.
-            if (user_has_role_assignment($user->id, 5)) { //in moodle library
+            if ($user && user_has_role_assignment($user->id, 5)) { //in moodle library
                 //convert commit_timestamp from UTC time (2019-12-02T05:06:20Z format) to unixtime
                 $commit_timestamp = $commit->commit_timestamp;
 
