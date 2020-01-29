@@ -477,7 +477,7 @@ class block_leaderboard_functions{
                     . 'WHERE ' . $DB->sql_compare_text('description') . ' = ?', 
                     array('description' => $commit->github_assignment_acceptor));
         
-            $whatisuser = $DB->get_record('user', array('name' => 'Gina Sprint'));
+            $whatisuser = $DB->get_record('user', array('firstname' => 'Gina'));
             echo("<script>console.log(". json_encode('database user:', JSON_HEX_TAG) .");</script>");
             echo("<script>console.log(". json_encode($whatisuser, JSON_HEX_TAG) .");</script>");
             
