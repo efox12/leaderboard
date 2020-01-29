@@ -487,8 +487,8 @@ class block_leaderboard_functions{
                     WHERE ' . $DB->sql_compare_text('modulename') . ' = ? AND studentid = ? AND courseid = ?;',
                         array('modulename' => $commit->pa, 'studentid' => $user->id, 'courseid' => $courseid));
 
-                        echo("<script>console.log(". json_encode('previous activity:', JSON_HEX_TAG) .");</script>");
-        echo("<script>console.log(". json_encode($activity, JSON_HEX_TAG) .");</script>");
+                echo("<script>console.log(". json_encode('previous activity:', JSON_HEX_TAG) .");</script>");
+                 echo("<script>console.log(". json_encode($activity, JSON_HEX_TAG) .");</script>");
                 
                 //CHECK obviously
                 // If there was previous records, and the commit is new, update them

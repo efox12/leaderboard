@@ -116,5 +116,20 @@ function xmldb_block_leaderboard_upgrade($oldversion) {
 //        upgrade_block_savepoint(true, 2020270101, 'leaderboard');
 //    }
     
+    if ($oldversion < 2020012901) {
+
+        // Define field courseid to be added to block_leaderboard_travis_bui.
+        $table = new xmldb_table('block_leaderboard_travis_builds');
+        $field = new xmldb_field('courseid', XMLDB_TYPE_INTEGER, '10', null, null, null, null, 'pa');
+
+        // Conditionally launch add field courseid.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Leaderboard savepoint reached.
+        upgrade_block_savepoint(true, 2020012901, 'leaderboard');
+    }
+    
     return true;
 }
