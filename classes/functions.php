@@ -556,7 +556,7 @@ class block_leaderboard_functions{
         // Gets the data of the assignment
         $sql = "SELECT assign.*
             FROM {assign} assign
-            WHERE assign.name = ?; AND assign.course = ?";
+            WHERE assign.name = ? AND assign.course = ?";
         $assignmentdata = $DB->get_record_sql($sql, array($commit->pa, 'course' => $courseid));
 
         // 86400 seconds per day in unix time.
@@ -579,10 +579,10 @@ class block_leaderboard_functions{
         $eventdata->activityid = $commit->build_id;
         $eventdata->timefinished = $commit_timestamp;
         $eventdata->modulename = $commit->pa;
+        $eventdata->courseid = $courseid;
         $eventdata->daysearly = $daysbeforesubmission;
         $eventdata->testspassed = $commit->passed_tests;
         $eventdata->testpoints = $test_points;
-        $eventdata->courseid = $courseid;
 
         return $eventdata;
     }
