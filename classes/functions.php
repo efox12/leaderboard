@@ -484,15 +484,15 @@ class block_leaderboard_functions{
 
                 // Searches for previous records of this assignment being submitted
                 $activity = $DB->get_record_sql('SELECT * FROM {block_leaderboard_assignment}
-                    WHERE ' . $DB->sql_compare_text('modulename') . ' = ? AND studentid = ?;',
-                        array('modulename' => $commit->pa, 'studentid' => $user->id));
+                    WHERE ' . $DB->sql_compare_text('modulename') . ' = ? AND studentid = ? AND courseid = ?;',
+                        array('modulename' => $commit->pa, 'studentid' => $user->id, 'courseid' => $courseid));
 
                 //CHECK obviously
                 // If there was previous records, and the commit is new, update them
                 if ($activity) {
                     if ($commit_timestamp > $activity->timefinished) {
                         $eventdata = self::create_assignment_record($commit, $user->id, $commit_timestamp, 
-                                $activity->testspassed, $activity->testpoints);
+                                $courseid, $activity->testspassed, $activity->testpoints);
 
                         $eventdata->id = $activity->id;
                         $DB->update_record('block_leaderboard_assignment', $eventdata);
@@ -502,7 +502,7 @@ class block_leaderboard_functions{
                 }
                 // else create new record 
                 else {     
-                    $eventdata = self::create_assignment_record($commit, $user->id, $commit_timestamp);
+                    $eventdata = self::create_assignment_record($commit, $user->id, $commit_timestamp, $courseid);
                     $DB->insert_record('block_leaderboard_assignment', $eventdata);
 //                    echo("<script>console.log(". json_encode('Insert new record', JSON_HEX_TAG) .");</script>");
 //                    echo("<script>console.log(". json_encode($eventdata, JSON_HEX_TAG) .");</script>");
@@ -547,7 +547,7 @@ class block_leaderboard_functions{
      * @param $existing_tests_points = already earned points for tests only
      * @return $eventdata
      */
-    public static function create_assignment_record($commit, $userid, $commit_timestamp, 
+    public static function create_assignment_record($commit, $userid, $commit_timestamp, $courseid, 
                 $passed_tests = 0, $existing_tests_points = 0) {
         global $DB;
 
@@ -556,8 +556,8 @@ class block_leaderboard_functions{
         // Gets the data of the assignment
         $sql = "SELECT assign.*
             FROM {assign} assign
-            WHERE assign.name = ?;";
-        $assignmentdata = $DB->get_record_sql($sql, array($commit->pa));
+            WHERE assign.name = ?; AND assign.course = ?";
+        $assignmentdata = $DB->get_record_sql($sql, array($commit->pa, 'course' => $courseid));
 
         // 86400 seconds per day in unix time.
         // The function intdiv() is integer divinsion for PHP '/' is foating point division.
@@ -582,6 +582,7 @@ class block_leaderboard_functions{
         $eventdata->daysearly = $daysbeforesubmission;
         $eventdata->testspassed = $commit->passed_tests;
         $eventdata->testpoints = $test_points;
+        $eventdata->courseid = $courseid;
 
         return $eventdata;
     }
