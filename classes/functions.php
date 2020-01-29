@@ -458,14 +458,14 @@ class block_leaderboard_functions{
                 $commits = self::select_travis_commits($commits, $assignment->name);
             }
         }
-        echo("<script>console.log(". json_encode('all assignments:', JSON_HEX_TAG) .");</script>");
-        echo("<script>console.log(". json_encode($all_assignments, JSON_HEX_TAG) .");</script>");
+//        echo("<script>console.log(". json_encode('all assignments:', JSON_HEX_TAG) .");</script>");
+//        echo("<script>console.log(". json_encode($all_assignments, JSON_HEX_TAG) .");</script>");
 //
 //        echo("<script>console.log(". json_encode('all commits:', JSON_HEX_TAG) .");</script>");
 //        $all_commits = $DB->get_records('block_leaderboard_travis_builds');
 //        echo("<script>console.log(". json_encode($all_commits, JSON_HEX_TAG) .");</script>");
-        echo("<script>console.log(". json_encode('commits:', JSON_HEX_TAG) .");</script>");
-        echo("<script>console.log(". json_encode($commits, JSON_HEX_TAG) .");</script>");
+//        echo("<script>console.log(". json_encode('commits:', JSON_HEX_TAG) .");</script>");
+//        echo("<script>console.log(". json_encode($commits, JSON_HEX_TAG) .");</script>");
         
         // Gets all commits that are for assignments within the given range
         // Commits must be in order time wise for this to work properly
@@ -487,10 +487,10 @@ class block_leaderboard_functions{
                     WHERE ' . $DB->sql_compare_text('modulename') . ' = ? AND studentid = ? AND courseid = ?;',
                         array('modulename' => $commit->pa, 'studentid' => $user->id, 'courseid' => $courseid));
 
-                echo("<script>console.log(". json_encode('previous activity:', JSON_HEX_TAG) .");</script>");
-                echo("<script>console.log(". json_encode($activity, JSON_HEX_TAG) .");</script>");
-                echo("<script>console.log(". json_encode('courseid:', JSON_HEX_TAG) .");</script>");
-                echo("<script>console.log(". json_encode($courseid, JSON_HEX_TAG) .");</script>");
+//                echo("<script>console.log(". json_encode('previous activity:', JSON_HEX_TAG) .");</script>");
+//                echo("<script>console.log(". json_encode($activity, JSON_HEX_TAG) .");</script>");
+//                echo("<script>console.log(". json_encode('courseid:', JSON_HEX_TAG) .");</script>");
+//                echo("<script>console.log(". json_encode($courseid, JSON_HEX_TAG) .");</script>");
                 
                 //CHECK obviously
                 // If there was previous records, and the commit is new, update them
@@ -501,23 +501,23 @@ class block_leaderboard_functions{
 
                         $eventdata->id = $activity->id;
                         $DB->update_record('block_leaderboard_assignment', $eventdata);
-                        echo("<script>console.log(". json_encode('Update new record', JSON_HEX_TAG) .");</script>");
-                        echo("<script>console.log(". json_encode($eventdata, JSON_HEX_TAG) .");</script>");
+//                        echo("<script>console.log(". json_encode('Update new record', JSON_HEX_TAG) .");</script>");
+//                        echo("<script>console.log(". json_encode($eventdata, JSON_HEX_TAG) .");</script>");
                     }
                 }
                 // else create new record 
                 else {     
                     $eventdata = self::create_assignment_record($commit, $user->id, $commit_timestamp, $courseid);
                     $DB->insert_record('block_leaderboard_assignment', $eventdata);
-                    echo("<script>console.log(". json_encode('Insert new record', JSON_HEX_TAG) .");</script>");
-                    echo("<script>console.log(". json_encode($eventdata, JSON_HEX_TAG) .");</script>");
+//                    echo("<script>console.log(". json_encode('Insert new record', JSON_HEX_TAG) .");</script>");
+//                    echo("<script>console.log(". json_encode($eventdata, JSON_HEX_TAG) .");</script>");
                 } 
                 
             }
         }
         $all_assignments = $DB->get_records('block_leaderboard_assignment');
-        echo("<script>console.log(". json_encode('leaderboard assignments:', JSON_HEX_TAG) .");</script>");
-        echo("<script>console.log(". json_encode($all_assignments, JSON_HEX_TAG) .");</script>");
+//        echo("<script>console.log(". json_encode('leaderboard assignments:', JSON_HEX_TAG) .");</script>");
+//        echo("<script>console.log(". json_encode($all_assignments, JSON_HEX_TAG) .");</script>");
     }
     
     /**
