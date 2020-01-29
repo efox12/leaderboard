@@ -511,8 +511,8 @@ class block_leaderboard_functions{
             }
         }
         $all_assignments = $DB->get_records('block_leaderboard_assignment');
-//        echo("<script>console.log(". json_encode('leaderboard assignments:', JSON_HEX_TAG) .");</script>");
-//        echo("<script>console.log(". json_encode($all_assignments, JSON_HEX_TAG) .");</script>");
+        echo("<script>console.log(". json_encode('leaderboard assignments:', JSON_HEX_TAG) .");</script>");
+        echo("<script>console.log(". json_encode($all_assignments, JSON_HEX_TAG) .");</script>");
     }
     
     /**
