@@ -405,7 +405,7 @@ class block_leaderboard_functions{
         $points->pastweek = 0;
         $points->pasttwoweeks = 0;
         $points->history = [];
-        $time = time();
+        //$time = time();
         foreach ($list as $activity) {
             $duedate = $activity->timefinished;
             if (isset($activity->duedate)) {
@@ -413,7 +413,8 @@ class block_leaderboard_functions{
             } else if (isset($activity->timeclose)) {
                 $duedate = $activity->timeclose;
             }
-            if ($time >= $duedate && $duedate >= $start && $duedate <= $end && $activity->modulename != '') {
+            //$time >= $duedate && 
+            if ($duedate >= $start && $duedate <= $end && $activity->modulename != '') {
                 $points->all += $activity->pointsearned;
                 if (($time - $activity->timefinished) / 86400 <= 7) {
                     $points->pastweek += $activity->pointsearned;
@@ -569,7 +570,12 @@ class block_leaderboard_functions{
         $daysbeforesubmission = intdiv(($assignmentdata->duedate - $commit_timestamp), 86400);
         
         // Set the point value.
-        $points = self::get_early_submission_points($daysbeforesubmission, 'assignment');
+        $points = 0;
+        
+        //ensures student gets no points if they haven't passed at least one test
+        if($commit->passed_tests > 0) {
+            $points =self::get_early_submission_points($daysbeforesubmission, 'assignment');
+        }        
 
         $test_points = $existing_tests_points;
         // If more tests have been passed than previously, adds points to total
