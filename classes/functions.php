@@ -405,7 +405,7 @@ class block_leaderboard_functions{
         $points->pastweek = 0;
         $points->pasttwoweeks = 0;
         $points->history = [];
-        //$time = time();
+        $time = time();
         foreach ($list as $activity) {
             $duedate = $activity->timefinished;
             if (isset($activity->duedate)) {
