@@ -218,7 +218,9 @@ if (count($groups) > 0) { // There are groups to display.
                                 if (property_exists($pointsmodule, "attempts")) {
                                     $earlypoints = $functions->get_early_submission_points($daysearly, 'quiz');
                                 } else {
-                                    $earlypoints = $functions->get_early_submission_points($daysearly, 'assignment');
+                                    if(property_exists($pointsmodule, "testspassed") && $pointsmodule->testspassed > 0) {
+                                        $earlypoints = $functions->get_early_submission_points($daysearly, 'assignment');
+                                    }
                                 }
                                 if ($earlypoints > 0) {
                                     $modulerow = new html_table_row(array("", "", "",
@@ -230,7 +232,7 @@ if (count($groups) > 0) { // There are groups to display.
 
                                 
                                     //Include info on points from tests passed
-                                    if(property_exists($pointsmodule, "testspassed")) {
+                                    if(property_exists($pointsmodule, "testspassed") && property_exists($pointsmodule, "testpoints")) {
                                         $earlypoints = $pointsmodule->testpoints;
 
                                         if ($earlypoints > 0) {
