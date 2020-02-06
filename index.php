@@ -228,24 +228,24 @@ if (count($groups) > 0) { // There are groups to display.
                                                     $earlypoints));
                                     $modulerow->attributes['class'] = 'contentInfo';
                                     $modulerow->attributes['name'] = 'c'.$groupindex.'s'.$count.'i'.$infocount;
-                                    $table->data[] = $modulerow;
-
-                                
-                                    //Include info on points from tests passed
-                                    if(property_exists($pointsmodule, "testspassed") && property_exists($pointsmodule, "testpoints")) {
-                                        $earlypoints = $pointsmodule->testpoints;
-
-                                        if ($earlypoints > 0) {
-                                            $modulerow = new html_table_row(array("", "", "",
-                                                            "Number of tests passed ".$pointsmodule->testspassed,
-                                                            $earlypoints));
-                                            $modulerow->attributes['class'] = 'contentInfo';
-                                            $modulerow->attributes['name'] = 'c'.$groupindex.'s'.$count.'i'.$infocount;
-                                            $table->data[] = $modulerow;
-                                        }
-                                    }
+                                    $table->data[] = $modulerow;                               
                                 }
                             }
+                            
+                            //Include info on points from tests passed
+                            if(property_exists($pointsmodule, "testspassed") && property_exists($pointsmodule, "testpoints")) {
+                                $earlypoints = $pointsmodule->testpoints;
+
+                                if ($earlypoints > 0) {
+                                    $modulerow = new html_table_row(array("", "", "",
+                                                    "Number of tests passed ".$pointsmodule->testspassed,
+                                                    $earlypoints));
+                                    $modulerow->attributes['class'] = 'contentInfo';
+                                    $modulerow->attributes['name'] = 'c'.$groupindex.'s'.$count.'i'.$infocount;
+                                    $table->data[] = $modulerow;
+                                }
+                            }
+                            
                             // Include info about how many times a quiz was attempted.
                             if (property_exists($pointsmodule, "attempts")) {
                                 $attemptspoints = $functions->get_quiz_attempts_points($pointsmodule->attempts);
