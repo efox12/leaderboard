@@ -102,21 +102,13 @@ if (count($groups) > 0) { // There are groups to display.
                     get_string('name', 'block_leaderboard'), get_string('points', 'block_leaderboard'));
     $table->attributes['class'] = 'generaltable leaderboardtable';
 
-    // Get average group size.
-    $numgroups = count($groups);
-    $numstudents = 0;
-    foreach ($groups as $group) {
-        // Get each member of the group.
-        $students = groups_get_members($group->id, $fields = 'u.*', $sort = 'lastname ASC');
-        $numstudents += count($students);
-    }
-    // Get the average group size.
-    $averagegroupsize = ceil($numstudents / $numgroups);
+    // Get the max group size.
+    $maxgroupsize = get_max_group_size($groups);
 
     // Get all group data.
     $groupdataarray = [];
     foreach ($groups as $group) {
-        $groupdataarray[] = $functions->get_group_data($group, $averagegroupsize, $start, $end);
+        $groupdataarray[] = $functions->get_group_data($group, $maxgroupsize, $start, $end);
     }
 
     // Sort the groups by points.

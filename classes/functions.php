@@ -205,16 +205,40 @@ class block_leaderboard_functions{
             return 0;
         }
     }
+    
+        /**
+     * Calculates the max group size based on a list of groups.
+     * @param array $groups A list of groups.
+     * @return int The max number of students per group.
+     */
+    public static function get_max_group_size($groups) {
+        // Determine average group size.
+        $numgroups = count($groups);
+        $maxgroupsize = 0;
+        $numstudents = 0;
+        
+        if ($numgroups > 0) {
+            foreach ($groups as $group) {
+                // Get each member of the group.
+                $students = groups_get_members($group->id, $fields = 'u.*', $sort = 'lastname ASC');
+                if($students > $maxgroupsize)
+                    $maxgroupsize = $students;
+            }
+            return $maxgroupsize;
+        } else {
+            return 0;
+        }
+    }
 
     /**
      * Gets all of the data about a group of students during a specific date range.
      * @param stdClass $group A group of students.
-     * @param int $averagegroupsize The average number of students per group.
+     * @param int $maxgroupsize The max number of students per group.
      * @param int $start A unit timestamp.
      * @param int $end A unix timestamp.
      * @return stdClass All important data about a group of students.
      */
-    public static function get_group_data($group, $averagegroupsize, $start, $end) {
+    public static function get_group_data($group, $maxgroupsize, $start, $end) {
         global $DB, $USER;
 
         $pastweekpoints = 0;
@@ -245,15 +269,15 @@ class block_leaderboard_functions{
             }
         }
 
-        // If the teams are not equal size make it a fair size.
+        // If the teams less than max size level the playing field.
         $groupsize = count($students);
         $bonuspoints = 0;
 
-        if ($groupsize != $averagegroupsize) {
-            $bonuspoints = $totalpoints / $groupsize * $averagegroupsize - $totalpoints;
-            $pastweekpoints = $pastweekpoints / $groupsize * $averagegroupsize;
-            $pasttwoweekspoints = $pasttwoweekspoints / $groupsize * $averagegroupsize;
-            $totalpoints = $totalpoints / $groupsize * $averagegroupsize;
+        if ($groupsize < $maxgroupsize) {
+            $bonuspoints = $totalpoints / $groupsize * $maxgroupsize - $totalpoints;
+            $pastweekpoints = $pastweekpoints / $groupsize * $maxgroupsize;
+            $pasttwoweekspoints = $pasttwoweekspoints / $groupsize * $maxgroupsize;
+            $totalpoints = $totalpoints / $groupsize * $maxgroupsize;
         }
         // Calculate the points per week.
         $pointsperweek = $pastweekpoints;

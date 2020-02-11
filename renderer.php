@@ -57,11 +57,11 @@ class block_leaderboard_renderer extends plugin_renderer_base {
         
         // Only display content in the block if there are groups.
         if (count($groups) > 0) {
-            $averagegroupsize = $functions->get_average_group_size($groups);
+            $maxgroupsize = $functions->get_max_group_size($groups);
             // Get data for the groups.
             $groupdataarray = array();
             foreach ($groups as $group) {
-                $groupdataarray[] = $functions->get_group_data($group, $averagegroupsize, $start, $end);
+                $groupdataarray[] = $functions->get_group_data($group, $maxgroupsize, $start, $end);
             }
 
             // Sort groups by points.
