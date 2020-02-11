@@ -215,14 +215,14 @@ class block_leaderboard_functions{
         // Determine average group size.
         $numgroups = count($groups);
         $maxgroupsize = 0;
-        $numstudents = 0;
         
         if ($numgroups > 0) {
             foreach ($groups as $group) {
                 // Get each member of the group.
                 $students = groups_get_members($group->id, $fields = 'u.*', $sort = 'lastname ASC');
-                if($students > $maxgroupsize)
+                if($students > $maxgroupsize) {
                     $maxgroupsize = $students;
+                }
             }
             return $maxgroupsize;
         } else {

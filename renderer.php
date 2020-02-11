@@ -50,6 +50,7 @@ class block_leaderboard_renderer extends plugin_renderer_base {
         $groups = $DB->get_records('groups', array('courseid' => $courseid));
         
         //if user is a student and is not in a group, disable viewing the leaderboard for them
+        //FIXME this works if user is student anywhere
         if(user_has_role_assignment($USER->id, 5) && 
                 !($functions->is_user_in_a_group($groups, $USER->id))) {
             return "";
