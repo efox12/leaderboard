@@ -103,7 +103,7 @@ if (count($groups) > 0) { // There are groups to display.
     $table->attributes['class'] = 'generaltable leaderboardtable';
 
     // Get the max group size.
-    $maxgroupsize = get_max_group_size($groups);
+    $maxgroupsize = $functions->get_max_group_size($groups);
 
     // Get all group data.
     $groupdataarray = [];
