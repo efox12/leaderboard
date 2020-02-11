@@ -220,8 +220,8 @@ class block_leaderboard_functions{
             foreach ($groups as $group) {
                 // Get each member of the group.
                 $students = groups_get_members($group->id, $fields = 'u.*', $sort = 'lastname ASC');
-                if($students > $maxgroupsize) {
-                    $maxgroupsize = $students;
+                if(count($students) > $maxgroupsize) {
+                    $maxgroupsize = count($students);
                 }
             }
             return $maxgroupsize;
