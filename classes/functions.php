@@ -274,7 +274,7 @@ class block_leaderboard_functions{
         $bonuspoints = 0;
 
         if ($groupsize < $maxgroupsize) {
-            $bonuspoints = $totalpoints / $groupsize * $maxgroupsize - $totalpoints;
+            $bonuspoints = (($totalpoints / $groupsize) * $maxgroupsize) - $totalpoints;
             $pastweekpoints = $pastweekpoints / $groupsize * $maxgroupsize;
             $pasttwoweekspoints = $pasttwoweekspoints / $groupsize * $maxgroupsize;
             $totalpoints = $totalpoints / $groupsize * $maxgroupsize;
