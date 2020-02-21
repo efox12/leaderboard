@@ -51,6 +51,11 @@ class block_leaderboard_renderer extends plugin_renderer_base {
         
         //if user is a student and is not in a group, disable viewing the leaderboard for them
         //FIXME this works if user is student anywhere
+        /*
+         * Possible solutions:
+         * moodle recommends basing off capacity instead of role
+         * put something in the context field of this function
+         */
         if(user_has_role_assignment($USER->id, 5) && 
                 !($functions->is_user_in_a_group($groups, $USER->id))) {
             return "";

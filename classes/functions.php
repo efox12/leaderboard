@@ -91,6 +91,7 @@ class block_leaderboard_functions{
 
         $course = $DB->get_record_sql($sql, array($courseid));
 
+        //get course start and end date
         $start = $course->startdate;
         $end = $course->enddate;
         if ($end == 0) {
@@ -342,6 +343,7 @@ class block_leaderboard_functions{
         // Add up student points for all points, past week, past two weeks, and fill student history array.
 
         // ACTIVITY.
+        //FIXME to prevent assignment from different course from being considered.
           $sql = "SELECT block_leaderboard_assignment.*, assign.duedate
                   FROM {block_leaderboard_assignment} block_leaderboard_assignment
                   INNER JOIN {assign} assign ON assign.name = block_leaderboard_assignment.modulename
@@ -478,14 +480,25 @@ class block_leaderboard_functions{
         // For all assignments, if it is within the given due date, then it will
         // call a function that will search and add all commits associated with
         // that assignment to $commits        
+        //FIXME - make strickter requirements (courseid?)
         foreach($all_assignments as $assignment) {
             if($assignment->duedate >= $start && $assignment->duedate <= $end) {
                 $commits = self::select_travis_commits($commits, $assignment->name);
             }
         }
-//        echo("<script>console.log(". json_encode('all assignments:', JSON_HEX_TAG) .");</script>");
-//        echo("<script>console.log(". json_encode($all_assignments, JSON_HEX_TAG) .");</script>");
-//
+        //FIXME problem is making assignments for not just 1 but 2 courses.
+        //get assignment code should shut down any non courseid stuff
+        //possibility code came from loading other course though
+        //
+        echo("<script>console.log(". json_encode('all assignments:', JSON_HEX_TAG) .");</script>");
+        echo("<script>console.log(". json_encode($all_assignments, JSON_HEX_TAG) .");</script>");
+        
+        echo("<script>console.log(". json_encode('start and end:', JSON_HEX_TAG) .");</script>");
+        echo("<script>console.log(". json_encode($start, JSON_HEX_TAG) .");</script>");
+        echo("<script>console.log(". json_encode($end, JSON_HEX_TAG) .");</script>");
+
+
+
 //        echo("<script>console.log(". json_encode('all commits:', JSON_HEX_TAG) .");</script>");
 //        $all_commits = $DB->get_records('block_leaderboard_travis_builds');
 //        echo("<script>console.log(". json_encode($all_commits, JSON_HEX_TAG) .");</script>");
