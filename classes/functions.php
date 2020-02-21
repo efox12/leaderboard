@@ -527,8 +527,8 @@ class block_leaderboard_functions{
 
 //                echo("<script>console.log(". json_encode('previous activity:', JSON_HEX_TAG) .");</script>");
 //                echo("<script>console.log(". json_encode($activity, JSON_HEX_TAG) .");</script>");
-//                echo("<script>console.log(". json_encode('courseid:', JSON_HEX_TAG) .");</script>");
-//                echo("<script>console.log(". json_encode($courseid, JSON_HEX_TAG) .");</script>");
+                echo("<script>console.log(". json_encode('courseid:', JSON_HEX_TAG) .");</script>");
+                echo("<script>console.log(". json_encode($courseid, JSON_HEX_TAG) .");</script>");
                 
                 //CHECK obviously
                 // If there was previous records, and the commit is new, update them
@@ -554,8 +554,8 @@ class block_leaderboard_functions{
             }
         }
         $all_assignments = $DB->get_records('block_leaderboard_assignment');
-//        echo("<script>console.log(". json_encode('leaderboard assignments:', JSON_HEX_TAG) .");</script>");
-//        echo("<script>console.log(". json_encode($all_assignments, JSON_HEX_TAG) .");</script>");
+        echo("<script>console.log(". json_encode('leaderboard assignments:', JSON_HEX_TAG) .");</script>");
+        echo("<script>console.log(". json_encode($all_assignments, JSON_HEX_TAG) .");</script>");
     }
     
     /**
