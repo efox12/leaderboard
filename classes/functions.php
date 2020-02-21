@@ -490,14 +490,8 @@ class block_leaderboard_functions{
         //get assignment code should shut down any non courseid stuff
         //possibility code came from loading other course though
         //
-        echo("<script>console.log(". json_encode('all assignments:', JSON_HEX_TAG) .");</script>");
-        echo("<script>console.log(". json_encode($all_assignments, JSON_HEX_TAG) .");</script>");
-        
-        echo("<script>console.log(". json_encode('start and end:', JSON_HEX_TAG) .");</script>");
-        echo("<script>console.log(". json_encode($start, JSON_HEX_TAG) .");</script>");
-        echo("<script>console.log(". json_encode($end, JSON_HEX_TAG) .");</script>");
-
-
+//        echo("<script>console.log(". json_encode('all assignments:', JSON_HEX_TAG) .");</script>");
+//        echo("<script>console.log(". json_encode($all_assignments, JSON_HEX_TAG) .");</script>");
 
 //        echo("<script>console.log(". json_encode('all commits:', JSON_HEX_TAG) .");</script>");
 //        $all_commits = $DB->get_records('block_leaderboard_travis_builds');
@@ -527,8 +521,8 @@ class block_leaderboard_functions{
 
 //                echo("<script>console.log(". json_encode('previous activity:', JSON_HEX_TAG) .");</script>");
 //                echo("<script>console.log(". json_encode($activity, JSON_HEX_TAG) .");</script>");
-                echo("<script>console.log(". json_encode('courseid:', JSON_HEX_TAG) .");</script>");
-                echo("<script>console.log(". json_encode($courseid, JSON_HEX_TAG) .");</script>");
+//                echo("<script>console.log(". json_encode('courseid:', JSON_HEX_TAG) .");</script>");
+//                echo("<script>console.log(". json_encode($courseid, JSON_HEX_TAG) .");</script>");
                 
                 //CHECK obviously
                 // If there was previous records, and the commit is new, update them
@@ -554,8 +548,8 @@ class block_leaderboard_functions{
             }
         }
         $all_assignments = $DB->get_records('block_leaderboard_assignment');
-        echo("<script>console.log(". json_encode('leaderboard assignments:', JSON_HEX_TAG) .");</script>");
-        echo("<script>console.log(". json_encode($all_assignments, JSON_HEX_TAG) .");</script>");
+//        echo("<script>console.log(". json_encode('leaderboard assignments:', JSON_HEX_TAG) .");</script>");
+//        echo("<script>console.log(". json_encode($all_assignments, JSON_HEX_TAG) .");</script>");
     }
     
     /**
