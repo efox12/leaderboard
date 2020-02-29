@@ -410,7 +410,7 @@ class block_leaderboard_functions{
         
         foreach($history as $forum) {
             //check property exists
-            if(property_exists($pointsmodule, "isresponse") && property_exists($pointsmodule, "pointsearned")) {
+            if(property_exists($forum, "isresponse") && property_exists($forum, "pointsearned")) {
                 if($forum->isresponse == true) {
                     $pointsearned = round($forum->pointsearned);
                     while($responsepoints < $maxresponse && $pointsearned > 0) {
