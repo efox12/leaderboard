@@ -410,14 +410,14 @@ class block_leaderboard_functions{
         
         foreach($history as $forum) {
             if($forum->isresponse == true) {
-                $pointsearned = round($pointsmodule->pointsearned);
+                $pointsearned = round($forum->pointsearned);
                 while($responsepoints < $maxresponse && $pointsearned > 0) {
                     $responsepoints++;
                     $pointsearned--;
                 }                  
             }
             else {
-                $pointsearned = round($pointsmodule->pointsearned);
+                $pointsearned = round($forum->pointsearned);
                 while($postpoints < $maxpost && $pointsearned > 0) {
                     $postpoints++;
                     $pointsearned--;
