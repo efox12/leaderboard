@@ -409,19 +409,22 @@ class block_leaderboard_functions{
         $postpoints = 0;
         
         foreach($history as $forum) {
-            if($forum->isresponse == true) {
-                $pointsearned = round($forum->pointsearned);
-                while($responsepoints < $maxresponse && $pointsearned > 0) {
-                    $responsepoints++;
-                    $pointsearned--;
-                }                  
-            }
-            else {
-                $pointsearned = round($forum->pointsearned);
-                while($postpoints < $maxpost && $pointsearned > 0) {
-                    $postpoints++;
-                    $pointsearned--;
-                }     
+            //check property exists
+            if(property_exists($pointsmodule, "isresponse") && property_exists($pointsmodule, "pointsearned")) {
+                if($forum->isresponse == true) {
+                    $pointsearned = round($forum->pointsearned);
+                    while($responsepoints < $maxresponse && $pointsearned > 0) {
+                        $responsepoints++;
+                        $pointsearned--;
+                    }                  
+                }
+                else {
+                    $pointsearned = round($forum->pointsearned);
+                    while($postpoints < $maxpost && $pointsearned > 0) {
+                        $postpoints++;
+                        $pointsearned--;
+                    }     
+                }
             }
         }
         
