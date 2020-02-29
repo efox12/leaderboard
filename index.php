@@ -195,7 +195,7 @@ if (count($groups) > 0) { // There are groups to display.
                                     //makes sure not more than the max amount of points is assigned
                                     $pointsearned = round($pointsmodule->pointsearned);
                                     $finalpoints = 0;
-                                    while($finalpoints < $$maxforumpostpoints && $pointsearned > 0) {
+                                    while($finalpoints < $maxforumpostpoints && $pointsearned > 0) {
                                         $finalpoints++;
                                         $pointsearned--;
                                     }             
