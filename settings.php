@@ -202,6 +202,26 @@ if (get_config('leaderboard', 'forumresponsepoints') === '') {
     set_config('forumresponsepoints', 2, 'leaderboard');
 }
 
+$settings->add(new admin_setting_configtext(
+    'leaderboard/forumpostmaxpoints',
+    get_string('label_forumpostmaxpoints', 'block_leaderboard'),
+    get_string('desc_forumpostmaxpoints', 'block_leaderboard'),
+    1
+));
+if (get_config('leaderboard', 'forumpostmaxpoints') === '') {
+    set_config('forumpostmaxpoints', 1, 'leaderboard');
+}
+
+$settings->add(new admin_setting_configtext(
+    'leaderboard/forumresponsemaxpoints',
+    get_string('label_forumresponsemaxpoints', 'block_leaderboard'),
+    get_string('desc_forumresponsemaxpoints', 'block_leaderboard'),
+    4
+));
+if (get_config('leaderboard', 'forumresponsemaxpoints') === '') {
+    set_config('forumresponsemaxpoints', 4, 'leaderboard');
+}
+
 // MISC.
 $settings->add(new admin_setting_heading(
     'resetheaderconfig',

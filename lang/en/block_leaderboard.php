@@ -72,6 +72,12 @@ $string['desc_forumpostpoints'] = 'Points earned for posting a question';
 $string['label_forumresponsepoints'] = 'Response Points';
 $string['desc_forumresponsepoints'] = 'Points earned for responding to a question';
 
+$string['label_forumpostmaxpoints'] = 'Post Max Points';
+$string['desc_forumpostmaxpoints'] = 'The maximum points that can be earned for posting questions';
+
+$string['label_forumresponsemaxpoints'] = 'Response Max Points';
+$string['desc_forumresponsemaxpoints'] = 'The maximum points that can be earned for responding to questions';
+
 $string['resetsettings'] = 'Leaderboard Reset Settings';
 $string['resetsettings_desc'] = 'Set the dates when you want the leaderboard to reset.';
 

@@ -175,15 +175,32 @@ if (count($groups) > 0) { // There are groups to display.
                     if (empty($studentdata->history) != 1) {
                         // Add the students data to the table.
                         $infocount = 0;
+                        $maxforumresponsepoints = get_config('leaderboard', 'forumresponsemaxpoints');
+                        $maxforumpostpoints = get_config('leaderboard', 'forumpostmaxpoints');
+                        
                         foreach ($studentdata->history as $pointsmodule) {
                             // Add a row to the table with the name of the module and the number of points earned.
                             if (property_exists($pointsmodule, "isresponse")) { // Forum modules.
                                 if ($pointsmodule->isresponse == 0) {
+                                    //makes sure not more than the max amount of points is assigned
+                                    $pointsearned = round($pointsmodule->pointsearned);
+                                    $finalpoints = 0;
+                                    while($finalpoints < $$maxforumresponsepoints && $pointsearned > 0) {
+                                        $finalpoints++;
+                                        $pointsearned--;
+                                    }                                    
                                     $modulerow = new html_table_row(array("", "", "",
-                                                        "Forum Post", round($pointsmodule->pointsearned)));
+                                                        "Forum Post", $finalpoints));
                                 } else if ($pointsmodule->isresponse == 1) {
+                                    //makes sure not more than the max amount of points is assigned
+                                    $pointsearned = round($pointsmodule->pointsearned);
+                                    $finalpoints = 0;
+                                    while($finalpoints < $$maxforumpostpoints && $pointsearned > 0) {
+                                        $finalpoints++;
+                                        $pointsearned--;
+                                    }             
                                     $modulerow = new html_table_row(array("", "", "",
-                                                        "Forum Response", round($pointsmodule->pointsearned)));
+                                                        "Forum Response", $finalpoints));
                                 }
                             } else { // Modules with their own names.
                                 if (property_exists($pointsmodule, "daysearly") && $pointsmodule->pointsearned > 0) {
