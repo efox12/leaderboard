@@ -381,7 +381,7 @@ class block_leaderboard_functions{
         // FORUM.
         $studentforumposts = $DB->get_records('block_leaderboard_forum', array('studentid' => $student->id));
         $pointsdata = self::get_module_points($studentforumposts, $start, $end);
-        $points->all += self::get_forum_points_with_max($points->history);
+        $points->all += self::get_forum_points_with_max($pointsdata->history);
         $points->pastweek += $pointsdata->pastweek;
         $points->pasttwoweeks += $pointsdata->pasttwoweeks;
         $points->history = array_merge($points->history, $pointsdata->history);
@@ -400,7 +400,7 @@ class block_leaderboard_functions{
      * Gets the total forum points, maxed out by requirements in settings
      * Possibility of adding more maxes for other categories
      * @params array $history. Contains all forum posts/responses for given student
-     * @return int $points. Returns points earned
+     * @return int $totalpoints. Returns points earned
      */
     public static function get_forum_points_with_max($history) {
         $maxresponse = get_config('leaderboard', 'forumresponsemaxpoints');
@@ -427,8 +427,8 @@ class block_leaderboard_functions{
                 }
             }
         }
-        
-        return $postpoints + $responsepoints;
+        $totalpoints = $postpoints + $responsepoints;
+        return $totalpoints;
     }
 
     /**
