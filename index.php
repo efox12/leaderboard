@@ -181,23 +181,25 @@ if (count($groups) > 0) { // There are groups to display.
                         foreach ($studentdata->history as $pointsmodule) {
                             // Add a row to the table with the name of the module and the number of points earned.
                             if (property_exists($pointsmodule, "isresponse")) { // Forum modules.
+                                //post
                                 if ($pointsmodule->isresponse == 0) {
-                                    //makes sure not more than the max amount of points is assigned
-                                    $pointsearned = round($pointsmodule->pointsearned);
-                                    $finalpoints = 0;
-                                    while(0 < $maxforumresponsepoints && $pointsearned > 0) {
-                                        $maxforumresponsepoints--;
-                                        $finalpoints++;
-                                        $pointsearned--;
-                                    }                                    
-                                    $modulerow = new html_table_row(array("", "", "",
-                                                        "Forum Post", $finalpoints));
-                                } else if ($pointsmodule->isresponse == 1) {
                                     //makes sure not more than the max amount of points is assigned
                                     $pointsearned = round($pointsmodule->pointsearned);
                                     $finalpoints = 0;
                                     while(0 < $maxforumpostpoints && $pointsearned > 0) {
                                         $maxforumpostpoints--;
+                                        $finalpoints++;
+                                        $pointsearned--;
+                                    }                                    
+                                    $modulerow = new html_table_row(array("", "", "",
+                                                        "Forum Post", $finalpoints));
+                                //response
+                                } else if ($pointsmodule->isresponse == 1) {
+                                    //makes sure not more than the max amount of points is assigned
+                                    $pointsearned = round($pointsmodule->pointsearned);
+                                    $finalpoints = 0;
+                                    while(0 < $maxforumresponsepoints && $pointsearned > 0) {
+                                        $maxforumresponsepoints--;
                                         $finalpoints++;
                                         $pointsearned--;
                                     }             
