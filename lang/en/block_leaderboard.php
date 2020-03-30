@@ -78,8 +78,11 @@ $string['desc_forumpostmaxpoints'] = 'The maximum points that can be earned for 
 $string['label_forumresponsemaxpoints'] = 'Response Max Points';
 $string['desc_forumresponsemaxpoints'] = 'The maximum points that can be earned for responding to questions';
 
+//future project: put course dates here?
 $string['resetsettings'] = 'Leaderboard Reset Settings';
-$string['resetsettings_desc'] = 'Set the dates when you want the leaderboard to reset.';
+$string['resetsettings_desc'] = 'Set the dates when you want the leaderboard to reset. '
+        . 'If they occur before or after the official course start or end dates, '
+        . 'they will automatically be reset to the start or end date.';
 
 $string['label_reset1'] = 'First Reset';
 $string['desc_reset1'] = 'Type using format MM/DD/YYYY';

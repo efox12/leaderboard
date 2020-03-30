@@ -101,6 +101,7 @@ class block_leaderboard_functions{
         $reset1ut = 0;
         $reset2ut = 0;
 
+        //get reset times
         $reset1 = get_config('leaderboard', 'reset1');
         $reset2 = get_config('leaderboard', 'reset2');
 
@@ -108,7 +109,23 @@ class block_leaderboard_functions{
             $reset1ut = strtotime($reset1);
             $reset2ut = strtotime($reset2);
         }
-
+        
+        //if there are resets outside of the course time dates, resets them
+        if($reset1ut < $start || $reset1ut > $end) {
+            $reset1ut = $start;
+        }
+        if($reset2ut < $start || $reset2ut > $end) {
+            $reset2ut = $end;
+        }        
+        //automatically handles error of accidentally flipping the reset order
+        //by flipping the resets
+        if($reset2ut < $reset1ut) {
+            $temp = $reset2ut;
+            $reset2ut = $reset1ut;
+            $reset1ut = $reset2ut;
+        }
+        
+        //find the start and end time
         if (time() < $reset1ut) {
             $end = $reset1ut;
         } else if (time() >= $reset1ut && time() < $reset2ut) {
