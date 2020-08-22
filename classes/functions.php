@@ -32,13 +32,13 @@ class block_leaderboard_functions{
      */
     public static function get_early_submission_points($daysbeforesubmission, $type) {
         for ($x = 1; $x <= 5; $x++) {
-            $currenttime = get_config('leaderboard', $type.'time'.$x);
+            $currenttime = get_config('block_leaderboard', $type.'time'.$x);
             $nexttime = INF;
             if ($x < 5) {
-                $nexttime = get_config('leaderboard', $type.'time'.($x + 1));
+                $nexttime = get_config('block_leaderboard', $type.'time'.($x + 1));
             }
             if ($daysbeforesubmission >= $currenttime && $daysbeforesubmission < $nexttime) {
-                return get_config('leaderboard', $type.'points'.$x);
+                return get_config('block_leaderboard', $type.'points'.$x);
             }
         }
         return 0;
@@ -51,13 +51,13 @@ class block_leaderboard_functions{
      * @return int The number of points earned.
      */
     public static function get_quiz_attempts_points($attempts) {
-        $maxattempts = get_config('leaderboard', 'quizattempts');
+        $maxattempts = get_config('block_leaderboard', 'quizattempts');
         if ($attempts == 0) {
             return 0;
         } else if ($attempts <= $maxattempts) {
-            return get_config('leaderboard', 'quizattemptspoints') * ($attempts - 1);
+            return get_config('block_leaderboard', 'quizattemptspoints') * ($attempts - 1);
         }
-        return get_config('leaderboard', 'quizattemptspoints') * ($maxattempts);
+        return get_config('block_leaderboard', 'quizattemptspoints') * ($maxattempts);
     }
     /**
      * Gets the number of points earned given an amount of time spaced since the last quiz.
@@ -67,13 +67,13 @@ class block_leaderboard_functions{
      */
     public static function get_quiz_spacing_points($quizspacing) {
         for ($x = 1; $x <= 3; $x++) {
-            $currentspacing = get_config('leaderboard', 'quizspacing'.$x);
+            $currentspacing = get_config('block_leaderboard', 'quizspacing'.$x);
             $nextspacing = INF;
             if ($x < 3) {
-                $nextspacing = get_config('leaderboard', 'quizspacing'.($x + 1));
+                $nextspacing = get_config('block_leaderboard', 'quizspacing'.($x + 1));
             }
             if ($quizspacing >= $currentspacing && $quizspacing < $nextspacing) {
-                return get_config('leaderboard', 'quizspacingpoints'.$x);
+                return get_config('block_leaderboard', 'quizspacingpoints'.$x);
             }
         }
         return 0;
@@ -100,8 +100,8 @@ class block_leaderboard_functions{
         $reset1ut = 0;
         $reset2ut = 0;
 
-        $reset1 = get_config('leaderboard', 'reset1');
-        $reset2 = get_config('leaderboard', 'reset2');
+        $reset1 = get_config('block_leaderboard', 'reset1');
+        $reset2 = get_config('block_leaderboard', 'reset2');
 
         if ($reset1 != ''  && $reset2 != '') {
             $reset1ut = strtotime($reset1);

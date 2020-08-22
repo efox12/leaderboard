@@ -37,8 +37,8 @@ if($ADMIN->fulltree) {
             '',
             $x
         ));
-        if (get_config('leaderboard', 'assignmenttime'.$x) === '') {
-            set_config('assignmenttime'.$x, $x, 'leaderboard');
+        if (get_config('block_leaderboard', 'assignmenttime'.$x) === '') {
+            set_config('assignmenttime'.$x, $x, 'block_leaderboard');
         }
 
         $settings->add(new admin_setting_configtext(
@@ -47,8 +47,8 @@ if($ADMIN->fulltree) {
             '<br/>',
             $x * 5
         ));
-        if (get_config('leaderboard', 'assignmentpoints'.$x) === '') {
-            set_config('assignmentpoints'.$x, $x * 5, 'leaderboard');
+        if (get_config('block_leaderboard', 'assignmentpoints'.$x) === '') {
+            set_config('assignmentpoints'.$x, $x * 5, 'block_leaderboard');
         }
     }
 
@@ -65,8 +65,8 @@ if($ADMIN->fulltree) {
             '',
             $x
         ));
-        if (get_config('leaderboard', 'quiztime'.$x) === '') {
-            set_config('quiztime'.$x, $x, 'leaderboard');
+        if (get_config('block_leaderboard', 'quiztime'.$x) === '') {
+            set_config('quiztime'.$x, $x, 'block_leaderboard');
         }
 
         $settings->add(new admin_setting_configtext(
@@ -75,8 +75,8 @@ if($ADMIN->fulltree) {
             '<br/>',
             $x * 2
         ));
-        if (get_config('leaderboard', 'quizpoints'.$x) === '') {
-            set_config('quizpoints'.$x, $x * 2, 'leaderboard');
+        if (get_config('block_leaderboard', 'quizpoints'.$x) === '') {
+            set_config('quizpoints'.$x, $x * 2, 'block_leaderboard');
         }
     }
     $settings->add(new admin_setting_heading(
@@ -93,8 +93,8 @@ if($ADMIN->fulltree) {
             '',
             $vals[$x - 1]
         ));
-        if (get_config('leaderboard', 'quizspacing'.$x) === '') {
-            set_config('quizspacing'.$x, $vals[$x - 1], 'leaderboard');
+        if (get_config('block_leaderboard', 'quizspacing'.$x) === '') {
+            set_config('quizspacing'.$x, $vals[$x - 1], 'block_leaderboard');
         }
 
         $settings->add(new admin_setting_configtext(
@@ -103,8 +103,8 @@ if($ADMIN->fulltree) {
             '<br/>',
             $x * 2
         ));
-        if (get_config('leaderboard', 'quizspacingpoints'.$x) === '') {
-            set_config('quizspacingpoints'.$x, $x * 5, 'leaderboard');
+        if (get_config('block_leaderboard', 'quizspacingpoints'.$x) === '') {
+            set_config('quizspacingpoints'.$x, $x * 5, 'block_leaderboard');
         }
     }
     $settings->add(new admin_setting_heading(
@@ -118,8 +118,8 @@ if($ADMIN->fulltree) {
         '',
         3
     ));
-    if (get_config('leaderboard', 'quizattempts') === '') {
-        set_config('quizattempts', 3, 'leaderboard');
+    if (get_config('block_leaderboard', 'quizattempts') === '') {
+        set_config('quizattempts', 3, 'block_leaderboard');
     }
 
     $settings->add(new admin_setting_configtext(
@@ -128,8 +128,8 @@ if($ADMIN->fulltree) {
         '<br/>',
         2
     ));
-    if (get_config('leaderboard', 'quizattemptspoints') === '') {
-        set_config('quizattemptspoints', 2, 'leaderboard');
+    if (get_config('block_leaderboard', 'quizattemptspoints') === '') {
+        set_config('quizattemptspoints', 2, 'block_leaderboard');
     }
 
     // CHOICE.
@@ -145,8 +145,8 @@ if($ADMIN->fulltree) {
         get_string('desc_choicepoints', 'block_leaderboard'),
         5
     ));
-    if (get_config('leaderboard', 'choicepoints') === '') {
-        set_config('choicepoints', 5, 'leaderboard');
+    if (get_config('block_leaderboard', 'choicepoints') === '') {
+        set_config('choicepoints', 5, 'block_leaderboard');
     }
 
     // FORUM.
@@ -162,8 +162,8 @@ if($ADMIN->fulltree) {
         get_string('desc_forumpostpoints', 'block_leaderboard'),
         1
     ));
-    if (get_config('leaderboard', 'forumpostpoints') === '') {
-        set_config('forumpostpoints', 1, 'leaderboard');
+    if (get_config('block_leaderboard', 'forumpostpoints') === '') {
+        set_config('forumpostpoints', 1, 'block_leaderboard');
     }
 
     $settings->add(new admin_setting_configtext(
@@ -172,8 +172,8 @@ if($ADMIN->fulltree) {
         get_string('desc_forumresponsepoints', 'block_leaderboard'),
         2
     ));
-    if (get_config('leaderboard', 'forumresponsepoints') === '') {
-        set_config('forumresponsepoints', 2, 'leaderboard');
+    if (get_config('block_leaderboard', 'forumresponsepoints') === '') {
+        set_config('forumresponsepoints', 2, 'block_leaderboard');
     }
 
     // MISC.
