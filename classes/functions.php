@@ -22,7 +22,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-class block_leaderboard_functions{
+class block_leaderboard_functions {
     /**
      * Gets the number of points earned given a number of days submitted early.
      *
