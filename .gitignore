@@ -1,0 +1,4 @@
+#git ignore file
+
+.DS_Store
+.idea/
