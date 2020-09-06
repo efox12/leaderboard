@@ -85,8 +85,9 @@ $PAGE->set_title(get_string('leaderboard', 'block_leaderboard'));
 $PAGE->set_heading($course->fullname);
 $PAGE->add_body_class("leaderboard page");
 
+$coursecontext = context_course::instance($course->id);
 $isstudent = false;
-if (user_has_role_assignment($USER->id, 5)) {
+if (has_capability('mod/assign:viewgrades', $coursecontext)) {
     $isstudent = true;
 }
 
