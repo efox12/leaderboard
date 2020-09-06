@@ -216,7 +216,7 @@ class block_leaderboard_observer {
                 $choicedata = new \stdClass();
                 $choicedata->studentid = $event->userid;
                 $choicedata->choiceid = $choice->id;
-                $choicedata->pointsearned = get_config('leaderboard', 'choicepoints');
+                $choicedata->pointsearned = get_config('block_leaderboard', 'choicepoints');
                 $choicedata->timefinished = $event->timecreated;
                 $choicedata->modulename = $choice->name;
 
@@ -241,7 +241,7 @@ class block_leaderboard_observer {
             $forumdata->discussionid = $event->other{'discussionid'};
             $forumdata->postid = $event->objectid;
             $forumdata->isresponse = true;
-            $forumdata->pointsearned = get_config('leaderboard', 'forumresponsepoints');
+            $forumdata->pointsearned = get_config('block_leaderboard', 'forumresponsepoints');
             $forumdata->timefinished = $event->timecreated;
             $forumdata->modulename = "Forum Response";
 
@@ -268,7 +268,7 @@ class block_leaderboard_observer {
             $forumdata->postid = $discussion->firstpost;
             $forumdata->discussionid = $event->objectid;
             $forumdata->isresponse = false;
-            $forumdata->pointsearned = get_config('leaderboard', 'forumpostpoints');
+            $forumdata->pointsearned = get_config('block_leaderboard', 'forumpostpoints');
             $forumdata->timefinished = $event->timecreated;
             $forumdata->modulename = "Forum Post";
 
