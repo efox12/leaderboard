@@ -1,6 +1,6 @@
 8/10/2018
 # Project Documentation
-This documentation gives an insight into the way this plugin is coded as well as a few tips for coding in PHP and Moodle that I tripped me up. Refer to it if you don't understand the purpose of a file or a function.
+This documentation gives an insight into the way this plugin is coded as well as a few tips for coding in PHP and Moodle that I tripped me up at the end. Refer to it if you don't understand the purpose of a file or a function.
 
 ## Project overview
 This section will give a general overview of the project.
@@ -29,6 +29,130 @@ pix/<br/>
 [settings.php](#settingsphp)<br/>
 [styles.css](#stylescss)<br/>
 [version.php](#versionphp)<br/>
+
+[More info on settings here](https://docs.moodle.org/dev/Admin_settings)
+
+### block_leaderboard.php
+The block_leaderboard.php file handles the entire blocks setup. Every block has a similar file with the standard name `block_blockname` located in the blocks root directory.
+
+[More info on blocks](https://docs.moodle.org/dev/Blocks)
+## Display Content
+### Display to Block
+#### renderer.php
+This file handles the specific rendering of the block. Blocks that use renderers all have a standard file named renderer.php located in the blocks root directory.
+
+[More info on renderers](https://docs.moodle.org/dev/Renderer)
+
+### Display Content to the Leaderboard Page
+#### index.php
+This file displays the full leaderboard page. It uses Moodle's Page API instead of a renderer. It functions similarly to renderer.php, but with one distinct difference. It uses `echo` to display the content instead of returning an output string.
+`echo ‘new content’;`
+
+
+## Modify the Multiplier/Points System
+### functions.php
+All of the functions corresponding to points and the multipliers are found in this file.
+```
+//static call
+$data = block_leaderboard_multiplier::get_multiplier($points_per_week);
+
+//non-static call
+$multiplier = new block_leaderboard_multiplier;
+$data = $multiplier->get_multiplier($points_per_week);
+```
+
+#### update_standing($groupdata, $currentstanding)
+#### get_date_range($courseid)
+#### get_quiz_spacing_points($quizspacing)
+#### get_quiz_attempts_points($attempts)
+
+#### `get_points($student)`
+This function gets all of a students points and history. This function is called in `functions.php`. 
+
+It requires the following parameters:
+```
+$student //a student object 
+```
+
+It returns an object containing the following:
+
+```
+$data->previous //the points required to reach the previous multiplier
+$data->all //all of a students points
+$data->past_week //the students points for the last week
+$data->past_two_weeks //the students points for the last two weeks
+$data->history //an array of all of the students event object
+```
+
+#### `get_group_data($group, $average_group_size, $start, $end)`
+This function gets important group data. This function is called in `functions.php`, `renderer.php`, and `index.php`. It calls get points, and is the primary function for getting student point data.
+
+It requires the following parameters:
+```
+$student //a moodle student record 
+$start //the start of the period from which data will be collected in unixtime
+$end //the end of the period from which data will be collected in unixtime
+```
+
+It returns an object containing the following:
+
+```
+$data->name //the groups name
+$data->id //the groups id
+$groupdata->currentstanding //the groups current standing in the leaderboard
+$groupdata->lastmove //the groups last 'move' in the standing
+$groupdata->time_updated //time group data was obtained
+$data->points //the groups total points
+$data->isusersgroup //true if this is the current user group
+$data->pointsperweek //the teams points-per-week
+$data->studentsdata //an array of student data objects
+$data->bonuspoints //the amount of extra points from inconsistent group sizing
+```
+#### `get_average_group_size($groups)`
+This function calculates the average group size. Used in `renderer.php` and 'index.php'. 
+
+It requires the following parameters:
+```
+$groups //all groups records 
+```
+
+It returns an integer with the average group size.
+
+#### `get_module_points($list, $start, $end)`
+This function gets information on all points for a specific module (ie: quiz, assignment, etc) given a date range. Used in `functions.php`.
+
+It requires the following parameters:
+```
+$coursid // The id of the current course.
+$start //the start of the period from which data will be collected in unixtime
+$end //the end of the period from which data will be collected in unixtime
+```
+
+It returns an object containing the following:
+```
+$points->all
+$points->pastweek
+$points->pasttwoweeks
+$points->history // A list of all the activity objects the points came from
+```
+
+## Modify What Gets Downloaded
+### data_loader.php
+This file controls what data gets loaded into the csv file before downloading. It only has one function that loads the data.
+
+#### `load_data_file($groups)`
+It requires the following parameters:
+```
+$groups //all groups records
+```
+
+It returns nothing.
+
+## Miscellaneous
+### access.php
+You probably won't need to touch this file but it controls capabilities and what the current user is and isn't allowed to use.
+
+# Generic moodle help. Not specific to this plugin
 
 The structure of this plugin is based off of Moodle's standards. Moodle uses something called [automatic class loading](https://docs.moodle.org/dev/Automatic_class_loading) where it knows where to look for certain peices of the plugin. This means that cetrain directory and file names should adhere to Moodle's standards.
 
@@ -381,112 +505,5 @@ set_config('uniqueSettingName',$defaultvalue,'leaderboard');
 }
 ```
 This ensures that if a setting is left unfilled by accident it gets filled in automatically before the admin leaves the page. `get_config()` and `set_config()` are also the getters and setters for the settings and they can be called from any file.
-
-[More info on settings here](https://docs.moodle.org/dev/Admin_settings)
-## Modify the Multiplier/Points System
-### functions.php
-All of the functions corresponding to points and the multipliers are found in this file.
-```
-//static call
-$data = block_leaderboard_multiplier::get_multiplier($points_per_week);
-
-//non-static call
-$multiplier = new block_leaderboard_multiplier;
-$data = $multiplier->get_multiplier($points_per_week);
-```
-
-#### `get_multiplier($points_per_week)`
-This function calculates all required multiplier data based on a points-per-week value. This function is called in `functions.php` and `renderer.php`. 
-
-It requires the folowing parameters:
-```
-$points_per_week //the number of points-per-week a group has 
-```
-
-It returns an object containing the following:
-
-```
-$data->previous //the points required to reach the previous multiplier
-$data->next //the points required to reach the next multiplier
-$data->multiplier //the current multiplier
-$data->color //the color of the progress bar
-$data->width //the width of the progess bar to fill (out of 100)
-$data->style //extra styling for the progress bar
-```
-
-#### `get_points($student)`
-This function gets all of a students points and history. This function is called in `functions.php` and `renderer.php`. 
-
-It requires the following parameters:
-```
-$student //a student object 
-```
-
-It returns an object containing the following:
-
-```
-$data->previous //the points required to reach the previous multiplier
-$data->all //all of a students points
-$data->past_week //the students points for the last week
-$data->past_two_weeks //the students points for the last two weeks
-$data->history //an array of all of the students event object
-```
-
-#### `get_group_data($group,$average_group_size)`
-This function gets important group data. This function is called in `functions.php`, `renderer.php`, and `index.php`. 
-
-It requires the following parameters:
-```
-$student //a moodle student record 
-```
-
-It returns an object containing the following:
-
-```
-$data->name //the groups name
-$data->id //the groups id
-$data->past_standing //the groups last standing in the leaderboard
-$data->points //the groups total points
-$data->is_users_group //true if this is the current user group
-$data->points_per_week //the teams points-per-week
-$data->students_data //an array of student data objects
-$data->bonus_points //the amount of extra points
-```
-#### `get_average_group_size($groups)`
-This function calculates the average group size. Used in `renderer.php`. 
-
-It requires the following parameters:
-```
-$groups //all groups records 
-```
-
-It returns an integer with the average group size.
-
-#### `calculate_points($student_id, $new_points)`
-This function calculates applies the multipliers to the points whenever a student earns them. Used in `observer.php`. 
-
-It requires the following parameters:
-```
-$student_id //the if of student earning the points
-$new_points // the number of new points the student earned
-```
-
-It returns an integer with the multiplier applied to the students points.
-
-## Modify What Gets Downloaded
-### data_loader.php
-This file controls what data gets loaded into the csv file before downloading. It only has one function that loads the data.
-
-#### `load_data_file($groups)`
-It requires the following parameters:
-```
-$groups //all groups records
-```
-
-It returns nothing.
-
-## Miscellaneous
-### access.php
-You probably won't need to touch this file but it controls capabilities and what the current user is and isn't allowed to use.
 
 [More info on access API](https://docs.moodle.org/dev/Access_API)
