@@ -237,8 +237,8 @@ class block_leaderboard_observer {
             // Create data for table.
             $forumdata = new \stdClass();
             $forumdata->studentid = $event->userid;
-            $forumdata->forumid = $event->other{'moodleoverflowid'};
-            $forumdata->discussionid = $event->other{'discussionid'};
+            $forumdata->forumid = $event->other['moodleoverflowid'];
+            $forumdata->discussionid = $event->other['discussionid'];
             $forumdata->postid = $event->objectid;
             $forumdata->isresponse = true;
             $forumdata->pointsearned = get_config('block_leaderboard', 'forumresponsepoints');
