@@ -323,6 +323,45 @@ if (!$isstudent) {
                                                 get_string('downloaddata', 'block_leaderboard'), 'get'), 'download_button');
 }
 
+$assignment_string = '';
+$quiz_string = '';
+$spacing_string = '';
+$forum_string = '';
+$attempt_string = get_string('a2:attempts', 'block_leaderboard',
+    [
+        'time' => \html_writer::tag('strong', get_config('leaderboard', 'quizattempts')),
+        'points' => \html_writer::tag('strong', get_config('leaderboard', 'quizattemptspoints')),
+    ]
+);
+
+for ($i=1; $i <= 5; $i++){
+    $assignment_string .= get_string('a2:submit_assignments', 'block_leaderboard',
+        [
+            'time' => \html_writer::tag('strong', get_config('leaderboard', 'assignmenttime'.$i)),
+            'points' => \html_writer::tag('strong', get_config('leaderboard', 'assignmentpoints'.$i)),
+        ]
+    );
+    $assignment_string .= \html_writer::empty_tag('br');
+
+    $quiz_string .= get_string('a2:submit_quizzes', 'block_leaderboard',
+        [
+            'time' => \html_writer::tag('strong', get_config('leaderboard', 'quiztime'.$i)),
+            'points' => \html_writer::tag('strong', get_config('leaderboard', 'quizpoints'.$i)),
+        ]
+    );
+    $quiz_string .= \html_writer::empty_tag('br');
+
+    if ($i <= 3) {
+        $spacing_string .= get_string('a2:quiz_spacing', 'block_leaderboard',
+            [
+                'time' => \html_writer::tag('strong', get_config('leaderboard', 'quizspacing'.$i)),
+                'points' => \html_writer::tag('strong', get_config('leaderboard', 'quizspacingpoints'.$i)),
+            ]
+        );
+        $spacing_string .= \html_writer::empty_tag('br');
+    }
+}
+
 // Display the Q/A.
 echo '<div class = "info">'.get_string('info', 'block_leaderboard').'</div>';
 echo '<div class = "description">'.get_string('description', 'block_leaderboard').'</div>';
@@ -339,7 +378,25 @@ echo '<div class = "q">'.get_string('q2', 'block_leaderboard').'</div>';
 echo '<br/>';
 echo '<div class = "a partone">'.get_string('a2', 'block_leaderboard').'</div>';
 echo '<br/>';
-echo '<div class = "a levels">'.get_string('a22', 'block_leaderboard').'</div>';
+echo '<div class = "a levels">';
+echo $assignment_string;
+echo '<br/>';
+echo $quiz_string;
+echo '<br/>';
+echo $spacing_string;
+echo '<br/>';
+echo $attempt_string;
+echo '<br/><br/>';
+echo get_string('a2:forumpostpoints', 'block_leaderboard',
+    \html_writer::tag('strong', get_config('leaderboard', 'forumpostpoints')));
+echo '<br/>';
+echo get_string('a2:forumresponsepoints', 'block_leaderboard',
+    \html_writer::tag('strong', get_config('leaderboard', 'forumresponsepoints')));
+echo '<br/>';
+echo get_string('a2:choicepoints', 'block_leaderboard',
+    \html_writer::tag('strong', get_config('leaderboard', 'choicepoints')));
+echo '<br/>';
+echo '</div>';
 echo '<br/>';
 echo '<div class = "q">'.get_string('q6', 'block_leaderboard').'</div>';
 echo '<br/>';
