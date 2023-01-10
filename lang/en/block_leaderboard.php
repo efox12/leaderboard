@@ -108,23 +108,23 @@ $string['q1'] = '<strong>Q1</strong>: What are ways that we can earn points?';
 $string['a1'] = '<strong>A1</strong>: Your team can earn points by practicing good study habits. Turning in assignments and completing quizzes early will award the most points. Other ways of earning points include spacing out quizzes instead of cramming them into one, retaking quizzes for extra practice, posting and responding to questions on the forum, and even rating your understanding in the choice module will all award points.';
 $string['q2'] = '<strong>Q2</strong>: What are the exact point breakdowns?';
 $string['a2'] = '<strong>A2</strong>: Here is a breakdown of the points before multipliers:';
-$string['a22'] = 'Submit Assignments <strong>'.get_config('leaderboard', 'assignmenttime5').'</strong> days early to earn <strong>'.get_config('leaderboard', 'assignmentpoints5').'</strong> points,
-                    <br/>Submit Assignments <strong>'.get_config('leaderboard', 'assignmenttime4').'</strong> days early to earn <strong>'.get_config('leaderboard', 'assignmentpoints4').'</strong> points,
-                    <br/>Submit Assignments <strong>'.get_config('leaderboard', 'assignmenttime3').'</strong> days early to earn <strong>'.get_config('leaderboard', 'assignmentpoints3').'</strong> points,
-                    <br/>Submit Assignments <strong>'.get_config('leaderboard', 'assignmenttime2').'</strong> days early to earn <strong>'.get_config('leaderboard', 'assignmentpoints2').'</strong> points,
-                    <br/>Submit Assignments <strong>'.get_config('leaderboard', 'assignmenttime1').'</strong> day early to earn <strong>'.get_config('leaderboard', 'assignmentpoints1').'</strong> points.
-                    <br/><br/>Submit Quizzes <strong>'.get_config('leaderboard', 'quiztime5').'</strong> days early to earn <strong>'.get_config('leaderboard', 'quizpoints5').'</strong> points,
-                    <br/>Submit Quizzes <strong>'.get_config('leaderboard', 'quiztime4').'</strong> days early to earn <strong>'.get_config('leaderboard', 'quizpoints4').'</strong> points,
-                    <br/>Submit Quizzes <strong>'.get_config('leaderboard', 'quiztime3').'</strong> days early to earn <strong>'.get_config('leaderboard', 'quizpoints3').'</strong> points,
-                    <br/>Submit Quizzes <strong>'.get_config('leaderboard', 'quiztime2').'</strong> days early to earn <strong>'.get_config('leaderboard', 'quizpoints2').'</strong> points,
-                    <br/>Submit Quizzes <strong>'.get_config('leaderboard', 'quiztime1').'</strong> day early to earn <strong>'.get_config('leaderboard', 'quizpoints1').'</strong> points.
-                    <br/><br/>Take <strong>'.get_config('leaderboard', 'quizspacing3').'</strong> days between Quizzes to earn <strong>'.get_config('leaderboard', 'quizspacingpoints3').'</strong> points,
-                    <br/>Take <strong>'.get_config('leaderboard', 'quizspacing2').'</strong> days between Quizzes to earn <strong>'.get_config('leaderboard', 'quizspacingpoints2').'</strong> points,
-                    <br/>Take <strong>'.get_config('leaderboard', 'quizspacing1').'</strong> days between Quizzes to earn <strong>'.get_config('leaderboard', 'quizspacingpoints1').'</strong> points.
-                    <br/><br/>Attempt Quizzes up to <strong>'.get_config('leaderboard', 'quizattempts').'</strong> times to earn <strong>'.get_config('leaderboard', 'quizattemptspoints').'</strong> points each attempt.
-                    <br/><br/>Earn <strong>'.get_config('leaderboard', 'forumpostpoints').'</strong> points for posting in a Forum
-                    <br/>Earn <strong>'.get_config('leaderboard', 'forumresponsepoints').'</strong> points for responding to a Forum
-                    <br/><br/>Earn <strong>'.get_config('leaderboard', 'choicepoints').'</strong> points for participating in a Choice';
+$string['a22'] = 'Submit Assignments {$a->assignmenttime5} days early to earn {$a->assignmentpoints5} points,
+                    <br/>Submit Assignments {$a->assignmenttime4} days early to earn {$a->assignmentpoints4} points,
+                    <br/>Submit Assignments {$a->assignmenttime3} days early to earn {$a->assignmentpoints3} points,
+                    <br/>Submit Assignments {$a->assignmenttime2} days early to earn {$a->assignmentpoints2} points,
+                    <br/>Submit Assignments {$a->assignmenttime1} day early to earn {$a->assignmentpoints1} points.
+                    <br/><br/>Submit Quizzes {$a->quiztime5} days early to earn {$a->quizpoints5} points,
+                    <br/>Submit Quizzes {$a->quiztime4} days early to earn {$a->quizpoints4} points,
+                    <br/>Submit Quizzes {$a->quiztime3} days early to earn {$a->quizpoints3} points,
+                    <br/>Submit Quizzes {$a->quiztime2} days early to earn {$a->quizpoints2} points,
+                    <br/>Submit Quizzes {$a->quiztime1} day early to earn {$a->quizpoints1} points.
+                    <br/><br/>Take {$a->quizspacing3} days between Quizzes to earn {$a->quizspacingpoints3} points,
+                    <br/>Take {$a->quizspacing2} days between Quizzes to earn {$a->quizspacingpoints2} points,
+                    <br/>Take {$a->quizspacing1} days between Quizzes to earn {$a->quizspacingpoints1} points.
+                    <br/><br/>Attempt Quizzes up to {$a->quizattempts} times to earn {$a->quizattemptspoints} points each attempt.
+                    <br/><br/>Earn {$a->forumpostpoints} points for posting in a Forum
+                    <br/>Earn {$a->forumresponsepoints} points for responding to a Forum
+                    <br/><br/>Earn {$a->choicepoints} points for participating in a Choice';
 $string['q6'] = '<strong>Q3</strong>: I submitted an assignment early, why don\'t I see any points?';
 $string['a6'] = '<strong>A3</strong>: This is normal. Your points will not be recorded in the leaderboard until after the due date for an assignment or quiz has passed. This is in place to so that an assignment cannot earn points for submission both before and after a reset.';
 $string['q7'] = '<strong>Q4</strong>: Is my data being logged?';
