@@ -323,6 +323,25 @@ if (!$isstudent) {
                                                 get_string('downloaddata', 'block_leaderboard'), 'get'), 'download_button');
 }
 
+$a22_array = [];
+
+for ($i=1; $i <= 5; $i++){
+    $a22_array['assignmenttime'.$i] =  \html_writer::tag('strong', get_config('leaderboard', 'assignmenttime'.$i));
+    $a22_array['assignmentpoints'.$i] =  \html_writer::tag('strong', get_config('leaderboard', 'assignmentpoints'.$i));
+    $a22_array['quiztime'.$i] =  \html_writer::tag('strong', get_config('leaderboard', 'quiztime'.$i));
+    $a22_array['quizpoints'.$i] =  \html_writer::tag('strong', get_config('leaderboard', 'quizpoints'.$i));
+    if ($i <= 3) {
+        $a22_array['quizspacing'.$i] =  \html_writer::tag('strong', get_config('leaderboard', 'quizspacing'.$i));
+        $a22_array['quizspacingpoints'.$i] =  \html_writer::tag('strong', get_config('leaderboard', 'quizspacingpoints'.$i));
+    }
+}
+
+$a22_array['forumpostpoints'] = \html_writer::tag('strong', get_config('leaderboard', 'forumpostpoints'));
+$a22_array['forumresponsepoints'] = \html_writer::tag('strong', get_config('leaderboard', 'forumresponsepoints'));
+$a22_array['choicepoints'] = \html_writer::tag('strong', get_config('leaderboard', 'choicepoints'));
+$a22_array['quizattempts'] = \html_writer::tag('strong', get_config('leaderboard', 'quizattempts'));
+$a22_array['quizattemptspoints'] = \html_writer::tag('strong', get_config('leaderboard', 'quizattemptspoints'));
+
 // Display the Q/A.
 echo '<div class = "info">'.get_string('info', 'block_leaderboard').'</div>';
 echo '<div class = "description">'.get_string('description', 'block_leaderboard').'</div>';
@@ -339,7 +358,7 @@ echo '<div class = "q">'.get_string('q2', 'block_leaderboard').'</div>';
 echo '<br/>';
 echo '<div class = "a partone">'.get_string('a2', 'block_leaderboard').'</div>';
 echo '<br/>';
-echo '<div class = "a levels">'.get_string('a22', 'block_leaderboard').'</div>';
+echo '<div class = "a levels">'.get_string('a22', 'block_leaderboard', $a22_array).'</div>';
 echo '<br/>';
 echo '<div class = "q">'.get_string('q6', 'block_leaderboard').'</div>';
 echo '<br/>';
